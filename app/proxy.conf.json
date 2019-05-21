@@ -1,0 +1,16 @@
+{
+    "/api/auth/*": {
+        "target": "http://localhost:8081",
+        "secure": false,
+        "pathRewrite": {"^/api/auth":""},
+        "logLevel": "debug"
+    },
+    "/api/legajo/*": {
+        "target": "http://localhost:8080",
+        "secure": false,
+        "pathRewrite": {
+            "^/api/legajo": ""
+        },
+        "logLevel": "debug"
+    }
+}

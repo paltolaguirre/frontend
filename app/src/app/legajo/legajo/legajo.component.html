@@ -1,0 +1,97 @@
+<div *ngIf="currentLegajo$ | async as data" class="legajo-container">
+  <h1 *ngIf="data.ID">
+    Modificar legajo <span>{{data.legajo}}</span>
+  </h1>
+  <h1 *ngIf="!data.ID">
+    Nuevo legajo
+  </h1>
+
+  <mat-divider></mat-divider>
+
+  <div mat-dialog-content class="content">
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.legajo" placeholder="Número de Legajo" cdkFocusInitial></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.nombre" placeholder="Nombre"></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.apellido" placeholder="Apellido"></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.cbu" placeholder="CBU"></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.codigo" placeholder="Código"></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.descripcion" placeholder="Descripción"></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.cuil" placeholder="CUIL"></mat-form-field>
+    
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.direccion" placeholder="Dirección"></mat-form-field>
+    <app-selector-default type="localidad" [value]="data.localidad"></app-selector-default>
+    <app-selector-default type="provincia" [value]="data.provincia"></app-selector-default>
+    <app-selector-default type="pais" [value]="data.pais"></app-selector-default>
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.telefono" placeholder="Telefono"></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.email" placeholder="E-Mail"></mat-form-field>
+    <br>
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.categoria" placeholder="Categoria"></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.tarea" placeholder="Tarea"></mat-form-field>
+    <app-selector-default type="modalidadcontratacion" [value]="data.modalidadcontratacion"></app-selector-default>
+    <app-selector-default type="situacion" [value]="data.situacion"></app-selector-default>
+    <app-selector-default type="condicion" [value]="data.condicion"></app-selector-default>
+
+    <app-selector-default type="condicionsiniestrado" [value]="data.condicionsiniestrado"></app-selector-default>
+    <app-selector-default type="obrasocial" [value]="data.obrasocial"></app-selector-default>
+    <app-selector-default type="conveniocolectivo" [value]="data.conveniocolectivo"></app-selector-default>
+    <app-selector-default type="centrodecosto" [value]="data.centrodecosto"></app-selector-default>
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.valorfijolrt" placeholder="Valor Fijo LRT"></mat-form-field>
+
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.remuneracion" placeholder="Remuneración"></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.horasmensualesnormales" placeholder="Horas mensuales normales"></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.fechaalta" placeholder="Fecha de alta"></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.fechabaja" placeholder="Fecha de baja"></mat-form-field>
+    
+    <mat-divider></mat-divider>
+    
+    <h2>Conyuge</h2>
+    <div class="children-container">
+      <table style="width:100%">
+        <tr *ngFor="let conyuge of data.conyuge">
+          <div *ngIf="(conyuge.DeletedAt == null)">
+            <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(conyuge)">
+              <mat-icon>delete_forever</mat-icon>
+            </button>
+            <mat-form-field class="children-input"><input matInput [(ngModel)]="conyuge.nombre" placeholder="Nombre"></mat-form-field>
+            <mat-form-field class="children-input"><input matInput [(ngModel)]="conyuge.apellido" placeholder="Apellido"></mat-form-field>
+            <mat-form-field class="children-input"><input matInput [(ngModel)]="conyuge.cuil" placeholder="Cuil"></mat-form-field>
+            <mat-form-field class="children-input"><input matInput [(ngModel)]="conyuge.descripcion" placeholder="Descripcion"></mat-form-field>
+            <mat-form-field class="children-input"><input matInput [(ngModel)]="conyuge.obrasocialid" placeholder="Obra Social"></mat-form-field>
+          </div>
+        </tr>
+      </table>
+      <button *ngIf="(data.conyuge == null || (data.conyuge.length == 0) || (data.conyuge[0].DeletedAt != null && data.conyuge.length == 1))" mat-mini-fab color="accent" class="add-button" (click)="onClickNewChild(data.conyuge)">
+        <mat-icon aria-label="Agregar conyuge">add</mat-icon>
+      </button>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <h2>Hijos</h2>
+    <div class="children-container">
+      <table style="width:100%">
+          <tr *ngFor="let hijo of data.hijos">
+            <div *ngIf="(hijo.DeletedAt == null)">
+              <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(hijo)">
+                <mat-icon>delete_forever</mat-icon>
+              </button>
+              <mat-form-field class="children-input"><input matInput [(ngModel)]="hijo.nombre" placeholder="Nombre"></mat-form-field>
+              <mat-form-field class="children-input"><input matInput [(ngModel)]="hijo.apellido" placeholder="Apellido"></mat-form-field>
+              <mat-form-field class="children-input"><input matInput [(ngModel)]="hijo.cuil" placeholder="Cuil"></mat-form-field>
+              <mat-form-field class="children-input"><input matInput [(ngModel)]="hijo.descripcion" placeholder="Descripcion"></mat-form-field>
+              <mat-form-field class="children-input"><input matInput [(ngModel)]="hijo.obrasocialid" placeholder="Obra Social"></mat-form-field>
+            </div>
+          </tr>
+      </table>
+      <button mat-mini-fab color="accent" class="add-button" (click)="onClickNewChild(data.hijos)">
+        <mat-icon aria-label="Agregar Hijo">add</mat-icon>
+      </button>
+    </div>
+
+    <mat-divider></mat-divider>
+
+  </div>
+  <div mat-dialog-actions class="actions">
+    <button mat-raised-button (click)="onClickAbort()">Cerrar</button>
+    <button mat-raised-button color="primary" (click)="onClickSave(data)">Guardar</button>
+  </div>
+</div>

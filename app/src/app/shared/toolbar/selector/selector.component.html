@@ -1,0 +1,14 @@
+<mat-form-field class="selector">
+
+<!--    <mat-select placeholder="Elija una opción">
+      <mat-option *ngFor="let element of elements" [value]="element.value">
+        {{element.viewValue}}
+      </mat-option>
+    </mat-select> -->
+    
+    <mat-select placeholder="Elija al menos una opción" [formControl]="toppings" multiple>
+      <mat-option *ngFor="let element of elements" [value]="element">{{element}}</mat-option>
+    </mat-select>
+
+  
+</mat-form-field>

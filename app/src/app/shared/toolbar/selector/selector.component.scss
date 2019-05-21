@@ -1,0 +1,32 @@
+.selector {
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #4b5052;
+    
+    height: 34px;
+    width: 100%;
+    /*width: 160px;
+    margin-right: 30px;*/
+
+    /*border-radius: 4px;
+    border: solid 1px #dcdcdc;
+    padding: 0px 15px 0px 15px;*/
+}
+
+label {
+    display: none;
+}
+
+::ng-deep.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label, .mat-form-field-empty.mat-form-field-label {
+    display: none !important; 
+}
+
+::ng-deep.mat-form-field-infix {
+    /* padding: 0.5em 0; */
+    border-top: 0em solid transparent;
+}

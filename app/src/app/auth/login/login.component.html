@@ -1,0 +1,31 @@
+<div class="hgroup"><a href="http://xubio.com/" target="_blank"><img
+      src="https://server6.xubio.com/styles/img/logo_xubio_header.png"></a>
+  <p>You will love <a href="http://xubio.com/" target="_blank">Xubio</a></p>
+</div>
+
+<main class="container">
+  <form (ngSubmit)="onSubmit()" class="form"> 
+    <mat-form-field class="full-width input">
+      <input matInput placeholder="Usuario" [formControl]="emailFormControl" [errorStateMatcher]="matcher">
+      <mat-hint></mat-hint>
+      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+        Por favor ingrese un email valido
+      </mat-error>
+      <mat-error *ngIf="emailFormControl.hasError('required')">
+        El usuario es <strong>obligatorio</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="full-width input">
+      <input matInput type="password" placeholder="Contraseña" [formControl]="passFormControl" [errorStateMatcher]="matcher">
+      <mat-hint></mat-hint>
+      <mat-error *ngIf="passFormControl.hasError('required')">
+        La contraseña es <strong>obligatoria</strong>
+      </mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary" class="full-width boton" [disabled]="!emailFormControl.valid || !passFormControl.valid">Ingresar</button>
+  </form>
+</main>
+
+<footer>
+  <span>¿Necesita ayuda?</span> Comuniquese con soporte al 11 4334 1234
+</footer>

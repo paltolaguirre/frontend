@@ -1,0 +1,72 @@
+
+<app-table-info></app-table-info>
+<div class="table-container"> 
+<table mat-table [dataSource]="dataSource" matSort>
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+  <!-- HC Column -->
+  <ng-container matColumnDef="HC">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> HC </th>
+    <td mat-cell *matCellDef="let element"> {{element.HC}} </td>
+  </ng-container>
+
+  <!-- Paciente Column -->
+  <ng-container matColumnDef="Paciente">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Paciente </th>
+    <td mat-cell *matCellDef="let element"> {{element.Paciente}} </td>
+  </ng-container>
+
+  <!-- Distancia Column -->
+  <ng-container matColumnDef="Distancia">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Distancia </th>
+    <td mat-cell *matCellDef="let element"> {{element.Distancia}} km </td>
+  </ng-container>
+
+  <!-- Condicion Column -->
+  <ng-container matColumnDef="Condicion">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Condición </th>
+    <td mat-cell *matCellDef="let element"> {{element.Condicion}} </td>
+  </ng-container>
+
+    <!-- Traslados Column -->
+    <ng-container matColumnDef="Traslados">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Traslados </th>
+      <td mat-cell *matCellDef="let element"> {{element.Traslados}} </td>
+    </ng-container>
+
+    <!-- CUIL Column -->
+    <ng-container matColumnDef="CUIL">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> CUIL Transportista </th>
+      <td mat-cell *matCellDef="let element"> {{element.CUIL}} </td>
+    </ng-container>
+
+    <!-- Centro Column -->
+    <ng-container matColumnDef="Centro">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Centro </th>
+      <td mat-cell *matCellDef="let element"> {{element.Centro}} </td>
+    </ng-container>
+
+    <!-- Tarifa Column -->
+    <ng-container matColumnDef="Tarifa">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Tarifa </th>
+      <td mat-cell *matCellDef="let element"> $ {{element.Tarifa}} </td>
+    </ng-container>
+    
+    <!-- Peaje Column -->
+    <ng-container matColumnDef="Peaje">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Peaje </th>
+      <td mat-cell *matCellDef="let element"> {{element.Peaje}} </td>
+    </ng-container>
+
+    <!-- Total Column -->
+    <ng-container matColumnDef="Total">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Total </th>
+      <td mat-cell *matCellDef="let element"> $ {{element.Total}} </td>
+    </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+</div>

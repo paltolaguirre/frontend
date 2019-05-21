@@ -1,0 +1,30 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+.example-icon {
+  padding: 0 14px;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.mat-toolbar.mat-primary {
+  height: 60px;
+  background-color: #0d4154;
+}
+
+[data-letters]:before {
+  content: attr(data-letters);
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 500;
+  width: 35px;
+  height: 35px;
+  /* line-height: 2.5em; */
+  text-align: center;
+  border-radius: 50%;
+  background: #3aca60;
+  /* vertical-align: middle; */
+  /* margin-right: 1em; */
+  color: white;
+}

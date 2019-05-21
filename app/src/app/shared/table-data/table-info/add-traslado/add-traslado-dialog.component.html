@@ -1,0 +1,12 @@
+<h1 mat-dialog-title class="titulo-traslado">Incluir traslado {{data.conductor}}</h1>
+<div mat-dialog-content class="content">
+  <mat-form-field class="standard-input">
+    <input matInput  placeholder="Conductor">
+  </mat-form-field>
+  <div style="width: 400px;display: inline-block;"><app-datepiker></app-datepiker></div>
+  <div style="width: 400px;margin-top: 15px;"><app-selector></app-selector></div>
+</div>
+<div mat-dialog-actions class="actions">
+  <button mat-button class="boton-dialog cancelar" (click)="onNoClick()">Cancelar</button>
+  <button mat-button class="boton" [mat-dialog-close]="data.conductor" cdkFocusInitial disabled>Incluir</button>
+</div>

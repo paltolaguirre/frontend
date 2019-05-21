@@ -1,0 +1,26 @@
+<header class="sticky">
+  <mat-toolbar color="primary">
+    <span>{{ title }}</span>
+    <span class="example-spacer"></span>
+
+    <button mat-button [matMenuTriggerFor]="menu"><p data-letters="AM"></p></button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>settings</mat-icon>
+        <span>Configuración</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>notifications_off</mat-icon>
+        <span>Deshabilitar Notificaciones</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>exit_to_app</mat-icon>
+        <span (click)="onClick()">Cerrar Sesión</span>
+      </button>
+    </mat-menu>
+
+    <!--<mat-icon class="example-icon">verified_user</mat-icon>
+    <mat-icon class="example-icon">favorite</mat-icon>
+    <mat-icon class="example-icon">delete</mat-icon>-->
+  </mat-toolbar>
+</header>

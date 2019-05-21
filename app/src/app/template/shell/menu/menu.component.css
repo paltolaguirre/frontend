@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+::ng-deep.mat-pseudo-checkbox{
+    display: none !important;
+}
+
+.mat-list-base .mat-list-item, .mat-list-base .mat-list-option {
+    height: 50px;
+}
+
+.mat-nav-list .mat-list-item:hover, .mat-list-option:hover {
+    background: rgba(0, 0, 0, 0.062);
+}
+
+.mat-list-option:focus, .mat-nav-list .mat-list-item:focus {
+    background: #0d4154;
+}
+
+::ng-deep.mat-list-text {
+    padding-left: 31px !important;
+    height: 14px;
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    color: white;
+}
+
+.is-active {
+    width: 200px;
+    height: 50px;
+    background: #0d4154;
+    padding: 17px 45px !important;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    border-left: 4px #7ea0a7 solid;
+}

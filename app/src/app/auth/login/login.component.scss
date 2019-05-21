@@ -1,0 +1,95 @@
+::ng-deep body {
+  background-color: #fafafa;
+}
+
+.vp-logo {
+  width: 115px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.toolbar {
+  height: 60px;
+}
+
+.form {
+	margin: 1em auto;
+	padding: 1em 2em 2em 2em;
+	background: #ffffff;
+	border: 1px solid #ebebeb;
+	box-shadow: rgba(0,0,0,0.14902) 0px 1px 1px 0px,rgba(0,0,0,0.09804) 0px 1px 2px 0px;
+
+  min-width: 100px;
+  max-width: 500px;
+}
+
+.full-width {
+  width: 100%;
+}
+ 
+.input {
+  margin: 10px 0px;
+}
+
+.boton {
+  margin-top: 40px;
+  margin-bottom: 20px;
+
+  padding: 10px;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: center;
+}
+
+.hgroup { 
+  text-align: center;
+  padding: 3em;
+}
+
+.hgroup p {
+	color: #888;
+	font-size: 13px;
+	letter-spacing: .4px;
+}
+
+.hgroup a {
+	color: #4a89dc;
+	text-decoration: none;
+	transition: all .2s ease;
+}
+
+.hgroup a:hover {
+	color: #666;
+	text-decoration: underline;
+}
+
+.hgroup img {
+	width: 250px;
+	transition: all .2s ease;
+}
+
+.hgroup img:hover { opacity: .83; }
+
+.hgroup img:focus , footer a:focus { outline: none; }
+
+footer {
+  margin: 0em auto;
+  height: 19px;
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #3c4144;
+}
+
+footer span {
+  font-weight: bold;
+}
