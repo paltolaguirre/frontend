@@ -49,12 +49,13 @@ export class LoginComponent implements OnInit {
 
   async onSubmit() {
     const user:User = {
+      Authorization : "Basic "+btoa(this.emailFormControl.value+":"+this.passFormControl.value+":tnt_1100153"),
       username: String(this.emailFormControl.value),
       pass: String(this.passFormControl.value),
-      tenant: 'tnt_41105'
-    };
+      tenant: 'tnt_1100153'
+    }; 
 
-    const data = await this.authenticationService.login(user.username, user.pass);
+    const data = await this.authenticationService.login(user.Authorization);
 
     // login successful if there's a jwt token in the response
     if (data && data.token) {

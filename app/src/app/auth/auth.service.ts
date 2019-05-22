@@ -21,13 +21,12 @@ export class AuthService {
     return user;
   }
 
-  async login(username: string, password: string) {
+  async login(Authorization: string) {
     const headers = new HttpHeaders()
       .append('Content-Type', 'application/x-www-form-urlencoded')
+      .append('Authorization', Authorization)
     const body = new HttpParams()
-      .set('username', username)
-      .set('pass', password)
-      .set('tenant', 'tnt_41105')
+      .set('Authorization', Authorization)
 
     let data = await this.httpClient.post<any>(`api/auth/login`, body.toString(), { headers }).toPromise();
     console.log(data);
@@ -49,12 +48,12 @@ export class AuthService {
 
   public async check_token() {
     if (localStorage.getItem('currentUser')) {
-      /*const token = JSON.parse(localStorage.getItem('currentUser')).token
+      const token = "Bearer "+JSON.parse(localStorage.getItem('currentUser')).token
       const headers = new HttpHeaders()
-        .append('token', token)*/
+        .append('Authorization', token)
 
       try {
-        let data = await this.httpClient.get<any>(`api/auth/check-token`).toPromise();
+        let data = await this.httpClient.get<any>(`api/auth/check-token`, { headers }).toPromise();
         console.log(data);
       } catch (error) {
         localStorage.removeItem('currentUser');
