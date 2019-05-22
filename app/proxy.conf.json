@@ -6,10 +6,18 @@
         "logLevel": "debug"
     },
     "/api/legajo/*": {
-        "target": "http://localhost:8080",
+        "target": "http://localhost:8083",
         "secure": false,
         "pathRewrite": {
             "^/api/legajo": ""
+        },
+        "logLevel": "debug"
+    },
+    "/api/concepto/*": {
+        "target": "http://localhost:8084",
+        "secure": false,
+        "pathRewrite": {
+            "^/api/concepto": ""
         },
         "logLevel": "debug"
     }

@@ -1,0 +1,11 @@
+<h1 mat-dialog-title class="titulo-traslado">Incluir concepto <span *ngIf="data.numeroConcepto">Nro. {{data.numeroConcepto}}</span></h1>
+<div mat-dialog-content class="content">    
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.CreatedAt" placeholder="Creado"></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.Nombre" placeholder="Nombre"></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.Cuentacontable" placeholder="Cuentacontable"></mat-form-field>
+
+</div>
+<div mat-dialog-actions class="actions">
+    <button mat-button class="boton-dialog cancelar" (click)="onNoClick()">Cancelar</button>
+    <button mat-button class="boton" [mat-dialog-close]="data" (click)="onClickSave()">Guardar</button>
+</div>
