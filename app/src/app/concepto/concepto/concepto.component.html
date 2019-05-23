@@ -1,0 +1,23 @@
+<div *ngIf="currentConcepto$ | async as data" class="concepto-container">
+  <h1 *ngIf="data.ID">
+    Modificar concepto <span>{{data.concepto}}</span>
+  </h1>
+  <h1 *ngIf="!data.ID">
+    Nuevo concepto
+  </h1>
+
+  <mat-divider></mat-divider>
+
+  <div mat-dialog-content class="content">
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.nombre" placeholder="Nombre"></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.codigo" placeholder="Código"></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.descripcion" placeholder="Descripción"></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.cuentacontable" placeholder="Cuenta Contable"></mat-form-field>
+    
+    <mat-divider></mat-divider>
+  </div>
+  <div mat-dialog-actions class="actions">
+    <button mat-raised-button (click)="onClickAbort()">Cerrar</button>
+    <button mat-raised-button color="primary" (click)="onClickSave(data)">Guardar</button>
+  </div>
+</div>

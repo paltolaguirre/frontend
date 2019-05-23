@@ -14,6 +14,7 @@ export interface ItemMenu {
 export class MenuComponent implements OnInit {
   itemsMenu: ItemMenu[] = [
     {nombre: 'Legajos', url: '/legajos'},
+    {nombre: 'Conceptos', url: '/conceptos'},
   ];
 
   constructor() { }

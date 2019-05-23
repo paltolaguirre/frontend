@@ -1,0 +1,50 @@
+<div class="example-container">
+  <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+      No se pudieron obtener datos. Por favor vuelva a intentar más tarde.
+    </div>
+  </div>
+
+  <div class="table-container">
+
+    <table mat-table [dataSource]="dataSource" class="example-table" matSort matSortActive="Creado" matSortDisableClear
+      matSortDirection="desc">
+      <!-- Number Column -->
+      <ng-container matColumnDef="ID">
+        <th mat-header-cell *matHeaderCellDef>#</th>
+        <td mat-cell *matCellDef="let row">{{row.ID}}</td>
+      </ng-container>
+
+      <!-- State Column -->
+      <ng-container matColumnDef="Nombre">
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let row">{{row.nombre}}</td>
+      </ng-container>
+
+      <!-- Created Column -->
+      <ng-container matColumnDef="Creado">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+          Creado
+        </th>
+        <td mat-cell *matCellDef="let row">{{row.CreatedAt | date}}</td>        
+      </ng-container>
+
+      <!-- Number Column -->
+      <ng-container matColumnDef="Acciones">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let row">
+          <app-actions (update)="onUpdate($event)" (delete)="onDelete($event)" concepto={{row.ID}}></app-actions>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  <button mat-fab color="primary" class="add-button" [routerLink]="['/conceptos', 'nuevo']">
+    <mat-icon aria-label="Nuevo Concepto">add</mat-icon>
+  </button>
+
+  <!--<mat-paginator [length]="resultsLength" [pageSize]="30"></mat-paginator>-->
+</div>

@@ -4,5 +4,6 @@ export interface User {
     pass: string;
     tenant?: string;
     token?: string;
+    Authorization?: string;
     fechacreacion?: string;
 }

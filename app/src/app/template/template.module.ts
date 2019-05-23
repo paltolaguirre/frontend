@@ -31,6 +31,10 @@ import { MatToolbarModule, MatTabsModule, MatIconModule, MatSidenavModule, MatLi
             loadChildren: '../legajo/legajo.module#LegajoModule',
           },
           {
+            path: 'conceptos',
+            loadChildren: '../concepto/concepto.module#ConceptoModule',
+          },
+          {
             path: '',
             redirectTo: 'legajos',
           }
