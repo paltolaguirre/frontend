@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { SelectorElement } from '../shared/selector-default/selector-default.component';
+import { SelectorElement } from '../shared/selector-default/selector-default.model';
 import { Legajo } from './legajo.model';
 
 export interface ListaItems {

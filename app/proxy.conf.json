@@ -20,5 +20,13 @@
             "^/api/concepto": ""
         },
         "logLevel": "debug"
+    },
+    "/api/helpers/*": {
+        "target": "http://localhost:8082/helpers",
+        "secure": false,
+        "pathRewrite": {
+            "^/api/helpers": ""
+        },
+        "logLevel": "debug"
     }
 }
