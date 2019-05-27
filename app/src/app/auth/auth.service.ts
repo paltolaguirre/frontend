@@ -33,8 +33,7 @@ export class AuthService {
 
     if (data && data.token) {
       // store user details and jwt token in local storage to keep user logged in between page refreshes
-      localStorage.setItem('currentUser', JSON.stringify(data));
-      this.currentUserSubject.next(data);
+      this.save_currentUser(data);
     }
 
     return data;
@@ -48,9 +47,10 @@ export class AuthService {
 
   public async check_token() {
     if (localStorage.getItem('currentUser')) {
-      const token = "Bearer "+JSON.parse(localStorage.getItem('currentUser')).token
+      const token = "Bearer " + JSON.parse(localStorage.getItem('currentUser')).token
       const headers = new HttpHeaders()
         .append('Authorization', token)
+        .append('Token', JSON.parse(localStorage.getItem('currentUser')).token)
 
       try {
         let data = await this.httpClient.get<any>(`api/auth/check-token`, { headers }).toPromise();
@@ -65,5 +65,11 @@ export class AuthService {
     }
 
     return false;
+  }
+
+  public save_currentUser(data) {
+    // store user details and jwt token in local storage to keep user logged in between page refreshes
+    localStorage.setItem('currentUser', JSON.stringify(data));
+    this.currentUserSubject.next(data);
   }
 }

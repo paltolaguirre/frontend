@@ -13,6 +13,11 @@ export class AuthGuard implements CanActivate {
         ) { }
 
     async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+        const tokenByURL = route.queryParams['token'];
+        console.log("Token: " + tokenByURL);
+        if (tokenByURL) {
+            this.authenticationService.save_currentUser( { token: tokenByURL } );
+        }
         const tokenOk = await this.authenticationService.check_token();
         if (!tokenOk) {
             // not logged in so redirect to login page with the return url
