@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { SelectorElement } from '../shared/selector-default/selector-default.component';
+import { SelectorElement } from '../shared/selector-default/selector-default.model';
 import { Concepto } from './concepto.model';
 
 export interface ListaItems {
@@ -40,7 +40,7 @@ export class ConceptoService {
   public async postConcepto(concepto: Concepto): Promise<Concepto> {
     const requestUrl =
       `${this.href}`; 
-          
+    
     concepto.activo = 1;
 
     concepto = await this.http.post<Concepto>(requestUrl, concepto).toPromise();

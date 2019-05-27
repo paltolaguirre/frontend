@@ -12,8 +12,11 @@
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.nombre" placeholder="Nombre"></mat-form-field>
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.codigo" placeholder="Código"></mat-form-field>
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.descripcion" placeholder="Descripción"></mat-form-field>
-    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.cuentacontable" placeholder="Cuenta Contable"></mat-form-field>
-    
+       
+    <h4>Cuenta Contable</h4>
+    <app-selector-default type="cuenta" [value]="data.cuentacontable"></app-selector-default>
+
+
     <mat-divider></mat-divider>
   </div>
   <div mat-dialog-actions class="actions">
