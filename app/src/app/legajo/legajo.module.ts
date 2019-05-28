@@ -7,12 +7,11 @@ import { LegajoRoutingModule } from './legajo-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { LegajoComponent } from './legajo/legajo.component';
 import { DemoMaterialModule } from '../material.module';
-import { AddLegajoComponent, AddLegajoDialog } from './legajo/add-legajo/add-legajo.component';
 import { LegajoListComponent } from './legajo-list/legajo-list.component';
 import { ActionsComponent } from './legajo-list/actions/actions.component';
 
 @NgModule({
-  declarations: [LegajoComponent, AddLegajoDialog, AddLegajoComponent, LegajoListComponent, ActionsComponent],
+  declarations: [LegajoComponent, LegajoListComponent, ActionsComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -21,7 +20,6 @@ import { ActionsComponent } from './legajo-list/actions/actions.component';
     SharedModule
   ],
   entryComponents: [
-    AddLegajoDialog
   ]
 })
 export class LegajoModule { }

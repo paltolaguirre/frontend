@@ -7,12 +7,11 @@ import { ConceptoRoutingModule } from './concepto-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { ConceptoComponent } from './concepto/concepto.component';
 import { DemoMaterialModule } from '../material.module';
-import { AddConceptoComponent, AddConceptoDialog } from './concepto/add-concepto/add-concepto.component';
 import { ConceptoListComponent } from './concepto-list/concepto-list.component';
 import { ActionsComponent } from './concepto-list/actions/actions.component';
 
 @NgModule({
-  declarations: [ConceptoComponent, AddConceptoDialog, AddConceptoComponent, ConceptoListComponent, ActionsComponent],
+  declarations: [ConceptoComponent, ConceptoListComponent, ActionsComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -21,7 +20,6 @@ import { ActionsComponent } from './concepto-list/actions/actions.component';
     SharedModule
   ],
   entryComponents: [
-    AddConceptoDialog
   ]
 })
 export class ConceptoModule { }

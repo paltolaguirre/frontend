@@ -1,14 +1,12 @@
-import { ListaItems, ConceptoService } from '../concepto.service';
+import { ConceptoService } from '../concepto.service';
 import { Concepto } from '../concepto.model';
-import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { merge, Observable, of as observableOf } from 'rxjs';
-import { catchError, map, startWith, switchMap } from 'rxjs/operators';
-import { AddConceptoDialog } from './add-concepto/add-concepto.component';
+import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { Observable } from 'rxjs';
+
 import { NotificationService } from 'src/app/handler-error/notification.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { SelectorDefaultComponent } from 'src/app/shared/selector-default/selector-default.component';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-concepto',
