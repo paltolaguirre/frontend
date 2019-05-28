@@ -21,6 +21,14 @@
         },
         "logLevel": "debug"
     },
+    "/api/novedad/*": {
+        "target": "http://localhost:8086",
+        "secure": false,
+        "pathRewrite": {
+            "^/api/novedad": ""
+        },
+        "logLevel": "debug"
+    },
     "/api/helpers/*": {
         "target": "http://localhost:8082/helpers",
         "secure": false,

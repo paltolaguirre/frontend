@@ -1,0 +1,29 @@
+<div *ngIf="currentNovedad$ | async as data" class="novedad-container">
+  <h1 *ngIf="data.ID">
+    Modificar novedad <span>{{data.novedad}}</span>
+  </h1>
+  <h1 *ngIf="!data.ID">
+    Nuevo novedad
+  </h1>
+
+  <mat-divider></mat-divider>
+
+  <div mat-dialog-content class="content">
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.nombre" placeholder="Nombre"></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.codigo" placeholder="Código"></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.descripcion" placeholder="Descripción"></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.importe" placeholder="Importe"></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.cantidad" placeholder="Cantidad"></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.fecha" placeholder="Fecha"></mat-form-field>
+       
+    <h4>Cuenta Contable</h4>
+    <app-selector-default type="cuenta" [value]="data.legajoid"></app-selector-default>
+
+
+    <mat-divider></mat-divider>
+  </div>
+  <div mat-dialog-actions class="actions">
+    <button mat-raised-button (click)="onClickAbort()">Cerrar</button>
+    <button mat-raised-button color="primary" (click)="onClickSave(data)">Guardar</button>
+  </div>
+</div>
