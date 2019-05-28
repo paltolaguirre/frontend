@@ -14,9 +14,11 @@ export class AuthGuard implements CanActivate {
 
     async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const tokenByURL = route.queryParams['token'];
+        const showMenu = (route.queryParams['showmenu'] == 'true');
+        const showToolbar = (route.queryParams['showtoolbar'] == 'true');
         console.log("Token: " + tokenByURL);
         if (tokenByURL) {
-            this.authenticationService.save_currentUser( { token: tokenByURL } );
+            this.authenticationService.save_currentUser({ token: tokenByURL, showmenu: Boolean(showMenu), showtoolbar: Boolean(showToolbar) } );
         }
         const tokenOk = await this.authenticationService.check_token();
         if (!tokenOk) {

@@ -6,4 +6,7 @@ export interface User {
     token?: string;
     Authorization?: string;
     fechacreacion?: string;
+
+    showmenu?: boolean;
+    showtoolbar?: boolean;
 }
