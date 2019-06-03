@@ -28,8 +28,8 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
     private router: Router
     ) { }
 
-  ngOnInit() {
-    this.currentConcepto$ = this.route.paramMap.pipe(
+ async ngOnInit() {
+    this.currentConcepto$ = await this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
         if (params.get('id') == "nuevo") {
           console.log("Nuevo Concepto");
@@ -58,9 +58,6 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
   async onClickSave(data: Concepto): Promise<Concepto> {
     let conceptosItem: Concepto;
 
-    // se setea el paisID segun Option del selector de paises    
-    data.cuentacontable = -7
-
     if (this.id) {
       console.log("Updated Concepto");
       conceptosItem = await this.conceptoService.putConcepto(data);
@@ -75,11 +72,11 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
     return conceptosItem;
   }
 
- /* onClickNewChild(children: Hijo[]) {
-    //if(children == null) children = [];
+  selectChange(event,data)
+  {
+    data.cuenta = event
+    data.cuentacontable = event.id
   }
 
-  onClickDeleteChild(child: any) {
-    child.DeletedAt = new Date();
-  }*/
+  
 }

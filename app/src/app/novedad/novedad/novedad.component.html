@@ -17,10 +17,11 @@
     <mat-form-field class="standard-input"><input matInput type="date" [ngModel]="data.fecha | date: 'yyyy-MM-dd'" placeholder="Fecha"></mat-form-field>
        
     <h4>Legajo</h4>
-    <app-selector-default type="legajo" [value]="data.legajoid"></app-selector-default>
+    <app-selector-default type="legajo" [(matSelect)]="data.legajoid" (optionSelected)="selectChangeLegajo($event,data)"></app-selector-default>
 
     <h4>Concepto</h4>
-    <app-selector-default  type="concepto" [value]="data.conceptoid"></app-selector-default>
+    <app-selector-default type="concepto" [(matSelect)]="data.conceptoid" (optionSelected)="selectChangeConcepto($event,data)"></app-selector-default>
+
 
     <mat-divider></mat-divider>
   </div>

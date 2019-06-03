@@ -2,7 +2,7 @@ import { ListaItems, LegajoService } from '../legajo.service';
 import { Legajo, Hijo } from '../legajo.model';
 import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MatDialogConfig , MAT_DIALOG_DATA } from '@angular/material';
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { AddLegajoDialog } from './add-legajo/add-legajo.component';
@@ -29,12 +29,6 @@ export class LegajoComponent implements OnInit, AfterViewInit {
     ) { }
 
   ngOnInit() {
-    this.paises = [
-      { value: 1, viewValue: 'Argentina' },
-      { value: 2, viewValue: 'Argelia' },
-      { value: 3, viewValue: 'Armenia' },
-      { value: 4, viewValue: 'Artico' }
-    ];
 
     this.currentLegajo$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
@@ -44,7 +38,7 @@ export class LegajoComponent implements OnInit, AfterViewInit {
         this.id = +params.get('id');
         const legajo = this.legajoService.getLegajo(this.id);
         console.log(legajo);
-        
+         
         return legajo;
       })
     );
@@ -66,7 +60,6 @@ export class LegajoComponent implements OnInit, AfterViewInit {
     let legajosItem: Legajo;
 
     // se setea el paisID segun Option del selector de paises
-    data.paisid = data.pais.ID;
 
     if (this.id) {
       console.log("Updated Legajo");
@@ -83,7 +76,7 @@ export class LegajoComponent implements OnInit, AfterViewInit {
   }
 
   onClickNewChild(children: Hijo[]) {
-    //if(children == null) children = [];
+    if(children == null) children = [];
     children.push({
       ID: null,
       nombre: null,
@@ -98,4 +91,65 @@ export class LegajoComponent implements OnInit, AfterViewInit {
   onClickDeleteChild(child: any) {
     child.DeletedAt = new Date();
   }
+
+  selectChangeLocalidad(event,data)
+  {
+    data.localidad = event
+    data.localidadid = event.id
+  }
+
+  selectChangeProvincia(event,data)
+  {
+    data.provincia = event
+    data.provinciaid = event.id
+  }
+
+  selectChangePais(event,data)
+  {
+    data.pais = event
+    data.paisid = event.id
+  }
+
+  selectChangeModalidad(event,data)
+  {
+    data.modalidadcontratacion = event
+    data.modalidadcontratacionid = event.id
+  }
+  
+  selectChangeSituacion(event,data)
+  {
+    data.situacion = event
+    data.situacionid = event.id
+  }
+  
+  selectChangeCondicion(event,data)
+  {
+    data.condicion = event
+    data.condicionid = event.id
+  }
+  
+  selectChangeCondicionSiniestrado(event,data)
+  {
+    data.condicionsiniestrado = event
+    data.condicionsiniestradoid = event.id
+  }
+  
+  selectChangeObraSocial(event,data)
+  {
+    data.obrasocial = event
+    data.obrasocialid = event.id
+  }
+  
+  selectChangeConvenio(event,data)
+  {
+    data.conveniocolectivo = event
+    data.conveniocolectivoid = event.id
+  }
+  
+  selectChangeCentroCosto(event,data)
+  {
+    data.centrodecosto = event
+    data.centrodecostoid = event.id
+  }
+
 }

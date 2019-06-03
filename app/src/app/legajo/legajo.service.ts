@@ -74,7 +74,7 @@ export class LegajoService {
     const requestUrl =
       `${this.href}`;
 
-    let legajoCompleto: Legajo = {
+ /*   let legajoCompleto: Legajo = {
       nombre: "Carlos",
       apellido: "Flores",
       codigo: "CARLOSF",
@@ -119,10 +119,10 @@ export class LegajoService {
     legajoCompleto.nombre = legajo.nombre;
     legajoCompleto.apellido = legajo.apellido;
     legajoCompleto.cbu = legajo.cbu;
-    legajoCompleto.hijos = legajo.hijos;
+    legajoCompleto.hijos = legajo.hijos;*/
 
 
-    legajo = await this.http.post<Legajo>(requestUrl, legajoCompleto).toPromise();
+    legajo = await this.http.post<Legajo>(requestUrl, legajo).toPromise();
 
     return legajo;
   }

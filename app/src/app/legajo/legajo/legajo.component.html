@@ -18,28 +18,29 @@
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.cuil" placeholder="CUIL"></mat-form-field>
     
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.direccion" placeholder="Dirección"></mat-form-field>
-    <app-selector-default type="localidad" [value]="data.localidad"></app-selector-default>
-    <app-selector-default type="provincia" [value]="data.provincia"></app-selector-default>
-    <app-selector-default type="pais" [value]="data.pais"></app-selector-default>
+    <app-selector-default type="localidad" [(matSelect)]="data.localidadid" (optionSelected)="selectChangeLocalidad($event,data)"></app-selector-default>
+    <app-selector-default type="provincia" [(matSelect)]="data.provinciaid" (optionSelected)="selectChangeProvincia($event,data)"></app-selector-default>
+    <app-selector-default type="pais" [(matSelect)]="data.paisid" (optionSelected)="selectChangePais($event,data)"></app-selector-default>
+
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.telefono" placeholder="Telefono"></mat-form-field>
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.email" placeholder="E-Mail"></mat-form-field>
     <br>
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.categoria" placeholder="Categoria"></mat-form-field>
-    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.tarea" placeholder="Tarea"></mat-form-field>
-    <app-selector-default type="modalidadcontratacion" [value]="data.modalidadcontratacion"></app-selector-default>
-    <app-selector-default type="situacion" [value]="data.situacion"></app-selector-default>
-    <app-selector-default type="condicion" [value]="data.condicion"></app-selector-default>
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.tarea" placeholder="Tarea"></mat-form-field>    
+    <app-selector-default type="modalidadcontratacion" [(matSelect)]="data.modalidadcontratacionid" (optionSelected)="selectChangeModalidad($event,data)"></app-selector-default>
+    <app-selector-default type="situacion" [(matSelect)]="data.situacionid" (optionSelected)="selectChangeSituacion($event,data)"></app-selector-default>
+    <app-selector-default type="condicion" [(matSelect)]="data.condicionid" (optionSelected)="selectChangeCondicion($event,data)"></app-selector-default>
 
-    <app-selector-default type="condicionsiniestrado" [value]="data.condicionsiniestrado"></app-selector-default>
-    <app-selector-default type="obrasocial" [value]="data.obrasocial"></app-selector-default>
-    <app-selector-default type="conveniocolectivo" [value]="data.conveniocolectivo"></app-selector-default>
-    <app-selector-default type="centrodecosto" [value]="data.centrodecosto"></app-selector-default>
+    <app-selector-default type="condicionsiniestrado" [(matSelect)]="data.condicionsiniestradoid" (optionSelected)="selectChangeCondicionSiniestrado($event,data)"></app-selector-default>
+    <app-selector-default type="obrasocial" [(matSelect)]="data.obrasocialid" (optionSelected)="selectChangeObraSocial($event,data)"></app-selector-default>
+    <app-selector-default type="conveniocolectivo" [(matSelect)]="data.conveniocolectivoid" (optionSelected)="selectChangeConvenio($event,data)"></app-selector-default>
+    <app-selector-default type="centrodecosto" [(matSelect)]="data.centrodecostoid" (optionSelected)="selectChangeCentroCosto($event,data)"></app-selector-default>
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.valorfijolrt" placeholder="Valor Fijo LRT"></mat-form-field>
 
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.remuneracion" placeholder="Remuneración"></mat-form-field>
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.horasmensualesnormales" placeholder="Horas mensuales normales"></mat-form-field>
-    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.fechaalta" placeholder="Fecha de alta"></mat-form-field>
-    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.fechabaja" placeholder="Fecha de baja"></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput type="date" [ngModel]="data.fechaalta | date: 'yyyy-MM-dd'" placeholder="Fecha de alta"></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput type="date" [ngModel]="data.fechabaja | date: 'yyyy-MM-dd'" placeholder="Fecha de baja"></mat-form-field>
     
     <mat-divider></mat-divider>
     
@@ -59,11 +60,12 @@
           </div>
         </tr>
       </table>
-      <button *ngIf="(data.conyuge == null || (data.conyuge.length == 0) || (data.conyuge[0].DeletedAt != null && data.conyuge.length == 1))" mat-mini-fab color="accent" class="add-button" (click)="onClickNewChild(data.conyuge)">
+      <button *ngIf="(data.conyuge == null || (data.conyuge.length == 0) || (data.conyuge[0].DeletedAt != null && data.conyuge.length == 1))" mat-mini-fab 
+      color="accent" class="add-button" (click)="onClickNewChild(data.conyuge)">
         <mat-icon aria-label="Agregar conyuge">add</mat-icon>
       </button>
     </div>
-
+    
     <mat-divider></mat-divider>
 
     <h2>Hijos</h2>

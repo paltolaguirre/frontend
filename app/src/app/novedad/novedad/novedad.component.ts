@@ -74,11 +74,17 @@ export class NovedadComponent implements OnInit, AfterViewInit {
     return novedadesItem;
   }
 
- /* onClickNewChild(children: Hijo[]) {
-    //if(children == null) children = [];
+
+  selectChangeLegajo(event,data)
+  {
+    data.legjao = event
+    data.legajoid = event.id
   }
 
-  onClickDeleteChild(child: any) {
-    child.DeletedAt = new Date();
-  }*/
+  selectChangeConcepto(event,data)
+  {
+    data.concepto = event
+    data.conceptoid = event.id
+  }
+
 }

@@ -25,8 +25,8 @@ export class SelectorDefaultComponent implements OnInit {
   @Input() placeholder: string = 'Seleccione una opción';
   @Input() value: SelectorElement;
   @Input('type') tipo: string;
+  @Input('matSelect') matSelect: string;
   @Output() optionSelected = new EventEmitter();
-  @Output('salidaid') salidaid : Number;
 
   myControl = new FormControl();
   options: SelectorElement[];
@@ -44,10 +44,10 @@ export class SelectorDefaultComponent implements OnInit {
       map(value => typeof value === 'string' ? value : ''), 
       map(name => name ? this._filter(name) : this.options.slice()) 
     ); 
-
-/*    let filter = this.options.filter(option => option.id == this.value.id); 
+    
+    let filter = this.options.filter(option => option.id == this.matSelect); 
     let option = filter.length>0?filter[0]:null; 
-    this.myControl.setValue(option); */
+    this.myControl.setValue(option); 
   }
 
 
@@ -98,7 +98,6 @@ export class SelectorDefaultComponent implements OnInit {
     const value = evt.option.value;
     console.log(value);
     this.value = value; 
-    this.salidaid = value.id;
     this.optionSelected.emit(value);
   }
 
