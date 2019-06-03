@@ -40,6 +40,8 @@ export class LegajoComponent implements OnInit, AfterViewInit {
         console.log(legajo);
          
         return legajo;
+
+
       })
     );
   }
@@ -75,9 +77,18 @@ export class LegajoComponent implements OnInit, AfterViewInit {
     return legajosItem;
   }
 
-  onClickNewChild(children: Hijo[]) {
-    if(children == null) children = [];
-    children.push({
+  onClickNewChild(data: Legajo) {
+    if(data.hijos == null) data.hijos = [{
+      ID: null,
+      nombre: null,
+      apellido: null,
+      codigo: null,
+      descripcion: null,
+      cuil: null,
+      obrasocialid: 1
+    }];
+    
+    data.hijos.push({
       ID: null,
       nombre: null,
       apellido: null,
