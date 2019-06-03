@@ -12,13 +12,15 @@
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.nombre" placeholder="Nombre"></mat-form-field>
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.codigo" placeholder="Código"></mat-form-field>
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.descripcion" placeholder="Descripción"></mat-form-field>
-    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.importe" placeholder="Importe"></mat-form-field>
-    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.cantidad" placeholder="Cantidad"></mat-form-field>
-    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.fecha" placeholder="Fecha"></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput type="number" [(ngModel)]="data.importe" placeholder="Importe"></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput type="number" [(ngModel)]="data.cantidad" placeholder="Cantidad"></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput type="date" [ngModel]="data.fecha | date: 'yyyy-MM-dd'" placeholder="Fecha"></mat-form-field>
        
-    <h4>Cuenta Contable</h4>
-    <app-selector-default type="cuenta" [value]="data.legajoid"></app-selector-default>
+    <h4>Legajo</h4>
+    <app-selector-default type="legajo" [value]="data.legajoid"></app-selector-default>
 
+    <h4>Concepto</h4>
+    <app-selector-default  type="concepto" [value]="data.conceptoid"></app-selector-default>
 
     <mat-divider></mat-divider>
   </div>

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { SelectorElement } from './selector-default.model';
+import { SelectorElement } from './selector-default.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SelectorService {
-  href = '/api/helpers';
-  
+  href = '/api/helper/helpers';
+
   constructor(private http: HttpClient) { }
 
   public async getSelector(paramhlp: string): Promise<SelectorElement[]> {
@@ -19,5 +19,5 @@ export class SelectorService {
 
     return selector;
   }
- 
+
 }

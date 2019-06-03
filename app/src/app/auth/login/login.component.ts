@@ -49,10 +49,10 @@ export class LoginComponent implements OnInit {
 
   async onSubmit() {
     const user:User = {
-      Authorization : "Basic "+btoa(this.emailFormControl.value+":"+this.passFormControl.value+":tnt_1100153"),
+      Authorization : "Basic "+btoa(this.emailFormControl.value+":"+this.passFormControl.value+":tnt_1200061"),
       username: String(this.emailFormControl.value),
       pass: String(this.passFormControl.value),
-      tenant: 'tnt_1100153'
+      tenant: 'tnt_1200061'
     }; 
 
     const data = await this.authenticationService.login(user.Authorization);

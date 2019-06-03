@@ -22,7 +22,7 @@ export class NovedadComponent implements OnInit, AfterViewInit {
 
   constructor(
     private route: ActivatedRoute,
-    private novedadService: NovedadService,
+    private novedadService: NovedadService, 
     public dialog: MatDialog,
     private notificationService: NotificationService,
     private router: Router

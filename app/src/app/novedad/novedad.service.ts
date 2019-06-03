@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { SelectorElement } from '../shared/selector-default/selector-default.model';
+import { SelectorElement } from '../shared/selector-default/selector-default.component';
 import { Novedad } from './novedad.model';
 
 export interface ListaItems {
@@ -28,12 +28,13 @@ export class NovedadService {
   }
 
   public async getNovedad(novedadId: number): Promise<Novedad> {
+    let novedad = <Novedad>{};
+    if (novedadId) {
     const requestUrl =
       `${this.href}/${novedadId}`;
 
-    let novedad: Novedad;
-    novedad  = await this.http.get<Novedad>(requestUrl).toPromise();
-
+      novedad  = await this.http.get<Novedad>(requestUrl).toPromise();
+    }
     return novedad;
   }
   

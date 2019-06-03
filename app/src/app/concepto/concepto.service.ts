@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { SelectorElement } from '../shared/selector-default/selector-default.model';
+import { SelectorElement } from '../shared/selector-default/selector-default.component';
 import { Concepto } from './concepto.model';
 
 export interface ListaItems {
@@ -28,12 +28,13 @@ export class ConceptoService {
   }
 
   public async getConcepto(conceptoId: number): Promise<Concepto> {
+    let concepto = <Concepto>{};
+    if (conceptoId) {
     const requestUrl =
       `${this.href}/${conceptoId}`;
 
-    let concepto: Concepto;
     concepto  = await this.http.get<Concepto>(requestUrl).toPromise();
-
+    }
     return concepto;
   }
   
@@ -43,9 +44,9 @@ export class ConceptoService {
     
     concepto.activo = 1;
 
-    concepto = await this.http.post<Concepto>(requestUrl, concepto).toPromise();
+    const new_concepto = await this.http.post<Concepto>(requestUrl, concepto).toPromise();
 
-    return concepto;
+    return new_concepto;
   }
 
   public async putConcepto(concepto: Concepto): Promise<Concepto> {

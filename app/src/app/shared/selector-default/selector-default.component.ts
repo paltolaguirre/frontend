@@ -2,10 +2,19 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material';
 import { Observable } from 'rxjs';
-import { SelectorElement} from './selector-default.model';
 import { SelectorService } from './selector-default.service';
 import { startWith, map } from 'rxjs/operators';
 
+export interface SelectorElement {
+  id: any;
+  nombre: string;
+  codigo?: string;
+  descripcion?: string;
+  CreatedAt?: string;
+  UpdatedAt?: string;
+  DeletedAt?: string;
+  activo?: Number
+}
 
 @Component({
   selector: 'app-selector-default',
@@ -17,6 +26,7 @@ export class SelectorDefaultComponent implements OnInit {
   @Input() value: SelectorElement;
   @Input('type') tipo: string;
   @Output() optionSelected = new EventEmitter();
+  @Output('salidaid') salidaid : Number;
 
   myControl = new FormControl();
   options: SelectorElement[];
@@ -34,9 +44,10 @@ export class SelectorDefaultComponent implements OnInit {
       map(value => typeof value === 'string' ? value : ''), 
       map(name => name ? this._filter(name) : this.options.slice()) 
     ); 
-    let filter = this.options.filter(option => option.ID == this.value.ID); 
+
+/*    let filter = this.options.filter(option => option.id == this.value.id); 
     let option = filter.length>0?filter[0]:null; 
-    this.myControl.setValue(option); 
+    this.myControl.setValue(option); */
   }
 
 
@@ -47,7 +58,7 @@ export class SelectorDefaultComponent implements OnInit {
       case 'provincia': 
         return "Seleccione una provincia"; 
       case 'pais': 
-        return "Seleccione un país";    
+        return "Seleccione un país"; 
       case 'modalidadcontratacion': 
         return "Seleccione modalidad de contratación"; 
       case 'situacion': 
@@ -62,6 +73,8 @@ export class SelectorDefaultComponent implements OnInit {
         return "Seleccione convenio colectivo"; 
       case 'centrodecosto': 
         return "Seleccione centro de costo"; 
+        case 'cuenta': 
+        return "Seleccione una cuenta"; 
       default: 
       return "Seleccione..."; 
     } 
@@ -84,8 +97,8 @@ export class SelectorDefaultComponent implements OnInit {
   itemSelected(evt: any) {
     const value = evt.option.value;
     console.log(value);
-    this.value.ID = value.ID;
-    this.value.nombre = value.nombre;
+    this.value = value; 
+    this.salidaid = value.id;
     this.optionSelected.emit(value);
   }
 

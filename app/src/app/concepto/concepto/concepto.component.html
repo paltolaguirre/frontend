@@ -12,9 +12,10 @@
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.nombre" placeholder="Nombre"></mat-form-field>
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.codigo" placeholder="Código"></mat-form-field>
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.descripcion" placeholder="Descripción"></mat-form-field>
-       
+ 
+
     <h4>Cuenta Contable</h4>
-    <app-selector-default type="cuenta" [value]="data.cuentacontable"></app-selector-default>
+    <app-selector-default type="cuenta" salidaid="data.cuentacontable" [value]="data.cuenta"></app-selector-default>
 
 
     <mat-divider></mat-divider>

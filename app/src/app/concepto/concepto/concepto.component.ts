@@ -19,7 +19,7 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
   public currentConcepto$: Observable<Concepto> = null;
   paises: any[];
   id: number;
-
+  
   constructor(
     private route: ActivatedRoute,
     private conceptoService: ConceptoService,
@@ -59,6 +59,7 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
     let conceptosItem: Concepto;
 
     // se setea el paisID segun Option del selector de paises    
+    data.cuentacontable = -7
 
     if (this.id) {
       console.log("Updated Concepto");
