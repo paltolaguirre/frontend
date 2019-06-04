@@ -1,6 +1,6 @@
 <mat-form-field class="selector">
   <input type="text" [placeholder]="placeholder" aria-label="Assignee" matInput [formControl]="myControl" (focusout)="closed($event)"
-    [matAutocomplete]="auto" minlength="5">
+    [matAutocomplete]="auto" minlength="5" type="text" autocomplete="off">
   <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="itemSelected($event)">
     <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
       {{option.nombre}}

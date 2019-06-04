@@ -1,5 +1,6 @@
 import { ListaItems, NovedadService } from '../novedad.service';
 import { Novedad } from '../novedad.model';
+import { formatDate } from "@angular/common";
 import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -59,6 +60,13 @@ export class NovedadComponent implements OnInit, AfterViewInit {
     let novedadesItem: Novedad;
 
     // se setea el paisID segun Option del selector de paises    
+    /*
+    2019-06-04T16:07:12.220847-03:00"
+DeletedAt: n
+    data.fecha = "T00:00:00.000000-00:00";*/
+    
+    data.fecha = formatDate(data.fecha, "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US');
+
 
     if (this.id) {
       console.log("Updated Novedad");
