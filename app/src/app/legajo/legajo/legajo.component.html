@@ -57,8 +57,7 @@
             <mat-form-field class="children-input"><input matInput [(ngModel)]="conyuge.cuil" placeholder="Cuil" type="text" autocomplete="off"></mat-form-field>
             <mat-form-field class="children-input"><input matInput [(ngModel)]="conyuge.descripcion" placeholder="Descripcion" type="text" autocomplete="off"></mat-form-field>
             <mat-form-field class="children-input"><input matInput [(ngModel)]="conyuge.obrasocialid" placeholder="Obra Social" type="text" autocomplete="off"></mat-form-field>
-            <app-selector-default type="obrasocial" [(matSelect)]="conyuge.obrasocialid" (optionSelected)="selectChangeObraSocial($event,conyuge)" ></app-selector-default>
-            
+
           </div>
         </tr>
       </table>
