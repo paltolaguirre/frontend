@@ -1,7 +1,7 @@
 import { Component, AfterViewInit, Inject, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { ListaItems, ConceptoService } from '../../concepto.service';
-import { Concepto } from '../../concepto.model';
+import { ListaItems, NovedadService } from '../../novedad.service';
+import { Novedad } from '../../novedad.model';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,17 +10,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./actions.component.css']
 })
 export class ActionsComponent implements OnInit {
-  @Input() concepto: number;
-  @Output() public update = new EventEmitter<Concepto>();
-  @Output() public delete = new EventEmitter<Concepto>();
-  numeroConcepto: string;
+  @Input() novedad: number;
+  @Output() public update = new EventEmitter<Novedad>();
+  @Output() public delete = new EventEmitter<Novedad>();
+  numeroNovedad: string;
   conductor: string;
   fecha: string;
   tipo: string;
 
   constructor(
     public dialog: MatDialog,
-    private conceptoService: ConceptoService,
+    private novedadService: NovedadService,
     private router: Router
     ) { }
 
@@ -28,12 +28,12 @@ export class ActionsComponent implements OnInit {
   }
 
   editItem() {
-    this.router.navigate(['/conceptos', this.concepto]);
+    this.router.navigate(['/novedades', this.novedad]);
   }
 
   async deleteItem() {
-    const item: Concepto = {
-      ID: this.concepto,
+    const item: Novedad = {
+      ID: this.novedad,
       CreatedAt: null,
       UpdatedAt: null,
       DeletedAt: null,
@@ -41,12 +41,16 @@ export class ActionsComponent implements OnInit {
       codigo: null,
       descripcion: null,
       activo: null,
-      tipo: null,
-      cuentacontable: null,
-      cuenta: null
+      importe: null,
+      cantidad: null,
+      fecha: null,
+      legajo: null,
+      legajoid: null,
+      concepto: null,
+      conceptoid: null
     }
     
-    await this.conceptoService.deleteConcepto(item);
+    await this.novedadService.deleteNovedad(item);
     this.delete.emit(item);
   }
 }

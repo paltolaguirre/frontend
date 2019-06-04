@@ -2,31 +2,26 @@
     "/api/auth/*": {
         "target": "http://localhost:8081",
         "secure": false,
-        "pathRewrite": {"^/api/auth":""},
         "logLevel": "debug"
     },
     "/api/legajo/*": {
         "target": "http://localhost:8083",
         "secure": false,
-        "pathRewrite": {
-            "^/api/legajo": ""
-        },
         "logLevel": "debug"
     },
     "/api/concepto/*": {
         "target": "http://localhost:8084",
         "secure": false,
-        "pathRewrite": {
-            "^/api/concepto": ""
-        },
         "logLevel": "debug"
     },
-    "/api/helpers/*": {
-        "target": "http://localhost:8082/helpers",
+    "/api/novedad/*": {
+        "target": "http://localhost:8086",
         "secure": false,
-        "pathRewrite": {
-            "^/api/helpers": ""
-        },
+        "logLevel": "debug"
+    },
+    "/api/helper/*": {
+        "target": "http://localhost:8082/",
+        "secure": false,
         "logLevel": "debug"
     }
 }

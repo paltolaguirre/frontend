@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { SelectorElement } from '../shared/selector-default/selector-default.model';
+import { SelectorElement } from '../shared/selector-default/selector-default.component';
 import { Legajo } from './legajo.model';
 
 export interface ListaItems {
@@ -60,12 +60,13 @@ export class LegajoService {
   }
 
   public async getLegajo(legajoId: number): Promise<Legajo> {
+    let legajo = <Legajo>{};
+    if (legajoId) {
     const requestUrl =
       `${this.href}/${legajoId}`;
 
-    let legajo: Legajo;
-    legajo  = await this.http.get<Legajo>(requestUrl).toPromise();
-
+      legajo  = await this.http.get<Legajo>(requestUrl).toPromise();
+    }
     return legajo;
   }
   
@@ -73,7 +74,7 @@ export class LegajoService {
     const requestUrl =
       `${this.href}`;
 
-    let legajoCompleto: Legajo = {
+ /*   let legajoCompleto: Legajo = {
       nombre: "Carlos",
       apellido: "Flores",
       codigo: "CARLOSF",
@@ -118,10 +119,10 @@ export class LegajoService {
     legajoCompleto.nombre = legajo.nombre;
     legajoCompleto.apellido = legajo.apellido;
     legajoCompleto.cbu = legajo.cbu;
-    legajoCompleto.hijos = legajo.hijos;
+    legajoCompleto.hijos = legajo.hijos;*/
 
 
-    legajo = await this.http.post<Legajo>(requestUrl, legajoCompleto).toPromise();
+    legajo = await this.http.post<Legajo>(requestUrl, legajo).toPromise();
 
     return legajo;
   }
