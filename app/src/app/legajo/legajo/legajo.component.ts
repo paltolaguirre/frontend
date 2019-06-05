@@ -1,5 +1,6 @@
 import { LegajoService } from '../legajo.service';
 import { Legajo, Hijo } from '../legajo.model';
+import { formatDate } from "@angular/common";
 import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { MatDialog, MatDialogRef, MatDialogConfig , MAT_DIALOG_DATA } from '@angular/material';
@@ -17,6 +18,7 @@ export class LegajoComponent implements OnInit, AfterViewInit {
   public currentLegajo$: Observable<Legajo> = null;
   paises: any[];
   id: number;
+  data : any;
 
   constructor(
     private route: ActivatedRoute,
@@ -60,6 +62,8 @@ export class LegajoComponent implements OnInit, AfterViewInit {
     let legajosItem: Legajo;
 
     // se setea el paisID segun Option del selector de paises
+    data.fechaalta = formatDate(data.fechaalta, "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US');
+    data.fechabaja = formatDate(data.fechabaja, "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US');
 
     if (this.id) {
       console.log("Updated Legajo");
@@ -75,26 +79,56 @@ export class LegajoComponent implements OnInit, AfterViewInit {
     return legajosItem;
   }
 
-  onClickNewChild(data: Legajo) {
-    if(data.hijos == null) data.hijos = [{
-      ID: null,
-      nombre: null,
-      apellido: null,
-      codigo: null,
-      descripcion: null,
-      cuil: null,
-      obrasocialid: 1
-    }];
-    
-    data.hijos.push({
-      ID: null,
-      nombre: null,
-      apellido: null,
-      codigo: null,
-      descripcion: null,
-      cuil: null,
-      obrasocialid: 1
-    });
+  onClickNewConyuge(data: Legajo) {
+    if(data.conyuge == null) {
+      data.conyuge = [{
+        ID: null,
+        nombre: null,
+        apellido: null,
+        codigo: null,
+        descripcion: null,
+        cuil: null,
+        activo: 1,
+        obrasocialid: 1
+      }];      
+    } else {
+      data.conyuge.push({
+        ID: null,
+        nombre: null,
+        apellido: null,
+        codigo: null,
+        descripcion: null,
+        cuil: null,
+        activo: 1,
+        obrasocialid: 1
+      });
+    }
+  }
+
+  onClickNewHijo(data: Legajo) {
+    if(data.hijos == null) {
+      data.hijos = [{
+        ID: null,
+        nombre: null,
+        apellido: null,
+        codigo: null,
+        descripcion: null,
+        cuil: null,
+        activo: 1,
+        obrasocialid: 1
+      }];      
+    } else {
+      data.hijos.push({
+        ID: null,
+        nombre: null,
+        apellido: null,
+        codigo: null,
+        descripcion: null,
+        cuil: null,
+        activo: 1,
+        obrasocialid: 1
+      });
+    }  
   }
 
   onClickDeleteChild(child: any) {
@@ -144,6 +178,11 @@ export class LegajoComponent implements OnInit, AfterViewInit {
   }
   
   selectChangeObraSocial(event,data)
+  {
+    data.obrasocial = event
+    data.obrasocialid = event.id
+  }
+  selectChangeObraSocial2(event,data)
   {
     data.obrasocial = event
     data.obrasocialid = event.id
