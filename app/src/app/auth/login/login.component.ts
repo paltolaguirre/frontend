@@ -29,9 +29,13 @@ export class LoginComponent implements OnInit {
     Validators.required,
     //Validators.email,
   ]);
-
+  
   passFormControl = new FormControl('', [
     Validators.required
+  ]);
+  tenantFormControl = new FormControl('', [
+    Validators.required,
+    //Validators.email,
   ]);
 
   matcher = new MyErrorStateMatcher();
@@ -52,9 +56,9 @@ export class LoginComponent implements OnInit {
       Authorization : "Basic "+btoa(this.emailFormControl.value+":"+this.passFormControl.value+":tnt_1200061"),
       username: String(this.emailFormControl.value),
       pass: String(this.passFormControl.value),
-      tenant: 'tnt_1200061'
+      tenant: String(this.tenantFormControl.value)
     }; 
-
+    
     const data = await this.authenticationService.login(user.Authorization);
 
     // login successful if there's a jwt token in the response
