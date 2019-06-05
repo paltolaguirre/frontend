@@ -1,4 +1,4 @@
-import { LegajoService } from '../legajo.service';
+import { ListaItems, LegajoService } from '../legajo.service';
 import { Legajo, Hijo } from '../legajo.model';
 import { formatDate } from "@angular/common";
 import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
@@ -8,6 +8,7 @@ import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { NotificationService } from 'src/app/handler-error/notification.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { SelectorDefaultComponent } from 'src/app/shared/selector-default/selector-default.component';
 
 @Component({
   selector: 'app-legajo',
@@ -178,11 +179,6 @@ export class LegajoComponent implements OnInit, AfterViewInit {
   }
   
   selectChangeObraSocial(event,data)
-  {
-    data.obrasocial = event
-    data.obrasocialid = event.id
-  }
-  selectChangeObraSocial2(event,data)
   {
     data.obrasocial = event
     data.obrasocialid = event.id

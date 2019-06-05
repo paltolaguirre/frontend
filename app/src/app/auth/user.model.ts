@@ -7,6 +7,6 @@ export interface User {
     Authorization?: string;
     fechacreacion?: string;
 
-    showmenu?: boolean;
-    showtoolbar?: boolean;
+    showMenu?: boolean;
+    showToolBar?: boolean;
 }

@@ -14,11 +14,19 @@ export class ShellComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
     const currentUser = this.authenticationService.currentUserValue;
-    this.menuOpened = currentUser.showmenu;
-    if(currentUser.showtoolbar) {
-      document.getElementById('toolbar').style.display = 'block';
+    const currentEnv = this.authenticationService.currentEnvValue;
+
+    if (currentUser.tenant) {
+      this.menuOpened = currentEnv.showMenu;
+      if(currentEnv.showToolBar) {
+        document.getElementById('toolbar').style.display = 'block';
+      } else {
+        document.getElementById('toolbar').style.display = 'none';
+      }
     } else {
+      this.menuOpened = false;
       document.getElementById('toolbar').style.display = 'none';
     }
   }

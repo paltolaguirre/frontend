@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from './user.model';
 
@@ -9,15 +10,24 @@ import { User } from './user.model';
 export class AuthService {
 
   private currentUserSubject: BehaviorSubject<User>;
+  private currentEnvSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
+  public currentEnviroment: Observable<User>;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient , private router: Router) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
+    this.currentEnvSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentEnviroment')));
+    this.currentEnviroment = this.currentEnvSubject.asObservable();
   }
 
   public get currentUserValue(): User {
     let user: User = this.currentUserSubject.value;
+    return user;
+  }
+
+  public get currentEnvValue(): User {
+    let user: User = this.currentEnvSubject.value;
     return user;
   }
 
@@ -30,7 +40,7 @@ export class AuthService {
 
     let data = await this.httpClient.post<any>(`api/auth/login`, body.toString(), { headers }).toPromise();
     console.log(data);
-
+    
     if (data && data.token) {
       // store user details and jwt token in local storage to keep user logged in between page refreshes
       this.save_currentUser(data);
@@ -72,4 +82,12 @@ export class AuthService {
     localStorage.setItem('currentUser', JSON.stringify(data));
     this.currentUserSubject.next(data);
   }
+
+  public save_currentEnviroment(data) {
+    // store user details and jwt token in local storage to keep user logged in between page refreshes
+    localStorage.setItem('currentEnviroment', JSON.stringify(data));
+    this.currentEnvSubject.next(data);
+  }
+
+
 }

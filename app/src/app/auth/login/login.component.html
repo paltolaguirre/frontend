@@ -22,6 +22,13 @@
         La contraseña es <strong>obligatoria</strong>
       </mat-error>
     </mat-form-field>
+    <mat-form-field class="full-width input">
+      <input matInput type="text" placeholder="Tenant" [formControl]="tenantFormControl" [errorStateMatcher]="matcher">
+      <mat-hint></mat-hint>
+      <mat-error *ngIf="tenantFormControl.hasError('required')">
+        La Tenant es <strong>obligatoria</strong>
+      </mat-error>
+    </mat-form-field>
     <button mat-raised-button color="primary" class="full-width boton" [disabled]="!emailFormControl.valid || !passFormControl.valid">Ingresar</button>
   </form>
 </main>
