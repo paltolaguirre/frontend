@@ -7,12 +7,11 @@ import { NovedadRoutingModule } from './novedad-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { NovedadComponent } from './novedad/novedad.component';
 import { DemoMaterialModule } from '../material.module';
-import { AddNovedadComponent, AddNovedadDialog } from './novedad/add-novedad/add-novedad.component';
 import { NovedadListComponent } from './novedad-list/novedad-list.component';
 import { ActionsComponent } from './novedad-list/actions/actions.component';
 
 @NgModule({
-  declarations: [NovedadComponent, AddNovedadDialog, AddNovedadComponent, NovedadListComponent, ActionsComponent],
+  declarations: [NovedadComponent, NovedadListComponent, ActionsComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -21,7 +20,6 @@ import { ActionsComponent } from './novedad-list/actions/actions.component';
     SharedModule
   ],
   entryComponents: [
-    AddNovedadDialog
   ]
 })
 export class NovedadModule { }
