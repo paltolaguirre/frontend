@@ -1,4 +1,4 @@
-import { ListaItems, NovedadService } from '../novedad.service';
+import { NovedadService } from '../novedad.service';
 import { Novedad } from '../novedad.model';
 import { formatDate } from "@angular/common";
 import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
@@ -6,10 +6,8 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
-import { AddNovedadDialog } from './add-novedad/add-novedad.component';
 import { NotificationService } from 'src/app/handler-error/notification.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { SelectorDefaultComponent } from 'src/app/shared/selector-default/selector-default.component';
 
 @Component({
   selector: 'app-novedad',

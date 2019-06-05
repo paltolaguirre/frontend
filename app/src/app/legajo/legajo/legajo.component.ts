@@ -1,4 +1,4 @@
-import { ListaItems, LegajoService } from '../legajo.service';
+import { LegajoService } from '../legajo.service';
 import { Legajo, Hijo } from '../legajo.model';
 import { formatDate } from "@angular/common";
 import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
@@ -6,10 +6,8 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { MatDialog, MatDialogRef, MatDialogConfig , MAT_DIALOG_DATA } from '@angular/material';
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
-import { AddLegajoDialog } from './add-legajo/add-legajo.component';
 import { NotificationService } from 'src/app/handler-error/notification.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { SelectorDefaultComponent } from 'src/app/shared/selector-default/selector-default.component';
 
 @Component({
   selector: 'app-legajo',
