@@ -74,53 +74,7 @@ export class LegajoService {
     const requestUrl =
       `${this.href}`;
 
- /*   let legajoCompleto: Legajo = {
-      nombre: "Carlos",
-      apellido: "Flores",
-      codigo: "CARLOSF",
-      descripcion: "Algooo",
-      activo: 1,
-      legajo: "Legajo 1",
-      cuil: "36548787",
-      direccion: "Av. Cabildo 2779",
-      paisid: 1,
-      provinciaid: 1,
-      localidadid: 1,
-      zonaid: 1,
-      telefono: "212131321312",
-      email: "cflores@finnegans.com.ar",
-      modalidadcontratacionid: 1,
-      categoria: "Categoria 1",
-      tarea: "Tarea 1",
-      situacionid: 1,
-      condicionid: 1,
-      condicionsiniestradoid: 1,
-      obrasocialid: 1,
-      conveniocolectivoid: 1,
-      valorfijolrt: 20,
-      conyuge: [{
-        nombre: "Juana",
-        apellido: "Pereza",
-        codigo: "JUANA",
-        descripcion: "",
-        activo: 1,
-        cuil: "21121321321",
-        obrasocialid: 1
-      }],
-      hijos: null,
-      remuneracion: 1200,
-      horasmensualesnormales: "15",
-      fechaalta: "0000-12-31T20:06:12-03:53",
-      fechabaja: "0000-12-31T20:06:12-03:53",
-      centrodecostoid: 1,
-      cbu: "12333333333333333333333"
-    };
-    legajoCompleto.legajo = legajo.legajo;
-    legajoCompleto.nombre = legajo.nombre;
-    legajoCompleto.apellido = legajo.apellido;
-    legajoCompleto.cbu = legajo.cbu;
-    legajoCompleto.hijos = legajo.hijos;*/
-
+    legajo.activo = 1;
 
     legajo = await this.http.post<Legajo>(requestUrl, legajo).toPromise();
 
