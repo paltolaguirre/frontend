@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
 
   async onSubmit() {
     const user:User = {
-      Authorization : "Basic "+btoa(this.emailFormControl.value+":"+this.passFormControl.value+":tnt_1200061"),
+      Authorization : "Basic "+btoa(this.emailFormControl.value+":"+this.passFormControl.value+":"+this.tenantFormControl.value),
       username: String(this.emailFormControl.value),
       pass: String(this.passFormControl.value),
       tenant: String(this.tenantFormControl.value)
