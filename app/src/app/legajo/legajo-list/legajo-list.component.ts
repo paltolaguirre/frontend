@@ -14,7 +14,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
   styleUrls: ['./legajo-list.component.css']
 })
 export class LegajoListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['ID', 'Creado', 'Nombre', 'Legajo', 'Acciones'];
+  displayedColumns: string[] = ['Creado', 'Nombre', 'Legajo', 'Acciones'];
   dataSource: MatTableDataSource<Legajo> = new MatTableDataSource<Legajo>();
   //data: LegajosApi;
 

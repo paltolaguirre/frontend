@@ -144,3 +144,14 @@ th.mat-sort-header-sorted {
   right: 5px;
   z-index: 100;
 }
+
+
+input {
+  -moz-appearance:textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

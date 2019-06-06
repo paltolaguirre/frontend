@@ -13,7 +13,7 @@
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.nombre" placeholder="Nombre" type="text" autocomplete="off"></mat-form-field>
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.apellido" placeholder="Apellido" type="text" autocomplete="off"></mat-form-field>
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.cbu" placeholder="CBU" type="text" autocomplete="off"></mat-form-field>
-    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.codigo" placeholder="Código" type="text" autocomplete="off"></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.codigo" placeholder="Código Postal" type="text" autocomplete="off"></mat-form-field>
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.cuil" placeholder="CUIL" type="text" autocomplete="off"></mat-form-field>
     
@@ -56,7 +56,7 @@
             <mat-form-field class="children-input"><input matInput [(ngModel)]="conyuge.apellido" placeholder="Apellido" type="text" autocomplete="off"></mat-form-field>
             <mat-form-field class="children-input"><input matInput [(ngModel)]="conyuge.cuil" placeholder="Cuil" type="text" autocomplete="off"></mat-form-field>
             <mat-form-field class="children-input"><input matInput [(ngModel)]="conyuge.descripcion" placeholder="Descripcion" type="text" autocomplete="off"></mat-form-field>
-            <mat-form-field class="children-input"><input matInput [(ngModel)]="conyuge.obrasocialid" placeholder="Obra Social" type="text" autocomplete="off"></mat-form-field>
+            <mat-form-field class="children-input"><input matInput [(ngModel)]="conyuge.obrasocialid" placeholder="Obra Social" type="number" autocomplete="off"></mat-form-field>
 
           </div>
         </tr>
@@ -81,7 +81,7 @@
               <mat-form-field class="children-input"><input matInput [(ngModel)]="hijo.apellido" placeholder="Apellido" type="text" autocomplete="off"></mat-form-field>
               <mat-form-field class="children-input"><input matInput [(ngModel)]="hijo.cuil" placeholder="Cuil" type="text" autocomplete="off"></mat-form-field>
               <mat-form-field class="children-input"><input matInput [(ngModel)]="hijo.descripcion" placeholder="Descripcion" type="text" autocomplete="off"></mat-form-field>
-              <mat-form-field class="children-input"><input matInput [(ngModel)]="hijo.obrasocialid" placeholder="Obra Social" type="text" autocomplete="off"></mat-form-field>
+              <mat-form-field class="children-input"><input matInput [(ngModel)]="hijo.obrasocialid" placeholder="Obra Social" type="number" autocomplete="off"></mat-form-field>
             </div>
           </tr>
       </table>

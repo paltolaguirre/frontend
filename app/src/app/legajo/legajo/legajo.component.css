@@ -13,6 +13,16 @@ h2 {
   background-color: #ffffff;
 }
 
+input {
+  -moz-appearance:textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .children-container {
   margin: 1em;
   padding: 1em 1em 1em 1em;

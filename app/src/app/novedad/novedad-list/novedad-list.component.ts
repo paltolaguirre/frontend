@@ -14,7 +14,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
   styleUrls: ['./novedad-list.component.css']
 })
 export class NovedadListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['ID', 'Creado', 'Nombre' , 'Acciones'];
+  displayedColumns: string[] = ['Creado', 'Nombre' , 'Acciones'];
   dataSource: MatTableDataSource<Novedad> = new MatTableDataSource<Novedad>();
   //data: NovedadesApi;
 

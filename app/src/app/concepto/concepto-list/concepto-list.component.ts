@@ -14,7 +14,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
   styleUrls: ['./concepto-list.component.css']
 })
 export class ConceptoListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['ID', 'Creado', 'Nombre' , 'Acciones'];
+  displayedColumns: string[] = ['Creado', 'Nombre' , 'Acciones'];
   dataSource: MatTableDataSource<Concepto> = new MatTableDataSource<Concepto>();
   //data: ConceptosApi;
 
