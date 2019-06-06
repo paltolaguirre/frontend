@@ -61,6 +61,10 @@ export class LegajoListComponent implements OnInit, AfterViewInit {
     this.dataSource = new MatTableDataSource<Legajo>(this.dataSource.data);
   }
 
+  public doFilter = (value: string) => {
+    this.dataSource.filter = value.trim().toLocaleLowerCase();
+  }
+
   onUpdate(item: Legajo) {
     console.log("Updated Item: " + item.ID);
     this.dataSource.data.forEach(function (el, index) {

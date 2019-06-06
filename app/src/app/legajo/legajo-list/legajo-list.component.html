@@ -5,9 +5,16 @@
       No se pudieron obtener datos. Por favor vuelva a intentar más tarde.
     </div>
   </div>
+  
 
   <div class="table-container">
 
+    <div>
+      <mat-form-field>
+        <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Buscar">
+      </mat-form-field>
+    </div>
+    
     <table mat-table [dataSource]="dataSource" class="example-table" matSort matSortActive="Creado" matSortDisableClear
       matSortDirection="desc">
 

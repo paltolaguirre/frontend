@@ -54,6 +54,10 @@ export class NovedadListComponent implements OnInit, AfterViewInit {
     this.dataSource = new MatTableDataSource<Novedad>(this.dataSource.data);
   }
 
+  public doFilter = (value: string) => {
+    this.dataSource.filter = value.trim().toLocaleLowerCase();
+  }
+
   onUpdate(item: Novedad) {
     console.log("Updated Item: " + item.ID);
     this.dataSource.data.forEach(function (el, index) {

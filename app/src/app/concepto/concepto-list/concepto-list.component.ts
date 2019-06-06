@@ -47,6 +47,10 @@ export class ConceptoListComponent implements OnInit, AfterViewInit {
 
   }
 
+  public doFilter = (value: string) => {
+    this.dataSource.filter = value.trim().toLocaleLowerCase();
+  }
+
   onCreate(item: Concepto) {
     console.log("Created Item: " + item.ID);
     this.dataSource.data.push(item);
