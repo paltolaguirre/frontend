@@ -9,6 +9,7 @@ import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { NotificationService } from 'src/app/handler-error/notification.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { SelectorDefaultComponent } from 'src/app/shared/selector-default/selector-default.component';
+import { PrintService } from 'src/app/print/print.service';
 
 @Component({
   selector: 'app-legajo',
@@ -26,7 +27,8 @@ export class LegajoComponent implements OnInit, AfterViewInit {
     private legajoService: LegajoService,
     public dialog: MatDialog,
     private notificationService: NotificationService,
-    private router: Router
+    private router: Router,
+    public printService : PrintService
     ) { }
 
   ngOnInit() {

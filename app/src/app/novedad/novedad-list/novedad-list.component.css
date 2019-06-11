@@ -25,6 +25,23 @@
     border: solid 1px #e6e6e6;
 }
 
+.topmenu-container {
+    margin: 17px;
+    max-height: 600px;
+    overflow: auto;
+}
+
+.topmenu-inner {
+    margin: 17px;
+}
+
+.export-elements {
+    display: none;
+  }
+  .k-pdf-export .export-elements {
+    display: block;
+  }
+
 table {
     background: #ffffff;
     min-width: 400px;

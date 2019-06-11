@@ -9,14 +9,19 @@
 
   <div class="table-container">
 
-    <div>
-      <mat-form-field>
-        <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Buscar">
-      </mat-form-field>
-    </div>
+      <div class="topmenu-container" >
+          <div>
+            <button mat-raised-button color="primary" mat-button (click)="printService.printTOPDF()">Imprimir</button>
+          </div>
+          <div>
+            <mat-form-field>
+              <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Buscar">
+            </mat-form-field>
+          </div>
+        </div>
     
     <table mat-table [dataSource]="dataSource" class="example-table" matSort matSortActive="Creado" matSortDisableClear
-      matSortDirection="desc">
+      matSortDirection="desc" id="contentTOPDF">
 
       <!-- Title Column -->
       <ng-container matColumnDef="Legajo">

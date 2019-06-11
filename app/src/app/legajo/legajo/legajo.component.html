@@ -8,7 +8,7 @@
 
   <mat-divider></mat-divider>
 
-  <div mat-dialog-content class="content">
+  <div mat-dialog-content class="content" id="contentTOPDF">
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.legajo" placeholder="Número de Legajo" cdkFocusInitial type="text" autocomplete="off"></mat-form-field>
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.nombre" placeholder="Nombre" type="text" autocomplete="off"></mat-form-field>
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.apellido" placeholder="Apellido" type="text" autocomplete="off"></mat-form-field>
@@ -96,5 +96,6 @@
   <div mat-dialog-actions class="actions">
     <button mat-raised-button (click)="onClickAbort()">Cerrar</button>
     <button mat-raised-button color="primary" (click)="onClickSave(data)">Guardar</button>
+    <button mat-raised-button color="primary" mat-button (click)="printService.printTOPDF()">Imprimir</button>
   </div>
 </div>

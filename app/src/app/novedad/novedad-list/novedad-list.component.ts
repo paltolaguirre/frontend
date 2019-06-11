@@ -7,6 +7,7 @@ import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { NotificationService } from 'src/app/handler-error/notification.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { PrintService } from 'src/app/print/print.service';
 
 @Component({
   selector: 'app-novedad-list',
@@ -27,12 +28,12 @@ export class NovedadListComponent implements OnInit, AfterViewInit {
   public currentNovedad$: Observable<Novedad> = null;
   id: number;
 
-
   constructor(
     private route: ActivatedRoute,
     private novedadService: NovedadService,
     public dialog: MatDialog,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private printService : PrintService
   ) { }
 
   ngOnInit() {
@@ -46,6 +47,7 @@ export class NovedadListComponent implements OnInit, AfterViewInit {
       this.isLoadingResults = false;
 
   }
+  
 
   onCreate(item: Novedad) {
     console.log("Created Item: " + item.ID);

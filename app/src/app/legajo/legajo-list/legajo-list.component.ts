@@ -7,6 +7,7 @@ import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { NotificationService } from 'src/app/handler-error/notification.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { PrintService } from 'src/app/print/print.service';
 
 @Component({
   selector: 'app-legajo-list',
@@ -32,7 +33,8 @@ export class LegajoListComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private legajoService: LegajoService,
     public dialog: MatDialog,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    public printService : PrintService
   ) { }
 
   ngOnInit() {

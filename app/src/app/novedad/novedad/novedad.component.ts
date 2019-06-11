@@ -8,6 +8,7 @@ import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { NotificationService } from 'src/app/handler-error/notification.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { PrintService } from 'src/app/print/print.service';
 
 @Component({
   selector: 'app-novedad',
@@ -24,7 +25,8 @@ export class NovedadComponent implements OnInit, AfterViewInit {
     private novedadService: NovedadService, 
     public dialog: MatDialog,
     private notificationService: NotificationService,
-    private router: Router
+    private router: Router,
+    public printService: PrintService
     ) { }
 
   ngOnInit() {
