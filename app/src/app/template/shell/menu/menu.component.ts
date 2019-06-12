@@ -16,7 +16,7 @@ export class MenuComponent implements OnInit {
     {nombre: 'Legajos', url: '/legajos'},
     {nombre: 'Conceptos', url: '/conceptos'},
     {nombre: 'Novedades', url: '/novedades'},
-    {nombre: 'Liquidacion', url: '/liquidaciones'},
+    {nombre: 'Liquidaciones', url: '/liquidaciones'},
   ];
 
   constructor() { }

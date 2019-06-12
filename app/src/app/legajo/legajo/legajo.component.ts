@@ -65,27 +65,34 @@ export class LegajoComponent implements OnInit, AfterViewInit {
     let legajosItem: Legajo;
 
     // se setea el paisID segun Option del selector de paises
-    data.fechaalta = formatDate(data.fechaalta, "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US');
-    data.fechabaja = formatDate(data.fechabaja, "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US');
+    if(data.fechaalta)data.fechaalta = formatDate(data.fechaalta, "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US');
+    if(data.fechabaja)data.fechabaja = formatDate(data.fechabaja, "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US');
 
-    data.situacionid = data.situacion.ID;
-    data.paisid = data.provincia.ID;
-    data.localidadid = data.localidad.ID;
-    data.obrasocialid = data.obrasocial.ID;
-    data.condicionsiniestradoid = data.condicionsiniestrado.ID;
-    data.modalidadcontratacionid = data.modalidadcontratacion.ID;
-    data.condicionid = data.condicion.ID;
+    if(data.situacion)data.situacionid = data.situacion.ID;
+    if(data.pais)data.paisid = data.provincia.ID;
+    if(data.localidad)data.localidadid = data.localidad.ID;
+    if(data.obrasocial)data.obrasocialid = data.obrasocial.ID;
+    if(data.condicionsiniestrado)data.condicionsiniestradoid = data.condicionsiniestrado.ID;
+    if(data.modalidadcontratacion)data.modalidadcontratacionid = data.modalidadcontratacion.ID;
+    if(data.condicion)data.condicionid = data.condicion.ID;
     
-    data.conyuge.forEach(function(element) {
-      element.obrasocial.activo = 1;
-      element.obrasocialid = element.obrasocial.ID;
-    });
+    if(data.conyuge){
+      data.conyuge.forEach(function(element) {
+        if(element.obrasocial) {
+          element.obrasocial.activo = 1;
+          element.obrasocialid = element.obrasocial.ID;
+        }  
+      });
+    }
 
-    data.hijos.forEach(function(element) {
-      element.obrasocial.activo = 1;
-      element.obrasocialid = element.obrasocial.ID;
-    });
-
+    if(data.hijos){
+      data.hijos.forEach(function(element) {
+        if(element.obrasocial) {
+          element.obrasocial.activo = 1;
+          element.obrasocialid = element.obrasocial.ID;
+        }  
+      });
+    }
     if (this.id) {
       console.log("Updated Legajo");
       legajosItem = await this.legajoService.putLegajo(data);
