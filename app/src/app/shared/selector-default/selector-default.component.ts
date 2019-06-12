@@ -50,31 +50,36 @@ export class SelectorDefaultComponent implements OnInit {
     this.myControl.setValue(option); 
   }
 
+  public onSelectChangeEvent(event,data)
+  {
+    eval("data."+this.tipo + " = " + event);
+    eval("data."+this.tipo + "id = " + event).id;
+  }
 
   async setPlaceHolder(tipo: string) : Promise<string> {
     switch (tipo) { 
       case 'localidad': 
-        return "Seleccione una localidad"; 
+        return "Localidad"; 
       case 'provincia': 
-        return "Seleccione una provincia"; 
+        return "Provincia"; 
       case 'pais': 
-        return "Seleccione un país"; 
+        return "País"; 
       case 'modalidadcontratacion': 
-        return "Seleccione modalidad de contratación"; 
+        return "Modalidad de contratación"; 
       case 'situacion': 
-        return "Seleccione situación"; 
+        return "Situación"; 
       case 'condicion': 
-        return "Seleccione condición"; 
+        return "Condición"; 
       case 'condicionsiniestrado': 
-        return "Seleccione condición siniestrado"; 
+        return "Condición siniestrado"; 
       case 'obrasocial': 
-        return "Seleccione una obra social"; 
+        return "Obra social"; 
       case 'conveniocolectivo': 
-        return "Seleccione convenio colectivo"; 
+        return "Convenio colectivo"; 
       case 'centrodecosto': 
-        return "Seleccione centro de costo"; 
+        return "Centro de costo"; 
         case 'cuenta': 
-        return "Seleccione una cuenta"; 
+        return "Cuenta"; 
       default: 
       return "Seleccione..."; 
     } 

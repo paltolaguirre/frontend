@@ -32,7 +32,7 @@ export class LegajoComponent implements OnInit, AfterViewInit {
     ) { }
 
   ngOnInit() {
-
+    
     this.currentLegajo$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
         if (params.get('id') == "nuevo") {
@@ -50,7 +50,7 @@ export class LegajoComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-
+    
   }
 
   private gotoGrilla() {
@@ -67,6 +67,24 @@ export class LegajoComponent implements OnInit, AfterViewInit {
     // se setea el paisID segun Option del selector de paises
     data.fechaalta = formatDate(data.fechaalta, "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US');
     data.fechabaja = formatDate(data.fechabaja, "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US');
+
+    data.situacionid = data.situacion.ID;
+    data.paisid = data.provincia.ID;
+    data.localidadid = data.localidad.ID;
+    data.obrasocialid = data.obrasocial.ID;
+    data.condicionsiniestradoid = data.condicionsiniestrado.ID;
+    data.modalidadcontratacionid = data.modalidadcontratacion.ID;
+    data.condicionid = data.condicion.ID;
+    
+    data.conyuge.forEach(function(element) {
+      element.obrasocial.activo = 1;
+      element.obrasocialid = element.obrasocial.ID;
+    });
+
+    data.hijos.forEach(function(element) {
+      element.obrasocial.activo = 1;
+      element.obrasocialid = element.obrasocial.ID;
+    });
 
     if (this.id) {
       console.log("Updated Legajo");
@@ -137,65 +155,4 @@ export class LegajoComponent implements OnInit, AfterViewInit {
   onClickDeleteChild(child: any) {
     child.DeletedAt = new Date();
   }
-
-  selectChangeLocalidad(event,data)
-  {
-    data.localidad = event
-    data.localidadid = event.id
-  }
-
-  selectChangeProvincia(event,data)
-  {
-    data.provincia = event
-    data.provinciaid = event.id
-  }
-
-  selectChangePais(event,data)
-  {
-    data.pais = event
-    data.paisid = event.id
-  }
-
-  selectChangeModalidad(event,data)
-  {
-    data.modalidadcontratacion = event
-    data.modalidadcontratacionid = event.id
-  }
-  
-  selectChangeSituacion(event,data)
-  {
-    data.situacion = event
-    data.situacionid = event.id
-  }
-  
-  selectChangeCondicion(event,data)
-  {
-    data.condicion = event
-    data.condicionid = event.id
-  }
-  
-  selectChangeCondicionSiniestrado(event,data)
-  {
-    data.condicionsiniestrado = event
-    data.condicionsiniestradoid = event.id
-  }
-  
-  selectChangeObraSocial(event,data)
-  {
-    data.obrasocial = event
-    data.obrasocialid = event.id
-  }
-  
-  selectChangeConvenio(event,data)
-  {
-    data.conveniocolectivo = event
-    data.conveniocolectivoid = event.id
-  }
-  
-  selectChangeCentroCosto(event,data)
-  {
-    data.centrodecosto = event
-    data.centrodecostoid = event.id
-  }
-
 }

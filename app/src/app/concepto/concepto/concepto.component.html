@@ -15,7 +15,7 @@
  
 
     <h4>Cuenta Contable</h4>
-    <app-selector-default type="cuenta" [(matSelect)]="data.cuentacontable" (optionSelected)="selectChange($event,data)"></app-selector-default>
+    <app-selector-default type="cuenta" [(matSelect)]="data.cuentacontable" (optionSelected)="data.cuenta=$event"></app-selector-default>
 
 
     <mat-divider></mat-divider>

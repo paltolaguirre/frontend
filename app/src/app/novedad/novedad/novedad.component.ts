@@ -66,7 +66,8 @@ DeletedAt: n
     data.fecha = "T00:00:00.000000-00:00";*/
     
     data.fecha = formatDate(data.fecha, "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US');
-
+    data.legajoid = data.legajo.ID;
+    data.conceptoid = data.concepto.ID;
 
     if (this.id) {
       console.log("Updated Novedad");
@@ -80,19 +81,6 @@ DeletedAt: n
     console.log(data);
     //this.create.emit(novedadesItem)
     return novedadesItem;
-  }
-
-
-  selectChangeLegajo(event,data)
-  {
-    data.legjao = event
-    data.legajoid = event.id
-  }
-
-  selectChangeConcepto(event,data)
-  {
-    data.concepto = event
-    data.conceptoid = event.id
   }
 
 }

@@ -58,6 +58,8 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
   async onClickSave(data: Concepto): Promise<Concepto> {
     let conceptosItem: Concepto;
 
+    data.cuentacontable = data.cuenta.ID;
+
     if (this.id) {
       console.log("Updated Concepto");
       conceptosItem = await this.conceptoService.putConcepto(data);

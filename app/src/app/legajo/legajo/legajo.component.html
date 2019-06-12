@@ -16,32 +16,32 @@
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.codigo" placeholder="Código Postal" type="text" autocomplete="off"></mat-form-field>
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.cuil" placeholder="CUIL" type="text" autocomplete="off"></mat-form-field>
-    
+
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.direccion" type="text" autocomplete="off" placeholder="Dirección"></mat-form-field>
-    <app-selector-default type="localidad" [(matSelect)]="data.localidadid" (optionSelected)="selectChangeLocalidad($event,data)"></app-selector-default>
-    <app-selector-default type="provincia" [(matSelect)]="data.provinciaid" (optionSelected)="selectChangeProvincia($event,data)"></app-selector-default>
-    <app-selector-default type="pais" [(matSelect)]="data.paisid" (optionSelected)="selectChangePais($event,data)" ></app-selector-default>
+    <app-selector-default type="localidad" [(matSelect)]="data.localidadid" (optionSelected)="data.localidad=$event"></app-selector-default>
+    <app-selector-default type="provincia" [(matSelect)]="data.provinciaid" (optionSelected)="data.provincia=$event"></app-selector-default>
+    <app-selector-default type="pais" [(matSelect)]="data.paisid" (optionSelected)="data.pais=$event" ></app-selector-default>
 
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.telefono" placeholder="Telefono" type="text" autocomplete="off"></mat-form-field>
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.email" placeholder="E-Mail" type="text" autocomplete="off"></mat-form-field>
     <br>
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.categoria" placeholder="Categoria" type="text" autocomplete="off"></mat-form-field>
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.tarea" placeholder="Tarea" type="text" autocomplete="off"></mat-form-field>    
-    <app-selector-default type="modalidadcontratacion" [(matSelect)]="data.modalidadcontratacionid" (optionSelected)="selectChangeModalidad($event,data)"></app-selector-default>
-    <app-selector-default type="situacion" [(matSelect)]="data.situacionid" (optionSelected)="selectChangeSituacion($event,data)" ></app-selector-default>
-    <app-selector-default type="condicion" [(matSelect)]="data.condicionid" (optionSelected)="selectChangeCondicion($event,data)" ></app-selector-default>
+    <app-selector-default type="modalidadcontratacion" [(matSelect)]="data.modalidadcontratacionid" (optionSelected)="data.modalidadcontratacion=$event"></app-selector-default>
+    <app-selector-default type="situacion" [(matSelect)]="data.situacionid" (optionSelected)="data.situacion=$event" ></app-selector-default>
+    <app-selector-default type="condicion" [(matSelect)]="data.condicionid" (optionSelected)="data.condicion=$event" ></app-selector-default>
 
-    <app-selector-default type="condicionsiniestrado" [(matSelect)]="data.condicionsiniestradoid" (optionSelected)="selectChangeCondicionSiniestrado($event,data)" ></app-selector-default>
-    <app-selector-default type="obrasocial" [(matSelect)]="data.obrasocialid" (optionSelected)="selectChangeObraSocial($event,data)" ></app-selector-default>
-    <app-selector-default type="conveniocolectivo" [(matSelect)]="data.conveniocolectivoid" (optionSelected)="selectChangeConvenio($event,data)" ></app-selector-default>
-    <app-selector-default type="centrodecosto" [(matSelect)]="data.centrodecostoid" (optionSelected)="selectChangeCentroCosto($event,data)" ></app-selector-default>
+    <app-selector-default type="condicionsiniestrado" [(matSelect)]="data.condicionsiniestradoid" (optionSelected)="data.condicionsiniestrado=$event" ></app-selector-default>
+    <app-selector-default type="obrasocial" [(matSelect)]="data.obrasocialid" (optionSelected)="data.obrasocial=$event" ></app-selector-default>
+    <app-selector-default type="conveniocolectivo" [(matSelect)]="data.conveniocolectivoid" (optionSelected)="data.conveniocolectivo=$event" ></app-selector-default>
+    <app-selector-default type="centrodecosto" [(matSelect)]="data.centrodecostoid" (optionSelected)="data.centrodecosto=$event" ></app-selector-default>
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.valorfijolrt" placeholder="Valor Fijo LRT" type="number" autocomplete="off"></mat-form-field>
 
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.remuneracion" placeholder="Remuneración" type="number" autocomplete="off"></mat-form-field>
     <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.horasmensualesnormales" placeholder="Horas mensuales normales" type="text" autocomplete="off"></mat-form-field>
     <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="data.fechaalta=$event" [ngModel]="data.fechaalta | date: 'yyyy-MM-dd'" placeholder="Fecha de alta" autocomplete="off"></mat-form-field>
     <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="data.fechabaja=$event" [ngModel]="data.fechabaja | date: 'yyyy-MM-dd'" placeholder="Fecha de baja" autocomplete="off"></mat-form-field>
-  
+    
     <mat-divider></mat-divider>
     
     <h2>Conyuge</h2>
@@ -56,8 +56,7 @@
             <mat-form-field class="children-input"><input matInput [(ngModel)]="conyuge.apellido" placeholder="Apellido" type="text" autocomplete="off"></mat-form-field>
             <mat-form-field class="children-input"><input matInput [(ngModel)]="conyuge.cuil" placeholder="Cuil" type="text" autocomplete="off"></mat-form-field>
             <mat-form-field class="children-input"><input matInput [(ngModel)]="conyuge.descripcion" placeholder="Descripcion" type="text" autocomplete="off"></mat-form-field>
-            <mat-form-field class="children-input"><input matInput [(ngModel)]="conyuge.obrasocialid" placeholder="Obra Social" type="number" autocomplete="off"></mat-form-field>
-
+            <app-selector-default type="obrasocial" [(matSelect)]="conyuge.obrasocialid" (optionSelected)="conyuge.obrasocial=$event" ></app-selector-default>
           </div>
         </tr>
       </table>
@@ -81,7 +80,7 @@
               <mat-form-field class="children-input"><input matInput [(ngModel)]="hijo.apellido" placeholder="Apellido" type="text" autocomplete="off"></mat-form-field>
               <mat-form-field class="children-input"><input matInput [(ngModel)]="hijo.cuil" placeholder="Cuil" type="text" autocomplete="off"></mat-form-field>
               <mat-form-field class="children-input"><input matInput [(ngModel)]="hijo.descripcion" placeholder="Descripcion" type="text" autocomplete="off"></mat-form-field>
-              <mat-form-field class="children-input"><input matInput [(ngModel)]="hijo.obrasocialid" placeholder="Obra Social" type="number" autocomplete="off"></mat-form-field>
+              <app-selector-default type="obrasocial" [(matSelect)]="hijo.obrasocialid" (optionSelected)="hijo.obrasocial=$event" ></app-selector-default>
             </div>
           </tr>
       </table>
