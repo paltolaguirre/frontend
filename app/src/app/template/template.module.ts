@@ -39,6 +39,10 @@ import { MatToolbarModule, MatTabsModule, MatIconModule, MatSidenavModule, MatLi
             loadChildren: '../novedad/novedad.module#NovedadModule',
           },
           {
+            path: 'liquidaciones',
+            loadChildren: '../liquidacion/liquidacion.module#LiquidacionModule',
+          },
+          {
             path: '',
             redirectTo: 'legajos',
           }

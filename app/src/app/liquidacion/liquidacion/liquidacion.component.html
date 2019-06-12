@@ -1,0 +1,23 @@
+<div *ngIf="currentLiquidacion$ | async as data" class="liquidacion-container">
+  <h1 *ngIf="data.ID">
+    Modificar liquidacion <span>{{data.liquidacion}}</span>
+  </h1>
+  <h1 *ngIf="!data.ID">
+    Nuevo liquidacion
+  </h1>
+
+  <mat-divider></mat-divider>
+
+  <div mat-dialog-content class="content" id="contentTOPDF">
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.nombre" placeholder="Nombre"  autocomplete="off"></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.codigo" placeholder="Código"  type="text" autocomplete="off"></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.descripcion" placeholder="Descripción"  type="text" autocomplete="off"></mat-form-field>
+
+    <mat-divider></mat-divider>
+  </div>
+  <div mat-dialog-actions class="actions">
+    <button mat-raised-button (click)="onClickAbort()">Cerrar</button>
+    <button mat-raised-button color="primary" (click)="onClickSave(data)">Guardar</button>
+    <button mat-raised-button color="primary" mat-button (click)="printService.printTOPDF()">Imprimir</button>
+  </div>
+</div>
