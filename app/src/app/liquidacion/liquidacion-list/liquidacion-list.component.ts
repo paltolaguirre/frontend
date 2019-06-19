@@ -33,7 +33,7 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
     private liquidacionService: LiquidacionService,
     public dialog: MatDialog,
     private notificationService: NotificationService,
-    private printService : PrintService
+    public printService : PrintService
   ) { }
 
   ngOnInit() {
