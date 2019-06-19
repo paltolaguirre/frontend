@@ -10,6 +10,8 @@ phases:
       docker: 18
   pre_build:
     commands:
+      - echo Installing Angular Cli...
+      - npm install -g @angular/cli
       - echo Logging in to Amazon ECR...
       - $(aws ecr get-login --no-include-email --region $AWS_REGION)
       - cd app/ && ng build --prod && cd ..
