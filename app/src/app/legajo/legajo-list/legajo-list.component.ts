@@ -7,6 +7,7 @@ import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { NotificationService } from 'src/app/handler-error/notification.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { PrintService } from 'src/app/print/print.service';
 
 @Component({
   selector: 'app-legajo-list',
@@ -14,7 +15,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
   styleUrls: ['./legajo-list.component.css']
 })
 export class LegajoListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['ID', 'Creado', 'Nombre', 'Legajo', 'Acciones'];
+  displayedColumns: string[] = ['Creado', 'Nombre', 'Legajo', 'Acciones'];
   dataSource: MatTableDataSource<Legajo> = new MatTableDataSource<Legajo>();
   //data: LegajosApi;
 
@@ -32,7 +33,8 @@ export class LegajoListComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private legajoService: LegajoService,
     public dialog: MatDialog,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    public printService : PrintService
   ) { }
 
   ngOnInit() {
@@ -59,6 +61,10 @@ export class LegajoListComponent implements OnInit, AfterViewInit {
     this.dataSource.data.push(item);
 
     this.dataSource = new MatTableDataSource<Legajo>(this.dataSource.data);
+  }
+
+  public doFilter = (value: string) => {
+    this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
 
   onUpdate(item: Legajo) {

@@ -7,6 +7,7 @@ import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { NotificationService } from 'src/app/handler-error/notification.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { PrintService } from 'src/app/print/print.service';
 
 @Component({
   selector: 'app-concepto-list',
@@ -14,7 +15,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
   styleUrls: ['./concepto-list.component.css']
 })
 export class ConceptoListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['ID', 'Creado', 'Nombre' , 'Acciones'];
+  displayedColumns: string[] = ['Creado', 'Nombre' , 'Acciones'];
   dataSource: MatTableDataSource<Concepto> = new MatTableDataSource<Concepto>();
   //data: ConceptosApi;
 
@@ -32,7 +33,8 @@ export class ConceptoListComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private conceptoService: ConceptoService,
     public dialog: MatDialog,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    public printService : PrintService
   ) { }
 
   ngOnInit() {
@@ -45,6 +47,10 @@ export class ConceptoListComponent implements OnInit, AfterViewInit {
       this.dataSource = new MatTableDataSource<Concepto>(conceptosApi.items);
       this.isLoadingResults = false;
 
+  }
+
+  public doFilter = (value: string) => {
+    this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
 
   onCreate(item: Concepto) {

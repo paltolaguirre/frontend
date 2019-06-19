@@ -12,6 +12,7 @@ import { TokenInterceptor } from './auth/token.interceptor';
 import { ErrorInterceptor } from './auth/error.interceptor';
 import { HandlerErrorModule } from './handler-error/handler-error.module';
 import { NotificationService } from './handler-error/notification.service';
+import { PrintService } from './print/print.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { NotificationService } from './handler-error/notification.service';
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     AuthGuard,
-    NotificationService
+    NotificationService,
+    PrintService
   ],
   bootstrap: [AppComponent]
 })

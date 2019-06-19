@@ -8,6 +8,7 @@ import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { NotificationService } from 'src/app/handler-error/notification.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { PrintService } from 'src/app/print/print.service';
 
 @Component({
   selector: 'app-novedad',
@@ -24,7 +25,8 @@ export class NovedadComponent implements OnInit, AfterViewInit {
     private novedadService: NovedadService, 
     public dialog: MatDialog,
     private notificationService: NotificationService,
-    private router: Router
+    private router: Router,
+    public printService: PrintService
     ) { }
 
   ngOnInit() {
@@ -63,8 +65,9 @@ export class NovedadComponent implements OnInit, AfterViewInit {
 DeletedAt: n
     data.fecha = "T00:00:00.000000-00:00";*/
     
-    data.fecha = formatDate(data.fecha, "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US');
-
+    if(data.fecha) data.fecha = formatDate(data.fecha, "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US');
+    if(data.legajo) data.legajoid = data.legajo.ID;
+    if(data.concepto) data.conceptoid = data.concepto.ID;
 
     if (this.id) {
       console.log("Updated Novedad");
@@ -78,19 +81,6 @@ DeletedAt: n
     console.log(data);
     //this.create.emit(novedadesItem)
     return novedadesItem;
-  }
-
-
-  selectChangeLegajo(event,data)
-  {
-    data.legjao = event
-    data.legajoid = event.id
-  }
-
-  selectChangeConcepto(event,data)
-  {
-    data.concepto = event
-    data.conceptoid = event.id
   }
 
 }

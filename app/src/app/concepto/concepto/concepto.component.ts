@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { NotificationService } from 'src/app/handler-error/notification.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
+import { PrintService } from 'src/app/print/print.service';
 
 @Component({
   selector: 'app-concepto',
@@ -23,7 +24,8 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
     private conceptoService: ConceptoService,
     public dialog: MatDialog,
     private notificationService: NotificationService,
-    private router: Router
+    private router: Router,
+    public printService : PrintService
     ) { }
 
  async ngOnInit() {
@@ -55,6 +57,8 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
 
   async onClickSave(data: Concepto): Promise<Concepto> {
     let conceptosItem: Concepto;
+
+    if(data.cuenta)data.cuentacontable = data.cuenta.ID;
 
     if (this.id) {
       console.log("Updated Concepto");
