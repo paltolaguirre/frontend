@@ -73,4 +73,165 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
     return liquidacionesItem;
   }
 
+
+  onClickNewImportesremunerativos(data: Liquidacion) {
+    if(data.importesremunerativos == null) {
+      data.importesremunerativos = [{
+        ID: null,
+        CreatedAt: null,
+        UpdatedAt: null,
+        DeletedAt: null,
+        codigo: null,
+        descripcion: null,
+        concepto: null,
+        conceptoid: null,
+        cantidad: null,
+        porcentaje: null,
+        sobreconcepto: null,
+        sobreconceptoid: null,
+        activo: 1,
+        importeunitario: null,
+        total: null
+      }];      
+    } else {
+      data.importesremunerativos.push({
+        ID: null,
+        CreatedAt: null,
+        UpdatedAt: null,
+        DeletedAt: null,
+        codigo: null,
+        descripcion: null,
+        concepto: null,
+        conceptoid: null,
+        cantidad: null,
+        porcentaje: null,
+        sobreconcepto: null,
+        sobreconceptoid: null,
+        activo: 1,
+        importeunitario: null,
+        total: null
+      });
+    }
+  }
+
+
+  onClickNewImportesNoremunerativos(data: Liquidacion) {
+    if(data.importesnoremunerativos == null) {
+      data.importesnoremunerativos = [{
+        ID: null,
+        CreatedAt: null,
+        UpdatedAt: null,
+        DeletedAt: null,
+        codigo: null,
+        descripcion: null,
+        concepto: null,
+        conceptoid: null,
+        cantidad: null,
+        porcentaje: null,
+        sobreconcepto: null,
+        sobreconceptoid: null,
+        activo: 1,
+        importeunitario: null,
+        total: null
+      }];      
+    } else {
+      data.importesnoremunerativos.push({
+        ID: null,
+        CreatedAt: null,
+        UpdatedAt: null,
+        DeletedAt: null,
+        codigo: null,
+        descripcion: null,
+        concepto: null,
+        conceptoid: null,
+        cantidad: null,
+        porcentaje: null,
+        sobreconcepto: null,
+        sobreconceptoid: null,
+        activo: 1,
+        importeunitario: null,
+        total: null
+      });
+    }
+  }
+
+  onClickNewDescuento(data: Liquidacion) {
+    if(data.descuentos == null) {
+      data.descuentos = [{
+        ID: null,
+        CreatedAt: null,
+        UpdatedAt: null,
+        DeletedAt: null,
+        codigo: null,
+        descripcion: null,
+        concepto: null,
+        conceptoid: null,
+        cantidad: null,
+        porcentaje: null,
+        sobreconcepto: null,
+        sobreconceptoid: null,
+        activo: 1,
+        importeunitario: null,
+        total: null
+      }];      
+    } else {
+      data.descuentos.push({
+        ID: null,
+        CreatedAt: null,
+        UpdatedAt: null,
+        DeletedAt: null,
+        codigo: null,
+        descripcion: null,
+        concepto: null,
+        conceptoid: null,
+        cantidad: null,
+        porcentaje: null,
+        sobreconcepto: null,
+        sobreconceptoid: null,
+        activo: 1,
+        importeunitario: null,
+        total: null
+      });
+    }
+  }
+
+  onClickNewRetenciones(data: Liquidacion) {
+    if(data.retenciones == null) {
+      data.retenciones = [{
+        ID: null,
+        CreatedAt: null,
+        UpdatedAt: null,
+        DeletedAt: null,
+        codigo: null,
+        descripcion: null,
+        concepto: null,
+        conceptoid: null,
+        cantidad: null,
+        porcentaje: null,
+        sobreconcepto: null,
+        sobreconceptoid: null,
+        activo: 1,
+        importeunitario: null,
+        total: null
+      }];      
+    } else {
+      data.retenciones.push({
+        ID: null,
+        CreatedAt: null,
+        UpdatedAt: null,
+        DeletedAt: null,
+        codigo: null,
+        descripcion: null,
+        concepto: null,
+        conceptoid: null,
+        cantidad: null,
+        porcentaje: null,
+        sobreconcepto: null,
+        sobreconceptoid: null,
+        activo: 1,
+        importeunitario: null,
+        total: null
+      });
+    }
+  }
 }

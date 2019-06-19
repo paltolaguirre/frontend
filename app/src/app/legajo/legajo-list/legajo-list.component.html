@@ -16,6 +16,7 @@
         <button mat-raised-button color="primary" class="topmenu-button" mat-button (click)="printService.printTOPDF()">Imprimir</button>
       </div>
   </div>
+  <div class="table-container" id="contentTOPDF">   
     <table mat-table [dataSource]="dataSource" class="example-table" matSort matSortActive="Creado" matSortDisableClear
       matSortDirection="desc" id="contentTOPDF">
 
@@ -50,6 +51,7 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+  </div>
   <div>
     <mat-paginator class="paginator-container" #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
   </div>
