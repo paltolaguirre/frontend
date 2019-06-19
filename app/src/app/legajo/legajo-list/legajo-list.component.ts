@@ -15,7 +15,7 @@ import { PrintService } from 'src/app/print/print.service';
   styleUrls: ['./legajo-list.component.css']
 })
 export class LegajoListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['Creado', 'Nombre', 'Legajo', 'Acciones'];
+  displayedColumns: string[] = [ 'Nombre', 'Legajo','Creado', 'Acciones'];
   dataSource: MatTableDataSource<Legajo> = new MatTableDataSource<Legajo>();
   //data: LegajosApi;
 
@@ -24,6 +24,7 @@ export class LegajoListComponent implements OnInit, AfterViewInit {
   isRateLimitReached = false;
 
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   legajoID$: Observable<String>;
   public currentLegajo$: Observable<Legajo> = null;
   id: number;
@@ -52,6 +53,7 @@ export class LegajoListComponent implements OnInit, AfterViewInit {
       //this.isLoadingResults = false;
       const legajosApi: ListaItems = await this.legajoService.getLegajos(this.sort.active, this.sort.direction, 1);
       this.dataSource = new MatTableDataSource<Legajo>(legajosApi.items);
+      this.dataSource.paginator = this.paginator;
       this.isLoadingResults = false;
 
   }

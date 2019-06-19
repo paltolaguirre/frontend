@@ -7,18 +7,16 @@
   </div>
 
   <div class="topmenu-container" >
-    <div>
-      <button mat-raised-button color="primary" mat-button (click)="printService.printTOPDF()">Imprimir</button>
-    </div>
-    <div>
-      <mat-form-field>
-        <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Buscar">
-      </mat-form-field>
-    </div>
+      <div>
+        <mat-form-field class="standard-input">
+          <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Buscar">
+        </mat-form-field>
+        <button mat-raised-button color="primary" class="topmenu-button" mat-button [routerLink]="['/novedades', 'nuevo']">Nuevo</button>
+        <button mat-raised-button color="primary" class="topmenu-button" mat-button (click)="printService.printTOPDF()">Imprimir</button>
+      </div>
   </div>
   
-  <div class="table-container" id="contentTOPDF">
-    
+  <div class="table-container" id="contentTOPDF">    
     <table mat-table [dataSource]="dataSource" class="example-table" matSort matSortActive="Creado" matSortDisableClear
       matSortDirection="desc">
       <!-- State Column -->
@@ -49,9 +47,8 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
-  <button mat-fab color="primary" class="add-button" [routerLink]="['/novedades', 'nuevo']">
-    <mat-icon aria-label="Nuevo Novedad">add</mat-icon>
-  </button>
-
+  <div>
+    <mat-paginator class="paginator-container" #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+  </div>
   <!--<mat-paginator [length]="resultsLength" [pageSize]="30"></mat-paginator>-->
 </div>

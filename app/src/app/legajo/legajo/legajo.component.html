@@ -10,8 +10,8 @@
 
   <div mat-dialog-content class="content" id="contentTOPDF">
 
-
-      <mat-expansion-panel (opened)="true">
+      <mat-accordion>
+      <mat-expansion-panel [expanded]="true">
           <mat-expansion-panel-header>
             <mat-panel-title>
                 Datos Personales
@@ -71,10 +71,8 @@
                 <app-selector-default type="conveniocolectivo" [(matSelect)]="data.conveniocolectivoid" (optionSelected)="data.conveniocolectivo=$event" ></app-selector-default>
                 <app-selector-default type="centrodecosto" [(matSelect)]="data.centrodecostoid" (optionSelected)="data.centrodecosto=$event" ></app-selector-default>        
             <div>
-
                 <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.categoria" placeholder="Categoria" type="text" autocomplete="off"></mat-form-field>
                 <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.tarea" placeholder="Tarea" type="text" autocomplete="off"></mat-form-field>    
-            
             </div>
             <div>
                 <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="data.fechaalta=$event" [ngModel]="data.fechaalta | date: 'yyyy-MM-dd'" placeholder="Fecha de alta" autocomplete="off"></mat-form-field>
@@ -84,7 +82,6 @@
                 <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.cbu" placeholder="CBU" type="text" autocomplete="off"></mat-form-field>
             </div>                  
       </mat-expansion-panel>   
-    <mat-divider></mat-divider>
 
     <mat-expansion-panel>
         <mat-expansion-panel-header>
@@ -141,6 +138,7 @@
 
        </mat-expansion-panel>
     
+</mat-accordion>
     <mat-divider></mat-divider>
 
   </div>

@@ -7,19 +7,15 @@
   </div>
   
 
-  <div class="table-container">
-
-      <div class="topmenu-container" >
-          <div>
-            <button mat-raised-button color="primary" mat-button (click)="printService.printTOPDF()">Imprimir</button>
-          </div>
-          <div>
-            <mat-form-field>
-              <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Buscar">
-            </mat-form-field>
-          </div>
-        </div>
-    
+  <div class="topmenu-container" >
+      <div>
+        <mat-form-field class="standard-input">
+          <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Buscar">
+        </mat-form-field>
+        <button mat-raised-button color="primary" class="topmenu-button" mat-button [routerLink]="['/legajos', 'nuevo']">Nuevo</button>
+        <button mat-raised-button color="primary" class="topmenu-button" mat-button (click)="printService.printTOPDF()">Imprimir</button>
+      </div>
+  </div>
     <table mat-table [dataSource]="dataSource" class="example-table" matSort matSortActive="Creado" matSortDisableClear
       matSortDirection="desc" id="contentTOPDF">
 
@@ -31,13 +27,13 @@
 
       <!-- State Column -->
       <ng-container matColumnDef="Nombre">
-        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>Nombre</th>
         <td mat-cell *matCellDef="let row">{{row.nombre}}</td>
       </ng-container>
 
       <!-- Created Column -->
       <ng-container matColumnDef="Creado">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+        <th mat-header-cell *matHeaderCellDef  disableClear>
           Creado
         </th>
         <td mat-cell *matCellDef="let row">{{row.CreatedAt | date}}</td>
@@ -54,10 +50,9 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+  <div>
+    <mat-paginator class="paginator-container" #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
   </div>
-  <button mat-fab color="primary" class="add-button" [routerLink]="['/legajos', 'nuevo']">
-    <mat-icon aria-label="Nuevo Legajo">add</mat-icon>
-  </button>
 
   <!--<mat-paginator [length]="resultsLength" [pageSize]="30"></mat-paginator>-->
 </div>

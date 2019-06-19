@@ -24,6 +24,7 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
   isRateLimitReached = false;
 
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   liquidacionID$: Observable<String>;
   public currentLiquidacion$: Observable<Liquidacion> = null;
   id: number;
@@ -44,6 +45,7 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
 
       const liquidacionesApi: ListaItems = await this.liquidacionService.getLiquidaciones(this.sort.active, this.sort.direction, 1);
       this.dataSource = new MatTableDataSource<Liquidacion>(liquidacionesApi.items);
+      this.dataSource.paginator = this.paginator;
       this.isLoadingResults = false;
 
   }

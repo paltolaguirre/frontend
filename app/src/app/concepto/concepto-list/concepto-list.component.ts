@@ -1,6 +1,6 @@
 import { ListaItems, ConceptoService } from '../concepto.service';
 import { Concepto } from '../concepto.model';
-import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnInit , Input} from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { merge, Observable, of as observableOf } from 'rxjs';
@@ -24,10 +24,10 @@ export class ConceptoListComponent implements OnInit, AfterViewInit {
   isRateLimitReached = false;
 
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   conceptoID$: Observable<String>;
   public currentConcepto$: Observable<Concepto> = null;
   id: number;
-
 
   constructor(
     private route: ActivatedRoute,
@@ -45,6 +45,7 @@ export class ConceptoListComponent implements OnInit, AfterViewInit {
 
       const conceptosApi: ListaItems = await this.conceptoService.getConceptos(this.sort.active, this.sort.direction, 1);
       this.dataSource = new MatTableDataSource<Concepto>(conceptosApi.items);
+      this.dataSource.paginator = this.paginator;
       this.isLoadingResults = false;
 
   }
@@ -81,4 +82,5 @@ export class ConceptoListComponent implements OnInit, AfterViewInit {
   refreshTableSorce() {
 
   }
+
 }
