@@ -33,7 +33,7 @@ export class NovedadListComponent implements OnInit, AfterViewInit {
     private novedadService: NovedadService,
     public dialog: MatDialog,
     private notificationService: NotificationService,
-    private printService : PrintService
+    public printService : PrintService
   ) { }
 
   ngOnInit() {
