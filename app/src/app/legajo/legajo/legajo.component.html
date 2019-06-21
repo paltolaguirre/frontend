@@ -107,11 +107,8 @@
                 </div>
               </tr>
             </table>
-            <button *ngIf="(data.conyuge == null || (data.conyuge.length == 0) || (data.conyuge[0].DeletedAt != null && data.conyuge.length == 1))" mat-mini-fab 
-            color="accent" class="add-button" (click)="onClickNewConyuge(data)">
-              <mat-icon aria-label="Agregar conyuge">add</mat-icon>
-            </button>
           </div>
+          <button style="margin-left: 17px;margin-bottom: 17px;" mat-raised-button (click)="onClickNewConyuge(data)">Agregar Item</button>
           
           <mat-divider></mat-divider>
 
@@ -131,10 +128,8 @@
                   </div>
                 </tr>
             </table>
-            <button mat-mini-fab color="accent" class="add-button" (click)="onClickNewHijo(data)">
-              <mat-icon aria-label="Agregar Hijo">add</mat-icon>
-            </button>
           </div>
+          <button style="margin-left: 17px;" mat-raised-button (click)="onClickNewHijo(data)">Agregar Item</button>
 
        </mat-expansion-panel>
     

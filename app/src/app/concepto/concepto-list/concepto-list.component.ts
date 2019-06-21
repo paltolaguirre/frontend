@@ -46,6 +46,7 @@ export class ConceptoListComponent implements OnInit, AfterViewInit {
       const conceptosApi: ListaItems = await this.conceptoService.getConceptos(this.sort.active, this.sort.direction, 1);
       this.dataSource = new MatTableDataSource<Concepto>(conceptosApi.items);
       this.dataSource.paginator = this.paginator;
+      this.paginator._intl.itemsPerPageLabel = "Items por página";
       this.isLoadingResults = false;
 
   }

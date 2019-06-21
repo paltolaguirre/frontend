@@ -46,6 +46,7 @@ export class NovedadListComponent implements OnInit, AfterViewInit {
       const novedadesApi: ListaItems = await this.novedadService.getNovedades(this.sort.active, this.sort.direction, 1);
       this.dataSource = new MatTableDataSource<Novedad>(novedadesApi.items);
       this.dataSource.paginator = this.paginator;
+      this.paginator._intl.itemsPerPageLabel = "Items por página";
       this.isLoadingResults = false;
 
   }

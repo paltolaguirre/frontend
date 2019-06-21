@@ -54,6 +54,7 @@ export class LegajoListComponent implements OnInit, AfterViewInit {
       const legajosApi: ListaItems = await this.legajoService.getLegajos(this.sort.active, this.sort.direction, 1);
       this.dataSource = new MatTableDataSource<Legajo>(legajosApi.items);
       this.dataSource.paginator = this.paginator;
+      this.paginator._intl.itemsPerPageLabel = "Items por pagina";
       this.isLoadingResults = false;
 
   }
