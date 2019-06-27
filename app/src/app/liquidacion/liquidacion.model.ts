@@ -19,21 +19,15 @@ export interface Liquidacion {
     fecha : string;
     fechaultimodepositoaportejubilatorio : string;
     zonatrabajo : string;
-    condicionpago : string;
-    bancoid : number;
+    condicionpago : number;
+    cuentabanco : number;
     banco : Banco;
-    fechainicioperiododepositado : string;
-    fechafinperiododepositado : string;
-    fechainicioperiodoliquidacion : string;
-    fechafinperiodoliquidacion : string;
+    fechaperiododepositado : string;
+    fechaperiodoliquidacion : string;
     importesremunerativos : [Importesremunerativos];
-    importeremunerativoid : number;
     importesnoremunerativos : [Importesnoremunerativos];
-    importenoremunerativoid : number;
     descuentos : [Descuentos];
-    descuentoid : number;
     retenciones : [Retenciones];
-    retencionid : number;
 }
 
 export interface Tipo {

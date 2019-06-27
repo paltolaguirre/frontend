@@ -28,7 +28,7 @@
             <div>
                 <mat-form-field class="big-input"><input matInput [(ngModel)]="data.direccion" type="text" autocomplete="off" placeholder="Dirección"></mat-form-field>
             </div>
-          <br/>
+            <br/>
             <div>
                 <app-selector-default type="localidad" [(matSelect)]="data.localidadid" (optionSelected)="data.localidad=$event"></app-selector-default>
                 <app-selector-default type="provincia" [(matSelect)]="data.provinciaid" (optionSelected)="data.provincia=$event"></app-selector-default>
@@ -43,7 +43,7 @@
             </div>   
             <div>
                 <mat-form-field class="big-input"><input matInput [(ngModel)]="data.descripcion" placeholder="Observaciones" type="text" autocomplete="off"></mat-form-field>
-            </div>                      
+            </div>
         </mat-expansion-panel>
 
         <mat-expansion-panel>

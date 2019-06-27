@@ -49,22 +49,17 @@ export class ActionsComponent implements OnInit {
       fechaultimodepositoaportejubilatorio : null,
       zonatrabajo : null,
       condicionpago : null,
-      bancoid : null,
+      cuentabanco : null,
       banco : null,
       fechainicioperiododepositado : null,
       fechafinperiododepositado : null,
       fechainicioperiodoliquidacion : null,
       fechafinperiodoliquidacion : null,
       importesremunerativos : null,
-      importeremunerativoid : null,
       importesnoremunerativos : null,
-      importenoremunerativoid : null,
       descuentos : null,
-      descuentoid : null,
-      retenciones : null,
-      retencionid : null
+      retenciones : null
     }
-    
     await this.liquidacionService.deleteLiquidacion(item);
     this.delete.emit(item);
   }

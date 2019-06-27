@@ -59,6 +59,14 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   async onClickSave(data: Liquidacion): Promise<Liquidacion> {
     let liquidacionesItem: Liquidacion;    
 
+    if(data.fechaperiododepositado)data.fechaperiododepositado = formatDate(data.fechaperiododepositado, "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US');
+    if(data.fecha)data.fecha = formatDate(data.fecha, "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US');
+    if(data.fechaperiodoliquidacion)data.fechaperiodoliquidacion = formatDate(data.fechaperiodoliquidacion, "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US');
+    if(data.fechaultimodepositoaportejubilatorio)data.fechaultimodepositoaportejubilatorio = formatDate(data.fechaultimodepositoaportejubilatorio, "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US');
+ 
+    if(data.legajo)data.legajoid = data.legajo.ID;
+    if(data.banco)data.cuentabanco = data.banco.ID;
+
     if (this.id) {
       console.log("Updated Liquidacion");
       liquidacionesItem = await this.liquidacionService.putLiquidacion(data);
@@ -73,6 +81,9 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
     return liquidacionesItem;
   }
 
+  onClickDeleteChild(child: any) {
+    child.DeletedAt = new Date();
+  }
 
   onClickNewImportesremunerativos(data: Liquidacion) {
     if(data.importesremunerativos == null) {

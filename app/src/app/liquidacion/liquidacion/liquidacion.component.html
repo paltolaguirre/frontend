@@ -8,33 +8,34 @@
 
   <mat-divider></mat-divider>
 
-  <div mat-dialog-content class="content" id="contentTOPDF">  
+  <div mat-dialog-content class="content" id="contentTOPDF">
+      <div>
+          <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.nombre" placeholder="Nombre" type="text" autocomplete="off"></mat-form-field>
+      </div>
       <div>
           <app-selector-default type="legajo" [(matSelect)]="data.legajoid" (optionSelected)="data.legajo=$event"></app-selector-default>
           <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.zonatrabajo" placeholder="Zona de Trabajo" type="text" autocomplete="off"></mat-form-field>
       </div>
-      <div>
-          <app-selector-default type="tipo" [(matSelect)]="data.tipoid" (optionSelected)="data.tipo=$event"></app-selector-default>
+      <div>  
+          <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.tipo" placeholder="Tipo" type="number" autocomplete="off"></mat-form-field>    
           <mat-form-field>
               <mat-label>Condicion de Pago</mat-label>
               <select [(ngModel)]="data.condicionpago" matNativeControl required>
-                <option value="1">Cuenta Corriente</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
+                <option [ngValue]="1">Cuenta Corriente</option>
+                <option [ngValue]="2">Contado</option>
               </select>
          </mat-form-field>
       </div>
       <div>
           <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="data.fecha=$event" [ngModel]="data.fecha | date: 'yyyy-MM-dd'" placeholder="Fecha" autocomplete="off"></mat-form-field>
-          <app-selector-default type="banco" [(matSelect)]="data.bancoid" (optionSelected)="data.banco=$event"></app-selector-default>
+          <app-selector-default type="cuenta" [(matSelect)]="data.cuentabanco" (optionSelected)="data.banco=$event"></app-selector-default>
       </div>
       <div>
           <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="data.fechaultimodepositoaportejubilatorio=$event" [ngModel]="data.fechaultimodepositoaportejubilatorio | date: 'yyyy-MM-dd'" placeholder="Fecha Ult. Aporte Jubil." autocomplete="off"></mat-form-field>
-          <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="data.fechainicioperiododepositado=$event" [ngModel]="data.fechainicioperiododepositado | date: 'yyyy-MM-dd'" placeholder="Periodo Depositado" autocomplete="off"></mat-form-field>      
+          <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="data.fechaperiododepositado=$event" [ngModel]="data.fechaperiododepositado | date: 'yyyy-MM-dd'" placeholder="Periodo Depositado" autocomplete="off"></mat-form-field>      
       </div>
       <div>
-          <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="data.fechainicioperiodoliquidacion=$event" [ngModel]="data.fechainicioperiodoliquidacion | date: 'yyyy-MM-dd'" placeholder="Periodo Liquidacion" autocomplete="off"></mat-form-field>      
+          <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="data.fechaperiodoliquidacion=$event" [ngModel]="data.fechaperiodoliquidacion | date: 'yyyy-MM-dd'" placeholder="Periodo Liquidacion" autocomplete="off"></mat-form-field>      
       </div>
       <div>
           <mat-expansion-panel >
@@ -58,23 +59,22 @@
                     <table style="width:100%">
                       <tr *ngFor="let importesremunerativos of data.importesremunerativos">
                         <div *ngIf="(importesremunerativos.DeletedAt == null)">
-                          <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(conyuge)">
+                          <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(importesremunerativos)">
                             <mat-icon>delete_forever</mat-icon>
                           </button>
                           <app-selector-default type="concepto" [(matSelect)]="importesremunerativos.conceptoid" (optionSelected)="importesremunerativos.concepto=$event" ></app-selector-default>
+                          <mat-form-field class="children-input"><input matInput [(ngModel)]="importesremunerativos.importeunitario" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                          <!--
+                          <mat-form-field class="children-input"><input matInput [(ngModel)]="importesremunerativos.total" placeholder="total" type="Number" autocomplete="off"></mat-form-field>
                           <mat-form-field class="children-input"><input matInput [(ngModel)]="importesremunerativos.cantidad" placeholder="Cantidad" type="number" autocomplete="off"></mat-form-field>
                           <mat-form-field class="children-input"><input matInput [(ngModel)]="importesremunerativos.porcentaje" placeholder="Porcentaje" type="number" autocomplete="off"></mat-form-field>
                           <app-selector-default type="concepto" [(matSelect)]="importesremunerativos.sobreconceptoid" (optionSelected)="importesremunerativos.sobreconcepto=$event" ></app-selector-default>
-                          <mat-form-field class="children-input"><input matInput [(ngModel)]="importesremunerativos.importeunitario" placeholder="Importeunitario" type="number" autocomplete="off"></mat-form-field>
-                          <mat-form-field class="children-input"><input matInput [(ngModel)]="importesremunerativos.total" placeholder="total" type="Number" autocomplete="off"></mat-form-field>
+                          -->
                         </div>
                       </tr>
                     </table>
-                    <button *ngIf="(data.importesremunerativos == null || (data.importesremunerativos.length == 0) || (data.importesremunerativos[0].DeletedAt != null && data.importesremunerativos.length == 1))" mat-mini-fab 
-                    color="accent" class="add-button" (click)="onClickNewImportesremunerativos(data)">
-                      <mat-icon aria-label="Agregar Importes Remunerativos">add</mat-icon>
-                    </button>
-                  </div>        
+                  </div>       
+                  <button style="margin-left: 17px;margin-bottom: 17px;" mat-raised-button (click)="onClickNewImportesremunerativos(data)">Agregar Item</button> 
           </mat-expansion-panel>
       </div>
 
@@ -90,23 +90,23 @@
                     <table style="width:100%">
                       <tr *ngFor="let importesnoremunerativos of data.importesnoremunerativos">
                         <div *ngIf="(importesnoremunerativos.DeletedAt == null)">
-                          <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(conyuge)">
+                          <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(importesnoremunerativos)">
                             <mat-icon>delete_forever</mat-icon>
                           </button>
                           <app-selector-default type="concepto" [(matSelect)]="importesnoremunerativos.conceptoid" (optionSelected)="importesnoremunerativos.concepto=$event" ></app-selector-default>
+                          <mat-form-field class="children-input"><input matInput [(ngModel)]="importesnoremunerativos.importeunitario" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+
+                          <!--  
                           <mat-form-field class="children-input"><input matInput [(ngModel)]="importesnoremunerativos.cantidad" placeholder="Cantidad" type="number" autocomplete="off"></mat-form-field>
                           <mat-form-field class="children-input"><input matInput [(ngModel)]="importesnoremunerativos.porcentaje" placeholder="Porcentaje" type="number" autocomplete="off"></mat-form-field>
-                          <app-selector-default type="concepto" [(matSelect)]="importesnoremunerativos.sobreconceptoid" (optionSelected)="importesnoremunerativos.sobreconcepto=$event" ></app-selector-default>
-                          <mat-form-field class="children-input"><input matInput [(ngModel)]="importesnoremunerativos.importeunitario" placeholder="Importeunitario" type="number" autocomplete="off"></mat-form-field>
                           <mat-form-field class="children-input"><input matInput [(ngModel)]="importesnoremunerativos.total" placeholder="total" type="Number" autocomplete="off"></mat-form-field>
+                          <app-selector-default type="concepto" [(matSelect)]="importesnoremunerativos.sobreconceptoid" (optionSelected)="importesnoremunerativos.sobreconcepto=$event" ></app-selector-default>
+                          -->                       
                         </div>
                       </tr>
                     </table>
-                    <button *ngIf="(data.importesnoremunerativos == null || (data.importesnoremunerativos.length == 0) || (data.importesnoremunerativos[0].DeletedAt != null && data.importesnoremunerativos.length == 1))" mat-mini-fab 
-                    color="accent" class="add-button" (click)="onClickNewImportesNoremunerativos(data)">
-                      <mat-icon aria-label="Agregar Importes Remunerativos">add</mat-icon>
-                    </button>
                   </div>        
+                  <button style="margin-left: 17px;margin-bottom: 17px;" mat-raised-button (click)="onClickNewImportesNoremunerativos(data)">Agregar Item</button>
           </mat-expansion-panel>
       </div>
 
@@ -121,23 +121,24 @@
                     <table style="width:100%">
                       <tr *ngFor="let descuentos of data.descuentos">
                         <div *ngIf="(descuentos.DeletedAt == null)">
-                          <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(conyuge)">
+                          <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(descuentos)">
                             <mat-icon>delete_forever</mat-icon>
                           </button>
                           <app-selector-default type="concepto" [(matSelect)]="descuentos.conceptoid" (optionSelected)="descuentos.concepto=$event" ></app-selector-default>
+                          <mat-form-field class="children-input"><input matInput [(ngModel)]="descuentos.importeunitario" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                        
+                          <!--  
                           <mat-form-field class="children-input"><input matInput [(ngModel)]="descuentos.cantidad" placeholder="Cantidad" type="number" autocomplete="off"></mat-form-field>
                           <mat-form-field class="children-input"><input matInput [(ngModel)]="descuentos.porcentaje" placeholder="Porcentaje" type="number" autocomplete="off"></mat-form-field>
                           <app-selector-default type="concepto" [(matSelect)]="descuentos.sobreconceptoid" (optionSelected)="descuentos.sobreconcepto=$event" ></app-selector-default>
-                          <mat-form-field class="children-input"><input matInput [(ngModel)]="descuentos.importeunitario" placeholder="Importeunitario" type="number" autocomplete="off"></mat-form-field>
                           <mat-form-field class="children-input"><input matInput [(ngModel)]="descuentos.total" placeholder="total" type="Number" autocomplete="off"></mat-form-field>
+                          -->
+
                         </div>
                       </tr>
                     </table>
-                    <button *ngIf="(data.descuentos == null || (data.descuentos.length == 0) || (data.descuentos[0].DeletedAt != null && data.descuentos.length == 1))" mat-mini-fab 
-                    color="accent" class="add-button" (click)="onClickNewDescuento(data)">
-                      <mat-icon aria-label="Agregar Importes Remunerativos">add</mat-icon>
-                    </button>
                   </div>        
+                  <button style="margin-left: 17px;margin-bottom: 17px;" mat-raised-button (click)="onClickNewDescuento(data)">Agregar Item</button>
           </mat-expansion-panel>
       </div>
 
@@ -152,23 +153,17 @@
                     <table style="width:100%">
                       <tr *ngFor="let retenciones of data.retenciones">
                         <div *ngIf="(retenciones.DeletedAt == null)">
-                          <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(conyuge)">
+                          <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(retenciones)">
                             <mat-icon>delete_forever</mat-icon>
                           </button>
                           <app-selector-default type="concepto" [(matSelect)]="retenciones.conceptoid" (optionSelected)="retenciones.concepto=$event" ></app-selector-default>
-                          <mat-form-field class="children-input"><input matInput [(ngModel)]="retenciones.cantidad" placeholder="Cantidad" type="number" autocomplete="off"></mat-form-field>
-                          <mat-form-field class="children-input"><input matInput [(ngModel)]="retenciones.porcentaje" placeholder="Porcentaje" type="number" autocomplete="off"></mat-form-field>
-                          <app-selector-default type="concepto" [(matSelect)]="retenciones.sobreconceptoid" (optionSelected)="retenciones.sobreconcepto=$event" ></app-selector-default>
-                          <mat-form-field class="children-input"><input matInput [(ngModel)]="retenciones.importeunitario" placeholder="Importeunitario" type="number" autocomplete="off"></mat-form-field>
-                          <mat-form-field class="children-input"><input matInput [(ngModel)]="retenciones.total" placeholder="total" type="Number" autocomplete="off"></mat-form-field>
+                          <mat-form-field class="children-input"><input matInput [(ngModel)]="retenciones.importeunitario" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                                                      
                         </div>
                       </tr>
                     </table>
-                    <button *ngIf="(data.retenciones == null || (data.retenciones.length == 0) || (data.retenciones[0].DeletedAt != null && data.retenciones.length == 1))" mat-mini-fab 
-                    color="accent" class="add-button" (click)="onClickNewRetenciones(data)">
-                      <mat-icon aria-label="Agregar Importes Remunerativos">add</mat-icon>
-                    </button>
                   </div>        
+                  <button style="margin-left: 17px;margin-bottom: 17px;" mat-raised-button (click)="onClickNewRetenciones(data)">Agregar Item</button>
           </mat-expansion-panel>
       </div>
 
