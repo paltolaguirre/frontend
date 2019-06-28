@@ -53,7 +53,7 @@ export class SelectorDefaultComponent implements OnInit {
   public onSelectChangeEvent(event,data)
   {
     eval("data."+this.tipo + " = " + event);
-    eval("data."+this.tipo + "id = " + event).id;
+    eval("data."+this.tipo + "ID = " + event.ID);
   }
 
   async setPlaceHolder(tipo: string) : Promise<string> {
@@ -103,6 +103,7 @@ export class SelectorDefaultComponent implements OnInit {
     const value = evt.option.value;
     console.log(value);
     this.value = value; 
+    value.ID = value.id;
     this.optionSelected.emit(value);
   }
 

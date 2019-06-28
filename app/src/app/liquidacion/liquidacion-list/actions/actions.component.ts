@@ -40,9 +40,26 @@ export class ActionsComponent implements OnInit {
       nombre: null,
       codigo: null,
       descripcion: null,
-      activo: null
+      activo: null,
+      legajo: null,
+      legajoid: null,
+      tipo : null,
+      tipoid : null,
+      fecha : null,
+      fechaultimodepositoaportejubilatorio : null,
+      zonatrabajo : null,
+      condicionpago : null,
+      cuentabanco : null,
+      banco : null,
+      fechainicioperiododepositado : null,
+      fechafinperiododepositado : null,
+      fechainicioperiodoliquidacion : null,
+      fechafinperiodoliquidacion : null,
+      importesremunerativos : null,
+      importesnoremunerativos : null,
+      descuentos : null,
+      retenciones : null
     }
-    
     await this.liquidacionService.deleteLiquidacion(item);
     this.delete.emit(item);
   }

@@ -9,6 +9,8 @@ import { LegajoComponent } from './legajo/legajo.component';
 import { DemoMaterialModule } from '../material.module';
 import { LegajoListComponent } from './legajo-list/legajo-list.component';
 import { ActionsComponent } from './legajo-list/actions/actions.component';
+import { MatSortModule } from '@angular/material/sort';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [LegajoComponent, LegajoListComponent, ActionsComponent],
@@ -17,7 +19,9 @@ import { ActionsComponent } from './legajo-list/actions/actions.component';
     FormsModule,
     LegajoRoutingModule,
     DemoMaterialModule,
-    SharedModule
+    SharedModule,
+    MatTableModule,
+    MatSortModule
   ],
   entryComponents: [
   ]
