@@ -6,12 +6,13 @@ import { LiquidacionRoutingModule } from './liquidacion-routing.module';
 
 import { SharedModule } from '../shared/shared.module';
 import { LiquidacionComponent } from './liquidacion/liquidacion.component';
+import { DialogLiquidaciones } from './liquidacion/liquidacion.component';
 import { DemoMaterialModule } from '../material.module';
 import { LiquidacionListComponent } from './liquidacion-list/liquidacion-list.component';
 import { ActionsComponent } from './liquidacion-list/actions/actions.component';
 
 @NgModule({
-  declarations: [LiquidacionComponent, LiquidacionListComponent, ActionsComponent],
+  declarations: [LiquidacionComponent, LiquidacionListComponent, ActionsComponent ,DialogLiquidaciones],
   imports: [
     CommonModule,
     FormsModule,
@@ -19,7 +20,6 @@ import { ActionsComponent } from './liquidacion-list/actions/actions.component';
     DemoMaterialModule,
     SharedModule
   ],
-  entryComponents: [
-  ]
+  entryComponents: [DialogLiquidaciones]
 })
 export class LiquidacionModule { }

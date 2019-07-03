@@ -15,7 +15,7 @@ import { PrintService } from 'src/app/print/print.service';
   styleUrls: ['./novedad-list.component.css']
 })
 export class NovedadListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['Creado', 'Nombre' , 'Acciones'];
+  displayedColumns: string[] = ['Legajo','Concepto', 'Fecha' , 'Acciones'];
   dataSource: MatTableDataSource<Novedad> = new MatTableDataSource<Novedad>();
   //data: NovedadesApi;
 
