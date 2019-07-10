@@ -3,7 +3,6 @@ import { Concepto } from '../concepto.model';
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
-
 import { NotificationService } from 'src/app/handler-error/notification.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
@@ -63,10 +62,12 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
     if (this.id) {
       console.log("Updated Concepto");
       conceptosItem = await this.conceptoService.putConcepto(data);
+      this.notificationService.notify("Concepto Actualizado");
     } else {
       console.log("Created Concepto");
       conceptosItem = await this.conceptoService.postConcepto(data);
       this.gotoGrilla();
+      this.notificationService.notify("Concepto Creado");
     }
 
     console.log(data);

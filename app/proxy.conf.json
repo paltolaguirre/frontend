@@ -28,5 +28,10 @@
         "target": "http://localhost:8082/",
         "secure": false,
         "logLevel": "debug"
+    },
+    "/api/informe/*": {
+        "target": "http://localhost:8087/",
+        "secure": false,
+        "logLevel": "debug"
     }
 }

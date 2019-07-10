@@ -9,12 +9,10 @@
   <mat-divider></mat-divider>
 
   <div mat-dialog-content class="content" id="contentTOPDF">
-      <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="data.fecha=$event" [ngModel]="data.fecha | date: 'yyyy-MM-dd'" placeholder="Fecha" autocomplete="off"></mat-form-field>
-    
-      <app-selector-default type="legajo" [(matSelect)]="data.legajoid" (optionSelected)="data.legajo=$event"></app-selector-default>
-  
-      <app-selector-default type="concepto" [(matSelect)]="data.conceptoid" (optionSelected)="data.concepto=$event"></app-selector-default>
-      <mat-form-field class="standard-input"><input matInput type="number" [(ngModel)]="data.cantidad" placeholder="Cantidad" autocomplete="off"></mat-form-field>
+      <mat-form-field class="standard-input"><input matInput type="date" required (ngModelChange)="data.fecha=$event" [ngModel]="data.fecha | date: 'yyyy-MM-dd'" placeholder="Fecha" autocomplete="off"></mat-form-field>
+      <app-selector-default type="legajo" [(matSelect)]="data.legajoid" required (optionSelected)="data.legajo=$event"></app-selector-default>
+      <app-selector-default type="concepto" [(matSelect)]="data.conceptoid" required (optionSelected)="data.concepto=$event"></app-selector-default>
+      <mat-form-field class="standard-input"><input matInput type="number" required [(ngModel)]="data.cantidad" placeholder="Cantidad" autocomplete="off"></mat-form-field>
           <mat-form-field class="standard-input"><input matInput type="number" [(ngModel)]="data.importe" placeholder="Importe" autocomplete="off"></mat-form-field>
      
       <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.descripcion" placeholder="Descripción"  type="text" autocomplete="off"></mat-form-field>

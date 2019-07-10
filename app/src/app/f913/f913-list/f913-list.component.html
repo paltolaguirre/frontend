@@ -6,49 +6,41 @@
     </div>
   </div>
 
-
+  
   <div class="topmenu-container" >
       <div>
         <mat-form-field class="standard-input">
           <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Buscar">
         </mat-form-field>
-        <button mat-raised-button color="primary" class="topmenu-button" mat-button [routerLink]="['/liquidaciones', 'nuevo']">Nuevo</button>
         <button mat-raised-button color="primary" class="topmenu-button" mat-button (click)="printService.printTOPDF()">Imprimir</button>
-        <button mat-raised-button color="primary" class="topmenu-button" mat-button (click)="onClickContabilizar(dataSource.data)">Contabilizar</button>
+        <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="fechadesde=$event" [ngModel]="fechadesde | date: 'yyyy-MM-dd'" placeholder="Fecha Desde" autocomplete="off"></mat-form-field>
+        <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="fechahasta=$event" [ngModel]="fechahasta | date: 'yyyy-MM-dd'" placeholder="Fecha Hasta" autocomplete="off"></mat-form-field>
       </div>
   </div>
-  <div class="table-container" id="contentTOPDF">    
+  <div class="table-container">   
     <table mat-table [dataSource]="dataSource" class="example-table" matSort matSortActive="Creado" matSortDisableClear
-      matSortDirection="desc">
-      <!-- State Column -->
+      matSortDirection="desc"  id="contentTOPDF">
+      <!-- Number Column -->
+
+      <!-- State Column Nombre-->
       <ng-container matColumnDef="Nombre">
         <th mat-header-cell *matHeaderCellDef>Nombre</th>
         <td mat-cell *matCellDef="let row">{{row.nombre}}</td>
       </ng-container>
 
-      <!-- Created Column -->
-      <ng-container matColumnDef="Creado">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
-          Creado
-        </th>
-        <td mat-cell *matCellDef="let row">{{row.CreatedAt | date}}</td>        
+        <!-- State Column Importe-->
+      <ng-container matColumnDef="Importe">
+          <th mat-header-cell *matHeaderCellDef>Importe</th>
+          <td mat-cell *matCellDef="let row">{{row.importe}}</td>
       </ng-container>
 
-      <!-- Number Column -->
-    <div data-html2canvas-ignore="true">
-      <ng-container  matColumnDef="Acciones">
-        <th mat-header-cell *matHeaderCellDef>Acciones</th>
-        <td mat-cell *matCellDef="let row">
-          <app-actions (update)="onUpdate($event)" (delete)="onDelete($event)" liquidacion={{row.ID}}></app-actions>
-        </td>
-      </ng-container>
-    </div>
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
-  <div>
-      <mat-paginator class="paginator-container" #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
-  </div>
+<div>
+  <mat-paginator class="paginator-container" #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+</div>
+
   <!--<mat-paginator [length]="resultsLength" [pageSize]="30"></mat-paginator>-->
 </div>

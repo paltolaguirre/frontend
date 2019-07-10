@@ -16,7 +16,7 @@ import { DialogLiquidacionesList } from './liquidacion-list-dialog/liquidacion-l
   styleUrls: ['./liquidacion-list.component.css']
 })
 export class LiquidacionListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['Creado', 'Nombre' , 'Acciones' , 'Contabilizar'];
+  displayedColumns: string[] = ['Creado', 'Nombre' , 'Acciones' ];
   dataSource: MatTableDataSource<Liquidacion> = new MatTableDataSource<Liquidacion>();
   //data: LiquidacionesApi;
 

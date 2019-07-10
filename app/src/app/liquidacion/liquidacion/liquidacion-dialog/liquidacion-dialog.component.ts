@@ -13,7 +13,7 @@ export class DialogLiquidaciones {
  
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  displayedColumns: string[] = ['Concepto', 'Importe' , 'Acciones'];
+  displayedColumns: string[] = ['Concepto', 'Acciones', 'Importe' ];
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   isLoadingResults = true;
   

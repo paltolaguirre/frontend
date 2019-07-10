@@ -1,6 +1,8 @@
 import { ListaItems, LiquidacionService } from '../../liquidacion.service';
 import { Component, ViewChild, AfterViewInit, OnInit , Inject } from '@angular/core';
+import { formatDate } from "@angular/common";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Fechaliquidaciones } from '../../liquidacion.model';
 
 @Component({
     selector: 'liquidacion-list-dialog.component',
@@ -9,21 +11,30 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   })
   export class DialogLiquidacionesList {
    
+    fecha : Date;
+
     constructor(
       public dialogRef: MatDialogRef<DialogLiquidacionesList>,
-      private novedadService: LiquidacionService,
-      @Inject(MAT_DIALOG_DATA) public data: any) { }
+      private liquidacionService: LiquidacionService,
+      @Inject(MAT_DIALOG_DATA) public data: any) { 
+        
+      }
   
-      onClickAgregar(): void {
-        this.contabilizar(this.data);
+      onClickContabilizar(): void {
+        this.contabilizar();
         this.dialogRef.close();        
       }
       onNoClick(): void {
         this.dialogRef.close();        
       }
   
-      public contabilizar (data) {
-        
+      public async contabilizar () {
+        const fechaliquidacion : Fechaliquidaciones = {fechaliquidaciones:formatDate(this.fecha, "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US')};
+        const liquidacionesContablesApi: any = await this.liquidacionService.postContabilizarLiquidacion(fechaliquidacion);    
+
+        if (liquidacionesContablesApi.Error) {
+          
+        }
       }
 
     async ngOnInit() {

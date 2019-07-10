@@ -43,6 +43,14 @@ import { MatToolbarModule, MatTabsModule, MatIconModule, MatSidenavModule, MatLi
             loadChildren: '../liquidacion/liquidacion.module#LiquidacionModule',
           },
           {
+            path: 'librosueldos',
+            loadChildren: '../librosueldos/librosueldos.module#LibrosueldosModule',
+          },
+          {
+            path: 'informe913',
+            loadChildren: '../f913/f913.module#F913Module',
+          },
+          {
             path: '',
             redirectTo: 'legajos',
           }
