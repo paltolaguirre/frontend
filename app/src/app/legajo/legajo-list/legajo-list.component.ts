@@ -15,7 +15,7 @@ import { PrintService } from 'src/app/print/print.service';
   styleUrls: ['./legajo-list.component.css']
 })
 export class LegajoListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = [ 'Nombre', 'Legajo','Creado', 'Acciones'];
+  displayedColumns: string[] = [ 'Legajo' , 'Apellido',  'Nombre', 'Acciones'];
   dataSource: MatTableDataSource<Legajo> = new MatTableDataSource<Legajo>();
   //data: LegajosApi;
 

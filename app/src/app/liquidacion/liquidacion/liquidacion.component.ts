@@ -1,6 +1,7 @@
 import { LiquidacionService } from '../liquidacion.service';
 import { Liquidacion } from '../liquidacion.model';
 import { formatDate } from "@angular/common";
+import { FormControl ,} from '@angular/forms';
 import { Component, ViewChild, AfterViewInit, OnInit , Inject } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -14,6 +15,8 @@ import { ListaItems , NovedadService } from 'src/app/novedad/novedad.service';
 import { Novedad } from '../../novedad/novedad.model';
 import { AnonymousSubject } from 'rxjs/internal/Subject';
 import { variable } from '@angular/compiler/src/output/output_ast';
+
+
 @Component({
   selector: 'app-liquidacion',
   templateUrl: './liquidacion.component.html',
@@ -25,6 +28,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   id: number;
   data: any;
 
+
   constructor(
     private route: ActivatedRoute,
     private liquidacionService: LiquidacionService, 
@@ -33,8 +37,9 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
     private router: Router,
     public printService: PrintService
     ) { }
-
+  
   ngOnInit() {
+
     this.currentLiquidacion$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
         if (params.get('id') == "nuevo") {

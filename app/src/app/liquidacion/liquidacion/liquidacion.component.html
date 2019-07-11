@@ -13,23 +13,16 @@
           <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.nombre" placeholder="Nombre" type="text" autocomplete="off"></mat-form-field>
       </div>
       <div>
-          <app-selector-default type="legajo" [(matSelect)]="data.legajoid" (optionSelected)="data.legajo=$event"></app-selector-default>
+          <app-selector-default nombre="legajo" [(matSelect)]="data.legajoid" (optionSelected)="data.legajo=$event"></app-selector-default>
           <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.zonatrabajo" placeholder="Zona de Trabajo" type="text" autocomplete="off"></mat-form-field>
       </div>
       <div>  
           <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.tipo" placeholder="Tipo" type="number" autocomplete="off"></mat-form-field>    
-          <mat-form-field class="selector">
-              <mat-label>Condicion de Pago</mat-label>
-              <select [(ngModel)]="data.condicionpago" matNativeControl required>
-                <option [ngValue]="1">Cuenta Corriente</option>
-                <option [ngValue]="2">Contado</option>
-              </select>
-         </mat-form-field>
-         
+         <app-selector-default nombre="condicionpago" type="hardcode" [(matSelect)]="data.condicionpago" (optionSelected)="data.condicionpagos=$event"></app-selector-default>
       </div>
       <div>
-          <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="data.fecha=$event" [ngModel]="data.fecha | date: 'yyyy-MM-dd'" placeholder="Fecha" autocomplete="off"></mat-form-field>
-          <app-selector-default type="cuenta" [(matSelect)]="data.cuentabanco" (optionSelected)="data.banco=$event"></app-selector-default>
+          <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="data.fecha=$event" [ngModel]="data.fecha | date: 'yyyy-MM-dd'" placeholder="Fecha de Liquidacion" autocomplete="off"></mat-form-field>
+          <app-selector-default nombre="cuenta" [(matSelect)]="data.cuentabanco" (optionSelected)="data.banco=$event"></app-selector-default>
       </div>
       <div>
           <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="data.fechaultimodepositoaportejubilatorio=$event" [ngModel]="data.fechaultimodepositoaportejubilatorio | date: 'yyyy-MM-dd'" placeholder="Fecha Ult. Aporte Jubil." autocomplete="off"></mat-form-field>
@@ -39,7 +32,7 @@
           <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="data.fechaperiodoliquidacion=$event" [ngModel]="data.fechaperiodoliquidacion | date: 'yyyy-MM-dd'" placeholder="Periodo Liquidacion" autocomplete="off"></mat-form-field>      
       </div>
       <div>
-          <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.descripcion" placeholder="Observaciones" type="text" autocomplete="off"></mat-form-field>
+          <mat-form-field class="big-input"><input matInput [(ngModel)]="data.descripcion" placeholder="Observaciones" type="text" autocomplete="off"></mat-form-field>
       </div>
       <div>
           <button  mat-raised-button color="primary" (click)="onClickNovedades(data)">Novedades</button>
@@ -47,12 +40,12 @@
       <div>
           <mat-expansion-panel >
               <mat-expansion-panel-header>
-                <mat-panel-title *ngIf="(data.importesremunerativos.length == 0)">
-                    Importes Remunerativos
-                </mat-panel-title>
-                <mat-panel-title *ngIf="(data.importesremunerativos.length != 0)">
-                    Importes Remunerativos ({{data.importesremunerativos.length}})
-                </mat-panel-title>
+                  <mat-panel-title *ngIf="(data.importesremunerativos == null || data.importesremunerativos.length == 0)">
+                      Importes Remunerativos
+                  </mat-panel-title>
+                  <mat-panel-title *ngIf="(data.importesremunerativos != null && data.importesremunerativos.length != 0)">
+                      Importes Remunerativos ({{data.importesremunerativos.length}})
+                  </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="children-container">
                     <table style="width:100%">
@@ -61,13 +54,13 @@
                           <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(importesremunerativos)">
                             <mat-icon>delete_forever</mat-icon>
                           </button>
-                          <app-selector-default type="concepto" [(matSelect)]="importesremunerativos.conceptoid" (optionSelected)="importesremunerativos.concepto=$event" ></app-selector-default>
+                          <app-selector-default nombre="concepto" [(matSelect)]="importesremunerativos.conceptoid" (optionSelected)="importesremunerativos.concepto=$event" ></app-selector-default>
                           <mat-form-field class="children-input"><input matInput [(ngModel)]="importesremunerativos.importeunitario" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
                           <!--
                           <mat-form-field class="children-input"><input matInput [(ngModel)]="importesremunerativos.total" placeholder="total" type="Number" autocomplete="off"></mat-form-field>
                           <mat-form-field class="children-input"><input matInput [(ngModel)]="importesremunerativos.cantidad" placeholder="Cantidad" type="number" autocomplete="off"></mat-form-field>
                           <mat-form-field class="children-input"><input matInput [(ngModel)]="importesremunerativos.porcentaje" placeholder="Porcentaje" type="number" autocomplete="off"></mat-form-field>
-                          <app-selector-default type="concepto" [(matSelect)]="importesremunerativos.sobreconceptoid" (optionSelected)="importesremunerativos.sobreconcepto=$event" ></app-selector-default>
+                          <app-selector-default nombre="concepto" [(matSelect)]="importesremunerativos.sobreconceptoid" (optionSelected)="importesremunerativos.sobreconcepto=$event" ></app-selector-default>
                           -->
                         </div>
                       </tr>
@@ -80,12 +73,12 @@
       <div>
           <mat-expansion-panel >
               <mat-expansion-panel-header>
-                <mat-panel-title *ngIf="(data.importesnoremunerativos.length == 0)">
-                    Importes No Remunerativos
-                </mat-panel-title>
-                <mat-panel-title *ngIf="(data.importesnoremunerativos.length != 0)">
-                    Importes No Remunerativos ({{data.importesnoremunerativos.length}})
-                </mat-panel-title>
+                  <mat-panel-title *ngIf="(data.importesnoremunerativos == null || data.importesnoremunerativos.length == 0)">
+                      Importes No Remunerativos
+                  </mat-panel-title>
+                  <mat-panel-title *ngIf="(data.importesnoremunerativos != null && data.importesnoremunerativos.length != 0)">
+                      Importes No Remunerativos ({{data.importesnoremunerativos.length}})
+                  </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="children-container">
                     <table style="width:100%">
@@ -94,14 +87,14 @@
                           <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(importesnoremunerativos)">
                             <mat-icon>delete_forever</mat-icon>
                           </button>
-                          <app-selector-default type="concepto" [(matSelect)]="importesnoremunerativos.conceptoid" (optionSelected)="importesnoremunerativos.concepto=$event" ></app-selector-default>
+                          <app-selector-default nombre="concepto" [(matSelect)]="importesnoremunerativos.conceptoid" (optionSelected)="importesnoremunerativos.concepto=$event" ></app-selector-default>
                           <mat-form-field class="children-input"><input matInput [(ngModel)]="importesnoremunerativos.importeunitario" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
 
                           <!--  
                           <mat-form-field class="children-input"><input matInput [(ngModel)]="importesnoremunerativos.cantidad" placeholder="Cantidad" type="number" autocomplete="off"></mat-form-field>
                           <mat-form-field class="children-input"><input matInput [(ngModel)]="importesnoremunerativos.porcentaje" placeholder="Porcentaje" type="number" autocomplete="off"></mat-form-field>
                           <mat-form-field class="children-input"><input matInput [(ngModel)]="importesnoremunerativos.total" placeholder="total" type="Number" autocomplete="off"></mat-form-field>
-                          <app-selector-default type="concepto" [(matSelect)]="importesnoremunerativos.sobreconceptoid" (optionSelected)="importesnoremunerativos.sobreconcepto=$event" ></app-selector-default>
+                          <app-selector-default nombre="concepto" [(matSelect)]="importesnoremunerativos.sobreconceptoid" (optionSelected)="importesnoremunerativos.sobreconcepto=$event" ></app-selector-default>
                           -->
                         </div>
                       </tr>
@@ -114,12 +107,12 @@
       <div>
           <mat-expansion-panel >
               <mat-expansion-panel-header>
-                <mat-panel-title *ngIf="(data.descuentos.length == 0)">
-                    Descuentos
-                </mat-panel-title>
-                <mat-panel-title *ngIf="(data.descuentos.length != 0)">
-                    Descuentos ({{data.descuentos.length}})
-                </mat-panel-title>
+                  <mat-panel-title *ngIf="(data.descuentos == null || data.descuentos.length == 0)">
+                      Descuentos
+                  </mat-panel-title>
+                  <mat-panel-title *ngIf="(data.descuentos != null && data.descuentos.length != 0)">
+                      Descuentos ({{data.descuentos.length}})
+                  </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="children-container">
                     <table style="width:100%">
@@ -128,13 +121,13 @@
                           <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(descuentos)">
                             <mat-icon>delete_forever</mat-icon>
                           </button>
-                          <app-selector-default type="concepto" [(matSelect)]="descuentos.conceptoid" (optionSelected)="descuentos.concepto=$event" ></app-selector-default>
+                          <app-selector-default nombre="concepto" [(matSelect)]="descuentos.conceptoid" (optionSelected)="descuentos.concepto=$event" ></app-selector-default>
                           <mat-form-field class="children-input"><input matInput [(ngModel)]="descuentos.importeunitario" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
                         
                           <!--  
                           <mat-form-field class="children-input"><input matInput [(ngModel)]="descuentos.cantidad" placeholder="Cantidad" type="number" autocomplete="off"></mat-form-field>
                           <mat-form-field class="children-input"><input matInput [(ngModel)]="descuentos.porcentaje" placeholder="Porcentaje" type="number" autocomplete="off"></mat-form-field>
-                          <app-selector-default type="concepto" [(matSelect)]="descuentos.sobreconceptoid" (optionSelected)="descuentos.sobreconcepto=$event" ></app-selector-default>
+                          <app-selector-default nombre="concepto" [(matSelect)]="descuentos.sobreconceptoid" (optionSelected)="descuentos.sobreconcepto=$event" ></app-selector-default>
                           <mat-form-field class="children-input"><input matInput [(ngModel)]="descuentos.total" placeholder="total" type="Number" autocomplete="off"></mat-form-field>
                           -->
 
@@ -147,12 +140,12 @@
       </div>
 
       <div>
-          <mat-expansion-panel >
+          <mat-expansion-panel>
               <mat-expansion-panel-header>
-                <mat-panel-title  *ngIf="(data.retenciones.length == 0)">
+                <mat-panel-title *ngIf="(data.retenciones == null || data.retenciones.length == 0)">
                     Retenciones
                 </mat-panel-title>
-                <mat-panel-title  *ngIf="(data.retenciones.length != 0)">
+                <mat-panel-title *ngIf="(data.retenciones != null && data.retenciones.length != 0)">
                     Retenciones ({{data.retenciones.length}})
                 </mat-panel-title>
                 </mat-expansion-panel-header>
@@ -163,7 +156,7 @@
                           <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(retenciones)">
                             <mat-icon>delete_forever</mat-icon>
                           </button>
-                          <app-selector-default type="concepto" [(matSelect)]="retenciones.conceptoid" (optionSelected)="retenciones.concepto=$event" ></app-selector-default>
+                          <app-selector-default nombre="concepto" [(matSelect)]="retenciones.conceptoid" (optionSelected)="retenciones.concepto=$event" ></app-selector-default>
                           <mat-form-field class="children-input"><input matInput [(ngModel)]="retenciones.importeunitario" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
                                                       
                         </div>
