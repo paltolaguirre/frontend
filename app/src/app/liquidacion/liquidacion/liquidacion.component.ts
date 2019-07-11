@@ -1,7 +1,7 @@
 import { LiquidacionService } from '../liquidacion.service';
 import { Liquidacion } from '../liquidacion.model';
 import { formatDate } from "@angular/common";
-import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnInit , Inject } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { merge, Observable, of as observableOf } from 'rxjs';
@@ -9,7 +9,11 @@ import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { NotificationService } from 'src/app/handler-error/notification.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { PrintService } from 'src/app/print/print.service';
-
+import { DialogLiquidaciones } from './liquidacion-dialog/liquidacion-dialog.component';
+import { ListaItems , NovedadService } from 'src/app/novedad/novedad.service';
+import { Novedad } from '../../novedad/novedad.model';
+import { AnonymousSubject } from 'rxjs/internal/Subject';
+import { variable } from '@angular/compiler/src/output/output_ast';
 @Component({
   selector: 'app-liquidacion',
   templateUrl: './liquidacion.component.html',
@@ -19,6 +23,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   public currentLiquidacion$: Observable<Liquidacion> = null;
   paises: any[];
   id: number;
+  data: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -47,6 +52,18 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
 
   }
+  
+  
+  onClickNovedades(data): void {
+    const dialogRef = this.dialog.open(DialogLiquidaciones, {
+       data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+   
+    });
+  }
+
 
   private gotoGrilla() {
     this.router.navigate(['/liquidaciones']);
@@ -58,7 +75,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
 
   async onClickSave(data: Liquidacion): Promise<Liquidacion> {
     let liquidacionesItem: Liquidacion;    
-
+    
     if(data.fechaperiododepositado)data.fechaperiododepositado = formatDate(data.fechaperiododepositado, "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US');
     if(data.fecha)data.fecha = formatDate(data.fecha, "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US');
     if(data.fechaperiodoliquidacion)data.fechaperiodoliquidacion = formatDate(data.fechaperiodoliquidacion, "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US');

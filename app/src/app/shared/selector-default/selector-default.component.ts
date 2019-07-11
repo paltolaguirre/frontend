@@ -76,6 +76,10 @@ export class SelectorDefaultComponent implements OnInit {
         return "Obra social"; 
       case 'conveniocolectivo': 
         return "Convenio colectivo"; 
+      case 'legajo': 
+          return "Legajo"; 
+      case 'concepto': 
+          return "Concepto"; 
       case 'centrodecosto': 
         return "Centro de costo"; 
         case 'cuenta': 

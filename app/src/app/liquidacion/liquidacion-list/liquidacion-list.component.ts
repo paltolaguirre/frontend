@@ -8,6 +8,7 @@ import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { NotificationService } from 'src/app/handler-error/notification.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { PrintService } from 'src/app/print/print.service';
+import { DialogLiquidacionesList } from './liquidacion-list-dialog/liquidacion-list-dialog.component';
 
 @Component({
   selector: 'app-liquidacion-list',
@@ -15,13 +16,14 @@ import { PrintService } from 'src/app/print/print.service';
   styleUrls: ['./liquidacion-list.component.css']
 })
 export class LiquidacionListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['Creado', 'Nombre' , 'Acciones'];
+  displayedColumns: string[] = ['Creado', 'Nombre' , 'Acciones' ];
   dataSource: MatTableDataSource<Liquidacion> = new MatTableDataSource<Liquidacion>();
   //data: LiquidacionesApi;
 
   resultsLength = 0;
   isLoadingResults = true;
   isRateLimitReached = false;
+  disabled = false;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -51,6 +53,17 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
 
   }
   
+  
+  onClickContabilizar(data): void {
+    const dialogRef = this.dialog.open(DialogLiquidacionesList, {
+       data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+   
+    });
+  }
+
 
   onCreate(item: Liquidacion) {
     console.log("Created Item: " + item.ID);
@@ -85,3 +98,4 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
 
   }
 }
+

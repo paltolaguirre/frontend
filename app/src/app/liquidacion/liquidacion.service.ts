@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SelectorElement } from '../shared/selector-default/selector-default.component';
-import { Liquidacion } from './liquidacion.model';
+import { Liquidacion , Fechaliquidaciones } from './liquidacion.model';
 
 export interface ListaItems {
   items: any[];
@@ -13,6 +13,7 @@ export interface ListaItems {
 })
 export class LiquidacionService {
   href = '/api/liquidacion/liquidaciones';
+  hrefcontabilizar = 'api/liquidacion/contabilizar';
   
   constructor(private http: HttpClient) { }
 
@@ -47,6 +48,15 @@ export class LiquidacionService {
     liquidacion = await this.http.post<Liquidacion>(requestUrl, liquidacion).toPromise();
 
     return liquidacion;
+  }
+
+  public async postContabilizarLiquidacion(fechaliquidaciones: Fechaliquidaciones): Promise<any> {
+    const requestUrl =
+      `${this.hrefcontabilizar}`;
+    
+    var response = await this.http.post<any>(requestUrl, fechaliquidaciones).toPromise();
+
+    return response;
   }
 
   public async putLiquidacion(liquidacion: Liquidacion): Promise<Liquidacion> {

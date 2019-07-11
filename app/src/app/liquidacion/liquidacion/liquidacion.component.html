@@ -18,13 +18,14 @@
       </div>
       <div>  
           <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.tipo" placeholder="Tipo" type="number" autocomplete="off"></mat-form-field>    
-          <mat-form-field>
+          <mat-form-field class="selector">
               <mat-label>Condicion de Pago</mat-label>
               <select [(ngModel)]="data.condicionpago" matNativeControl required>
                 <option [ngValue]="1">Cuenta Corriente</option>
                 <option [ngValue]="2">Contado</option>
               </select>
          </mat-form-field>
+         
       </div>
       <div>
           <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="data.fecha=$event" [ngModel]="data.fecha | date: 'yyyy-MM-dd'" placeholder="Fecha" autocomplete="off"></mat-form-field>
@@ -38,21 +39,19 @@
           <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="data.fechaperiodoliquidacion=$event" [ngModel]="data.fechaperiodoliquidacion | date: 'yyyy-MM-dd'" placeholder="Periodo Liquidacion" autocomplete="off"></mat-form-field>      
       </div>
       <div>
-          <mat-expansion-panel >
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                    Datos Personales
-                </mat-panel-title>
-                </mat-expansion-panel-header>
-                <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.descripcion" placeholder="Observaciones" type="text" autocomplete="off"></mat-form-field>
-              </mat-expansion-panel>
+          <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.descripcion" placeholder="Observaciones" type="text" autocomplete="off"></mat-form-field>
       </div>
-
+      <div>
+          <button  mat-raised-button color="primary" (click)="onClickNovedades(data)">Novedades</button>
+      </div>
       <div>
           <mat-expansion-panel >
               <mat-expansion-panel-header>
-                <mat-panel-title>
+                <mat-panel-title *ngIf="(data.importesremunerativos.length == 0)">
                     Importes Remunerativos
+                </mat-panel-title>
+                <mat-panel-title *ngIf="(data.importesremunerativos.length != 0)">
+                    Importes Remunerativos ({{data.importesremunerativos.length}})
                 </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="children-container">
@@ -78,12 +77,14 @@
           </mat-expansion-panel>
       </div>
 
-      
       <div>
           <mat-expansion-panel >
               <mat-expansion-panel-header>
-                <mat-panel-title>
+                <mat-panel-title *ngIf="(data.importesnoremunerativos.length == 0)">
                     Importes No Remunerativos
+                </mat-panel-title>
+                <mat-panel-title *ngIf="(data.importesnoremunerativos.length != 0)">
+                    Importes No Remunerativos ({{data.importesnoremunerativos.length}})
                 </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="children-container">
@@ -101,7 +102,7 @@
                           <mat-form-field class="children-input"><input matInput [(ngModel)]="importesnoremunerativos.porcentaje" placeholder="Porcentaje" type="number" autocomplete="off"></mat-form-field>
                           <mat-form-field class="children-input"><input matInput [(ngModel)]="importesnoremunerativos.total" placeholder="total" type="Number" autocomplete="off"></mat-form-field>
                           <app-selector-default type="concepto" [(matSelect)]="importesnoremunerativos.sobreconceptoid" (optionSelected)="importesnoremunerativos.sobreconcepto=$event" ></app-selector-default>
-                          -->                       
+                          -->
                         </div>
                       </tr>
                     </table>
@@ -113,8 +114,11 @@
       <div>
           <mat-expansion-panel >
               <mat-expansion-panel-header>
-                <mat-panel-title>
+                <mat-panel-title *ngIf="(data.descuentos.length == 0)">
                     Descuentos
+                </mat-panel-title>
+                <mat-panel-title *ngIf="(data.descuentos.length != 0)">
+                    Descuentos ({{data.descuentos.length}})
                 </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="children-container">
@@ -145,8 +149,11 @@
       <div>
           <mat-expansion-panel >
               <mat-expansion-panel-header>
-                <mat-panel-title>
+                <mat-panel-title  *ngIf="(data.retenciones.length == 0)">
                     Retenciones
+                </mat-panel-title>
+                <mat-panel-title  *ngIf="(data.retenciones.length != 0)">
+                    Retenciones ({{data.retenciones.length}})
                 </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="children-container">

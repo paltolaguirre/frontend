@@ -13,6 +13,11 @@ h2 {
   background-color: #ffffff;
 }
 
+.standard-input {
+  margin-right: 15px;
+
+}
+
 .children-container {
   margin: 1em;
   padding: 1em 1em 1em 1em;
@@ -27,10 +32,15 @@ h2 {
   padding: 1em;
 }
 
-.standard-input {
+.th {
     width: 400px;
     height: 60px;
     margin-right: 15px;
+}
+
+.ng-container {
+  margin-right: 15px;
+  margin-left: 15px;
 }
 
 .actions {
