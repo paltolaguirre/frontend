@@ -71,6 +71,13 @@ export class ConceptoListComponent implements OnInit, AfterViewInit {
     this.dataSource = new MatTableDataSource<Concepto>(this.dataSource.data);
   }
 
+  getPageSizeOptions(): number[] {
+    if (this.dataSource.data.length>20)
+    return [5, 10, 20,  this.dataSource.paginator.length];
+    else
+    return [5, 10, 20];
+  }
+
   onDelete(item: Concepto) {
     console.log("Deleted Item: " + item.ID);
     this.dataSource.data.forEach(function (el, index) {

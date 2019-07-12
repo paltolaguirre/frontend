@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { F913Service } from './f913.service';
+import { F931Service } from './f931.service';
 
-describe('F913Service', () => {
+describe('F931Service', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: F913Service = TestBed.get(F913Service);
+    const service: F931Service = TestBed.get(F931Service);
     expect(service).toBeTruthy();
   });
 });

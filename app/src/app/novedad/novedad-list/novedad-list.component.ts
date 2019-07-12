@@ -61,6 +61,13 @@ export class NovedadListComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
 
+  getPageSizeOptions(): number[] {
+    if (this.dataSource.data.length>20)
+    return [5, 10, 20,  this.dataSource.paginator.length];
+    else
+    return [5, 10, 20];
+  }
+  
   onUpdate(item: Novedad) {
     console.log("Updated Item: " + item.ID);
     this.dataSource.data.forEach(function (el, index) {

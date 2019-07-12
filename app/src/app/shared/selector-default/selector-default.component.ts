@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { SelectorService } from './selector-default.service';
 import { startWith, map } from 'rxjs/operators';
 import { Options } from 'selenium-webdriver';
+import { Models } from './selector-default.models';
 
 export interface SelectorElement {
   id: any;
@@ -35,12 +36,12 @@ export class SelectorDefaultComponent implements OnInit {
 
   filteredOptions: Observable<SelectorElement[]>;
 
-  constructor(private selectorService: SelectorService) { }
+  constructor(private selectorService: SelectorService, public models: Models) { }
     
   async ngOnInit() {
-    this.placeholder = await this.setPlaceHolder(this.nombre);
+    this.placeholder = await this.models.setPlaceHolder(this.nombre);
     if (this.tipo == "hardcode") {
-      this.options = this.getOpciones(this.nombre);
+      this.options = this.models.valor(this.nombre);
     } else {
       this.options = await this.selectorService.getSelector(this.nombre);
     }
@@ -57,60 +58,13 @@ export class SelectorDefaultComponent implements OnInit {
     }
   }
   
-  getOpciones(nombre: string): SelectorElement[] {
-    switch (nombre) { 
-      case 'condicionpago': 
-        return  [{nombre: 'Contado', id: 1},{nombre: 'Cuenta Corriente', id: 2}];      
-      case 'provincia': 
-      return  [{nombre: 'Contado', id: 1},{nombre: 'Cuenta Corriente', id: 2}];      
-      case 'cuenta': 
-      return  [{nombre: 'Contado', id: 1},{nombre: 'Cuenta Corriente', id: 2}];      
-      default: 
-      return  [];      
-    } 
-  }
-
   public onSelectChangeEvent(event,data)
   {
     eval("data."+this.nombre + " = " + event);
     eval("data."+this.nombre + "ID = " + event.ID);
   }
 
-  async setPlaceHolder(nombre: string) : Promise<string> {
-    switch (nombre) { 
-      case 'condicionpago': 
-        return "Condicion de Pago"; 
-      case 'localidad': 
-        return "Localidad"; 
-      case 'provincia': 
-        return "Provincia"; 
-      case 'pais': 
-        return "País"; 
-      case 'modalidadcontratacion': 
-        return "Modalidad de contratación"; 
-      case 'situacion': 
-        return "Situación"; 
-      case 'condicion': 
-        return "Condición"; 
-      case 'condicionsiniestrado': 
-        return "Condición siniestrado"; 
-      case 'obrasocial': 
-        return "Obra social"; 
-      case 'conveniocolectivo': 
-        return "Convenio colectivo"; 
-      case 'legajo': 
-          return "Legajo"; 
-      case 'concepto': 
-          return "Concepto"; 
-      case 'centrodecosto': 
-        return "Centro de costo"; 
-        case 'cuenta': 
-        return "Cuenta"; 
-      default: 
-      return "Seleccione..."; 
-    } 
-  }
-
+ 
   ngAfterViewInit() {
   
   }

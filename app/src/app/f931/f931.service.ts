@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SelectorElement } from '../shared/selector-default/selector-default.component';
-import { F913 } from './f913.model';
+import { F931 } from './f931.model';
 
 export interface ListaItems {
   items: any[];
@@ -11,17 +11,17 @@ export interface ListaItems {
 @Injectable({
   providedIn: 'root'
 })
-export class F913Service {
-  href = '/api/informe/informes/f913';
+export class F931Service {
+  href = '/api/informe/informes/f931';
   
   constructor(private http: HttpClient) { }
 
-  public async getF913s(sort: string, order: string, page: number): Promise<ListaItems> {
+  public async getF931s(sort: string, order: string, fechadesde : Date , fechahasta : Date, page: number): Promise<ListaItems> {
     const requestUrl =
-      `${this.href}`+"?fechadesde=01-01-1990&fechahasta=01-01-2020";
+      `${this.href}`+"?fechadesde="+fechadesde+"&fechahasta="+fechahasta;
 
     let listaItems: ListaItems = { items: null, total_count: null };
-    listaItems.items = await this.http.get<F913[]>(requestUrl).toPromise();
+    listaItems.items = await this.http.get<F931[]>(requestUrl).toPromise();
     listaItems.total_count = listaItems.items.length;
 
     return listaItems;

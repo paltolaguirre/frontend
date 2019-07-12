@@ -16,8 +16,8 @@
           <app-selector-default nombre="legajo" [(matSelect)]="data.legajoid" (optionSelected)="data.legajo=$event"></app-selector-default>
           <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.zonatrabajo" placeholder="Zona de Trabajo" type="text" autocomplete="off"></mat-form-field>
       </div>
-      <div>  
-          <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.tipo" placeholder="Tipo" type="number" autocomplete="off"></mat-form-field>    
+      <div>
+         <app-selector-default nombre="tipo" type="hardcode" [(matSelect)]="data.tipo" (optionSelected)="data.tipos=$event"></app-selector-default>
          <app-selector-default nombre="condicionpago" type="hardcode" [(matSelect)]="data.condicionpago" (optionSelected)="data.condicionpagos=$event"></app-selector-default>
       </div>
       <div>

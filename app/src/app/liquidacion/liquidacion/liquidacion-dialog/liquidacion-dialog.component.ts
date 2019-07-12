@@ -13,7 +13,7 @@ export class DialogLiquidaciones {
  
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  displayedColumns: string[] = ['Concepto', 'Acciones', 'Importe' ];
+  displayedColumns: string[] = ['Concepto',  'Importe' , 'Acciones'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   isLoadingResults = true;
   
@@ -31,6 +31,12 @@ export class DialogLiquidaciones {
       this.dialogRef.close();
     }
   
+    getPageSizeOptions(): number[] {
+      if (this.dataSource.data.length>20)
+      return [5, 10, 20,  this.dataSource.paginator.length];
+      else
+      return [5, 10, 20];
+    }
     private agregarTablas() {
       this.dataSource.data.forEach(element => {   
         var pushData = {conceptoid : element.conceptoid , importeunitario : element.importe};

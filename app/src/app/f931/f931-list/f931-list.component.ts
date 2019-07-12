@@ -1,5 +1,5 @@
-import { ListaItems, LibrosueldosService } from '../librosueldos.service';
-import { Librosueldos } from '../librosueldos.model';
+import { ListaItems, F931Service } from '../f931.service';
+import { F931 } from '../f931.model';
 import { Component, ViewChild, AfterViewInit, OnInit , Input} from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -11,14 +11,14 @@ import { formatDate } from "@angular/common";
 import { PrintService } from 'src/app/print/print.service';
 
 @Component({
-  selector: 'app-librosueldos-list',
-  templateUrl: './librosueldos-list.component.html',
-  styleUrls: ['./librosueldos-list.component.css']
+  selector: 'app-f931-list',
+  templateUrl: './f931-list.component.html',
+  styleUrls: ['./f931-list.component.css']
 })
-export class LibrosueldosListComponent implements OnInit, AfterViewInit {
+export class F931ListComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['Legajo', 'Fechaperiodoliquidacion' , 'Concepto', 'Importe'];
-  dataSource: MatTableDataSource<Librosueldos> = new MatTableDataSource<Librosueldos>();
-  //data: LibrosueldossApi;
+  dataSource: MatTableDataSource<F931> = new MatTableDataSource<F931>();
+  //data: F931sApi;
 
   fechahasta : any;
   fechadesde : any;
@@ -29,24 +29,24 @@ export class LibrosueldosListComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  librosueldosID$: Observable<String>;
-  public currentLibrosueldos$: Observable<Librosueldos> = null;
+  f931ID$: Observable<String>;
+  public currentF931$: Observable<F931> = null;
   id: number;
 
   constructor(
     private route: ActivatedRoute,
-    private librosueldosService: LibrosueldosService,
+    private f931Service: F931Service,
     public dialog: MatDialog,
     private notificationService: NotificationService,
     public printService : PrintService
   ) {
-    if(localStorage.getItem('librosueldos-fechahasta')) {
-      this.fechahasta = localStorage.getItem('librosueldos-fechahasta');
+    if(localStorage.getItem('f931-fechahasta')) {
+      this.fechahasta = localStorage.getItem('f931-fechahasta');
     } else {
       this.fechahasta = formatDate(Date.now(), "MM-dd-yyyy", 'en-US');
     }
-    if(localStorage.getItem('librosueldos-fechadesde')) {
-      this.fechadesde = localStorage.getItem('librosueldos-fechadesde');
+    if(localStorage.getItem('f931-fechadesde')) {
+      this.fechadesde = localStorage.getItem('f931-fechadesde');
     } else {
       this.fechadesde = '01/01/2000';
     }
@@ -63,12 +63,12 @@ export class LibrosueldosListComponent implements OnInit, AfterViewInit {
     return [5, 10, 20];
   }
   changeFechaDesde (value) {
-    localStorage.setItem("librosueldos-fechadesde",value);
+    localStorage.setItem("f931-fechadesde",value);
     this.fechadesde = value;
     this.updateGrilla();
   }
   changeFechaHasta (value) {
-    localStorage.setItem("librosueldos-fechahasta",value);
+    localStorage.setItem("f931-fechahasta",value);
     this.fechahasta = value;
     this.updateGrilla();
 
@@ -80,8 +80,8 @@ export class LibrosueldosListComponent implements OnInit, AfterViewInit {
   }
 
   async updateGrilla () {
-    const librosueldossApi: ListaItems = await this.librosueldosService.getLibrosueldoss(this.sort.active, this.sort.direction,this.fechadesde,this.fechahasta, 1);
-    this.dataSource = new MatTableDataSource<Librosueldos>(librosueldossApi.items);
+    const f931sApi: ListaItems = await this.f931Service.getF931s(this.sort.active, this.sort.direction,this.fechadesde,this.fechahasta, 1);
+    this.dataSource = new MatTableDataSource<F931>(f931sApi.items);
     this.dataSource.paginator = this.paginator;
     this.paginator._intl.itemsPerPageLabel = "Items por página";
     this.isLoadingResults = false;

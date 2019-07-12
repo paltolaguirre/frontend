@@ -47,8 +47,8 @@ import { MatToolbarModule, MatTabsModule, MatIconModule, MatSidenavModule, MatLi
             loadChildren: '../librosueldos/librosueldos.module#LibrosueldosModule',
           },
           {
-            path: 'informe913',
-            loadChildren: '../f913/f913.module#F913Module',
+            path: 'informe931',
+            loadChildren: '../f931/f931.module#F931Module',
           },
           {
             path: '',

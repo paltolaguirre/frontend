@@ -14,8 +14,8 @@ export interface Liquidacion {
     activo: number;
     legajo: Legajo;
     legajoid: number;
-    tipoid : number;
-    tipo : Tipo;
+    tipos : Tipo;
+    tipo : number;
     fecha : string;
     fechaultimodepositoaportejubilatorio : string;
     zonatrabajo : string;

@@ -16,7 +16,7 @@ import { DialogLiquidacionesList } from './liquidacion-list-dialog/liquidacion-l
   styleUrls: ['./liquidacion-list.component.css']
 })
 export class LiquidacionListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['Creado', 'Nombre' , 'Acciones' ];
+  displayedColumns: string[] = ['Creado', 'Nombre' , 'Contabilizada','Acciones' ];
   dataSource: MatTableDataSource<Liquidacion> = new MatTableDataSource<Liquidacion>();
   //data: LiquidacionesApi;
 
@@ -53,7 +53,12 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
 
   }
   
-  
+  getPageSizeOptions(): number[] {
+    if (this.dataSource.data.length>20)
+    return [5, 10, 20,  this.dataSource.paginator.length];
+    else
+    return [5, 10, 20];
+  }
   onClickContabilizar(data): void {
     const dialogRef = this.dialog.open(DialogLiquidacionesList, {
        data

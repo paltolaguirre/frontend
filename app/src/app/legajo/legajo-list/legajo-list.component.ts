@@ -59,6 +59,13 @@ export class LegajoListComponent implements OnInit, AfterViewInit {
 
   }
 
+  getPageSizeOptions(): number[] {
+    if (this.dataSource.data.length>20)
+    return [5, 10, 20,  this.dataSource.paginator.length];
+    else
+    return [5, 10, 20];
+  }
+
   onCreate(item: Legajo) {
     console.log("Created Item: " + item.ID);
     this.dataSource.data.push(item);
