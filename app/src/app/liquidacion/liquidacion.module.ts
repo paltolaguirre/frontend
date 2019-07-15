@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-
+import { FormsModule , ReactiveFormsModule } from '@angular/forms';
 import { LiquidacionRoutingModule } from './liquidacion-routing.module';
 
 import { SharedModule } from '../shared/shared.module';
@@ -17,6 +16,7 @@ import { ActionsComponent } from './liquidacion-list/actions/actions.component';
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     LiquidacionRoutingModule,
     DemoMaterialModule,
     SharedModule

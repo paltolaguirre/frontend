@@ -15,7 +15,7 @@ import { PrintService } from 'src/app/print/print.service';
   styleUrls: ['./concepto-list.component.css']
 })
 export class ConceptoListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['Creado', 'Nombre' , 'Acciones'];
+  displayedColumns: string[] = ['Nombre' , 'Acciones'];
   dataSource: MatTableDataSource<Concepto> = new MatTableDataSource<Concepto>();
   //data: ConceptosApi;
 
@@ -69,6 +69,13 @@ export class ConceptoListComponent implements OnInit, AfterViewInit {
     }, this);
 
     this.dataSource = new MatTableDataSource<Concepto>(this.dataSource.data);
+  }
+
+  getPageSizeOptions(): number[] {
+    if (this.dataSource.data.length>20)
+    return [5, 10, 20,  this.dataSource.paginator.length];
+    else
+    return [5, 10, 20];
   }
 
   onDelete(item: Concepto) {

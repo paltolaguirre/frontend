@@ -42,6 +42,12 @@
     max-height: 600px;
 }
 
+.standard-input {
+    margin-left: 17px;
+    margin-right: 17px;
+    width: 200px;
+}
+
 table {
     background: #ffffff;
     min-width: 400px;

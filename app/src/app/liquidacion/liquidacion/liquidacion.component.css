@@ -13,6 +13,11 @@ h2 {
   background-color: #ffffff;
 }
 
+::ng-deep.big-input {
+  width: 815px;
+  height: 60px;
+  margin-right: 15px;
+}
 .children-container {
   margin: 1em;
   padding: 1em 1em 1em 1em;

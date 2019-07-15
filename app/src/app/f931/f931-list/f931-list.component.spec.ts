@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { F913ListComponent } from './f913-list.component';
+import { F931ListComponent } from './f931-list.component';
 
-describe('F913ListComponent', () => {
-  let component: F913ListComponent;
-  let fixture: ComponentFixture<F913ListComponent>;
+describe('F931ListComponent', () => {
+  let component: F931ListComponent;
+  let fixture: ComponentFixture<F931ListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ F913ListComponent ]
+      declarations: [ F931ListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(F913ListComponent);
+    fixture = TestBed.createComponent(F931ListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -15,7 +15,7 @@ import { PrintService } from 'src/app/print/print.service';
   styleUrls: ['./legajo-list.component.css']
 })
 export class LegajoListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = [ 'Nombre', 'Legajo','Creado', 'Acciones'];
+  displayedColumns: string[] = [ 'Legajo' , 'Apellido',  'Nombre', 'Acciones'];
   dataSource: MatTableDataSource<Legajo> = new MatTableDataSource<Legajo>();
   //data: LegajosApi;
 
@@ -57,6 +57,13 @@ export class LegajoListComponent implements OnInit, AfterViewInit {
       this.paginator._intl.itemsPerPageLabel = "Items por página";
       this.isLoadingResults = false;
 
+  }
+
+  getPageSizeOptions(): number[] {
+    if (this.dataSource.data.length>20)
+    return [5, 10, 20,  this.dataSource.paginator.length];
+    else
+    return [5, 10, 20];
   }
 
   onCreate(item: Legajo) {

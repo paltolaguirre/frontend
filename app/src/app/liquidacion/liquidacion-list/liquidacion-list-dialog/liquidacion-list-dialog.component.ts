@@ -37,6 +37,7 @@ import { Fechaliquidaciones } from '../../liquidacion.model';
         }
       }
 
+
     async ngOnInit() {
         
     }

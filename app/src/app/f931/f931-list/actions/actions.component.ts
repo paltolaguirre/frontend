@@ -1,7 +1,7 @@
 import { Component, AfterViewInit, Inject, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { ListaItems, F913Service } from '../../f913.service';
-import { F913 } from '../../f913.model';
+import { ListaItems, F931Service } from '../../f931.service';
+import { F931 } from '../../f931.model';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,17 +10,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./actions.component.css']
 })
 export class ActionsComponent implements OnInit {
-  @Input() f913: number;
-  @Output() public update = new EventEmitter<F913>();
-  @Output() public delete = new EventEmitter<F913>();
-  numeroF913: string;
+  @Input() f931: number;
+  @Output() public update = new EventEmitter<F931>();
+  @Output() public delete = new EventEmitter<F931>();
+  numeroF931: string;
   conductor: string;
   fecha: string;
   tipo: string;
 
   constructor(
     public dialog: MatDialog,
-    private f913Service: F913Service,
+    private f931Service: F931Service,
     private router: Router
     ) { }
 
@@ -28,7 +28,7 @@ export class ActionsComponent implements OnInit {
   }
 
   editItem() {
-    this.router.navigate(['/f913s', this.f913]);
+    this.router.navigate(['/f931s', this.f931]);
   }
 
 }

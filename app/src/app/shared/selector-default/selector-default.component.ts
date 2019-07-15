@@ -4,6 +4,8 @@ import { MatTableDataSource } from '@angular/material';
 import { Observable } from 'rxjs';
 import { SelectorService } from './selector-default.service';
 import { startWith, map } from 'rxjs/operators';
+import { Options } from 'selenium-webdriver';
+import { Models } from './selector-default.models';
 
 export interface SelectorElement {
   id: any;
@@ -25,6 +27,7 @@ export class SelectorDefaultComponent implements OnInit {
   @Input() placeholder: string = 'Seleccione una opción';
   @Input() value: SelectorElement;
   @Input('type') tipo: string;
+  @Input('nombre') nombre: string;
   @Input('matSelect') matSelect: string;
   @Output() optionSelected = new EventEmitter();
 
@@ -33,62 +36,35 @@ export class SelectorDefaultComponent implements OnInit {
 
   filteredOptions: Observable<SelectorElement[]>;
 
-  constructor(private selectorService: SelectorService) { }
+  constructor(private selectorService: SelectorService, public models: Models) { }
     
   async ngOnInit() {
-    this.placeholder = await this.setPlaceHolder(this.tipo);
-    this.options = await this.selectorService.getSelector(this.tipo);
-    this.filteredOptions = this.myControl.valueChanges 
-    .pipe( 
-      startWith<string | SelectorElement>(''), 
-      map(value => typeof value === 'string' ? value : ''), 
-      map(name => name ? this._filter(name) : this.options.slice()) 
-    ); 
-    
-    let filter = this.options.filter(option => option.id == this.matSelect); 
-    let option = filter.length>0?filter[0]:null; 
-    this.myControl.setValue(option); 
+    this.placeholder = await this.models.setPlaceHolder(this.nombre);
+    if (this.tipo == "hardcode") {
+      this.options = this.models.valor(this.nombre);
+    } else {
+      this.options = await this.selectorService.getSelector(this.nombre);
+    }
+    if (this.options) {
+      this.filteredOptions = this.myControl.valueChanges 
+      .pipe( 
+        startWith<string | SelectorElement>(''), 
+        map(value => typeof value === 'string' ? value : ''), 
+        map(name => name ? this._filter(name) : this.options.slice()) 
+      ); 
+      let filter = this.options.filter(option => option.id == this.matSelect); 
+      let option = filter.length>0?filter[0]:null; 
+      this.myControl.setValue(option); 
+    }
   }
-
+  
   public onSelectChangeEvent(event,data)
   {
-    eval("data."+this.tipo + " = " + event);
-    eval("data."+this.tipo + "ID = " + event.ID);
+    eval("data."+this.nombre + " = " + event);
+    eval("data."+this.nombre + "ID = " + event.ID);
   }
 
-  async setPlaceHolder(tipo: string) : Promise<string> {
-    switch (tipo) { 
-      case 'localidad': 
-        return "Localidad"; 
-      case 'provincia': 
-        return "Provincia"; 
-      case 'pais': 
-        return "País"; 
-      case 'modalidadcontratacion': 
-        return "Modalidad de contratación"; 
-      case 'situacion': 
-        return "Situación"; 
-      case 'condicion': 
-        return "Condición"; 
-      case 'condicionsiniestrado': 
-        return "Condición siniestrado"; 
-      case 'obrasocial': 
-        return "Obra social"; 
-      case 'conveniocolectivo': 
-        return "Convenio colectivo"; 
-      case 'legajo': 
-          return "Legajo"; 
-      case 'concepto': 
-          return "Concepto"; 
-      case 'centrodecosto': 
-        return "Centro de costo"; 
-        case 'cuenta': 
-        return "Cuenta"; 
-      default: 
-      return "Seleccione..."; 
-    } 
-  }
-
+ 
   ngAfterViewInit() {
   
   }

@@ -15,7 +15,7 @@ import { PrintService } from 'src/app/print/print.service';
   styleUrls: ['./novedad-list.component.css']
 })
 export class NovedadListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['Legajo','Concepto', 'Fecha' , 'Acciones'];
+  displayedColumns: string[] = ['Legajo','Apellido','Nombre','Concepto', 'Fecha' , 'Acciones'];
   dataSource: MatTableDataSource<Novedad> = new MatTableDataSource<Novedad>();
   //data: NovedadesApi;
 
@@ -42,13 +42,11 @@ export class NovedadListComponent implements OnInit, AfterViewInit {
   }
 
   async ngAfterViewInit() {
-
       const novedadesApi: ListaItems = await this.novedadService.getNovedades(this.sort.active, this.sort.direction, 1);
       this.dataSource = new MatTableDataSource<Novedad>(novedadesApi.items);
       this.dataSource.paginator = this.paginator;
       this.paginator._intl.itemsPerPageLabel = "Items por página";
       this.isLoadingResults = false;
-
   }
   
 
@@ -63,6 +61,13 @@ export class NovedadListComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
 
+  getPageSizeOptions(): number[] {
+    if (this.dataSource.data.length>20)
+    return [5, 10, 20,  this.dataSource.paginator.length];
+    else
+    return [5, 10, 20];
+  }
+  
   onUpdate(item: Novedad) {
     console.log("Updated Item: " + item.ID);
     this.dataSource.data.forEach(function (el, index) {
