@@ -26,6 +26,7 @@ export interface SelectorElement {
 export class SelectorDefaultComponent implements OnInit {
   @Input() placeholder: string = 'Seleccione una opción';
   @Input() value: SelectorElement;
+  @Input('disabled') disabled: Boolean;
   @Input('type') tipo: string;
   @Input('nombre') nombre: string;
   @Input('matSelect') matSelect: string;
@@ -55,6 +56,7 @@ export class SelectorDefaultComponent implements OnInit {
       let filter = this.options.filter(option => option.id == this.matSelect); 
       let option = filter.length>0?filter[0]:null; 
       this.myControl.setValue(option); 
+      if (this.disabled == true) {this.myControl.disable();}
     }
   }
   

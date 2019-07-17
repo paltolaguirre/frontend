@@ -75,6 +75,10 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
     return conceptosItem;
   }
 
+  isDefault(data) : Boolean {
+    return data.ID<0?true:false;
+  }
+
   selectChange(event,data)
   {
     data.cuenta = event
