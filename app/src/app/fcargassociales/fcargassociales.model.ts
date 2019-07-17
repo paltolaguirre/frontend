@@ -1,4 +1,4 @@
-export interface F931 {  
+export interface Fcargassociales {  
     nombre: string;
     importe: number;
 }

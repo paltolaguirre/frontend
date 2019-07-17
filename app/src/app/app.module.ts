@@ -13,6 +13,11 @@ import { ErrorInterceptor } from './auth/error.interceptor';
 import { HandlerErrorModule } from './handler-error/handler-error.module';
 import { NotificationService } from './handler-error/notification.service';
 import { PrintService } from './print/print.service';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es-AR';
+import localeEsExtra from '@angular/common/locales/extra/es-AR';
+
+registerLocaleData(localeEs, 'es-AR', localeEsExtra);
 
 @NgModule({
   declarations: [
