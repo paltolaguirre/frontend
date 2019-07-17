@@ -13,9 +13,11 @@ export class Models {
             return [{nombre: 'Mensual', codigo: 'Mensual',id: 1},{nombre: 'Primer Quincena', id: 2},{nombre: 'Segunda Quincena', id: 3},{nombre: 'Vacaciones', id: 4},{nombre: 'SAC', id: 5},{nombre: 'Liquidacion Final', id: 6}]; 
           case 'liquidacion-novedades': 
             return [{nombre: 'Descuentos', id: 1},{nombre: 'Retenciones', id: 2},{nombre: 'Importes Remunerativos', id: 3},{nombre: 'Importes No Remunerativos', id: 4}]; 
-            case 'mes': 
-            return [{nombre: 'Enero', id: 1},{nombre: 'Febrero', id: 2},{nombre: 'Marzo', id: 3},{nombre: 'Abril', id: 4},{nombre: 'Mayo', id: 5},
-            ,{nombre: 'Junio', id: 6},{nombre: 'Julio', id: 7},{nombre: 'Agosto', id: 8},{nombre: 'Septiembre', id: 9},{nombre: 'Octubre', id: 10},{nombre: 'Noviembre', id: 11},{nombre: 'Diciembre', id: 12}]; 
+          case 'mes': 
+            return [{nombre: 'Enero', id: 1},{nombre: 'Febrero', id: 2},{nombre: 'Marzo', id: 3},
+                    {nombre: 'Abril', id: 4},{nombre: 'Mayo', id: 5},{nombre: 'Junio', id: 6},
+                    {nombre: 'Julio', id: 7},{nombre: 'Agosto', id: 8},{nombre: 'Septiembre', id: 9},
+                    {nombre: 'Octubre', id: 10},{nombre: 'Noviembre', id: 11},{nombre: 'Diciembre', id: 12}]; 
           default: 
           return []; 
       } 
@@ -52,6 +54,10 @@ export class Models {
         return "Cuenta"; 
       case 'tipo': 
          return "Tipo"; 
+      case 'mes': 
+         return "Mes"; 
+      case 'anio': 
+         return "Año"; 
       default: 
       return "Seleccione..."; 
     } 
