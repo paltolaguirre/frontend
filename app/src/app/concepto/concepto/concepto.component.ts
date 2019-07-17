@@ -62,12 +62,13 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
     if (this.id) {
       console.log("Updated Concepto");
       conceptosItem = await this.conceptoService.putConcepto(data);
-      this.notificationService.notify("Concepto Actualizado");
+      this.gotoGrilla();
+   //   this.notificationService.notify("Concepto Actualizado");
     } else {
       console.log("Created Concepto");
       conceptosItem = await this.conceptoService.postConcepto(data);
       this.gotoGrilla();
-      this.notificationService.notify("Concepto Creado");
+ //     this.notificationService.notify("Concepto Creado");
     }
 
     console.log(data);

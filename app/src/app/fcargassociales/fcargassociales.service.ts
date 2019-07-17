@@ -27,4 +27,14 @@ export class FcargassocialesService {
     return listaItems;
   }
  
+  public async getFcargassocialesTXT(fechadesde : Date , fechahasta : Date): Promise<ListaItems> {
+    const requestUrl = `${this.href}`+"?fechadesde="+fechadesde+"&fechahasta="+fechahasta;
+
+    let listaItems: ListaItems = { items: null, total_count: null };
+    listaItems.items = await this.http.get<Fcargassociales[]>(requestUrl).toPromise();
+    listaItems.total_count = listaItems.items.length;
+
+    return listaItems;
+  }
+
 }

@@ -94,6 +94,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
     if (this.id) {
       console.log("Updated Liquidacion");
       liquidacionesItem = await this.liquidacionService.putLiquidacion(data);
+      this.gotoGrilla();
     } else {
       console.log("Created Liquidacion");
       liquidacionesItem = await this.liquidacionService.postLiquidacion(data);

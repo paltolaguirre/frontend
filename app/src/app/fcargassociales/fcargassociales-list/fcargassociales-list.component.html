@@ -14,6 +14,7 @@
     </div>
       <div>
         <button mat-button color="secondary" class="topmenu-button" (click)="printService.printTOPDF()">Imprimir</button>
+        <button mat-button color="secondary" class="topmenu-button" (click)="exportarTXT()">Exportar TXT</button>
         <mat-form-field class="topmenu-search">
             <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Buscar">
           </mat-form-field>

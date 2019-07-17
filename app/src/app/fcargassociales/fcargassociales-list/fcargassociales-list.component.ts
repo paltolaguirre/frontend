@@ -91,6 +91,16 @@ export class FcargassocialesListComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
 
+  async exportarTXT() {
+    const fcargassocialessApi: ListaItems = await this.fcargassocialesService.getFcargassocialesTXT(this.fechadesde,this.fechahasta);
+  
+ /*   vm.download = function(text) {
+      var data = new Blob([text], { type: 'text/plain;charset=utf-8' });
+      FileSaver.saveAs(data, 'text.txt');
+    };*/
+  
+  }
+
   refreshTableSorce() {
 
   }
