@@ -84,4 +84,9 @@ DeletedAt: n
     return novedadesItem;
   }
 
+
+  isNew(data) : Boolean {
+    return data.ID==null?false:true;
+  }
+
 }

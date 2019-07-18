@@ -110,9 +110,10 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
     child.DeletedAt = new Date();
   }
 
-  setMes (data , value) {
-
+  isNew(data) : Boolean {
+    return data.ID==null?false:true;
   }
+  
 
   onClickNewImportesremunerativos(data: Liquidacion) {
     if(data.importesremunerativos == null) {

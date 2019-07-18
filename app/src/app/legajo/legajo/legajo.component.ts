@@ -160,6 +160,11 @@ export class LegajoComponent implements OnInit, AfterViewInit {
     }  
   }
 
+
+  isNew(data) : Boolean {
+    return data.ID==null?false:true;
+  }
+
   onClickDeleteChild(child: any) {
     child.DeletedAt = new Date();
   }

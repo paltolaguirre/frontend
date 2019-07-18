@@ -8,7 +8,6 @@ import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { NotificationService } from 'src/app/handler-error/notification.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { PrintService } from 'src/app/print/print.service';
-import { DialogLiquidacionesList } from './liquidacion-list-dialog/liquidacion-list-dialog.component';
 
 @Component({
   selector: 'app-liquidacion-list',
@@ -16,7 +15,7 @@ import { DialogLiquidacionesList } from './liquidacion-list-dialog/liquidacion-l
   styleUrls: ['./liquidacion-list.component.css']
 })
 export class LiquidacionListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['Creado', 'Nombre' , 'Contabilizada','Acciones' ];
+  displayedColumns: string[] = ['Creado', 'Nombre' , 'Contabilizada', 'Contabilizar','Acciones' ];
   dataSource: MatTableDataSource<Liquidacion> = new MatTableDataSource<Liquidacion>();
   //data: LiquidacionesApi;
 
@@ -59,16 +58,15 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
     else
     return [5, 10, 20];
   }
-  onClickContabilizar(data): void {
-    const dialogRef = this.dialog.open(DialogLiquidacionesList, {
-       data
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-   
-    });
+  async onClickContabilizar(datos) {
+   var elementsRequest = [];
+   datos.forEach(function (el, index) {
+      if (el.checked == true) { elementsRequest.push(el.ID)};
+    }, this);    
+    const responseContabilizarLiq: any = await this.liquidacionService.postContabilizarLiquidacion(elementsRequest);
+    this.notificationService.notify(responseContabilizarLiq);
   }
-
 
   onCreate(item: Liquidacion) {
     console.log("Created Item: " + item.ID);

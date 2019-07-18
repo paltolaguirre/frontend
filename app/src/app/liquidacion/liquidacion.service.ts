@@ -50,12 +50,9 @@ export class LiquidacionService {
     return liquidacion;
   }
 
-  public async postContabilizarLiquidacion(fechaliquidaciones: Fechaliquidaciones): Promise<any> {
-    const requestUrl =
-      `${this.hrefcontabilizar}`;
-    
-    var response = await this.http.post<any>(requestUrl, fechaliquidaciones).toPromise();
-
+  public async postContabilizarLiquidacion(elementsRequest:  number[]): Promise<any> {
+    const requestUrl = `${this.hrefcontabilizar}`;    
+    var response = await this.http.post<any>(requestUrl, elementsRequest).toPromise();
     return response;
   }
 

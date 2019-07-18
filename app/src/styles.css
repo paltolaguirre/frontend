@@ -12,3 +12,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     color : #005d85 !important;
     background : #dadada;
 }
+
+.mat-sidenav-content {
+    background-color:#F5F5F5 !important;
+    color: rgba(0,0,0,.87);
+}

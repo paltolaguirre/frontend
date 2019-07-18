@@ -1,7 +1,0 @@
-<h1 mat-dialog-title>Contabilizar</h1>
-<mat-divider></mat-divider>
-<mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="fecha=$event" [ngModel]="fecha | date: 'yyyy-MM-dd'" placeholder="Periodo a Contabilizar" autocomplete="off"></mat-form-field>    
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancelar</button>
-  <button mat-button (click)="onClickContabilizar()">Contabilizar</button>
-</div>
