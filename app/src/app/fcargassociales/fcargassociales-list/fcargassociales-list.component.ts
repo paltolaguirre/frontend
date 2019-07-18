@@ -9,6 +9,7 @@ import { NotificationService } from 'src/app/handler-error/notification.service'
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { formatDate } from "@angular/common";
 import { PrintService } from 'src/app/print/print.service';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-fcargassociales-list',
@@ -92,13 +93,9 @@ export class FcargassocialesListComponent implements OnInit, AfterViewInit {
   }
 
   async exportarTXT() {
-    const fcargassocialessApi: ListaItems = await this.fcargassocialesService.getFcargassocialesTXT(this.fechadesde,this.fechahasta);
-  
- /*   vm.download = function(text) {
-      var data = new Blob([text], { type: 'text/plain;charset=utf-8' });
-      FileSaver.saveAs(data, 'text.txt');
-    };*/
-  
+    const fcargassocialessTXT: any = await this.fcargassocialesService.getFcargassocialesTXT(this.fechadesde,this.fechahasta);
+    var blob = new Blob([fcargassocialessTXT], {type: "text/plain;charset=utf-8"});
+    saveAs.saveAs(blob, 'F931EXPORT');
   }
 
   refreshTableSorce() {
