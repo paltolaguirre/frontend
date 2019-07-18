@@ -2,3 +2,13 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-button.mat-primary {
+    color : #fff !important;
+    background : linear-gradient(to bottom, #00abeb 0%,#027cd8 100%);
+}
+
+.mat-button.mat-secondary {
+    color : #005d85 !important;
+    background : #dadada;
+}

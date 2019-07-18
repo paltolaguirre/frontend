@@ -73,7 +73,7 @@ export class ConceptoListComponent implements OnInit, AfterViewInit {
 
   getPageSizeOptions(): number[] {
     if (this.dataSource.data.length>20)
-    return [5, 10, 20,  this.dataSource.paginator.length];
+    return [5, 10, 20,  this.dataSource.data.length];
     else
     return [5, 10, 20];
   }

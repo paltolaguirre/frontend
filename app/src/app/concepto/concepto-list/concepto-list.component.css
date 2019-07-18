@@ -36,6 +36,12 @@
     margin-right: 5px;
 }
 
+.topmenu-search {
+    margin-left: 15px;
+    margin-right: 15px;
+    width:300px;
+}
+
 .paginator-container {
     margin-left: 17px;
     margin-right: 17px;
@@ -123,6 +129,7 @@ th.mat-sort-header-sorted {
         background-color: #0d4154;
     }
 }
+
 
 .actions-icon {
   size: 5px;

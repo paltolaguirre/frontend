@@ -1,6 +1,13 @@
-<button mat-icon-button color="accent" (click)="editItem()">
-  <mat-icon>edit</mat-icon>
-</button>
-<button mat-icon-button class="actions-icon" color="warn" (click)="deleteItem()">
-  <mat-icon>delete_forever</mat-icon>
-</button>
+<div *ngIf="concepto > 0">
+  <button mat-icon-button color="accent" (click)="editItem()">
+    <mat-icon>edit</mat-icon>
+  </button>
+  <button mat-icon-button class="actions-icon" color="warn" (click)="deleteItem()">
+    <mat-icon>delete_forever</mat-icon>
+  </button>
+</div>
+<div *ngIf="concepto < 0">
+  <button mat-icon-button class="actions-icon" color="warn" (click)="viewItem()">
+      <mat-icon>remove_red_eye</mat-icon>
+  </button>
+</div>

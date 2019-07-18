@@ -8,13 +8,16 @@
 
   
   <div class="topmenu-container" >
+    <div>
+      <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="changeFechaDesde($event)" [ngModel]="fechadesde | date: 'yyyy-MM-dd'" placeholder="Fecha Desde" autocomplete="off"></mat-form-field>
+      <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="changeFechaHasta($event)" [ngModel]="fechahasta | date: 'yyyy-MM-dd'" placeholder="Fecha Hasta" autocomplete="off"></mat-form-field>
+    </div>
       <div>
-        <mat-form-field class="standard-input">
-          <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Buscar">
-        </mat-form-field>
-        <button mat-raised-button color="primary" class="topmenu-button" mat-button (click)="printService.printTOPDF()">Imprimir</button>
-        <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="changeFechaDesde($event)" [ngModel]="fechadesde | date: 'yyyy-MM-dd'" placeholder="Fecha Desde" autocomplete="off"></mat-form-field>
-        <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="changeFechaHasta($event)" [ngModel]="fechahasta | date: 'yyyy-MM-dd'" placeholder="Fecha Hasta" autocomplete="off"></mat-form-field>
+        <button mat-button color="secondary" class="topmenu-button" (click)="printService.printTOPDF()">Imprimir</button>
+        <button mat-button color="secondary" class="topmenu-button" (click)="exportarTXT()">Exportar TXT</button>
+        <mat-form-field class="topmenu-search">
+            <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Buscar">
+          </mat-form-field>
       </div>
   </div>
   <div class="table-container">   

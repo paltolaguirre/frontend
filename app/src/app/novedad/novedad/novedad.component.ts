@@ -72,6 +72,7 @@ DeletedAt: n
     if (this.id) {
       console.log("Updated Novedad");
       novedadesItem = await this.novedadService.putNovedad(data);
+      this.gotoGrilla();
     } else {
       console.log("Created Novedad");
       novedadesItem = await this.novedadService.postNovedad(data);

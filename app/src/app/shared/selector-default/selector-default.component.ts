@@ -24,11 +24,13 @@ export interface SelectorElement {
   styleUrls: ['./selector-default.component.css']
 })
 export class SelectorDefaultComponent implements OnInit {
-  @Input() placeholder: string = 'Seleccione una opción';
+  @Input('placeholder') placeholder: string;
   @Input() value: SelectorElement;
+  @Input('disabled') disabled: Boolean;
   @Input('type') tipo: string;
   @Input('nombre') nombre: string;
   @Input('matSelect') matSelect: string;
+  @Input('estilo') estilo: string;
   @Output() optionSelected = new EventEmitter();
 
   myControl = new FormControl();
@@ -39,7 +41,7 @@ export class SelectorDefaultComponent implements OnInit {
   constructor(private selectorService: SelectorService, public models: Models) { }
     
   async ngOnInit() {
-    this.placeholder = await this.models.setPlaceHolder(this.nombre);
+    if (this.placeholder == null) this.placeholder = await this.models.setPlaceHolder(this.nombre);
     if (this.tipo == "hardcode") {
       this.options = this.models.valor(this.nombre);
     } else {
@@ -52,9 +54,11 @@ export class SelectorDefaultComponent implements OnInit {
         map(value => typeof value === 'string' ? value : ''), 
         map(name => name ? this._filter(name) : this.options.slice()) 
       ); 
+      if(this.estilo == null) this.estilo = 'selector';
       let filter = this.options.filter(option => option.id == this.matSelect); 
       let option = filter.length>0?filter[0]:null; 
       this.myControl.setValue(option); 
+      if (this.disabled == true) {this.myControl.disable();}
     }
   }
   

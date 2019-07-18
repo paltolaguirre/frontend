@@ -1,5 +1,5 @@
-import { ListaItems, F931Service } from '../f931.service';
-import { F931 } from '../f931.model';
+import { ListaItems, FcargassocialesService } from '../fcargassociales.service';
+import { Fcargassociales } from '../fcargassociales.model';
 import { Component, ViewChild, AfterViewInit, OnInit , Input} from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -11,14 +11,14 @@ import { formatDate } from "@angular/common";
 import { PrintService } from 'src/app/print/print.service';
 
 @Component({
-  selector: 'app-f931-list',
-  templateUrl: './f931-list.component.html',
-  styleUrls: ['./f931-list.component.css']
+  selector: 'app-fcargassociales-list',
+  templateUrl: './fcargassociales-list.component.html',
+  styleUrls: ['./fcargassociales-list.component.css']
 })
-export class F931ListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['Legajo', 'Fechaperiodoliquidacion' , 'Concepto', 'Importe'];
-  dataSource: MatTableDataSource<F931> = new MatTableDataSource<F931>();
-  //data: F931sApi;
+export class FcargassocialesListComponent implements OnInit, AfterViewInit {
+  displayedColumns: string[] = ['Nombre', 'Importe'];
+  dataSource: MatTableDataSource<Fcargassociales> = new MatTableDataSource<Fcargassociales>();
+  //data: FcargassocialessApi;
 
   fechahasta : any;
   fechadesde : any;
@@ -29,24 +29,24 @@ export class F931ListComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  f931ID$: Observable<String>;
-  public currentF931$: Observable<F931> = null;
+  fcargassocialesID$: Observable<String>;
+  public currentFcargassociales$: Observable<Fcargassociales> = null;
   id: number;
 
   constructor(
     private route: ActivatedRoute,
-    private f931Service: F931Service,
+    private fcargassocialesService: FcargassocialesService,
     public dialog: MatDialog,
     private notificationService: NotificationService,
     public printService : PrintService
   ) {
-    if(localStorage.getItem('f931-fechahasta')) {
-      this.fechahasta = localStorage.getItem('f931-fechahasta');
+    if(localStorage.getItem('fcargassociales-fechahasta')) {
+      this.fechahasta = localStorage.getItem('fcargassociales-fechahasta');
     } else {
       this.fechahasta = formatDate(Date.now(), "MM-dd-yyyy", 'en-US');
     }
-    if(localStorage.getItem('f931-fechadesde')) {
-      this.fechadesde = localStorage.getItem('f931-fechadesde');
+    if(localStorage.getItem('fcargassociales-fechadesde')) {
+      this.fechadesde = localStorage.getItem('fcargassociales-fechadesde');
     } else {
       this.fechadesde = '01/01/2000';
     }
@@ -63,12 +63,12 @@ export class F931ListComponent implements OnInit, AfterViewInit {
     return [5, 10, 20];
   }
   changeFechaDesde (value) {
-    localStorage.setItem("f931-fechadesde",value);
+    localStorage.setItem("fcargassociales-fechadesde",value);
     this.fechadesde = value;
     this.updateGrilla();
   }
   changeFechaHasta (value) {
-    localStorage.setItem("f931-fechahasta",value);
+    localStorage.setItem("fcargassociales-fechahasta",value);
     this.fechahasta = value;
     this.updateGrilla();
 
@@ -80,8 +80,8 @@ export class F931ListComponent implements OnInit, AfterViewInit {
   }
 
   async updateGrilla () {
-    const f931sApi: ListaItems = await this.f931Service.getF931s(this.sort.active, this.sort.direction,this.fechadesde,this.fechahasta, 1);
-    this.dataSource = new MatTableDataSource<F931>(f931sApi.items);
+    const fcargassocialessApi: ListaItems = await this.fcargassocialesService.getFcargassocialess(this.sort.active, this.sort.direction,this.fechadesde,this.fechahasta, 1);
+    this.dataSource = new MatTableDataSource<Fcargassociales>(fcargassocialessApi.items);
     this.dataSource.paginator = this.paginator;
     this.paginator._intl.itemsPerPageLabel = "Items por página";
     this.isLoadingResults = false;
@@ -89,6 +89,16 @@ export class F931ListComponent implements OnInit, AfterViewInit {
 
   public doFilter = (value: string) => {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
+  }
+
+  async exportarTXT() {
+    const fcargassocialessApi: ListaItems = await this.fcargassocialesService.getFcargassocialesTXT(this.fechadesde,this.fechahasta);
+  
+ /*   vm.download = function(text) {
+      var data = new Blob([text], { type: 'text/plain;charset=utf-8' });
+      FileSaver.saveAs(data, 'text.txt');
+    };*/
+  
   }
 
   refreshTableSorce() {

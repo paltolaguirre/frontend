@@ -13,6 +13,7 @@ export class ActionsComponent implements OnInit {
   @Input() concepto: number;
   @Output() public update = new EventEmitter<Concepto>();
   @Output() public delete = new EventEmitter<Concepto>();
+  @Output() public view = new EventEmitter<Concepto>();
   numeroConcepto: string;
   conductor: string;
   fecha: string;
@@ -25,6 +26,10 @@ export class ActionsComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+  }
+
+  viewItem() {
+    this.router.navigate(['/conceptos', this.concepto]);
   }
 
   editItem() {

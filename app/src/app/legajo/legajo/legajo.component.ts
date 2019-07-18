@@ -96,6 +96,7 @@ export class LegajoComponent implements OnInit, AfterViewInit {
     if (this.id) {
       console.log("Updated Legajo");
       legajosItem = await this.legajoService.putLegajo(data);
+      this.gotoGrilla();
     } else {
       console.log("Created Legajo");
       legajosItem = await this.legajoService.postLegajo(data);

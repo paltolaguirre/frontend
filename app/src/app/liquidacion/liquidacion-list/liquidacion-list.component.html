@@ -9,12 +9,12 @@
 
   <div class="topmenu-container" >
       <div>
-        <mat-form-field class="standard-input">
+        <button mat-raised-button color="primary" class="topmenu-button" mat-button [routerLink]="['/liquidaciones', 'nuevo']">Nuevo</button>
+        <button mat-raised-button color="secondary" class="topmenu-button" mat-button (click)="printService.printTOPDF()">Imprimir</button>
+        <button mat-raised-button color="secondary" class="topmenu-button" mat-button (click)="onClickContabilizar(dataSource.data)">Contabilizar</button>
+        <mat-form-field class="topmenu-search">
           <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Buscar">
         </mat-form-field>
-        <button mat-raised-button color="primary" class="topmenu-button" mat-button [routerLink]="['/liquidaciones', 'nuevo']">Nuevo</button>
-        <button mat-raised-button color="primary" class="topmenu-button" mat-button (click)="printService.printTOPDF()">Imprimir</button>
-        <button mat-raised-button color="primary" class="topmenu-button" mat-button (click)="onClickContabilizar(dataSource.data)">Contabilizar</button>
       </div>
   </div>
   <div class="table-container" id="contentTOPDF">    
