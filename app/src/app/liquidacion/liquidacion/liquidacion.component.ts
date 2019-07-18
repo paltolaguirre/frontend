@@ -5,7 +5,7 @@ import { FormControl ,} from '@angular/forms';
 import { Component, ViewChild, AfterViewInit, OnInit , Inject } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { merge, Observable, of as observableOf } from 'rxjs';
+import { merge, Observable, of as observableOf, of } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { NotificationService } from 'src/app/handler-error/notification.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
@@ -27,6 +27,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   paises: any[];
   id: number;
   data: any;
+  public print$: Observable<boolean> = null;
 
 
   constructor(
@@ -39,7 +40,6 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
     ) { }
   
   ngOnInit() {
-
     this.currentLiquidacion$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
         if (params.get('id') == "nuevo") {
@@ -50,6 +50,17 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
         console.log(liquidacion);
         
         return liquidacion;
+      })
+    );
+
+    this.print$ = this.route.paramMap.pipe(
+      switchMap((params: ParamMap) => {
+        const print = (params.get('action') == "imprimir");
+        if (print) {
+          console.log("Action Imprimir");
+        }
+
+        return of(print);
       })
     );
   }
@@ -69,16 +80,35 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
     });
   }
 
+  private gotoId() {
+    this.router.navigate([`/liquidaciones/${this.id}`]);
+  }
+
+  private gotoPreview() {
+    this.router.navigate([`/liquidaciones/${this.id}/imprimir`]);
+  }
 
   private gotoGrilla() {
     this.router.navigate(['/liquidaciones']);
   }
+  
+  onClickId(): void {
+    this.gotoId();
+  }
 
+  onClickPreview(): void {
+    this.gotoPreview();
+  }
+  
   onClickAbort(): void {
     this.gotoGrilla();
   }
 
-  async onClickSave(data: Liquidacion): Promise<Liquidacion> { 
+  onClickPrint() {
+    this.printService.printTOPDF();
+  }
+
+  async onClickSave(data: Liquidacion): Promise<Liquidacion> {
     let liquidacionesItem: Liquidacion;    
     
     if(data.fechaperiododepositado)data.fechaperiododepositado = formatDate(data.fechaperiododepositadoanio+"-"+data.fechaperiododepositadomes+"-01", "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US');
