@@ -27,6 +27,17 @@ export class NovedadService {
     return listaItems;
   }
 
+  public async getNovedadesPorLegajo(legajoid : string ,sort: string, order: string, page: number): Promise<ListaItems> {
+    const requestUrl =
+      `${this.href}`+ "?legajoid="+legajoid;
+
+    let listaItems: ListaItems = { items: null, total_count: null };
+    listaItems.items = await this.http.get<Novedad[]>(requestUrl).toPromise();
+    listaItems.total_count = listaItems.items.length;
+
+    return listaItems;
+  }
+
   public async getNovedad(novedadId: number): Promise<Novedad> {
     let novedad = <Novedad>{};
     if (novedadId) {

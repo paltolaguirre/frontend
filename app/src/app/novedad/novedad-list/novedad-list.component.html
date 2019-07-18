@@ -17,7 +17,7 @@
   </div>
   
   <div class="table-container" id="contentTOPDF">    
-    <table mat-table [dataSource]="dataSource" class="example-table" matSort matSortActive="Creado" matSortDisableClear
+    <table mat-table [dataSource]="dataSource" class="example-table" (matSortChange)="sortData($event)" matSort matSortActive="Creado" matSortDisableClear
       matSortDirection="desc">
 
         <!-- Created Column -->
