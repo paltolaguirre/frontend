@@ -14,7 +14,16 @@
     </colgroup>
     <tr>
       <th class="tg-0pky" colspan="4">logo</th>
-      <th class="tg-0lax" colspan="5">datos</th>
+      <th class="tg-0lax" colspan="5">
+        <div class="container">
+          <ul>
+            <li>Empleador: {{empresa.nombre}}</li>
+            <li>Domicilio: {{empresa.domicilio}}</li>
+            <li>Localidad: {{empresa.localidad}}</li>
+            <li>CUIT Empleador: {{empresa.cuit}}</li>
+          </ul>
+        </div>
+      </th>
       <th class="tg-0lax">{{data.nombre}}</th>
     </tr>
     <tr>
