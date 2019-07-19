@@ -159,7 +159,10 @@ export class LegajoComponent implements OnInit, AfterViewInit {
       });
     }  
   }
+  
+  onClickRefreshLocalidad (localidadid) {
 
+  }
 
   isNew(data) : Boolean {
     return data.ID==null?false:true;
