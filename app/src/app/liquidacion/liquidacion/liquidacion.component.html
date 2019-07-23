@@ -219,7 +219,7 @@
       <button mat-raised-button color="primary" mat-button (click)="onClickSave(data)">Guardar</button>
       <button mat-raised-button mat-button color="secondary" (click)="onClickAbort()">Cerrar</button>
       <button mat-raised-button *ngIf=isNew(data) color="secondary" mat-button
-        (click)="printService.printTOPDF()">Imprimir</button>
+        (click)="onClickPreview()">Imprimir</button>
     </div>
   </div>
 </div>
