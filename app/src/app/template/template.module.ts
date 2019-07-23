@@ -43,11 +43,11 @@ import { MatToolbarModule, MatTabsModule, MatIconModule, MatSidenavModule, MatLi
             loadChildren: '../liquidacion/liquidacion.module#LiquidacionModule',
           },
           {
-            path: 'librosueldos',
+            path: 'informes/libro-sueldos',
             loadChildren: '../librosueldos/librosueldos.module#LibrosueldosModule',
           },
           {
-            path: 'fcargassociales',
+            path: 'informes/cargas-sociales-f93',
             loadChildren: '../fcargassociales/fcargassociales.module#FcargassocialesModule',
           },
           {
