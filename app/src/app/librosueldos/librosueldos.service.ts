@@ -12,11 +12,11 @@ export interface ListaItems {
   providedIn: 'root'
 })
 export class LibrosueldosService {
-  href = '/api/informe/informes/librosueldos';
+  href = '/api/informe/informes/libro-sueldos';
   
   constructor(private http: HttpClient) { }
 
-  public async getLibrosueldoss(sort: string, order: string, fechadesde : Date , fechahasta : Date, page: number): Promise<ListaItems> {
+  public async getLibrosueldos(sort: string, order: string, fechadesde : Date , fechahasta : Date, page: number): Promise<ListaItems> {
     const requestUrl =
       `${this.href}`+"?fechadesde="+fechadesde+"&fechahasta="+fechahasta;
 

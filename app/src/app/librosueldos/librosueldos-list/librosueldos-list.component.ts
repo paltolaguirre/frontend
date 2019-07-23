@@ -48,7 +48,7 @@ export class LibrosueldosListComponent implements OnInit, AfterViewInit {
     if(localStorage.getItem('librosueldos-fechadesde')) {
       this.fechadesde = localStorage.getItem('librosueldos-fechadesde');
     } else {
-      this.fechadesde = '01/01/2000';
+      this.fechadesde = '01-01-2000';
     }
   }
 
@@ -80,7 +80,7 @@ export class LibrosueldosListComponent implements OnInit, AfterViewInit {
   }
 
   async updateGrilla () {
-    const librosueldossApi: ListaItems = await this.librosueldosService.getLibrosueldoss(this.sort.active, this.sort.direction,this.fechadesde,this.fechahasta, 1);
+    const librosueldossApi: ListaItems = await this.librosueldosService.getLibrosueldos(this.sort.active, this.sort.direction,this.fechadesde,this.fechahasta, 1);
     this.dataSource = new MatTableDataSource<Librosueldos>(librosueldossApi.items);
     this.dataSource.paginator = this.paginator;
     this.paginator._intl.itemsPerPageLabel = "Items por página";
