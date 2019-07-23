@@ -17,7 +17,7 @@ export class MenuComponent implements OnInit {
     {nombre: 'Conceptos', url: '/conceptos'},
     {nombre: 'Novedades', url: '/novedades'},
     {nombre: 'Liquidaciones', url: '/liquidaciones'},
-    {nombre: 'Informe 931', url: '/informes/cargas-sociales-f93'},
+    {nombre: 'Informe 931', url: '/informes/cargas-sociales-f931'},
     {nombre: 'Libro Sueldos', url: '/informes/libro-sueldos'},
   ];
 
