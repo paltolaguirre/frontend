@@ -47,7 +47,7 @@ import { MatToolbarModule, MatTabsModule, MatIconModule, MatSidenavModule, MatLi
             loadChildren: '../librosueldos/librosueldos.module#LibrosueldosModule',
           },
           {
-            path: 'informes/cargas-sociales-f93',
+            path: 'informes/cargas-sociales-f931',
             loadChildren: '../fcargassociales/fcargassociales.module#FcargassocialesModule',
           },
           {

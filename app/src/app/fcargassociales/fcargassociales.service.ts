@@ -12,7 +12,7 @@ export interface ListaItems {
   providedIn: 'root'
 })
 export class FcargassocialesService {
-  href = '/api/informe/informes/cargas-sociales-f93';
+  href = '/api/informe/informes/cargas-sociales-f931';
   
   constructor(private http: HttpClient) { }
 
