@@ -52,7 +52,8 @@ export class LiquidacionService {
 
   public async postContabilizarLiquidacion(elementsRequest:  number[]): Promise<any> {
     const requestUrl = `${this.hrefcontabilizar}`;    
-    var response = await this.http.post<any>(requestUrl, elementsRequest).toPromise();
+    const contabilizar = { idsliquidacionesacontabilizar: elementsRequest, descripcion: "Alguna descripcion"};
+    var response = await this.http.post<any>(requestUrl, contabilizar).toPromise();
     return response;
   }
 
