@@ -11,6 +11,10 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: ':id/:action',
+    component: LiquidacionComponent
+  },
+  {
     path: ':id', 
     component: LiquidacionComponent 
   },

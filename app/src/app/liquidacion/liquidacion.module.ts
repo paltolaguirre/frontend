@@ -9,9 +9,10 @@ import { DialogLiquidaciones } from './liquidacion/liquidacion-dialog/liquidacio
 import { DemoMaterialModule } from '../material.module';
 import { LiquidacionListComponent } from './liquidacion-list/liquidacion-list.component';
 import { ActionsComponent } from './liquidacion-list/actions/actions.component';
+import { LiquidacionPrintComponent } from './liquidacion/liquidacion-print/liquidacion-print.component';
 
 @NgModule({
-  declarations: [LiquidacionComponent, LiquidacionListComponent, ActionsComponent ,DialogLiquidaciones ],
+  declarations: [LiquidacionComponent, LiquidacionListComponent, ActionsComponent ,DialogLiquidaciones, LiquidacionPrintComponent],
   imports: [
     CommonModule,
     FormsModule,
