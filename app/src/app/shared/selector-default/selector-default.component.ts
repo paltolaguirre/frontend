@@ -30,9 +30,10 @@ export class SelectorDefaultComponent implements OnInit {
   @Input('type') tipo: string;
   @Input('nombre') nombre: string;
   @Input('matSelect') matSelect: string;
-  @Input('estilo') estilo: string;
+  @Input('required') required: Boolean;
+  @Input('filter') filter: string;
   @Output() optionSelected = new EventEmitter();
-
+  
   myControl = new FormControl();
   options: SelectorElement[];
 
@@ -42,10 +43,11 @@ export class SelectorDefaultComponent implements OnInit {
     
   async ngOnInit() {
     if (this.placeholder == null) this.placeholder = await this.models.setPlaceHolder(this.nombre);
+    if (this.required == null) this.required = false;
     if (this.tipo == "hardcode") {
       this.options = this.models.valor(this.nombre);
     } else {
-      this.options = await this.selectorService.getSelector(this.nombre);
+      this.options = await this.selectorService.getSelector(this.nombre , this.filter);
     }
     if (this.options) {
       this.filteredOptions = this.myControl.valueChanges 
@@ -54,7 +56,6 @@ export class SelectorDefaultComponent implements OnInit {
         map(value => typeof value === 'string' ? value : ''), 
         map(name => name ? this._filter(name) : this.options.slice()) 
       ); 
-      if(this.estilo == null) this.estilo = 'selector';
       let filter = this.options.filter(option => option.id == this.matSelect); 
       let option = filter.length>0?filter[0]:null; 
       this.myControl.setValue(option); 

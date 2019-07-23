@@ -29,6 +29,7 @@ export class NovedadListComponent implements OnInit, AfterViewInit {
   public currentNovedad$: Observable<Novedad> = null;
   id: number;
 
+
   constructor(
     private route: ActivatedRoute,
     private novedadService: NovedadService,

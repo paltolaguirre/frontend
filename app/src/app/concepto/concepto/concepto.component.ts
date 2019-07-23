@@ -76,6 +76,10 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
     return conceptosItem;
   }
 
+  isNew(data) : Boolean {
+    return data.ID==null?false:true;
+  }
+
   isDefault(data) : Boolean {
     return data.ID<0?true:false;
   }

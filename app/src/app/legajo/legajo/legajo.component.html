@@ -30,11 +30,11 @@
             </div>
             <br/>
             <div>
-                <app-selector-default nombre="pais" [(matSelect)]="data.paisid" required (optionSelected)="data.pais=$event" ></app-selector-default>
-                <app-selector-default nombre="provincia" [(matSelect)]="data.provinciaid" required (optionSelected)="data.provincia=$event"></app-selector-default>
+                <app-selector-default nombre="pais" [(matSelect)]="data.paisid" required=true (optionSelected)="data.pais=$event" ></app-selector-default>
+                <app-selector-default nombre="provincia" (click)="onClickRefreshLocalidad(data.provinciaid)" [(matSelect)]="data.provinciaid" required=true (optionSelected)="data.provincia=$event"></app-selector-default>
             </div>
             <div>
-                <app-selector-default nombre="localidad" [(matSelect)]="data.localidadid" required (optionSelected)="data.localidad=$event"></app-selector-default>
+                <app-selector-default nombre="localidad" [(matSelect)]="data.localidadid" filter="provinciaid={{data.provinciaid}}" required=true (optionSelected)="data.localidad=$event"></app-selector-default>
                 <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.codigo" placeholder="Código Postal" type="text" autocomplete="off"></mat-form-field>
             </div>
             <div>
@@ -57,18 +57,18 @@
                 <app-selector-default nombre="condicion" [(matSelect)]="data.condicionid" (optionSelected)="data.condicion=$event" ></app-selector-default>            
             </div>
             <div>
-                <app-selector-default nombre="modalidadcontratacion" [(matSelect)]="data.modalidadcontratacionid" required (optionSelected)="data.modalidadcontratacion=$event"></app-selector-default>
-                <app-selector-default nombre="obrasocial" [(matSelect)]="data.obrasocialid" required (optionSelected)="data.obrasocial=$event" ></app-selector-default>
+                <app-selector-default nombre="modalidadcontratacion" [(matSelect)]="data.modalidadcontratacionid" required=true (optionSelected)="data.modalidadcontratacion=$event"></app-selector-default>
+                <app-selector-default nombre="obrasocial" [(matSelect)]="data.obrasocialid" required=true (optionSelected)="data.obrasocial=$event" ></app-selector-default>
             </div>
             <div>
-                <app-selector-default nombre="condicionsiniestrado" [(matSelect)]="data.condicionsiniestradoid" required (optionSelected)="data.condicionsiniestrado=$event" ></app-selector-default>
+                <app-selector-default nombre="condicionsiniestrado" [(matSelect)]="data.condicionsiniestradoid" required=true (optionSelected)="data.condicionsiniestrado=$event" ></app-selector-default>
                 <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.valorfijolrt" placeholder="Valor Fijo LRT" type="number" autocomplete="off"></mat-form-field>
             </div>
             <div>
                 <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.remuneracion" placeholder="Remuneración" type="number" autocomplete="off"></mat-form-field>
                 <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.horasmensualesnormales" required placeholder="Horas mensuales normales" type="text" autocomplete="off"></mat-form-field>            
             </div>
-                <app-selector-default nombre="conveniocolectivo" [(matSelect)]="data.conveniocolectivoid" required (optionSelected)="data.conveniocolectivo=$event" ></app-selector-default>
+                <app-selector-default nombre="conveniocolectivo" [(matSelect)]="data.conveniocolectivoid" required=true (optionSelected)="data.conveniocolectivo=$event" ></app-selector-default>
                 <app-selector-default nombre="centrodecosto" [(matSelect)]="data.centrodecostoid" (optionSelected)="data.centrodecosto=$event" ></app-selector-default>        
             <div>
                 <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.categoria" required placeholder="Categoria" type="text" autocomplete="off"></mat-form-field>
@@ -133,13 +133,14 @@
           
        </mat-expansion-panel>
     
-</mat-accordion>
+    </mat-accordion>
     <mat-divider></mat-divider>
 
   </div>
+
   <div mat-dialog-actions class="actions">
+      <button mat-raised-button color="primary" mat-button (click)="onClickSave(data)">Guardar</button>
     <button mat-raised-button mat-button color="secondary"  (click)="onClickAbort()">Cerrar</button>
-    <button mat-raised-button color="primary" mat-button (click)="onClickSave(data)">Guardar</button>
-    <button mat-raised-button color="primary" mat-button (click)="printService.printTOPDF()">Imprimir</button>
+    <button *ngIf=isNew(data) mat-raised-button color="secondary" mat-button (click)="printService.printTOPDF()">Imprimir</button>
   </div>
 </div>

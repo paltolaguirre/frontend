@@ -10,9 +10,11 @@ export class SelectorService {
 
   constructor(private http: HttpClient) { }
 
-  public async getSelector(paramhlp: string): Promise<SelectorElement[]> {
-    const requestUrl =
-      `${this.href}/${paramhlp}`;
+  public async getSelector(paramhlp: string , filter : string): Promise<SelectorElement[]> {
+    var requestUrl =`${this.href}/${paramhlp}`
+    if (filter) {
+      requestUrl +="?"+filter;
+    } 
 
     let selector: SelectorElement[];
     selector = await this.http.get<SelectorElement[]>(requestUrl).toPromise();
