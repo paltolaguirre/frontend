@@ -2,7 +2,7 @@
 import { ErrorHandler, Injectable, Injector } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { NotificationService } from './notification.service';
+import { NotificationService, Notificacion } from './notification.service';
 
 //import * as StackTraceParser from 'error-stack-parser';
 
@@ -44,7 +44,12 @@ export class ErrorsHandler implements ErrorHandler {
 
             //console.error("Se produjo un Error:");
             console.error(error);
-            return notificationService.notify(`Error - ${error.message}`);
+            const mensaje = error.message.split("):")[1];
+            const notificacion = {
+                codigo: parseInt(mensaje.split("|")[0]),
+                mensaje: mensaje.split("|")[1]
+            }
+            return notificationService.notify(notificacion);
         }
     }
 }

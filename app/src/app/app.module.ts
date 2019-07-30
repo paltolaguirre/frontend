@@ -16,6 +16,7 @@ import { PrintService } from './print/print.service';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es-AR';
 import localeEsExtra from '@angular/common/locales/extra/es-AR';
+import { DemoMaterialModule } from './material.module';
 
 registerLocaleData(localeEs, 'es-AR', localeEsExtra);
 
@@ -27,6 +28,7 @@ registerLocaleData(localeEs, 'es-AR', localeEsExtra);
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    DemoMaterialModule,
     LoginModule,
     HandlerErrorModule
   ],
