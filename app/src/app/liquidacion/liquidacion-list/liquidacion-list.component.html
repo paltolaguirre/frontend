@@ -18,41 +18,70 @@
       </div>
   </div>
   <div class="table-container" id="contentTOPDF">    
-    <table mat-table [dataSource]="dataSource" class="example-table" matSort matSortActive="Creado" matSortDisableClear
+    <table mat-table [dataSource]="dataSource" class="example-table" matSort matSortActive="Creado"
       matSortDirection="desc">
 
-      <!-- State Column -->
-      <ng-container matColumnDef="Nombre">
-        <th mat-header-cell *matHeaderCellDef>Nombre</th>
-        <td mat-cell *matCellDef="let row">{{row.nombre}}</td>
-      </ng-container>
-
-      <!-- Created Column -->
-      <ng-container matColumnDef="Contabilizada">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
-              Contabilizada
-          </th>
-          <td mat-cell *matCellDef="let row">{{row.estacontabilizada}}</td>        
-        </ng-container>
-
-      <!-- Created Column -->
-      <ng-container matColumnDef="Creado">
+      <!-- Seleccionar -->
+      <ng-container matColumnDef="Seleccionar">
         <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
-          Creado
+          Seleccionar
         </th>
-        <td mat-cell *matCellDef="let row">{{row.CreatedAt | date}}</td>        
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox class="example-margin" [(ngModel)]="row.checked"></mat-checkbox>
+        </td>
       </ng-container>
 
-      <ng-container matColumnDef="Contabilizar"> 
-          <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> 
-              Contabilizar 
-          </th> 
-          <td mat-cell *matCellDef="let row">           
-            <mat-checkbox class="example-margin" [(ngModel)]="row.checked"></mat-checkbox> 
-          </td> 
-      </ng-container> 
+      <!-- Legajo -->
+      <ng-container matColumnDef="Legajo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Legajo</th>
+        <td mat-cell *matCellDef="let row">{{row.legajo.legajo}}</td>
+      </ng-container>
+ 
+      <!-- Apellido -->
+      <ng-container matColumnDef="Apellido">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Apellido</th>
+        <td mat-cell *matCellDef="let row">{{row.legajo.apellido}}</td>
+      </ng-container>
       
-      <!-- Number Column -->
+      <!-- Nombre -->
+      <ng-container matColumnDef="Nombre">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+        <td mat-cell *matCellDef="let row">{{row.legajo.nombre}}</td>
+      </ng-container>
+
+      <!-- Fecha Liquidacion -->
+      <ng-container matColumnDef="Fecha Liquidacion">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha Liquidación</th>
+        <td mat-cell *matCellDef="let row">{{row.fecha | date}}</td>
+      </ng-container>
+
+      <!-- Periodo Liquidacion -->
+      <ng-container matColumnDef="Periodo Liquidacion">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Periodo Liquidación</th>
+        <td mat-cell *matCellDef="let row">{{row.fechaperiodoliquidacion | date}}</td>
+      </ng-container>
+
+      <!-- Tipo -->
+      <ng-container matColumnDef="Tipo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Tipo</th>
+        <td mat-cell *matCellDef="let row">{{obtenerTipoLiquidacion(row)}}</td>
+      </ng-container>
+
+      <!-- Total -->
+      <ng-container matColumnDef="Total">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Total</th>
+        <td mat-cell *matCellDef="let row">{{calcularTotal(row)}}</td>
+      </ng-container>
+
+      <!-- Contabilizada -->
+      <ng-container matColumnDef="Contabilizada">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+            Contabilizada
+        </th>
+        <td mat-cell *matCellDef="let row">{{row.estacontabilizada?'Si':'No'}}</td>        
+      </ng-container>
+      
+      <!-- Acciones -->
     <div data-html2canvas-ignore="true">
       <ng-container  matColumnDef="Acciones">
         <th mat-header-cell *matHeaderCellDef>Acciones</th>
