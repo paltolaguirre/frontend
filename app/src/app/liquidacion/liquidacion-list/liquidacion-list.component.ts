@@ -15,7 +15,7 @@ import { PrintService } from 'src/app/print/print.service';
   styleUrls: ['./liquidacion-list.component.css']
 })
 export class LiquidacionListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['Creado', 'Nombre' , 'Contabilizada', 'Contabilizar','Acciones' ];
+  displayedColumns: string[] = ['Seleccionar', 'Legajo', 'Apellido', 'Nombre', 'Fecha Liquidacion', 'Periodo Liquidacion', 'Tipo',  'Contabilizada', 'Acciones' ];
   dataSource: MatTableDataSource<Liquidacion> = new MatTableDataSource<Liquidacion>();
   //data: LiquidacionesApi;
 
@@ -39,7 +39,7 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-
+    this.dataSource.sort = this.sort;
   }
 
   async ngAfterViewInit() {
@@ -99,6 +99,39 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
 
   refreshTableSorce() {
 
+  }
+
+  obtenerTipoLiquidacion(row: Liquidacion) {
+    let tipo: string;
+    switch (row.tipo) {
+      case 1:
+        tipo = 'Mensual';
+        break;
+      case 2:
+        tipo = 'Primer Quincena';
+        break;
+      case 3:
+        tipo = 'Segunda Quincena';
+        break;
+      case 4:
+        tipo = 'Vacaciones';
+        break;
+      case 5:
+        tipo = 'SAC';
+        break;
+      case 6:
+        tipo = 'Liquidación Final';
+        break;
+      default:
+        tipo = '-';
+        break;
+    }
+
+    return tipo;
+  }
+
+  calcularTotal(row: Liquidacion) {
+    return 'Falta calcular';
   }
 }
 

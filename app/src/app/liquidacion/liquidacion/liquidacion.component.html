@@ -14,10 +14,6 @@
 
   <div mat-dialog-content class="content" id="contentTOPDF">
     <div>
-      <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.nombre" placeholder="Nombre" type="text"
-          autocomplete="off"></mat-form-field>
-    </div>
-    <div>
       <app-selector-default nombre="legajo" [(matSelect)]="data.legajoid" (optionSelected)="data.legajo=$event">
       </app-selector-default>
       <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.zonatrabajo"
@@ -69,11 +65,8 @@
       <div>
         <mat-expansion-panel>
           <mat-expansion-panel-header>
-            <mat-panel-title *ngIf="(data.importesremunerativos == null || data.importesremunerativos.length == 0)">
-              Importes Remunerativos
-            </mat-panel-title>
-            <mat-panel-title *ngIf="(data.importesremunerativos != null && data.importesremunerativos.length != 0)">
-              Importes Remunerativos ({{data.importesremunerativos.length}})
+            <mat-panel-title>
+              Importes Remunerativos ({{childrenCounter(data.importesremunerativos)}})
             </mat-panel-title>
           </mat-expansion-panel-header>
           <div class="children-container">
@@ -81,7 +74,7 @@
               <tr *ngFor="let importesremunerativos of data.importesremunerativos">
                 <div *ngIf="(importesremunerativos.DeletedAt == null)">
                   <button mat-icon-button class="actions-icon" color="warn"
-                    (click)="onClickDeleteChild(importesremunerativos)">
+                    (click)="onClickDeleteChild(importesremunerativos, data.importesremunerativos)">
                     <mat-icon>delete_forever</mat-icon>
                   </button>
                   <app-selector-default nombre="concepto" [(matSelect)]="importesremunerativos.conceptoid"
@@ -107,11 +100,8 @@
       <div>
         <mat-expansion-panel>
           <mat-expansion-panel-header>
-            <mat-panel-title *ngIf="(data.importesnoremunerativos == null || data.importesnoremunerativos.length == 0)">
-              Importes No Remunerativos
-            </mat-panel-title>
-            <mat-panel-title *ngIf="(data.importesnoremunerativos != null && data.importesnoremunerativos.length != 0)">
-              Importes No Remunerativos ({{data.importesnoremunerativos.length}})
+            <mat-panel-title>
+              Importes No Remunerativos ({{childrenCounter(data.importesnoremunerativos)}})
             </mat-panel-title>
           </mat-expansion-panel-header>
           <div class="children-container">
@@ -119,7 +109,7 @@
               <tr *ngFor="let importesnoremunerativos of data.importesnoremunerativos">
                 <div *ngIf="(importesnoremunerativos.DeletedAt == null)">
                   <button mat-icon-button class="actions-icon" color="warn"
-                    (click)="onClickDeleteChild(importesnoremunerativos)">
+                    (click)="onClickDeleteChild(importesnoremunerativos, data.importesnoremunerativos)">
                     <mat-icon>delete_forever</mat-icon>
                   </button>
                   <app-selector-default nombre="concepto" [(matSelect)]="importesnoremunerativos.conceptoid"
@@ -146,18 +136,15 @@
       <div>
         <mat-expansion-panel>
           <mat-expansion-panel-header>
-            <mat-panel-title *ngIf="(data.descuentos == null || data.descuentos.length == 0)">
-              Descuentos
-            </mat-panel-title>
-            <mat-panel-title *ngIf="(data.descuentos != null && data.descuentos.length != 0)">
-              Descuentos ({{data.descuentos.length}})
+            <mat-panel-title>
+              Descuentos ({{childrenCounter(data.descuentos)}})
             </mat-panel-title>
           </mat-expansion-panel-header>
           <div class="children-container">
             <table style="width:100%">
               <tr *ngFor="let descuentos of data.descuentos">
                 <div *ngIf="(descuentos.DeletedAt == null)">
-                  <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(descuentos)">
+                  <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(descuentos, data.descuentos)">
                     <mat-icon>delete_forever</mat-icon>
                   </button>
                   <app-selector-default nombre="concepto" [(matSelect)]="descuentos.conceptoid"
@@ -184,18 +171,15 @@
       <div>
         <mat-expansion-panel>
           <mat-expansion-panel-header>
-            <mat-panel-title *ngIf="(data.retenciones == null || data.retenciones.length == 0)">
-              Retenciones
-            </mat-panel-title>
-            <mat-panel-title *ngIf="(data.retenciones != null && data.retenciones.length != 0)">
-              Retenciones ({{data.retenciones.length}})
+            <mat-panel-title>
+              Retenciones ({{childrenCounter(data.retenciones)}})
             </mat-panel-title>
           </mat-expansion-panel-header>
           <div class="children-container">
             <table style="width:100%">
               <tr *ngFor="let retenciones of data.retenciones">
                 <div *ngIf="(retenciones.DeletedAt == null)">
-                  <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(retenciones)">
+                  <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(retenciones, data.retenciones)">
                     <mat-icon>delete_forever</mat-icon>
                   </button>
                   <app-selector-default nombre="concepto" [(matSelect)]="retenciones.conceptoid"

@@ -44,12 +44,26 @@ export class ErrorsHandler implements ErrorHandler {
 
             //console.error("Se produjo un Error:");
             console.error(error);
-            const mensaje = error.message.split("):")[1];
-            const notificacion = {
-                codigo: parseInt(mensaje.split("|")[0]),
-                mensaje: mensaje.split("|")[1]
+
+            let  ret: any;
+            if (this.isPromiseError(error)) {
+                const mensaje = error.message.split("):")[1];
+                const notificacion = {
+                    codigo: parseInt(mensaje.split("|")[0]),
+                    mensaje: mensaje.split("|")[1]
+                }
+                ret = notificationService.notify(notificacion);     
+            } else {
+                ret = null;
             }
-            return notificationService.notify(notificacion);
+            
+            return ret;
         }
     }
+
+    isPromiseError(error: Error) {
+        return error.message.indexOf("promise") >= 0;
+    }
+
+
 }

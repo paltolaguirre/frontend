@@ -111,10 +111,10 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   async onClickSave(data: Liquidacion): Promise<Liquidacion> {
     let liquidacionesItem: Liquidacion;    
     
-    if(data.fechaperiododepositado)data.fechaperiododepositado = formatDate(data.fechaperiododepositadoanio+"-"+data.fechaperiododepositadomes+"-01", "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US');
-    if(data.fecha)data.fecha = formatDate(data.fecha, "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US');
-    if(data.fechaperiodoliquidacion)data.fechaperiodoliquidacion = formatDate(data.fechaperiodoliquidacion, "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US');
-    if(data.fechaultimodepositoaportejubilatorio)data.fechaultimodepositoaportejubilatorio = formatDate(data.fechaultimodepositoaportejubilatorio, "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US');
+    if(data.fechaperiododepositado)data.fechaperiododepositado = formatDate(data.fechaperiododepositadoanio+"-"+data.fechaperiododepositadomes+"-01", "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
+    if(data.fecha)data.fecha = formatDate(data.fecha, "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
+    if(data.fechaperiodoliquidacion)data.fechaperiodoliquidacion = formatDate(data.fechaperiodoliquidacion, "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
+    if(data.fechaultimodepositoaportejubilatorio)data.fechaultimodepositoaportejubilatorio = formatDate(data.fechaultimodepositoaportejubilatorio, "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
  
     if(data.legajo)data.legajoid = data.legajo.ID;
     if(data.banco)data.cuentabanco = data.banco.ID;
@@ -136,8 +136,25 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
     return liquidacionesItem;
   }
 
-  onClickDeleteChild(child: any) {
-    child.DeletedAt = new Date();
+  onClickDeleteChild(child: any, arr: any) {
+    if(child.ID) {
+      child.DeletedAt = new Date();
+    } else {
+      this.removeItemFromArr(arr, child);
+    }
+  }
+
+  removeItemFromArr(arr: Array<any>, item: any) {
+    const i = arr.indexOf(item);
+    if (i !== -1) arr.splice(i, 1);
+  }
+
+  childrenCounter(arr: Array<any>) {
+    const elementosNoBorrados = arr.filter(function (child) {
+      return child.DeletedAt == null;
+    });
+
+    return elementosNoBorrados.length;
   }
 
   isNew(data) : Boolean {
