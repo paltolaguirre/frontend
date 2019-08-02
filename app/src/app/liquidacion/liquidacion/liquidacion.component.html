@@ -211,7 +211,7 @@
 
 <ng-template #imprimir>
   <div *ngIf="currentLiquidacion$ | async as data" class="liquidacion-container">
-    <app-liquidacion-print [data]="data"></app-liquidacion-print>
+    <app-liquidacion-print [liquidacion]="data"></app-liquidacion-print>
     <div mat-dialog-actions class="actions">
       <button mat-raised-button mat-button (click)="onClickId()">Cerrar</button>
       <button mat-raised-button color="primary" mat-button (click)="onClickPrint()">Descargar</button>
