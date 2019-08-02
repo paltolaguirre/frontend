@@ -33,10 +33,70 @@
   .tg .tg-0pky {
     border-color: inherit;
     text-align: left;
-    vertical-align: top
+    vertical-align: top;
   }
 
   .tg .tg-0lax {
+    /*text-align: left;*/
+    vertical-align: top;
+  }
+  
+  .dato {
+    background-color: azure;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  td {
+    text-align: center;
+  }
+
+  /*********************************************/
+  .item {
+    border-top: black 0px solid;
+    border-right: black 1px solid;
+    border-bottom: black 0px solid;
+    border-left: black 1px solid;
+  }
+
+  .border-right {
+    border-right: black 1px solid !important;
+  }
+
+
+
+  /*.item td:nth-child(1){
+    border-left: black 1px solid;
+  }
+  .item td:nth-child(6){
+    border-left: black 1px solid;
+  }
+  .item td:nth-last-child(1){
+    border-right: black 1px solid;
+  }*/
+
+  .item td {
+    border-right: black 1px solid;
+
+  }
+
+  .empresa ul {
     text-align: left;
-    vertical-align: top
+    list-style-type: none;
+  }
+
+  .leyenda {
+    text-transform: uppercase;
+    text-align: justify;
+    margin: 10px;
+    font-size: 13px;
+  }
+
+  .firma {
+    text-transform: uppercase;
+    text-align: left;
+    margin: 20px 10px 20px 10px;
+    font-size: 16px;
   }

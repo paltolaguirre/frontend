@@ -12,12 +12,12 @@ export class EmpresaService {
 
   public async getEmpresa(empresaId: number): Promise<Empresa> {
     let empresa = <Empresa>{};
-    if (empresaId) {
-      const requestUrl =
-        `${this.href}/${empresaId}`;
+    
+    const requestUrl =
+      `${this.href}`;
 
-      empresa = await this.http.get<Empresa>(requestUrl).toPromise();
-    }
+    empresa = await this.http.get<Empresa>(requestUrl).toPromise();
+    
     return empresa;
   }
 

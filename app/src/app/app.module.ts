@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,7 +18,8 @@ import localeEs from '@angular/common/locales/es-AR';
 import localeEsExtra from '@angular/common/locales/extra/es-AR';
 import { DemoMaterialModule } from './material.module';
 
-registerLocaleData(localeEs, 'es-AR', localeEsExtra);
+//registerLocaleData(localeEs, 'es-AR', localeEsExtra);
+registerLocaleData(localeEs, 'es-Ar');
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ registerLocaleData(localeEs, 'es-AR', localeEsExtra);
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: LOCALE_ID, useValue: 'es-Ar' },
     AuthGuard,
     NotificationService,
     PrintService
