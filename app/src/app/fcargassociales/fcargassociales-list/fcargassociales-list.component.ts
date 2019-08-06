@@ -23,6 +23,7 @@ export class FcargassocialesListComponent implements OnInit, AfterViewInit {
 
   fechahasta : any;
   fechadesde : any;
+  importedetraccion: any;
 
   resultsLength = 0;
   isLoadingResults = true;
@@ -49,7 +50,7 @@ export class FcargassocialesListComponent implements OnInit, AfterViewInit {
     if(localStorage.getItem('fcargassociales-fechadesde')) {
       this.fechadesde = localStorage.getItem('fcargassociales-fechadesde');
     } else {
-      this.fechadesde = '01/01/2000';
+      this.fechadesde = '01-01-2000';
     }
   }
 
@@ -93,8 +94,8 @@ export class FcargassocialesListComponent implements OnInit, AfterViewInit {
   }
 
   async exportarTXT() {
-    const fcargassocialessTXT: any = await this.fcargassocialesService.getFcargassocialesTXT(this.fechadesde,this.fechahasta);
-    var blob = new Blob([fcargassocialessTXT], {type: "text/plain;charset=utf-8"});
+    const fcargassocialessTXT: any = await this.fcargassocialesService.getFcargassocialesTXT(this.fechadesde,this.fechahasta, this.importedetraccion);
+    var blob = new Blob([fcargassocialessTXT.data], {type: "text/plain;charset=utf-8"});
     saveAs.saveAs(blob, 'F931EXPORT');
   }
 

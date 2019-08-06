@@ -27,15 +27,18 @@ export class FcargassocialesService {
     return listaItems;
   }
  
-  public async getFcargassocialesTXT(fechadesde : Date , fechahasta : Date): Promise<any> {
+  public async getFcargassocialesTXT(fechadesde : Date , fechahasta : Date, importedetraccion: number): Promise<any> {
     let result = <any>{};
 
-    const requestUrl = `${this.href}`+"?fechadesde="+fechadesde+"&fechahasta="+fechahasta;
+    fechadesde = new Date("2000-12-12")
+    fechahasta = new Date("2019-12-12")
+    importedetraccion = 999
 
-//    result  = await this.http.get<any>(requestUrl).toPromise();
+    const requestUrl = `${this.href}-exportartxt?fechadesde=2000-12-12&fechahasta=2019-12-12&importedetraccion=${importedetraccion}`;
 
+    result  = await this.http.get<any>(requestUrl).toPromise();
 
-    return "TXT DE PRUEBA";
+    return result;
   }
 
 }
