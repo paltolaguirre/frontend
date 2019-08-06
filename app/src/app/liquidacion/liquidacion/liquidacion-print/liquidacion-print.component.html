@@ -65,15 +65,15 @@
     </tr>
     
     <tr class="item" *ngFor="let item of items">
-      <td class="tg-0lax border-right">dato</td>
-      <td class="tg-0lax" colspan="2">dato</td>
-      <td class="tg-0lax">dato</td>
-      <td class="tg-0lax">dato</td>
-      <td class="tg-0lax">dato</td>
-      <td class="tg-0lax">dato</td>
-      <td class="tg-0lax">dato</td>
-      <td class="tg-0lax">dato</td>
-      <td class="tg-0lax">dato</td>
+      <td class="tg-0lax"><div class="dato">{{item.haber.codigo}}</div></td>
+      <td class="tg-0lax" colspan="2"><div class="dato">{{item.haber.detalle}}</div></td>
+      <td class="tg-0lax"><div class="dato">{{item.haber.cantidad}}</div></td>
+      <td class="tg-0lax"><div class="dato">{{item.haber.remunerativo}}</div></td>
+      <td class="tg-0lax"><div class="dato">{{item.haber.noremunerativo}}</div></td>
+      <td class="tg-0lax"><div class="dato">{{item.deduccion.codigo}}</div></td>
+      <td class="tg-0lax"><div class="dato">{{item.deduccion.detalle}}</div></td>
+      <td class="tg-0lax"><div class="dato">{{item.deduccion.cantidad}}</div></td>
+      <td class="tg-0lax"><div class="dato">{{item.deduccion.importe}}</div></td>
     </tr>
 
     <tr>
