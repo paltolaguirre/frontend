@@ -150,11 +150,17 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   }
 
   childrenCounter(arr: Array<any>) {
-    const elementosNoBorrados = arr.filter(function (child) {
-      return child.DeletedAt == null;
-    });
+    let ret;
+    if(arr) {
+      const elementosNoBorrados = arr.filter(function (child) {
+        return child.DeletedAt == null;
+      });
+      ret = elementosNoBorrados.length;
+    } else {
+      ret = 0;
+    }
 
-    return elementosNoBorrados.length;
+    return ret;
   }
 
   isNew(data) : Boolean {
