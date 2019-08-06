@@ -6,12 +6,19 @@ import { Empresa } from 'src/app/empresa/empresa.model';
 import { Observable } from 'rxjs';
 
 export interface LiquidacionItem {
-  codigo: string;
-  detalle: string;
-  cantidad: string;
-  remunerativo: string;
-  noremunerativo: string;
-  importe: string;
+  haber: {
+    codigo: string;
+    detalle: string;
+    cantidad: string;
+    remunerativo: string;
+    noremunerativo: string;
+  },
+  deduccion: {
+    codigo: string;
+    detalle: string;
+    cantidad: string;
+    importe: string;
+  }
 }
 
 @Component({
@@ -47,12 +54,19 @@ export class LiquidacionPrintComponent implements OnInit {
   obtenerItems() {
     for (let index = 0; index < 10; index++) {
       this.items.push({
-        codigo: "",
-        detalle: "",
-        cantidad: "",
-        remunerativo: "",
-        noremunerativo: "",
-        importe: ""
+        haber: {
+          codigo: "",
+          detalle: "",
+          cantidad: "",
+          remunerativo: "",
+          noremunerativo: "",
+        },
+        deduccion: {
+          codigo: "",
+          detalle: "",
+          cantidad: "",
+          importe: ""
+        }
       });
     }
   }
