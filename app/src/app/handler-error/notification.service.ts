@@ -40,7 +40,7 @@ export class NotificationService {
                 break;
         }
         this._notification.next(notification);
-        setTimeout(() => this._notification.next(null), 3000);
+        setTimeout(() => this._notification.next(null), 10 * 1000);
     }
 
 }

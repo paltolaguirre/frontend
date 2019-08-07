@@ -10,7 +10,7 @@ export class EmpresaService {
 
   constructor(private http: HttpClient) { }
 
-  public async getEmpresa(empresaId: number): Promise<Empresa> {
+  public async getEmpresa(): Promise<Empresa> {
     let empresa = <Empresa>{};
     
     const requestUrl =

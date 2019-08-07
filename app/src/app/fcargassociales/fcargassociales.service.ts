@@ -18,7 +18,7 @@ export class FcargassocialesService {
 
   public async getFcargassocialess(sort: string, order: string, fechadesde : Date , fechahasta : Date, page: number): Promise<ListaItems> {
     const requestUrl =
-      `${this.href}`+"?fechadesde="+fechadesde+"&fechahasta="+fechahasta;
+      `${this.href}?fechadesde=${fechadesde.toISOString().substring(0, 10)}&fechahasta=${fechahasta.toISOString().substring(0, 10)}`;
 
     let listaItems: ListaItems = { items: null, total_count: null };
     listaItems.items = await this.http.get<Fcargassociales[]>(requestUrl).toPromise();
@@ -30,13 +30,11 @@ export class FcargassocialesService {
   public async getFcargassocialesTXT(fechadesde : Date , fechahasta : Date, importedetraccion: number): Promise<any> {
     let result = <any>{};
 
-    fechadesde = new Date("2000-12-12")
-    fechahasta = new Date("2019-12-12")
-    importedetraccion = 999
-
-    const requestUrl = `${this.href}-exportartxt?fechadesde=2000-12-12&fechahasta=2019-12-12&importedetraccion=${importedetraccion}`;
+    const requestUrl =
+      `${this.href}-exportartxt?fechadesde=${fechadesde.toISOString().substring(0, 10)}&fechahasta=${fechahasta.toISOString().substring(0, 10)}&importedetraccion=${importedetraccion}`;
 
     result  = await this.http.get<any>(requestUrl).toPromise();
+
 
     return result;
   }

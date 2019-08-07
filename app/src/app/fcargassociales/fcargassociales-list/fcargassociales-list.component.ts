@@ -10,6 +10,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { formatDate } from "@angular/common";
 import { PrintService } from 'src/app/print/print.service';
 import { saveAs } from 'file-saver';
+import { EmpresaService } from 'src/app/empresa/empresa.service';
 
 @Component({
   selector: 'app-fcargassociales-list',
@@ -21,8 +22,9 @@ export class FcargassocialesListComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<Fcargassociales> = new MatTableDataSource<Fcargassociales>();
   //data: FcargassocialessApi;
 
-  fechahasta : any;
-  fechadesde : any;
+  periodo: any;
+  fechahasta: Date;
+  fechadesde: Date;
   importedetraccion: any;
 
   resultsLength = 0;
@@ -40,17 +42,13 @@ export class FcargassocialesListComponent implements OnInit, AfterViewInit {
     private fcargassocialesService: FcargassocialesService,
     public dialog: MatDialog,
     private notificationService: NotificationService,
-    public printService : PrintService
+    public printService: PrintService,
+    private empresaService: EmpresaService,
   ) {
-    if(localStorage.getItem('fcargassociales-fechahasta')) {
-      this.fechahasta = localStorage.getItem('fcargassociales-fechahasta');
+    if(localStorage.getItem('fcargassociales-periodo')) {
+      this.periodo = localStorage.getItem('fcargassociales-periodo');
     } else {
-      this.fechahasta = formatDate(Date.now(), "MM-dd-yyyy", 'en-US');
-    }
-    if(localStorage.getItem('fcargassociales-fechadesde')) {
-      this.fechadesde = localStorage.getItem('fcargassociales-fechadesde');
-    } else {
-      this.fechadesde = '01-01-2000';
+      this.periodo = formatDate(Date.now(), "yyyy-MM", 'en-US');
     }
   }
 
@@ -58,30 +56,33 @@ export class FcargassocialesListComponent implements OnInit, AfterViewInit {
 
   }
 
+  async ngAfterViewInit() {
+    this.updateGrilla();
+  }
+  
   getPageSizeOptions(): number[] {
     if (this.dataSource.data.length>20)
     return [5, 10, 20,  this.dataSource.paginator.length];
     else
     return [5, 10, 20];
   }
-  changeFechaDesde (value) {
-    localStorage.setItem("fcargassociales-fechadesde",value);
-    this.fechadesde = value;
+  
+  changePeriodo(event) {
+    this.periodo = event.target.value;
+    localStorage.setItem("fcargassociales-periodo", this.periodo);
     this.updateGrilla();
   }
-  changeFechaHasta (value) {
-    localStorage.setItem("fcargassociales-fechahasta",value);
-    this.fechahasta = value;
-    this.updateGrilla();
 
+  setFechasFromPeriodo() {
+    const anio = parseInt(this.periodo.split("-")[0]);
+    const mes = parseInt(this.periodo.split("-")[1]);
+
+    this.fechadesde = new Date(anio, mes - 1, 1);
+    this.fechahasta = new Date(anio, mes, 0);
   }
 
-
-  async ngAfterViewInit() {
-    this.updateGrilla ();
-  }
-
-  async updateGrilla () {
+  async updateGrilla() {
+    this.setFechasFromPeriodo();
     const fcargassocialessApi: ListaItems = await this.fcargassocialesService.getFcargassocialess(this.sort.active, this.sort.direction,this.fechadesde,this.fechahasta, 1);
     this.dataSource = new MatTableDataSource<Fcargassociales>(fcargassocialessApi.items);
     this.dataSource.paginator = this.paginator;
@@ -94,9 +95,23 @@ export class FcargassocialesListComponent implements OnInit, AfterViewInit {
   }
 
   async exportarTXT() {
+    if(!this.importedetraccion) {
+      const notificacion = {
+        codigo: 400,
+        mensaje: "Debe ingresar un importe a detraer."
+      }
+      const ret = this.notificationService.notify(notificacion);
+      return ret;
+    }
+
+    const empresa = await this.empresaService.getEmpresa();
     const fcargassocialessTXT: any = await this.fcargassocialesService.getFcargassocialesTXT(this.fechadesde,this.fechahasta, this.importedetraccion);
     var blob = new Blob([fcargassocialessTXT.data], {type: "text/plain;charset=utf-8"});
-    saveAs.saveAs(blob, 'F931EXPORT');
+    
+    const anio = parseInt(this.periodo.split("-")[0]);
+    const mes = parseInt(this.periodo.split("-")[1]);
+    const nombreArchivo = `${empresa.cuit}_${anio}-${mes}_0_`;
+    saveAs.saveAs(blob, nombreArchivo);
   }
 
   refreshTableSorce() {

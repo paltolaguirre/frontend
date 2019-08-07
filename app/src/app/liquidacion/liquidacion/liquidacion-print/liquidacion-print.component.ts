@@ -37,7 +37,7 @@ export class LiquidacionPrintComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.empresa = await this.empresaService.getEmpresa(914);
+    this.empresa = await this.empresaService.getEmpresa();
     console.log(this.empresa);
 
     this.obtenerItems();
