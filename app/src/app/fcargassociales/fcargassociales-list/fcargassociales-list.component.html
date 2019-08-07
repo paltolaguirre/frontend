@@ -9,9 +9,8 @@
   
   <div class="topmenu-container" >
     <div>
-      <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="changeFechaDesde($event)" [ngModel]="fechadesde | date: 'yyyy-MM-dd'" placeholder="Fecha Desde" autocomplete="off"></mat-form-field>
-      <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="changeFechaHasta($event)" [ngModel]="fechahasta | date: 'yyyy-MM-dd'" placeholder="Fecha Hasta" autocomplete="off"></mat-form-field>
-      <mat-form-field class="standard-input"><input matInput type="number" placeholder="Importe a detraer Ley 27430" [ngModel]="importedetraccion" autocomplete="off"></mat-form-field>
+      <mat-form-field class="standard-input"><input matInput type="month" (focusout)="changePeriodo($event)" placeholder="Periodo mensual" [(ngModel)]="periodo" autocomplete="off"></mat-form-field>
+      <mat-form-field class="standard-input"><input matInput type="number" placeholder="Importe a detraer Ley 27430" [(ngModel)]="importedetraccion" autocomplete="off"></mat-form-field>
     </div>
       <div>
         <button mat-button color="secondary" class="topmenu-button" (click)="printService.printTOPDF()">Imprimir</button>
