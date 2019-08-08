@@ -32,6 +32,11 @@ export class LiquidacionPrintComponent implements OnInit {
   empresa: Empresa;
   items: Array<LiquidacionItem>;
 
+  totalImpRemunerativo: number;
+  totalImpNoRemunerativo: number;
+  totalDeducciones: number;
+  totalNeto: number;
+
   constructor(private empresaService: EmpresaService,) { 
     this.items = new Array();
   }
@@ -52,22 +57,53 @@ export class LiquidacionPrintComponent implements OnInit {
   }
 
   obtenerItems() {
+    this.totalImpRemunerativo = 0;
+    this.totalImpNoRemunerativo = 0;
+    this.totalDeducciones = 0;
+    this.totalNeto = 0;
+
     for (let index = 0; index < 10; index++) {
-      this.items.push({
+      let posicionImpNoRemunerativos = index - this.liquidacion.importesremunerativos.length;
+      let posicionRetenciones = index - this.liquidacion.descuentos.length;
+
+      let item = {
         haber: {
           codigo: "",
           detalle: "",
           cantidad: "",
-          remunerativo: "",
-          noremunerativo: "",
+          remunerativo: null,
+          noremunerativo: null,
         },
         deduccion: {
           codigo: "",
           detalle: "",
           cantidad: "",
-          importe: ""
+          importe: null
         }
-      });
+      };
+
+      if (index < this.liquidacion.importesremunerativos.length) {
+        item.haber.codigo = this.liquidacion.importesremunerativos[index].conceptoid.toString();
+        item.haber.remunerativo = this.liquidacion.importesremunerativos[index].importeunitario;
+        this.totalImpRemunerativo += this.liquidacion.importesremunerativos[index].importeunitario;
+      } else if (posicionImpNoRemunerativos < this.liquidacion.importesnoremunerativos.length) {
+        item.haber.codigo = this.liquidacion.importesnoremunerativos[posicionImpNoRemunerativos].conceptoid.toString();
+        item.haber.noremunerativo = this.liquidacion.importesnoremunerativos[posicionImpNoRemunerativos].importeunitario;
+        this.totalImpNoRemunerativo += this.liquidacion.importesnoremunerativos[posicionImpNoRemunerativos].importeunitario;
+      }
+
+      if (index < this.liquidacion.descuentos.length) {
+        item.deduccion.codigo = this.liquidacion.descuentos[index].conceptoid.toString();
+        item.deduccion.importe = this.liquidacion.descuentos[index].importeunitario;
+      } else if (posicionRetenciones < this.liquidacion.retenciones.length) {
+        item.deduccion.codigo = this.liquidacion.retenciones[posicionRetenciones].conceptoid.toString();
+        item.deduccion.importe = this.liquidacion.retenciones[posicionRetenciones].importeunitario;
+      }
+      this.totalDeducciones += item.deduccion.importe;
+      
+      this.items.push(item);
     }
+
+    this.totalNeto = this.totalImpRemunerativo + this.totalImpNoRemunerativo - this.totalDeducciones
   }
 }
