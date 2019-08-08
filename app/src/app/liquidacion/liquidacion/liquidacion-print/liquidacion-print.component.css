@@ -1,8 +1,14 @@
  /*@import "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css";*/
-   
+  #contentTOPDF {
+    width: 1000px;
+    padding-right: 50px;
+    padding-left: 50px;
+    padding-top: 25px;
+  }
+
   .tg {
+    width: 1000px;
     margin: auto;
-    width: 1500px;
     border-collapse: collapse;
     border-spacing: 0;
   }
@@ -10,12 +16,13 @@
   .tg td {
     font-family: Arial, sans-serif;
     font-size: 14px;
-    padding: 10px 5px;
+    /*padding: 10px 5px;*/
     border-style: solid;
     border-width: 1px;
     overflow: hidden;
     word-break: normal;
     border-color: black;
+    min-height: 110px;
   }
 
   .tg th {
@@ -38,7 +45,8 @@
 
   .tg .tg-0lax {
     /*text-align: left;*/
-    vertical-align: top;
+    /*vertical-align: top;*/
+    padding: 5px;
   }
   
   .dato {
@@ -51,6 +59,8 @@
 
   td {
     text-align: center;
+    text-transform: uppercase;
+    font-size: 13px !important;
   }
 
   /*********************************************/
@@ -59,6 +69,7 @@
     border-right: black 1px solid;
     border-bottom: black 0px solid;
     border-left: black 1px solid;
+    height: 25px;
   }
 
   .border-right {
@@ -82,7 +93,12 @@
 
   }
 
+  .empresa {
+    margin-top: 10px;
+  }
+
   .empresa ul {
+    margin-top: 0px;
     text-align: left;
     list-style-type: none;
   }
@@ -100,3 +116,32 @@
     margin: 20px 10px 20px 10px;
     font-size: 16px;
   }
+
+  .total {
+    font-size: 14px;
+    margin: 5px 0px;
+  }
+
+  .hidden-top {
+    border-top-style: hidden !important;
+  }
+  .hidden-top td {
+    border-top-style: hidden !important;
+  }
+
+  .hidden-right {
+    border-right-style: hidden !important;
+  }
+  .hidden-right td {
+    border-right-style: hidden !important;
+  }
+  .hidden-bottom {
+    border-bottom: hidden !important;
+  }
+  .hidden-bottom td {
+    border-bottom: hidden !important;
+  }
+  .hidden-left {
+    border-left-style: hidden !important;
+  }
+
