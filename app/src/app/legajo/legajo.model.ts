@@ -33,8 +33,7 @@ export interface Legajo {
     condicionsiniestradoid: number;
     obrasocial?: ObraSocial;
     obrasocialid: number;
-    conveniocolectivo?: ConvenioColectivo;
-    conveniocolectivoid: number;
+    conveniocolectivo?: string;
     valorfijolrt: number;
     conyuge: [Conyuge];
     hijos: [Hijo];

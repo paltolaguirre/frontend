@@ -65,8 +65,8 @@ export class LegajoComponent implements OnInit, AfterViewInit {
     let legajosItem: Legajo;
 
     // se setea el paisID segun Option del selector de paises
-    if(data.fechaalta)data.fechaalta = formatDate(data.fechaalta, "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US');
-    if(data.fechabaja)data.fechabaja = formatDate(data.fechabaja, "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US');
+    if(data.fechaalta)data.fechaalta = formatDate(data.fechaalta, "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
+    if(data.fechabaja)data.fechabaja = formatDate(data.fechabaja, "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
 
     if(data.situacion)data.situacionid = data.situacion.ID;
     if(data.pais)data.paisid = data.provincia.ID;

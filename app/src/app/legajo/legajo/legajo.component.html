@@ -1,6 +1,6 @@
 <div *ngIf="currentLegajo$ | async as data" class="legajo-container">
   <h1 *ngIf="data.ID">
-    Modificar legajo <span>{{data.legajo}}</span>
+    Legajo Nº <span>{{data.legajo}}</span>
   </h1>
   <h1 *ngIf="!data.ID">
     Nuevo legajo
@@ -53,8 +53,8 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div>
-                <app-selector-default nombre="situacion" [(matSelect)]="data.situacionid" (optionSelected)="data.situacion=$event" ></app-selector-default>
-                <app-selector-default nombre="condicion" [(matSelect)]="data.condicionid" (optionSelected)="data.condicion=$event" ></app-selector-default>            
+                <app-selector-default nombre="situacion" [(matSelect)]="data.situacionid" (optionSelected)="data.situacion=$event" required></app-selector-default>
+                <app-selector-default nombre="condicion" [(matSelect)]="data.condicionid" (optionSelected)="data.condicion=$event" required></app-selector-default>            
             </div>
             <div>
                 <app-selector-default nombre="modalidadcontratacion" [(matSelect)]="data.modalidadcontratacionid" required=true (optionSelected)="data.modalidadcontratacion=$event"></app-selector-default>
@@ -68,14 +68,14 @@
                 <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.remuneracion" placeholder="Remuneración" type="number" autocomplete="off"></mat-form-field>
                 <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.horasmensualesnormales" required placeholder="Horas mensuales normales" type="text" autocomplete="off"></mat-form-field>            
             </div>
-                <app-selector-default nombre="conveniocolectivo" [(matSelect)]="data.conveniocolectivoid" required=true (optionSelected)="data.conveniocolectivo=$event" ></app-selector-default>
+                <mat-form-field class="standard-input"><input matInput required [(ngModel)]="data.conveniocolectivo" placeholder="Convenio colectivo" type="text" autocomplete="off" required></mat-form-field>
                 <app-selector-default nombre="centrodecosto" [(matSelect)]="data.centrodecostoid" (optionSelected)="data.centrodecosto=$event" ></app-selector-default>        
             <div>
                 <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.categoria" required placeholder="Categoria" type="text" autocomplete="off"></mat-form-field>
                 <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.tarea" required placeholder="Tarea" type="text" autocomplete="off"></mat-form-field>    
             </div>
             <div>
-                <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="data.fechaalta=$event" [ngModel]="data.fechaalta | date: 'yyyy-MM-dd'" placeholder="Fecha de alta" autocomplete="off"></mat-form-field>
+                <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="data.fechaalta=$event" [ngModel]="data.fechaalta | date: 'yyyy-MM-dd'" placeholder="Fecha de alta" autocomplete="off" required></mat-form-field>
                 <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="data.fechabaja=$event" [ngModel]="data.fechabaja | date: 'yyyy-MM-dd'" placeholder="Fecha de baja" autocomplete="off"></mat-form-field>
             </div>
             <div>
