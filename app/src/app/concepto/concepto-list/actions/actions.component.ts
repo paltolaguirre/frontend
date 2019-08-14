@@ -48,7 +48,8 @@ export class ActionsComponent implements OnInit {
       activo: null,
       tipo: null,
       cuentacontable: null,
-      cuenta: null
+      cuenta: null,
+      esimprimible : null
     }
     
     await this.conceptoService.deleteConcepto(item);

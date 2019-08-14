@@ -9,6 +9,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     margin-top : 15px;
     margin-bottom : 15px;
 }
+::ng-deep .mat-checkbox .mat-checkbox-frame {
+    border-color: #fff;
+  }
 
 .mat-button.mat-secondary {
     color : #005d85 !important;

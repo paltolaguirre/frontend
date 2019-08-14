@@ -23,10 +23,7 @@
             </div>
             <div>
                 <mat-form-field class="standard-input"><input matInput required [(ngModel)]="data.apellido" placeholder="Apellido" type="text" autocomplete="off"></mat-form-field>
-                <mat-form-field class="standard-input"><input matInput required [(ngModel)]="data.nombre" placeholder="Nombre" type="text" autocomplete="off"></mat-form-field>    
-            </div>
-            <div>
-                <mat-form-field class="big-input"><input matInput [(ngModel)]="data.direccion" type="text" autocomplete="off" placeholder="Domicilio"></mat-form-field>
+                <mat-form-field class="standard-input"><input matInput required [(ngModel)]="data.nombre" placeholder="Nombres" type="text" autocomplete="off"></mat-form-field>    
             </div>
             <br/>
             <div>
@@ -37,6 +34,10 @@
                 <app-selector-default nombre="localidad" [(matSelect)]="data.localidadid" filter="provinciaid={{data.provinciaid}}" required=true (optionSelected)="data.localidad=$event"></app-selector-default>
                 <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.codigo" placeholder="Código Postal" type="text" autocomplete="off"></mat-form-field>
             </div>
+
+            <div>
+              <mat-form-field class="big-input"><input matInput [(ngModel)]="data.direccion" type="text" autocomplete="off" placeholder="Domicilio"></mat-form-field>
+          </div>
             <div>
                 <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.telefono" placeholder="Telefono" type="text" autocomplete="off"></mat-form-field>
                 <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.email" placeholder="E-Mail" type="text" autocomplete="off"></mat-form-field>
@@ -53,8 +54,8 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div>
-                <app-selector-default nombre="situacion" [(matSelect)]="data.situacionid" (optionSelected)="data.situacion=$event" ></app-selector-default>
-                <app-selector-default nombre="condicion" [(matSelect)]="data.condicionid" (optionSelected)="data.condicion=$event" ></app-selector-default>            
+                <app-selector-default nombre="situacion" [(matSelect)]="data.situacionid" required=true (optionSelected)="data.situacion=$event" ></app-selector-default>
+                <app-selector-default nombre="condicion" [(matSelect)]="data.condicionid" required=true (optionSelected)="data.condicion=$event" ></app-selector-default>            
             </div>
             <div>
                 <app-selector-default nombre="modalidadcontratacion" [(matSelect)]="data.modalidadcontratacionid" required=true (optionSelected)="data.modalidadcontratacion=$event"></app-selector-default>
@@ -75,7 +76,7 @@
                 <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.tarea" required placeholder="Tarea" type="text" autocomplete="off"></mat-form-field>    
             </div>
             <div>
-                <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="data.fechaalta=$event" [ngModel]="data.fechaalta | date: 'yyyy-MM-dd'" placeholder="Fecha de alta" autocomplete="off"></mat-form-field>
+                <mat-form-field class="standard-input"><input matInput type="date" required (ngModelChange)="data.fechaalta=$event" [ngModel]="data.fechaalta | date: 'yyyy-MM-dd'" placeholder="Fecha de alta" autocomplete="off"></mat-form-field>
                 <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="data.fechabaja=$event" [ngModel]="data.fechabaja | date: 'yyyy-MM-dd'" placeholder="Fecha de baja" autocomplete="off"></mat-form-field>
             </div>
             <div>

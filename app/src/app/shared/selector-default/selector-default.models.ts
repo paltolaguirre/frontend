@@ -51,7 +51,7 @@ export class Models {
       case 'centrodecosto': 
         return "Centro de costo"; 
       case 'cuenta': 
-        return "Cuenta"; 
+        return "Cuenta Contable"; 
       case 'tipo': 
          return "Tipo"; 
       case 'mes': 
