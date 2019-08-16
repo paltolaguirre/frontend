@@ -117,7 +117,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
     if(data.fechaultimodepositoaportejubilatorio)data.fechaultimodepositoaportejubilatorio = formatDate(data.fechaultimodepositoaportejubilatorio, "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
  
     if(data.legajo)data.legajoid = data.legajo.ID;
-    if(data.banco)data.cuentabanco = data.banco.ID;
+    if(data.banco)data.cuentabancoid = data.banco.ID;
     if(data.condicionpagos)data.condicionpago = data.condicionpagos.ID;
     if(data.tipos)data.tipo = data.tipos.ID;
 

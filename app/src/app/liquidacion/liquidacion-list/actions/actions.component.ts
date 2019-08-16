@@ -52,7 +52,7 @@ export class ActionsComponent implements OnInit {
       zonatrabajo : null,
       condicionpago : null,
       condicionpagos : null,
-      cuentabanco : null, 
+      cuentabancoid : null, 
       banco : null,
       fechaperiododepositado : null,
       fechaperiododepositadomes : null,

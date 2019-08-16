@@ -60,7 +60,6 @@ export class ActionsComponent implements OnInit {
       condicionid: null,
       condicionsiniestradoid: null,
       obrasocialid: null,
-      conveniocolectivoid: null,
       valorfijolrt: null,
       conyuge: null,
       remuneracion: null,

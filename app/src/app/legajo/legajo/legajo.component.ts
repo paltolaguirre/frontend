@@ -62,11 +62,13 @@ export class LegajoComponent implements OnInit, AfterViewInit {
   }
 
   async onClickSave(data: Legajo): Promise<Legajo> {
+    if(this.faltanRequeridos()) return null;
+
     let legajosItem: Legajo;
 
     // se setea el paisID segun Option del selector de paises
-    if(data.fechaalta)data.fechaalta = formatDate(data.fechaalta, "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US');
-    if(data.fechabaja)data.fechabaja = formatDate(data.fechabaja, "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US');
+    if(data.fechaalta)data.fechaalta = formatDate(data.fechaalta, "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
+    if(data.fechabaja)data.fechabaja = formatDate(data.fechabaja, "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
 
     if(data.situacion)data.situacionid = data.situacion.ID;
     if(data.pais)data.paisid = data.provincia.ID;
@@ -170,5 +172,23 @@ export class LegajoComponent implements OnInit, AfterViewInit {
 
   onClickDeleteChild(child: any) {
     child.DeletedAt = new Date();
+  }
+
+  faltanRequeridos() {
+    var todos = document.getElementsByTagName('*');
+    var requeridos = new Array();
+    for (let obj of todos as any) {
+      if (obj.getAttribute("ng-reflect-required") == "true" && obj.value == "") {
+        // requeridos.push(obj);
+        let placeholder = obj.getAttribute("placeholder");
+        const notificacion = {
+          codigo: 400,
+          mensaje: `El campo "${placeholder}" es obligatorio.`
+        }
+        const ret = this.notificationService.notify(notificacion);
+        return true;
+      }
+    }
+    return false;
   }
 }
