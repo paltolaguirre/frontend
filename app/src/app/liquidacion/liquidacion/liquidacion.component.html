@@ -29,7 +29,7 @@
       <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="data.fecha=$event"
           [ngModel]="data.fecha | date: 'yyyy-MM-dd'" placeholder="Fecha de Liquidacion" autocomplete="off">
       </mat-form-field>
-      <app-selector-default nombre="cuenta" placeholder="Cuenta Bancaria" [(matSelect)]="data.cuentabanco"
+      <app-selector-default nombre="banco" placeholder="Cuenta Bancaria" [(matSelect)]="data.cuentabanco"
         (optionSelected)="data.banco=$event"></app-selector-default>
     </div>
     <div>
