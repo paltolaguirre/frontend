@@ -62,6 +62,8 @@ export class LegajoComponent implements OnInit, AfterViewInit {
   }
 
   async onClickSave(data: Legajo): Promise<Legajo> {
+    if(this.faltanRequeridos()) return null;
+
     let legajosItem: Legajo;
 
     // se setea el paisID segun Option del selector de paises
@@ -170,5 +172,23 @@ export class LegajoComponent implements OnInit, AfterViewInit {
 
   onClickDeleteChild(child: any) {
     child.DeletedAt = new Date();
+  }
+
+  faltanRequeridos() {
+    var todos = document.getElementsByTagName('*');
+    var requeridos = new Array();
+    for (let obj of todos as any) {
+      if (obj.getAttribute("ng-reflect-required") == "true" && obj.value == "") {
+        // requeridos.push(obj);
+        let placeholder = obj.getAttribute("placeholder");
+        const notificacion = {
+          codigo: 400,
+          mensaje: `El campo "${placeholder}" es obligatorio.`
+        }
+        const ret = this.notificationService.notify(notificacion);
+        return true;
+      }
+    }
+    return false;
   }
 }
