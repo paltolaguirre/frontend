@@ -178,7 +178,7 @@ export class LegajoComponent implements OnInit, AfterViewInit {
     var todos = document.getElementsByTagName('*');
     var requeridos = new Array();
     for (let obj of todos as any) {
-      if (obj.getAttribute("ng-reflect-required") == "true" && obj.value == "") {
+      if (obj.required && obj.value == "") {
         // requeridos.push(obj);
         let placeholder = obj.getAttribute("placeholder");
         const notificacion = {
