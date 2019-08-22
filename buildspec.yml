@@ -31,7 +31,7 @@ phases:
       - echo Build started on `date`
       # Building App
       - echo Building App...
-      - ng build --prod
+      - ng build --prod --output-hashing=all
       - cd ..
       # Building Docker image
       - echo Building Docker image...

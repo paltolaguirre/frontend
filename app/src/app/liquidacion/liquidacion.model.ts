@@ -23,7 +23,7 @@ export interface Liquidacion {
     zonatrabajo : string;
     condicionpago : number;
     condicionpagos : Condicionpago;
-    cuentabanco : number;
+    cuentabancoid : number;
     banco : Banco;
     fechaperiododepositado : string;
     fechaperiododepositadomes : string;
