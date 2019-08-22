@@ -69,6 +69,13 @@ export class DialogLiquidaciones {
                 this.data.importesnoremunerativos.push(pushData);
               }
               break;
+           case 5:
+                  if(this.data.aportespatronales == null) {
+                    this.data.aportespatronales = [pushData];      
+                  } else {
+                    this.data.aportespatronales.push(pushData);
+                  }
+                  break;
         }
       });
     } 
