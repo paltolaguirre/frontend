@@ -288,6 +288,47 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
       });
     }
   }
+  
+
+  onClickNewAportespatronales(data: Liquidacion) {
+    if(data.aportespatronales == null) {
+      data.aportespatronales = [{
+        ID: null,
+        CreatedAt: null,
+        UpdatedAt: null,
+        DeletedAt: null,
+        codigo: null,
+        descripcion: null,
+        concepto: null,
+        conceptoid: null,
+        cantidad: null,
+        porcentaje: null,
+        sobreconcepto: null,
+        sobreconceptoid: null,
+        activo: 1,
+        importeunitario: null,
+        total: null
+      }];      
+    } else {
+      data.aportespatronales.push({
+        ID: null,
+        CreatedAt: null,
+        UpdatedAt: null,
+        DeletedAt: null,
+        codigo: null,
+        descripcion: null,
+        concepto: null,
+        conceptoid: null,
+        cantidad: null,
+        porcentaje: null,
+        sobreconcepto: null,
+        sobreconceptoid: null,
+        activo: 1,
+        importeunitario: null,
+        total: null
+      });
+    }
+  }
 
   onClickNewRetenciones(data: Liquidacion) {
     if(data.retenciones == null) {

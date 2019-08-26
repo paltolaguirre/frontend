@@ -17,8 +17,6 @@
           placeholder="Código" type="text" autocomplete="off"></mat-form-field>
     </div>
     <div>
-    </div>
-    <div>
       <app-selector-default nombre="cuenta" [disabled]=isDefault(data) required=true [(matSelect)]="data.cuentacontable"
         (optionSelected)="data.cuenta=$event"></app-selector-default>
     </div>
@@ -26,9 +24,10 @@
       <mat-form-field class="standard-input"><input [disabled]=isDefault(data) matInput [(ngModel)]="data.descripcion"
           placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
     </div>
-
-
-
+    <div>
+      <mat-checkbox color="primary" class="example-margin"  [(ngModel)]="data.esimprimible">Es Imprimible</mat-checkbox>
+    </div>
+    <br/>    
     <mat-divider></mat-divider>
   </div>
   <div mat-dialog-actions class="actions">

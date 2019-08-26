@@ -196,6 +196,34 @@
         </mat-expansion-panel>
       </div>
 
+      <div>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Aportes Patronales ({{childrenCounter(data.aportespatronales)}})
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="children-container">
+            <table style="width:100%">
+              <tr *ngFor="let aportespatronales of data.aportespatronales">
+                <div *ngIf="(aportespatronales.DeletedAt == null)">
+                  <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(aportespatronales, data.aportespatronales)">
+                    <mat-icon>delete_forever</mat-icon>
+                  </button>
+                  <app-selector-default nombre="concepto" [(matSelect)]="aportespatronales.conceptoid"
+                    (optionSelected)="aportespatronales.concepto=$event"></app-selector-default>
+                  <mat-form-field class="children-input"><input matInput [(ngModel)]="aportespatronales.importeunitario"
+                      placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+
+                </div>
+              </tr>
+            </table>
+          </div>
+          <button style="margin-left: 17px;margin-bottom: 17px;" mat-raised-button
+            (click)="onClickNewAportespatronales(data)">Agregar Item</button>
+        </mat-expansion-panel>
+      </div>
+
 
       <mat-divider></mat-divider>
     </div>

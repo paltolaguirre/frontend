@@ -25,9 +25,6 @@
                 <mat-form-field class="standard-input"><input matInput required=true [(ngModel)]="data.apellido" placeholder="Apellido" type="text" autocomplete="off"></mat-form-field>
                 <mat-form-field class="standard-input"><input matInput required=true [(ngModel)]="data.nombre" placeholder="Nombre" type="text" autocomplete="off"></mat-form-field>    
             </div>
-            <div>
-                <mat-form-field class="big-input"><input matInput [(ngModel)]="data.direccion" type="text" autocomplete="off" placeholder="Domicilio"></mat-form-field>
-            </div>
             <br/>
             <div>
                 <app-selector-default nombre="pais" [(matSelect)]="data.paisid" required=true (optionSelected)="data.pais=$event" ></app-selector-default>
@@ -37,6 +34,10 @@
                 <app-selector-default nombre="localidad" [(matSelect)]="data.localidadid" filter="provinciaid={{data.provinciaid}}" required=true (optionSelected)="data.localidad=$event"></app-selector-default>
                 <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.codigo" placeholder="Código Postal" type="text" autocomplete="off"></mat-form-field>
             </div>
+
+            <div>
+              <mat-form-field class="big-input"><input matInput [(ngModel)]="data.direccion" type="text" autocomplete="off" placeholder="Domicilio"></mat-form-field>
+          </div>
             <div>
                 <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.telefono" placeholder="Telefono" type="text" autocomplete="off"></mat-form-field>
                 <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.email" placeholder="E-Mail" type="text" autocomplete="off"></mat-form-field>

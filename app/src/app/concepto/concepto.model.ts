@@ -10,6 +10,7 @@ export interface Concepto {
     tipo: string;
     cuentacontable: number;
     cuenta?: Cuenta;
+    esimprimible: Boolean;
 }
 
 export interface Cuenta {  

@@ -35,6 +35,7 @@ export interface Liquidacion {
     importesnoremunerativos : [Importesnoremunerativos];
     descuentos : [Descuentos];
     retenciones : [Retenciones];
+    aportespatronales  : [Aportespatronales];
 }
 
 export interface Tipo {
@@ -138,7 +139,23 @@ export interface Retenciones {
     importeunitario: number;    
     total: number;
 }
-
+export interface Aportespatronales {
+    ID?: number;
+    CreatedAt?: string;
+    UpdatedAt?: string;
+    DeletedAt?: Date;
+    codigo: string;
+    descripcion: string;
+    concepto: Concepto;
+    conceptoid: number;
+    cantidad: number;
+    porcentaje: string;
+    sobreconcepto: Concepto;
+    sobreconceptoid: number;
+    activo?: number;    
+    importeunitario: number;    
+    total: number;
+}
 
 export interface Fechaliquidaciones {
     fechaliquidaciones : string;

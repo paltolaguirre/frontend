@@ -13,7 +13,7 @@
       <app-selector-default nombre="legajo" [(matSelect)]="data.legajoid" required=true (optionSelected)="data.legajo=$event"></app-selector-default>
       <app-selector-default nombre="concepto" [(matSelect)]="data.conceptoid" required=true (optionSelected)="data.concepto=$event"></app-selector-default>
       <mat-form-field class="standard-input"><input matInput type="number"  [(ngModel)]="data.cantidad" placeholder="Cantidad" autocomplete="off"></mat-form-field>
-      <mat-form-field class="standard-input"><input matInput type="number" [(ngModel)]="data.importe" placeholder="Importe Total" autocomplete="off"></mat-form-field>
+      <mat-form-field class="standard-input"><input matInput type="number" [(ngModel)]="data.importe" required placeholder="Importe Total" autocomplete="off"></mat-form-field>
      
       <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.descripcion" placeholder="Descripción"  type="text" autocomplete="off"></mat-form-field>
   
