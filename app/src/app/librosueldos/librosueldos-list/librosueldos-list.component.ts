@@ -6,7 +6,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { NotificationService } from 'src/app/handler-error/notification.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { formatDate } from "@angular/common";
 import { PrintService } from 'src/app/print/print.service';
 
@@ -35,6 +35,7 @@ export class LibrosueldosListComponent implements OnInit, AfterViewInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private librosueldosService: LibrosueldosService,
     public dialog: MatDialog,
     private notificationService: NotificationService,
@@ -71,9 +72,7 @@ export class LibrosueldosListComponent implements OnInit, AfterViewInit {
     localStorage.setItem("librosueldos-fechahasta",value);
     this.fechahasta = value;
     this.updateGrilla();
-
   }
-
 
   async ngAfterViewInit() {
     this.updateGrilla ();
@@ -95,4 +94,11 @@ export class LibrosueldosListComponent implements OnInit, AfterViewInit {
 
   }
 
+  private gotoPreview() {
+    this.router.navigate([`/informes/libro-sueldos/imprimir`]);
+  }
+
+  onClickPreview(): void {
+    this.gotoPreview();
+  }
 }
