@@ -10,9 +10,10 @@ import { DemoMaterialModule } from '../material.module';
 import { LiquidacionListComponent } from './liquidacion-list/liquidacion-list.component';
 import { ActionsComponent } from './liquidacion-list/actions/actions.component';
 import { LiquidacionPrintComponent } from './liquidacion/liquidacion-print/liquidacion-print.component';
+import { CalcularLiquidacionesPipe } from './calcular-liquidaciones.pipe';
 
 @NgModule({
-  declarations: [LiquidacionComponent, LiquidacionListComponent, ActionsComponent ,DialogLiquidaciones, LiquidacionPrintComponent],
+  declarations: [LiquidacionComponent, LiquidacionListComponent, ActionsComponent ,DialogLiquidaciones, LiquidacionPrintComponent, CalcularLiquidacionesPipe],
   imports: [
     CommonModule,
     FormsModule,
@@ -21,6 +22,7 @@ import { LiquidacionPrintComponent } from './liquidacion/liquidacion-print/liqui
     DemoMaterialModule,
     SharedModule
   ],
-  entryComponents: [DialogLiquidaciones]
+  entryComponents: [DialogLiquidaciones],
+  exports: [CalcularLiquidacionesPipe]
 })
 export class LiquidacionModule { }

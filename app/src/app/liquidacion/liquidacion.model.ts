@@ -161,3 +161,33 @@ export interface Fechaliquidaciones {
     fechaliquidaciones : string;
 }
 
+export interface LiquidacionCalculada {
+    liquidacion: Liquidacion,
+    calculo: LiquidacionItems
+}
+
+export interface LiquidacionItems {
+    items: Item[],
+    total: {
+        remunerativo: number,
+        noremunerativo: number,
+        descuento: number,
+        retencion: number,
+        neto: number
+    }
+}
+
+export enum TipoItem {
+    Remunerativo = "REMUNERATIVO",
+    NoRemunerativo = "NOREMUNERATIVO",
+    Descuento = "DESCUENTO",
+    Retencion = "RETENCION",
+}
+
+export interface Item {
+    codigo: string,
+    detalle: string,
+    cantidad: number,
+    importe: number,
+    tipo: TipoItem
+}
