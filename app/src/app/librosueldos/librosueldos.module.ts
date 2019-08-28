@@ -8,15 +8,18 @@ import { SharedModule } from '../shared/shared.module';
 import { DemoMaterialModule } from '../material.module';
 import { LibrosueldosListComponent } from './librosueldos-list/librosueldos-list.component';
 import { ActionsComponent } from './librosueldos-list/actions/actions.component';
+import { LibrosueldosListPrintComponent } from './librosueldos-list/librosueldos-list-print/librosueldos-list-print.component';
+import { LiquidacionModule } from '../liquidacion/liquidacion.module';
 
 @NgModule({
-  declarations: [ LibrosueldosListComponent, ActionsComponent],
+  declarations: [ LibrosueldosListComponent, ActionsComponent, LibrosueldosListPrintComponent],
   imports: [
     CommonModule,
     FormsModule,
     LibrosueldosRoutingModule,
     DemoMaterialModule,
-    SharedModule
+    SharedModule,
+    LiquidacionModule
   ],
   entryComponents: [
   ]

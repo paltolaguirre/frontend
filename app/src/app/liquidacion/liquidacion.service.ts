@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Pipe, PipeTransform } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SelectorElement } from '../shared/selector-default/selector-default.component';
-import { Liquidacion , Fechaliquidaciones } from './liquidacion.model';
+import { Liquidacion , Fechaliquidaciones, LiquidacionItems, LiquidacionCalculada, TipoItem } from './liquidacion.model';
 
 export interface ListaItems {
   items: any[];
@@ -73,4 +73,63 @@ export class LiquidacionService {
     let res = await this.http.delete(requestUrl).toPromise();
     return res;
   }
+
+
+  calcularLiquidacion(liquidacion: Liquidacion): LiquidacionItems {
+    const result = {
+      items: [],
+      total: {
+        remunerativo: 0,
+        noremunerativo: 0,
+        descuento: 0,
+        retencion: 0,
+        neto: 0
+      }
+    };
+
+    liquidacion.importesremunerativos.forEach(element => {
+      let item = { codigo: "", detalle: "", cantidad: "", importe: null, tipo: null };
+      item.codigo = element.conceptoid.toString();
+      item.detalle = element.concepto.nombre;
+      item.importe = element.importeunitario;
+      item.tipo = TipoItem.Remunerativo;
+      result.total.remunerativo += element.importeunitario;
+      result.items.push(item);
+    });
+
+    liquidacion.descuentos.forEach(element => {
+      let item = { codigo: "", detalle: "", cantidad: "", importe: null, tipo: null };
+      item.codigo = element.conceptoid.toString();
+      item.detalle = element.concepto.nombre;
+      item.importe = element.importeunitario;
+      item.tipo = TipoItem.Descuento;
+      result.total.descuento += element.importeunitario;
+      result.items.push(item);
+    });
+
+    liquidacion.retenciones.forEach(element => {
+      let item = { codigo: "", detalle: "", cantidad: "", importe: null, tipo: null };
+      item.codigo = element.conceptoid.toString();
+      item.detalle = element.concepto.nombre;
+      item.importe = element.importeunitario;
+      item.tipo = TipoItem.Retencion;
+      result.total.retencion += element.importeunitario;
+      result.items.push(item);
+    });
+
+    liquidacion.importesnoremunerativos.forEach(element => {
+      let item = { codigo: "", detalle: "", cantidad: "", importe: null, tipo: null };
+      item.codigo = element.conceptoid.toString();
+      item.detalle = element.concepto.nombre;
+      item.importe = element.importeunitario;
+      item.tipo = TipoItem.NoRemunerativo;
+      result.total.noremunerativo += element.importeunitario;
+      result.items.push(item);
+    });
+
+    result.total.neto = result.total.remunerativo + result.total.noremunerativo - result.total.descuento - result.total.retencion;
+    
+    return result;
+  }
+  
 }

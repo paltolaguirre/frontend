@@ -1,0 +1,105 @@
+<div class="container">
+  <div mat-dialog-content class="content" style="padding: 5em 0.5em 5em 0.5em; overflow: auto;">
+    <div id="contentTOPDF">
+
+    <div class="cabecera">
+      <ul>
+      </ul>
+    </div>
+
+    <div *ngIf="currentLiquidaciones$ | async as data">
+      
+        <table *ngFor="let liquidacionCalculada of data | calcularLiquidaciones" class="tg" style="table-layout:fixed;width:696px">
+          <colgroup>
+            <col style="width: 166px">
+            <col style="width: 166px">
+            <col style="width: 336px">
+            <col style="width: 166px">
+            <col style="width: 166px">
+          </colgroup>
+          <tr>
+            <th class="tg-8n49" colspan="2">Número de legajo: {{liquidacionCalculada.liquidacion.legajo.legajo}}</th>
+            <th class="tg-8n49"></th>
+            <th class="tg-8n49" colspan="2">C.U.I.L.: {{liquidacionCalculada.liquidacion.legajo.cuil}}</th>
+          </tr>
+          <tr>
+            <td class="tg-8n49" colspan="2">Apellido y nombre: {{liquidacionCalculada.liquidacion.legajo.apellido + ", " + liquidacionCalculada.liquidacion.legajo.nombre}}</td>
+            <td class="tg-8n49"></td>
+            <td class="tg-8n49" colspan="2">Fecha nacimiento</td>
+          </tr>
+          <tr>
+            <td class="tg-8n49" colspan="2">Sexo</td>
+            <td class="tg-8n49">Dirección: {{liquidacionCalculada.liquidacion.legajo.direccion}}</td>
+            <td class="tg-8n49" colspan="2">Documento</td>
+          </tr>
+          <tr>
+            <td class="tg-8n49" colspan="2">Fecha ingreso: {{liquidacionCalculada.liquidacion.legajo.fechaalta}}</td>
+            <td class="tg-8n49">Fecha egreso</td>
+            <td class="tg-8n49" colspan="2">Estado civil</td>
+          </tr>
+          <tr>
+            <td class="tg-8n49" colspan="2">Categoria: {{liquidacionCalculada.liquidacion.legajo.categoria}}</td>
+            <td class="tg-8n49"></td>
+            <td class="tg-8n49" colspan="2">Sueldo/Jornal</td>
+          </tr>
+          <tr>
+            <td class="tg-8n49" colspan="2">Sueldo - Período</td>
+            <td class="tg-8n49"></td>
+            <td class="tg-8n49" colspan="2">Contratación</td>
+          </tr>
+          <tr class="simple-line-bottom">
+            <td class="tg-8n49" colspan="2">Nacionalidad: {{liquidacionCalculada.liquidacion.legajo.pais.nombre}}</td>
+            <td class="tg-8n49"></td>
+            <td class="tg-8n49" colspan="2">Modalidad</td>
+          </tr>
+          <tr class="simple-line-top">
+            <td class="tg-8n49" colspan="5">CONCEPTOS LIQUIDADOS</td>
+          </tr>
+          <tr>
+            <td class="tg-7eit">Concepto</td>
+            <td class="tg-7eit">Haber</td>
+            <td class="tg-7eit">Descuento</td>
+            <td class="tg-7eit">Retención</td>
+            <td class="tg-7eit">No remunerativo</td>
+          </tr>
+
+          <tr *ngFor="let item of liquidacionCalculada.calculo.items; let i = index; let firstItem = first; let lastItem = last">
+            <td class="tg-oe15">{{item.codigo}}</td>
+            <td class="tg-oe15"><span *ngIf="item.tipo=='REMUNERATIVO'">{{item.importe}}</span></td>
+            <td class="tg-oe15"><span *ngIf="item.tipo=='DESCUENTO'">{{item.importe}}</span></td>
+            <td class="tg-oe15"><span *ngIf="item.tipo=='RETENCION'">{{item.importe}}</span></td>
+            <td class="tg-oe15"><span *ngIf="item.tipo=='NOREMUNERATIVO'">{{item.importe}}</span></td>
+          </tr>
+
+          <tr class="simple-line-bottom">
+            <td class="tg-oe15"></td>
+            <td class="tg-oe15"></td>
+            <td class="tg-oe15"></td> 
+            <td class="tg-oe15"></td>
+            <td class="tg-oe15"></td>
+          </tr>
+          <tr class="simple-line-top">
+            <td class="tg-oe15">Total haberes: {{liquidacionCalculada.calculo.total.remunerativo}}</td>
+            <td class="tg-oe15"></td>
+            <td class="tg-oe15">Total descuentos: {{liquidacionCalculada.calculo.total.descuento}}</td>
+            <td class="tg-oe15">Total retenciones: {{liquidacionCalculada.calculo.total.retencion}}</td>
+            <td class="tg-2bxt"></td>
+          </tr>
+          <tr class="double-line-bottom">
+            <td class="tg-oe15">Total no remunerativo: {{liquidacionCalculada.calculo.total.noremunerativo}}</td>
+            <td class="tg-oe15"></td>
+            <td class="tg-oe15">Total neto: {{liquidacionCalculada.calculo.total.neto}}</td>
+            <td class="tg-oe15"></td>
+            <td class="tg-oe15"></td>
+          </tr>
+        </table>
+        
+    </div>
+  </div>
+
+  <div mat-dialog-actions class="actions">
+    <button mat-raised-button mat-button (click)="onClickId()">Cerrar</button>
+    <button mat-raised-button color="primary" mat-button (click)="onClickPrint()">Descargar</button>
+  </div>
+
+</div>
