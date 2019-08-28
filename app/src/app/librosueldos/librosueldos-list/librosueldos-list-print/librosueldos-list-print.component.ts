@@ -4,6 +4,7 @@ import { ListaItems, LiquidacionService } from 'src/app/liquidacion/liquidacion.
 import { merge, Observable } from 'rxjs';
 import { Liquidacion, Tipo } from 'src/app/liquidacion/liquidacion.model';
 import { switchMap } from 'rxjs/operators';
+import { PrintService } from 'src/app/print/print.service';
 
 @Component({
   selector: 'app-librosueldos-list-print',
@@ -16,7 +17,9 @@ export class LibrosueldosListPrintComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private liquidacionService: LiquidacionService,
+    public printService: PrintService
     ) { }
 
   ngOnInit() {
@@ -34,5 +37,17 @@ export class LibrosueldosListPrintComponent implements OnInit {
     const liquidacionesApi: ListaItems = await this.liquidacionService.getLiquidaciones(null, null, 1);
     this.liquidaciones = liquidacionesApi.items;
     console.log(this.liquidaciones);
+  }
+
+  private gotoGrilla() {
+    this.router.navigate(['/informes/libro-sueldos']);
+  }
+
+  onClickAbort(): void {
+    this.gotoGrilla();
+  }
+
+  onClickPrint() {
+    this.printService.printTOPDF();
   }
 }
