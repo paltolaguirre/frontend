@@ -84,19 +84,23 @@ export class LiquidacionPrintComponent implements OnInit {
 
       if (index < this.liquidacion.importesremunerativos.length) {
         item.haber.codigo = this.liquidacion.importesremunerativos[index].conceptoid.toString();
+        item.haber.detalle = this.liquidacion.importesremunerativos[index].concepto.nombre;
         item.haber.remunerativo = this.liquidacion.importesremunerativos[index].importeunitario;
         this.totalImpRemunerativo += this.liquidacion.importesremunerativos[index].importeunitario;
       } else if (posicionImpNoRemunerativos < this.liquidacion.importesnoremunerativos.length) {
         item.haber.codigo = this.liquidacion.importesnoremunerativos[posicionImpNoRemunerativos].conceptoid.toString();
+        item.haber.detalle = this.liquidacion.importesnoremunerativos[posicionImpNoRemunerativos].concepto.nombre;
         item.haber.noremunerativo = this.liquidacion.importesnoremunerativos[posicionImpNoRemunerativos].importeunitario;
         this.totalImpNoRemunerativo += this.liquidacion.importesnoremunerativos[posicionImpNoRemunerativos].importeunitario;
       }
 
       if (index < this.liquidacion.descuentos.length) {
         item.deduccion.codigo = this.liquidacion.descuentos[index].conceptoid.toString();
+        item.deduccion.detalle = this.liquidacion.descuentos[index].concepto.nombre;
         item.deduccion.importe = this.liquidacion.descuentos[index].importeunitario;
       } else if (posicionRetenciones < this.liquidacion.retenciones.length) {
         item.deduccion.codigo = this.liquidacion.retenciones[posicionRetenciones].conceptoid.toString();
+        item.deduccion.detalle = this.liquidacion.retenciones[posicionRetenciones].concepto.nombre;
         item.deduccion.importe = this.liquidacion.retenciones[posicionRetenciones].importeunitario;
       }
       this.totalDeducciones += item.deduccion.importe;
