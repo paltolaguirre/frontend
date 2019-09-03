@@ -30,7 +30,7 @@
           <tr>
             <td class="tg-8n49" colspan="2">Sexo</td>
             <td class="tg-8n49">Dirección: {{liquidacionCalculada.liquidacion.legajo.direccion}}</td>
-            <td class="tg-8n49" colspan="2">Documento</td>
+            <td class="tg-8n49" colspan="2">Documento: {{obtenerDniFromCuil(liquidacionCalculada.liquidacion.legajo.cuil)}}</td>
           </tr>
           <tr>
             <td class="tg-8n49" colspan="2">Fecha ingreso: {{liquidacionCalculada.liquidacion.legajo.fechaalta}}</td>
@@ -40,17 +40,17 @@
           <tr>
             <td class="tg-8n49" colspan="2">Categoria: {{liquidacionCalculada.liquidacion.legajo.categoria}}</td>
             <td class="tg-8n49"></td>
-            <td class="tg-8n49" colspan="2">Sueldo/Jornal</td>
+            <td class="tg-8n49" colspan="2">Sueldo/Jornal: {{liquidacionCalculada.liquidacion.legajo.remuneracion}}</td>
           </tr>
           <tr>
-            <td class="tg-8n49" colspan="2">Sueldo - Período</td>
+            <td class="tg-8n49" colspan="2">Sueldo - Período: {{liquidacionCalculada.liquidacion.fechaperiodoliquidacion}}</td>
             <td class="tg-8n49"></td>
-            <td class="tg-8n49" colspan="2">Contratación</td>
+            <td class="tg-8n49" colspan="2">Contratación: {{liquidacionCalculada.liquidacion.legajo.situacion.nombre}}</td>
           </tr>
           <tr class="simple-line-bottom">
             <td class="tg-8n49" colspan="2">Nacionalidad: {{liquidacionCalculada.liquidacion.legajo.pais.nombre}}</td>
             <td class="tg-8n49"></td>
-            <td class="tg-8n49" colspan="2">Modalidad</td>
+            <td class="tg-8n49" colspan="2">Modalidad: {{liquidacionCalculada.liquidacion.legajo.modalidadcontratacion.nombre}}</td>
           </tr>
           <tr class="simple-line-top">
             <td class="tg-8n49" colspan="5">CONCEPTOS LIQUIDADOS</td>
@@ -64,7 +64,7 @@
           </tr>
 
           <tr *ngFor="let item of liquidacionCalculada.calculo.items; let i = index; let firstItem = first; let lastItem = last">
-            <td class="tg-oe15">{{item.codigo}}</td>
+            <td class="tg-oe15">{{item.detalle}}</td>
             <td class="tg-oe15"><span *ngIf="item.tipo=='REMUNERATIVO'">{{item.importe}}</span></td>
             <td class="tg-oe15"><span *ngIf="item.tipo=='DESCUENTO'">{{item.importe}}</span></td>
             <td class="tg-oe15"><span *ngIf="item.tipo=='RETENCION'">{{item.importe}}</span></td>
