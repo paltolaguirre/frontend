@@ -8,8 +8,10 @@ export class Models {
   public valor(nombre) : any {
       switch (nombre) { 
           case 'condicionpago': 
+          // TODO: Se debe llamar al helper de liquidacioncondicionpago
             return [{nombre: 'Contado', id: 1},{nombre: 'Cuenta Corriente', id: 2}]; 
           case 'tipo': 
+          // TODO: Se debe llamar al helper de liquidaciontipo
             return [{nombre: 'Mensual', codigo: 'Mensual',id: 1},{nombre: 'Primer Quincena', id: 2},{nombre: 'Segunda Quincena', id: 3},{nombre: 'Vacaciones', id: 4},{nombre: 'SAC', id: 5},{nombre: 'Liquidacion Final', id: 6}]; 
           case 'liquidacion-novedades': 
             return [{nombre: 'Descuentos', id: 1},{nombre: 'Retenciones', id: 2},{nombre: 'Importes Remunerativos', id: 3},{nombre: 'Importes No Remunerativos', id: 4},{nombre: 'Aportes Patronales', id: 5}]; 
