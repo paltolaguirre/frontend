@@ -14,6 +14,8 @@ import { PrintService } from 'src/app/print/print.service';
 export class LibrosueldosListPrintComponent implements OnInit {
   @Input() liquidaciones: any;
   public currentLiquidaciones$: Observable<Liquidacion[]> = null;
+  fechadesde: any;
+  fechahasta: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -25,8 +27,12 @@ export class LibrosueldosListPrintComponent implements OnInit {
   ngOnInit() {
     this.currentLiquidaciones$ = this.route.paramMap.pipe(
       switchMap(async (params: ParamMap) => {
+        this.fechadesde = this.route.snapshot.queryParamMap.get("fechadesde");
+        this.fechahasta = this.route.snapshot.queryParamMap.get("fechahasta");
+
         const liquidacionesApi = await this.liquidacionService.getLiquidaciones(null, null, 1);
-        console.log("Liquidaciones: " + liquidacionesApi.items);
+        console.log("fechadesde: " + this.fechadesde);
+        console.log("fechahasta: " + this.fechahasta);
          
         return liquidacionesApi.items;
       })
