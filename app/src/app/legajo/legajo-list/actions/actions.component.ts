@@ -50,7 +50,6 @@ export class ActionsComponent implements OnInit {
       paisid: null,
       localidadid: null,
       provinciaid: null,
-      zonaid: null,
       telefono: null,
       email: null,
       modalidadcontratacionid: null,
