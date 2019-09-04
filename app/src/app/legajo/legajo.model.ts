@@ -17,8 +17,6 @@ export interface Legajo {
     provinciaid: number;
     pais?: Pais;
     paisid: number;
-    zona?: Zona;
-    zonaid: number;
     telefono: string;
     email: string;
     modalidadcontratacion?: ModalidadContratacion;

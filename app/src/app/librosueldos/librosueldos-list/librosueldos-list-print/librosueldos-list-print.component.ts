@@ -56,4 +56,8 @@ export class LibrosueldosListPrintComponent implements OnInit {
   onClickPrint() {
     this.printService.printTOPDF();
   }
+
+  obtenerDniFromCuil(cuil) {
+    return cuil.slice(2, cuil.length - 1);
+  }
 }
