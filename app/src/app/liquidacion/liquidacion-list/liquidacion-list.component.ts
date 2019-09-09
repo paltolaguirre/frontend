@@ -101,35 +101,6 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
 
   }
 
-  obtenerTipoLiquidacion(row: Liquidacion) {
-    let tipo: string;
-    switch (row.tipo) {
-      case 1:
-        tipo = 'Mensual';
-        break;
-      case 2:
-        tipo = 'Primer Quincena';
-        break;
-      case 3:
-        tipo = 'Segunda Quincena';
-        break;
-      case 4:
-        tipo = 'Vacaciones';
-        break;
-      case 5:
-        tipo = 'SAC';
-        break;
-      case 6:
-        tipo = 'Liquidación Final';
-        break;
-      default:
-        tipo = '-';
-        break;
-    }
-
-    return tipo;
-  }
-
   calcularTotal(row: Liquidacion) {
     return 'Falta calcular';
   }
