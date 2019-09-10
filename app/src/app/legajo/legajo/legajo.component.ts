@@ -75,6 +75,7 @@ export class LegajoComponent implements OnInit, AfterViewInit {
     if(data.localidad)data.localidadid = data.localidad.ID;
     if(data.obrasocial)data.obrasocialid = data.obrasocial.ID;
     if(data.condicionsiniestrado)data.condicionsiniestradoid = data.condicionsiniestrado.ID;
+    if(data.centrodecosto)data.centrodecostoid = data.centrodecosto.ID;
     if(data.modalidadcontratacion)data.modalidadcontratacionid = data.modalidadcontratacion.ID;
     if(data.condicion)data.condicionid = data.condicion.ID;
     
