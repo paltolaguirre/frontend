@@ -16,7 +16,7 @@ import { PrintService } from 'src/app/print/print.service';
   styleUrls: ['./librosueldos-list.component.css']
 })
 export class LibrosueldosListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['Legajo', 'Fechaperiodoliquidacion' , 'Concepto', 'Importe'];
+  displayedColumns: string[] = ['Legajo', 'Apellido', 'Nombre', 'Fechaperiodoliquidacion'];
   dataSource: MatTableDataSource<Librosueldos> = new MatTableDataSource<Librosueldos>();
   //data: LibrosueldossApi;
 
