@@ -1,7 +1,7 @@
 import { Injectable, Pipe, PipeTransform } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SelectorElement } from '../shared/selector-default/selector-default.component';
-import { Liquidacion , Fechaliquidaciones, LiquidacionItems, LiquidacionCalculada, TipoItem } from './liquidacion.model';
+import { Liquidacion , Fechaliquidaciones, LiquidacionItems, LiquidacionCalculada, TipoItem, DuplicarLiquidaciones, ResultProcesamientoMasivo } from './liquidacion.model';
 
 export interface ListaItems {
   items: any[];
@@ -13,7 +13,8 @@ export interface ListaItems {
 })
 export class LiquidacionService {
   href = '/api/liquidacion/liquidaciones';
-  hrefcontabilizar = 'api/liquidacion/contabilizar';
+  hrefContabilizar = 'api/liquidacion/contabilizar';
+  hrefDuplicar = 'api/liquidacion/duplicar';
   
   constructor(private http: HttpClient) { }
 
@@ -51,7 +52,7 @@ export class LiquidacionService {
   }
 
   public async postContabilizarLiquidacion(elementsRequest:  number[]): Promise<any> {
-    const requestUrl = `${this.hrefcontabilizar}`;    
+    const requestUrl = `${this.hrefContabilizar}`;    
     const contabilizar = { idsliquidacionesacontabilizar: elementsRequest, descripcion: "Alguna descripcion"};
     var response = await this.http.post<any>(requestUrl, contabilizar).toPromise();
     return response;
@@ -74,6 +75,14 @@ export class LiquidacionService {
     return res;
   }
 
+  public async postDuplicarLiquidaciones(duplicarLiquidaciones: DuplicarLiquidaciones): Promise<ResultProcesamientoMasivo> {
+    const requestUrl =
+      `${this.hrefDuplicar}`; 
+    
+    const resultProcesamientoMasivo = await this.http.post<ResultProcesamientoMasivo>(requestUrl, duplicarLiquidaciones).toPromise();
+
+    return resultProcesamientoMasivo;
+  }
 
   calcularLiquidacion(liquidacion: Liquidacion): LiquidacionItems {
     const result = {

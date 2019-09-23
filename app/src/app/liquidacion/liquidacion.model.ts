@@ -191,3 +191,28 @@ export interface Item {
     importe: number,
     tipo: TipoItem
 }
+
+export interface DuplicarLiquidaciones {
+    liquidaciondefaultvalues: LiquidacionDefaultValues,
+    idstoreplicate: number[]
+}
+
+export interface LiquidacionDefaultValues {
+    tipoid: number,
+    fecha: string,
+    fechaperiododepositado: string,
+    fechaperiodoliquidacion: string,
+    fechaultimodepositoaportejubilatorio: string
+}
+
+export interface ResultProcesamientoMasivo {
+    processid: string,
+    result: ProcesamientoStatus
+}
+
+export interface ProcesamientoStatus {
+    id: number,
+    tipo: string,
+    codigo: number,
+    mensaje: string
+}

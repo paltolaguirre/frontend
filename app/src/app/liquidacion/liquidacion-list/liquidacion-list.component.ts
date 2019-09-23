@@ -8,6 +8,7 @@ import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { NotificationService } from 'src/app/handler-error/notification.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { PrintService } from 'src/app/print/print.service';
+import { DuplicarDialogComponent } from './duplicar-dialog/duplicar-dialog.component';
 
 @Component({
   selector: 'app-liquidacion-list',
@@ -103,6 +104,38 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
 
   calcularTotal(row: Liquidacion) {
     return 'Falta calcular';
+  }
+
+  onClickDuplicar(data): void {
+    data = data.filter(this.isSelected);
+
+    if(data.length == 0) {
+      const notificacion = {
+        codigo: 400,
+        mensaje: `Se debe seleccionar al menos una liquidación a duplicar.`
+      }
+      const ret = this.notificationService.notify(notificacion);
+    } else {
+      const dialogRef = this.dialog.open(DuplicarDialogComponent, {
+        data
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log("Respuesta PopUp: ", result);
+
+        // TODO: no me convence llamar directamente a este metodo... investigar al respecto.
+        this.ngAfterViewInit();
+
+        /*if(result && result.refresh) {
+          // TODO: no me convence llamar directamente a este metodo... investigar al respecto.
+          this.ngAfterViewInit();
+        }*/
+      });
+    }
+  }
+
+  private isSelected(elemento) {
+    return elemento.checked == true;
   }
 }
 
