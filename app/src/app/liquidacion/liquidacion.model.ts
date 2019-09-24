@@ -162,18 +162,18 @@ export interface Fechaliquidaciones {
 }
 
 export interface LiquidacionCalculada {
-    liquidacion: Liquidacion,
-    calculo: LiquidacionItems
+    liquidacion: Liquidacion;
+    calculo: LiquidacionItems;
 }
 
 export interface LiquidacionItems {
-    items: Item[],
+    items: Item[];
     total: {
-        remunerativo: number,
-        noremunerativo: number,
-        descuento: number,
-        retencion: number,
-        neto: number
+        remunerativo: number;
+        noremunerativo: number;
+        descuento: number;
+        retencion: number;
+        neto: number;
     }
 }
 
@@ -185,34 +185,34 @@ export enum TipoItem {
 }
 
 export interface Item {
-    codigo: string,
-    detalle: string,
-    cantidad: number,
-    importe: number,
-    tipo: TipoItem
+    codigo: string;
+    detalle: string;
+    cantidad: number;
+    importe: number;
+    tipo: TipoItem;
 }
 
 export interface DuplicarLiquidaciones {
-    liquidaciondefaultvalues: LiquidacionDefaultValues,
-    idstoreplicate: number[]
+    liquidaciondefaultvalues: LiquidacionDefaultValues;
+    idstoreplicate: number[];
 }
 
 export interface LiquidacionDefaultValues {
-    tipoid: number,
-    fecha: string,
-    fechaperiododepositado: string,
-    fechaperiodoliquidacion: string,
-    fechaultimodepositoaportejubilatorio: string
+    tipoid: number;
+    fecha: string;
+    fechaperiododepositado: string;
+    fechaperiodoliquidacion: string;
+    fechaultimodepositoaportejubilatorio: string;
 }
 
 export interface ResultProcesamientoMasivo {
-    processid: string,
-    result: ProcesamientoStatus
+    processid: string;
+    result: ProcesamientoStatus;
 }
 
 export interface ProcesamientoStatus {
-    id: number,
-    tipo: string,
-    codigo: number,
-    mensaje: string
+    id: number;
+    tipo: string;
+    codigo: number;
+    mensaje: string;
 }

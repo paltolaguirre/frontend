@@ -48,7 +48,7 @@ export class DuplicarDialogComponent implements OnInit {
     if(this.faltanRequeridos()) return null;
     if(this.mismoPeriodoLiquidacion(this.liquidacion.fechaperiodoliquidacion)) return null;
 
-    const liquidacion: LiquidacionDefaultValues = {
+    const liquidacionDefault: LiquidacionDefaultValues = {
       tipoid: parseInt(this.liquidacion.tipo, 10),
       fecha: new Date(this.liquidacion.fecha+"T03:00:00.000Z").toISOString(),
       fechaultimodepositoaportejubilatorio: new Date(this.liquidacion.fechaultimodepositoaportejubilatorio+"T03:00:00.000Z").toISOString(),
@@ -62,7 +62,7 @@ export class DuplicarDialogComponent implements OnInit {
     });
 
     const duplicarLiquidaciones: DuplicarLiquidaciones = {
-      liquidaciondefaultvalues: liquidacion,
+      liquidaciondefaultvalues: liquidacionDefault,
       idstoreplicate: idsLiquidaciones
     }
 
