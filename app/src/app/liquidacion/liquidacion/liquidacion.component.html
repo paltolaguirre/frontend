@@ -40,20 +40,10 @@
             placeholder="Fecha Ult. Aporte Jubil." autocomplete="off"></mat-form-field>
       </div>
       <div>
-        <app-selector-default nombre="mes" placeholder="Periodo Depositado" type="hardcode"
-          [matSelect]="data.fechaperiododepositado | date: 'MM'"
-          (optionSelected)="data.fechaperiododepositadomes=$event.id"></app-selector-default>
-        <mat-form-field class="standard-input"><input placeholder="Año" matInput
-            (ngModelChange)="data.fechaperiododepositadoanio=$event"
-            [ngModel]="data.fechaperiododepositado | date: 'yyyy'" type="number" autocomplete="off"></mat-form-field>
+        <mat-form-field class="standard-input"><input required=true matInput type="month" placeholder="Periodo Depositado" [(ngModel)]="fechaperiododepositado" autocomplete="off"></mat-form-field>
       </div>
       <div>
-        <app-selector-default nombre="mes" placeholder="Periodo Liquidacion" type="hardcode"
-          [matSelect]="data.fechaperiodoliquidacion | date: 'MM'"
-          (optionSelected)="data.fechaperiodoliquidacionmes=$event.id"></app-selector-default>
-        <mat-form-field class="standard-input"><input placeholder="Año" matInput
-            (ngModelChange)="data.fechaperiodoliquidacionanio=$event"
-            [ngModel]="data.fechaperiodoliquidacion | date: 'yyyy'" type="number" autocomplete="off"></mat-form-field>
+        <mat-form-field class="standard-input"><input required=true matInput type="month" placeholder="Periodo Liquidación" [(ngModel)]="fechaperiodoliquidacion" autocomplete="off"></mat-form-field>
       </div>
       <div>
         <mat-form-field class="big-input"><input matInput [(ngModel)]="data.descripcion" placeholder="Observaciones"
