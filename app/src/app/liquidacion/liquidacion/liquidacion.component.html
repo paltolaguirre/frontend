@@ -58,6 +58,9 @@
             <mat-panel-title>
               Importes Remunerativos ({{childrenCounter(data.importesremunerativos)}})
             </mat-panel-title>
+            <mat-panel-description>
+              {{calcularTotal(data.importesremunerativos)}}
+            </mat-panel-description>
           </mat-expansion-panel-header>
           <div class="children-container">
             <table style="width:100%">
@@ -93,6 +96,9 @@
             <mat-panel-title>
               Importes No Remunerativos ({{childrenCounter(data.importesnoremunerativos)}})
             </mat-panel-title>
+            <mat-panel-description>
+              {{calcularTotal(data.importesnoremunerativos)}}
+            </mat-panel-description>
           </mat-expansion-panel-header>
           <div class="children-container">
             <table style="width:100%">
@@ -129,6 +135,9 @@
             <mat-panel-title>
               Descuentos ({{childrenCounter(data.descuentos)}})
             </mat-panel-title>
+            <mat-panel-description>
+              {{calcularTotal(data.descuentos)}}
+            </mat-panel-description>
           </mat-expansion-panel-header>
           <div class="children-container">
             <table style="width:100%">
@@ -164,6 +173,9 @@
             <mat-panel-title>
               Retenciones ({{childrenCounter(data.retenciones)}})
             </mat-panel-title>
+            <mat-panel-description>
+              {{calcularTotal(data.retenciones)}}
+            </mat-panel-description>
           </mat-expansion-panel-header>
           <div class="children-container">
             <table style="width:100%">
@@ -192,6 +204,9 @@
             <mat-panel-title>
               Aportes Patronales ({{childrenCounter(data.aportespatronales)}})
             </mat-panel-title>
+            <mat-panel-description>
+              {{calcularTotal(data.aportespatronales)}}
+            </mat-panel-description>
           </mat-expansion-panel-header>
           <div class="children-container">
             <table style="width:100%">
@@ -214,7 +229,10 @@
         </mat-expansion-panel>
       </div>
 
-
+      <div class="totales">
+        <p><span>Total: </span>{{calcularTotal(data.importesremunerativos) + calcularTotal(data.importesnoremunerativos) - calcularTotal(data.descuentos) + calcularTotal(data.aportespatronales)}}</p>
+        <p><span>Total Recibo: </span>{{calcularTotal(data.importesremunerativos) + calcularTotal(data.importesnoremunerativos) - calcularTotal(data.descuentos) + calcularTotal(data.retenciones)}}</p>
+      </div>
       <mat-divider></mat-divider>
     </div>
     <div mat-dialog-actions class="actions">

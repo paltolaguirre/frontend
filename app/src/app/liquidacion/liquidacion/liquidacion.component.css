@@ -78,3 +78,21 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.mat-expansion-panel-header-description {
+  flex-grow: 0.05;
+}
+
+.totales {
+  margin-left: 25px;
+}
+
+.totales p {
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.totales span {
+  font-weight: 575;
+}
