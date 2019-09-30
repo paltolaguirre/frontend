@@ -122,7 +122,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
     if(data.legajo)data.legajoid = data.legajo.ID;
     if(data.banco)data.cuentabancoid = data.banco.ID;
     if(data.condicionpagos)data.condicionpago = data.condicionpagos.ID;
-    if(data.tipos)data.tipo = data.tipos.ID;
+    if(data.tipo)data.tipoid = data.tipo.ID;
 
     if (this.id) {
       console.log("Updated Liquidacion");
