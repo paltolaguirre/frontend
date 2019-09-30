@@ -24,6 +24,8 @@ export interface Liquidacion {
     condicionpago : number;
     condicionpagos : Condicionpago;
     cuentabancoid : number;
+    bancoaportejubilatorio? : Banco;
+    bancoaportejubilatorioid? : number;
     banco : Banco;
     fechaperiododepositado : string;
     fechaperiododepositadomes : string;

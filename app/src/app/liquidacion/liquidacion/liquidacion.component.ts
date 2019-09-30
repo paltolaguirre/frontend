@@ -28,7 +28,8 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   id: number;
   data: any;
   public print$: Observable<boolean> = null;
-
+  fechaperiododepositado: any;
+  fechaperiodoliquidacion: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -41,12 +42,14 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   
   ngOnInit() {
     this.currentLiquidacion$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) => {
+      switchMap(async (params: ParamMap) => {
         if (params.get('id') == "nuevo") {
           console.log("Nuevo Liquidacion");
         }
         this.id = +params.get('id');
-        const liquidacion = this.liquidacionService.getLiquidacion(this.id);
+        const liquidacion = await this.liquidacionService.getLiquidacion(this.id);
+        this.fechaperiododepositado = liquidacion.fechaperiododepositado?liquidacion.fechaperiododepositado.substring(0, 7):liquidacion.fechaperiododepositado;
+        this.fechaperiodoliquidacion = liquidacion.fechaperiodoliquidacion?liquidacion.fechaperiodoliquidacion.substring(0, 7):liquidacion.fechaperiodoliquidacion;
         console.log(liquidacion);
         
         return liquidacion;
@@ -111,9 +114,9 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   async onClickSave(data: Liquidacion): Promise<Liquidacion> {
     let liquidacionesItem: Liquidacion;    
     
-    if(data.fechaperiododepositado)data.fechaperiododepositado = formatDate(data.fechaperiododepositadoanio+"-"+data.fechaperiododepositadomes+"-01", "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
     if(data.fecha)data.fecha = formatDate(data.fecha, "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
-    if(data.fechaperiodoliquidacion)data.fechaperiodoliquidacion = formatDate(data.fechaperiodoliquidacion, "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
+    if(this.fechaperiododepositado)data.fechaperiododepositado = formatDate(this.fechaperiododepositado+"-01", "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
+    if(this.fechaperiodoliquidacion)data.fechaperiodoliquidacion = formatDate(this.fechaperiodoliquidacion+"-01", "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
     if(data.fechaultimodepositoaportejubilatorio)data.fechaultimodepositoaportejubilatorio = formatDate(data.fechaultimodepositoaportejubilatorio, "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
  
     if(data.legajo)data.legajoid = data.legajo.ID;
