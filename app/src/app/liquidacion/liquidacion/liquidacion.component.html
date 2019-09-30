@@ -35,9 +35,11 @@
     <div>
       <div>
         <mat-form-field class="standard-input"><input matInput type="date"
-            (ngModelChange)="data.fechaultimodepositoaportejubilatorio=$event"
-            [ngModel]="data.fechaultimodepositoaportejubilatorio | date: 'yyyy-MM-dd'"
-            placeholder="Fecha Ult. Aporte Jubil." autocomplete="off"></mat-form-field>
+          (ngModelChange)="data.fechaultimodepositoaportejubilatorio=$event"
+          [ngModel]="data.fechaultimodepositoaportejubilatorio | date: 'yyyy-MM-dd'"
+          placeholder="Fecha Ult. Aporte Jubil." autocomplete="off"></mat-form-field>
+        <app-selector-default nombre="banco" placeholder="Banco Aporte Jubilatorio" [(matSelect)]="data.bancoaportejubilatorioid"
+          (optionSelected)="data.bancoaportejubilatorio=$event"></app-selector-default>
       </div>
       <div>
         <mat-form-field class="standard-input"><input required=true matInput type="month" placeholder="Periodo Depositado" [(ngModel)]="fechaperiododepositado" autocomplete="off"></mat-form-field>
