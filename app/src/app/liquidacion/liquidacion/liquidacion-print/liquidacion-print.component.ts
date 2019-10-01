@@ -47,7 +47,11 @@ export class LiquidacionPrintComponent implements OnInit {
     const bancos = await this.selectorService.getSelector("banco" , null);
     let banco;
     if(bancos) {
-      banco = bancos.filter((banco)=>{banco.id = this.liquidacion.bancoaportejubilatorioid})[0];
+      const bancoaportejubilatorioid = this.liquidacion.bancoaportejubilatorioid;
+      banco = bancos.filter((banco)=>{
+        return banco.id == bancoaportejubilatorioid
+      })[0];
+      console.log("Banco Aporte Jubilatorio: ", banco);
     } else {
       banco = {id:0, nombre: "-"};
     }
