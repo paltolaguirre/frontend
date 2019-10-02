@@ -4,6 +4,7 @@ import { Liquidacion } from '../../liquidacion.model';
 import { EmpresaService } from 'src/app/empresa/empresa.service';
 import { Empresa } from 'src/app/empresa/empresa.model';
 import { Observable } from 'rxjs';
+import { SelectorService } from 'src/app/shared/selector-default/selector-default.service';
 
 export interface LiquidacionItem {
   haber: {
@@ -37,12 +38,30 @@ export class LiquidacionPrintComponent implements OnInit {
   totalDeducciones: number;
   totalNeto: number;
 
-  constructor(private empresaService: EmpresaService,) { 
+  constructor(private empresaService: EmpresaService, private selectorService: SelectorService) { 
     this.items = new Array();
   }
 
   async ngOnInit() {
     this.empresa = await this.empresaService.getEmpresa();
+    const bancos = await this.selectorService.getSelector("banco" , null);
+    let banco;
+    const bancoaportejubilatorioid = this.liquidacion.bancoaportejubilatorioid;
+    if(bancos && bancoaportejubilatorioid!=0) {
+      banco = bancos.filter((banco)=>{
+        return banco.id == bancoaportejubilatorioid
+      })[0];
+      console.log("Banco Aporte Jubilatorio: ", banco);
+    } else {
+      banco = {id:0, nombre: "-"};
+    }
+
+    this.liquidacion.bancoaportejubilatorio = {
+      ID: banco.id,
+      codigo: banco.nombre,
+      descripcion: banco.nombre,
+    };
+
     console.log(this.empresa);
 
     this.obtenerItems();
