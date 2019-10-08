@@ -233,7 +233,7 @@
 
       <div class="totales">
         <p><span>Total: </span>{{calcularTotal(data.importesremunerativos) + calcularTotal(data.importesnoremunerativos) - calcularTotal(data.descuentos) + calcularTotal(data.aportespatronales)}}</p>
-        <p><span>Total Recibo: </span>{{calcularTotal(data.importesremunerativos) + calcularTotal(data.importesnoremunerativos) - calcularTotal(data.descuentos) + calcularTotal(data.retenciones)}}</p>
+        <p><span>Total Recibo: </span>{{calcularTotal(data.importesremunerativos) + calcularTotal(data.importesnoremunerativos) - calcularTotal(data.descuentos) - calcularTotal(data.retenciones)}}</p>
       </div>
       <mat-divider></mat-divider>
     </div>
