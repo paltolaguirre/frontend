@@ -180,11 +180,12 @@ export interface Hijo {
     nombre: string;
     apellido: string;
     codigo: string;
-    descripcion: string;
+    descripcion?: string;
     activo?: number;
     cuil: string;
     obrasocial?: ObraSocial;
     obrasocialid: number;
+    beneficiarioasignacionfamiliar: boolean;
     legajoid?: number;
 }
 

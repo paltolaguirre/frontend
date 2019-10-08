@@ -1,6 +1,6 @@
 
 
-import { Legajo } from '../legajo/legajo.model';
+import { Legajo, Hijo } from '../legajo/legajo.model';
 import { Concepto } from '../concepto/concepto.model';
 
 export interface Liquidacion {  
@@ -168,6 +168,7 @@ export interface Fechaliquidaciones {
 export interface LiquidacionCalculada {
     liquidacion: Liquidacion;
     calculo: LiquidacionItems;
+    hijosasignacionfamiliar: Hijo[];
 }
 
 export interface LiquidacionItems {

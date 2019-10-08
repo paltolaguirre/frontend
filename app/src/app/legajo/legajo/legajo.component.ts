@@ -147,7 +147,8 @@ export class LegajoComponent implements OnInit, AfterViewInit {
         descripcion: null,
         cuil: null,
         activo: 1,
-        obrasocialid: 1
+        obrasocialid: 1,
+        beneficiarioasignacionfamiliar: false,
       }];      
     } else {
       data.hijos.push({
@@ -158,7 +159,8 @@ export class LegajoComponent implements OnInit, AfterViewInit {
         descripcion: null,
         cuil: null,
         activo: 1,
-        obrasocialid: 1
+        obrasocialid: 1,
+        beneficiarioasignacionfamiliar: false,
       });
     }  
   }
@@ -191,5 +193,9 @@ export class LegajoComponent implements OnInit, AfterViewInit {
       }
     }
     return false;
+  }
+
+  setBeneficiarioAsignacionFamiliar(event) {
+    return event.nombre.toLowerCase() == "si"
   }
 }

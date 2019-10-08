@@ -36,8 +36,9 @@
             </div>
 
             <div>
-              <mat-form-field class="big-input"><input matInput [(ngModel)]="data.direccion" type="text" autocomplete="off" placeholder="Domicilio"></mat-form-field>
-          </div>
+              <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.direccion" type="text" autocomplete="off" placeholder="Domicilio"></mat-form-field>
+              <app-selector-default nombre="estadocivil" [(matSelect)]="data.estadocivilid" required=true (optionSelected)="data.estadocivil=$event" placeholder="Estado Civil" autocomplete="off"></app-selector-default>
+            </div>
             <div>
                 <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.telefono" placeholder="Telefono" type="text" autocomplete="off"></mat-form-field>
                 <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.email" placeholder="E-Mail" type="text" autocomplete="off"></mat-form-field>
@@ -124,7 +125,7 @@
                     <mat-form-field class="children-input"><input matInput [(ngModel)]="hijo.nombre" placeholder="Nombre" type="text" autocomplete="off"></mat-form-field>
                     <mat-form-field class="children-input"><input matInput [(ngModel)]="hijo.apellido" placeholder="Apellido" type="text" autocomplete="off"></mat-form-field>
                     <mat-form-field class="children-input"><input matInput [(ngModel)]="hijo.cuil" placeholder="Cuil" type="text" autocomplete="off"></mat-form-field>
-                    <mat-form-field class="children-input"><input matInput [(ngModel)]="hijo.descripcion" placeholder="Descripcion" type="text" autocomplete="off"></mat-form-field>
+                    <app-selector-default type="hardcode" nombre="si/no" [(matSelect)]="hijo.beneficiarioasignacionfamiliar" (optionSelected)="hijo.beneficiarioasignacionfamiliar=setBeneficiarioAsignacionFamiliar($event)" placeholder="Beneficiario AA/FF." autocomplete="off"></app-selector-default>
                     <app-selector-default nombre="obrasocial" [(matSelect)]="hijo.obrasocialid" (optionSelected)="hijo.obrasocial=$event" ></app-selector-default>
                   </div>
                 </tr>
