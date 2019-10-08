@@ -16,6 +16,9 @@ import { Novedad } from '../../novedad/novedad.model';
 import { AnonymousSubject } from 'rxjs/internal/Subject';
 import { variable } from '@angular/compiler/src/output/output_ast';
 
+export interface ImporteUnitario {
+  importeunitario: number;    
+}
 
 @Component({
   selector: 'app-liquidacion',
@@ -372,5 +375,15 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
         total: null
       });
     }
+  }
+
+  calcularTotal(array: ImporteUnitario[]): number {
+    let total: number= 0;
+    if(array) {
+      array.forEach(element => {
+        total += element.importeunitario;  
+      });
+    }
+    return total;
   }
 }
