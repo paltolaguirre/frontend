@@ -192,4 +192,8 @@ export class LegajoComponent implements OnInit, AfterViewInit {
     }
     return false;
   }
+
+  setBeneficiarioAsignacionFamiliar(event) {
+    return event.nombre.toLowerCase() == "si"
+  }
 }
