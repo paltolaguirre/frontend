@@ -14,8 +14,8 @@ export interface Liquidacion {
     activo: number;
     legajo: Legajo;
     legajoid: number;
-    tipos : Tipo;
-    tipo : number;
+    tipo : Tipo;
+    tipoid : number;
     fecha : string;
     fechaultimodepositoaportejubilatorio : string;
     fechaultimodepositoaportejubilatoriomes : string;
@@ -24,6 +24,9 @@ export interface Liquidacion {
     condicionpago : number;
     condicionpagos : Condicionpago;
     cuentabancoid : number;
+    cuentabanco?: Banco;
+    bancoaportejubilatorio? : Banco;
+    bancoaportejubilatorioid? : number;
     banco : Banco;
     fechaperiododepositado : string;
     fechaperiododepositadomes : string;
@@ -46,6 +49,7 @@ export interface Tipo {
     codigo: string;
     descripcion: string;
     activo?: number;
+    nombre?: string;
 }
 
 export interface Condicionpago {

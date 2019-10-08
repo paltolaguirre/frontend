@@ -44,7 +44,7 @@ export class ActionsComponent implements OnInit {
       legajo: null,
       legajoid: null,
       tipo : null,
-      tipos : null,
+      tipoid : null,
       fecha : null,
       fechaultimodepositoaportejubilatorio : null,
       fechaultimodepositoaportejubilatoriomes : null,
