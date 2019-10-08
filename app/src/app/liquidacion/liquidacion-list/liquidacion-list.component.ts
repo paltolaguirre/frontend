@@ -9,6 +9,7 @@ import { NotificationService } from 'src/app/handler-error/notification.service'
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { PrintService } from 'src/app/print/print.service';
 import { DuplicarDialogComponent } from './duplicar-dialog/duplicar-dialog.component';
+import { ContabilizarDialogComponent } from './contabilizar-dialog/contabilizar-dialog.component';
 
 @Component({
   selector: 'app-liquidacion-list',
@@ -60,14 +61,42 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
     return [5, 10, 20];
   }
 
-  async onClickContabilizar(datos) {
+  onClickContabilizar(data): void {
+    data = data.filter(this.isSelected);
+
+    if(data.length == 0) {
+      const notificacion = {
+        codigo: 400,
+        mensaje: `Se debe seleccionar al menos una liquidación a contabilizar.`
+      }
+      const ret = this.notificationService.notify(notificacion);
+    } else {
+      const dialogRef = this.dialog.open(ContabilizarDialogComponent, {
+        data
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log("Respuesta PopUp: ", result);
+
+        // TODO: no me convence llamar directamente a este metodo... investigar al respecto.
+        this.ngAfterViewInit();
+
+        /*if(result && result.refresh) {
+          // TODO: no me convence llamar directamente a este metodo... investigar al respecto.
+          this.ngAfterViewInit();
+        }*/
+      });
+    }
+  }
+
+  /*async onClickContabilizar(datos) {
    var elementsRequest = [];
    datos.forEach(function (el, index) {
       if (el.checked == true) { elementsRequest.push(el.ID)};
     }, this);    
     const responseContabilizarLiq: any = await this.liquidacionService.postContabilizarLiquidacion(elementsRequest);
     this.notificationService.notify(responseContabilizarLiq);
-  }
+  }*/
 
   onCreate(item: Liquidacion) {
     console.log("Created Item: " + item.ID);

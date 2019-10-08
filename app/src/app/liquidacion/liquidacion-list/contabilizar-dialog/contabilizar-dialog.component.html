@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>Contabilizar Liquidaciones</h1>
+<mat-divider></mat-divider>
+
+<div mat-dialog-content *ngIf="toggle">
+  <div>
+    <mat-form-field class="big-input"><input matInput [(ngModel)]="contabilizacion.descripcion" placeholder="Concepto"
+      type="text" autocomplete="off"></mat-form-field>
+  </div>
+  <div>
+    <mat-form-field class="standard-input"><input required=true matInput type="date" (ngModelChange)="contabilizacion.fechaasiento=$event"
+      [ngModel]="contabilizacion.fechaasiento | date: 'yyyy-MM-dd'" placeholder="Fecha de Asiento" autocomplete="off">
+    </mat-form-field>
+  </div>
+</div>
+<div mat-dialog-content *ngIf="!toggle">
+  <div class="box success">
+    <strong>{{cantidadCorrecto}}</strong> Liquidaciones contabilizadas correctamente.
+  </div>
+  <div ngIf="cantidadError!=0" class="box error">
+    <strong>{{cantidadError}}</strong> Liquidaciones no se pudieron contabilizar.
+  </div>
+</div>
+<div mat-dialog-actions>
+  <!--<button mat-button (click)="onClickDuplicar()">Duplicar</button>-->
+  <button mat-button *ngIf="toggle" (click)="onClickContabilizar()">Contabilizar</button>
+  
+  <button mat-button *ngIf="!toggle" (click)="onNoClick()">Salir</button>
+  <button mat-button *ngIf="toggle" (click)="onNoClick()">Cancelar</button>
+</div>

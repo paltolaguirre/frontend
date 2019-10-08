@@ -1,7 +1,7 @@
 import { Injectable, Pipe, PipeTransform } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SelectorElement } from '../shared/selector-default/selector-default.component';
-import { Liquidacion , Fechaliquidaciones, LiquidacionItems, LiquidacionCalculada, TipoItem, DuplicarLiquidaciones, ResultProcesamientoMasivo } from './liquidacion.model';
+import { Liquidacion , Fechaliquidaciones, LiquidacionItems, LiquidacionCalculada, TipoItem, DuplicarLiquidaciones, ResultProcesamientoMasivo, Contabilizar } from './liquidacion.model';
 
 export interface ListaItems {
   items: any[];
@@ -51,9 +51,8 @@ export class LiquidacionService {
     return liquidacion;
   }
 
-  public async postContabilizarLiquidacion(elementsRequest:  number[]): Promise<any> {
+  public async postContabilizarLiquidacion(contabilizar:  Contabilizar): Promise<any> {
     const requestUrl = `${this.hrefContabilizar}`;    
-    const contabilizar = { idsliquidacionesacontabilizar: elementsRequest, descripcion: "Alguna descripcion"};
     var response = await this.http.post<any>(requestUrl, contabilizar).toPromise();
     return response;
   }
