@@ -29,7 +29,7 @@ export class ContabilizarDialogComponent implements OnInit {
     this.contabilizacion = {
       idsliquidacionesacontabilizar: [],
       descripcion: "Asiento de Sueldos",
-      fechaasiento: ""
+      fechaasiento: new Date().toString()
     }
 
     console.log("data: ", this.data);
@@ -45,18 +45,21 @@ export class ContabilizarDialogComponent implements OnInit {
     }, this);
 
     console.log("Contabilizando Liquidaciones");
-    this.response = await this.liquidacionService.postContabilizarLiquidacion(this.contabilizacion);
+    let response = await this.liquidacionService.postContabilizarLiquidacion(this.contabilizacion);
 
-    console.log("Resultado Contabilizar Liquidaciones: ", this.response);
-    
-    this.cantidadCorrecto = this.contar_correcto();
-    this.cantidadError = this.contar_error();
+    console.log("Resultado Contabilizar Liquidaciones: ", response);
+
+    this.response = response;
+    // RESPONSE: {codigo: 200, respuesta: "Se contabilizaron correctamente 1 liquidaciones"}
+    /*this.cantidadCorrecto = this.contar_correcto();
+    this.cantidadError = this.contar_error();*/
     this.toggle = !this.toggle;
   }
 
   onNoClick(): void {
     const result = {
-      "refresh": (this.cantidadCorrecto > 0)
+      //"refresh": (this.cantidadCorrecto > 0)
+      "refresh": 1
     };
 
     this.dialogRef.close(result);

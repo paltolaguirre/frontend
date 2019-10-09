@@ -13,11 +13,17 @@
   </div>
 </div>
 <div mat-dialog-content *ngIf="!toggle">
-  <div class="box success">
+  <!--<div class="box success">
     <strong>{{cantidadCorrecto}}</strong> Liquidaciones contabilizadas correctamente.
   </div>
   <div ngIf="cantidadError!=0" class="box error">
     <strong>{{cantidadError}}</strong> Liquidaciones no se pudieron contabilizar.
+  </div>-->
+  <div *ngIf="response.codigo==200" class="box success">
+    {{response.respuesta}}
+  </div>
+  <div *ngIf="response.codigo!=200" class="box error">
+    {{response.respuesta}}
   </div>
 </div>
 <div mat-dialog-actions>
