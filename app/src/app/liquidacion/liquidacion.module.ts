@@ -12,9 +12,10 @@ import { ActionsComponent } from './liquidacion-list/actions/actions.component';
 import { LiquidacionPrintComponent } from './liquidacion/liquidacion-print/liquidacion-print.component';
 import { CalcularLiquidacionesPipe } from './calcular-liquidaciones.pipe';
 import { DuplicarDialogComponent } from './liquidacion-list/duplicar-dialog/duplicar-dialog.component';
+import { ContabilizarDialogComponent } from './liquidacion-list/contabilizar-dialog/contabilizar-dialog.component';
 
 @NgModule({
-  declarations: [LiquidacionComponent, LiquidacionListComponent, ActionsComponent ,DialogLiquidaciones, LiquidacionPrintComponent, CalcularLiquidacionesPipe, DuplicarDialogComponent],
+  declarations: [LiquidacionComponent, LiquidacionListComponent, ActionsComponent ,DialogLiquidaciones, LiquidacionPrintComponent, CalcularLiquidacionesPipe, DuplicarDialogComponent, ContabilizarDialogComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -23,7 +24,7 @@ import { DuplicarDialogComponent } from './liquidacion-list/duplicar-dialog/dupl
     DemoMaterialModule,
     SharedModule
   ],
-  entryComponents: [DialogLiquidaciones, DuplicarDialogComponent],
+  entryComponents: [DialogLiquidaciones, DuplicarDialogComponent, ContabilizarDialogComponent],
   exports: [CalcularLiquidacionesPipe]
 })
 export class LiquidacionModule { }
