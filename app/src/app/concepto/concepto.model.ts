@@ -8,7 +8,7 @@ export interface Concepto {
     descripcion: string;
     activo: number;
     tipo: string;
-    cuentacontable: number;
+    cuentacontableid: number;
     cuenta?: Cuenta;
     esimprimible: Boolean;
 }
