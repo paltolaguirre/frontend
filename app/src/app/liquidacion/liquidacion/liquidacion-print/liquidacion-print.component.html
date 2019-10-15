@@ -41,12 +41,12 @@
       <tr>
         <td class="tg-0lax" colspan="2" rowspan="2">categoria<div class="dato">{{liquidacion.legajo.categoria}}</div></td>
         <td class="tg-0lax" rowspan="2">sector<div class="dato">-</div></td>
-        <td class="tg-0lax" rowspan="2">periodo liquidacion<div class="dato">{{liquidacion.fechaperiodoliquidacion | date: 'dd-MM-yyyy'}}</div></td>
+        <td class="tg-0lax" rowspan="2">periodo liquidacion<div class="dato">{{liquidacion.fechaperiodoliquidacion | date: 'MM-yyyy'}}</div></td>
         <td class="tg-0lax" colspan="2" rowspan="2">tarea<div class="dato">{{liquidacion.legajo.tarea}}</div></td>
         <td class="tg-0lax" colspan="4" class="text-center">Depósito aporte jubilatorio Art. 12 Ley 17.250/67</td>
       </tr>
       <tr>
-        <td class="tg-0lax">periodo<div class="dato">{{liquidacion.fechaperiodoliquidacion | date: 'dd-MM-yyyy'}}</div></td>
+        <td class="tg-0lax">periodo<div class="dato">{{liquidacion.fechaperiodoliquidacion | date: 'MM-yyyy'}}</div></td>
         <td class="tg-0lax">fecha<div class="dato">{{liquidacion.fechaultimodepositoaportejubilatorio | date: 'dd-MM-yyyy'}}</div></td>
         <td class="tg-0lax" colspan="2">banco<div class="dato">{{liquidacion.bancoaportejubilatorio.codigo}}</div></td>
       </tr>
@@ -155,14 +155,14 @@
         <td class="tg-0lax" rowspan="2">sector<div class="dato">-</div>
         </td>
         <td class="tg-0lax" rowspan="2">periodo liquidacion<div class="dato">
-            {{liquidacion.fechaperiodoliquidacion | date: 'dd-MM-yyyy'}}</div>
+            {{liquidacion.fechaperiodoliquidacion | date: 'MM-yyyy'}}</div>
         </td>
         <td class="tg-0lax" colspan="2" rowspan="2">tarea<div class="dato">{{liquidacion.legajo.tarea}}</div>
         </td>
         <td class="tg-0lax" colspan="4" class="text-center">Depósito aporte jubilatorio Art. 12 Ley 17.250/67</td>
       </tr>
       <tr>
-        <td class="tg-0lax">periodo<div class="dato">{{liquidacion.fechaperiodoliquidacion | date: 'dd-MM-yyyy'}}</div>
+        <td class="tg-0lax">periodo<div class="dato">{{liquidacion.fechaperiodoliquidacion | date: 'MM-yyyy'}}</div>
         </td>
         <td class="tg-0lax">fecha<div class="dato">{{liquidacion.fechaultimodepositoaportejubilatorio | date: 'dd-MM-yyyy'}}
           </div>
