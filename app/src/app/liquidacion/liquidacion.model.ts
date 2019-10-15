@@ -221,3 +221,9 @@ export interface ProcesamientoStatus {
     codigo: number;
     mensaje: string;
 }
+
+export interface Contabilizar {
+    idsliquidacionesacontabilizar: number[];
+    descripcion: string;
+    fechaasiento: string;
+}

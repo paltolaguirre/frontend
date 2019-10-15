@@ -47,7 +47,7 @@ export class ActionsComponent implements OnInit {
       descripcion: null,
       activo: null,
       tipo: null,
-      cuentacontable: null,
+      cuentacontableid: null,
       cuenta: null,
       esimprimible : null
     }
