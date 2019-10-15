@@ -29,7 +29,7 @@ export class ContabilizarDialogComponent implements OnInit {
     this.contabilizacion = {
       idsliquidacionesacontabilizar: [],
       descripcion: "Asiento de Sueldos",
-      fechaasiento: new Date().toString()
+      fechaasiento: new Date().toISOString().split('T')[0]
     }
 
     console.log("data: ", this.data);
