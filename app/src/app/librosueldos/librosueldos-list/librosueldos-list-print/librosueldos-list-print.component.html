@@ -28,14 +28,14 @@
             <td class="tg-8n49" colspan="2">Fecha nacimiento</td>
           </tr>
           <tr>
-            <td class="tg-8n49" colspan="2">Sexo</td>
+            <td class="tg-8n49" colspan="2">Sexo:</td>
             <td class="tg-8n49">Dirección: {{liquidacionCalculada.liquidacion.legajo.direccion}}</td>
             <td class="tg-8n49" colspan="2">Documento: {{obtenerDniFromCuil(liquidacionCalculada.liquidacion.legajo.cuil)}}</td>
           </tr>
           <tr>
             <td class="tg-8n49" colspan="2">Fecha ingreso: {{liquidacionCalculada.liquidacion.legajo.fechaalta}}</td>
             <td class="tg-8n49">Fecha egreso</td>
-            <td class="tg-8n49" colspan="2">Estado civil</td>
+            <td class="tg-8n49" colspan="2">Estado civil: {{liquidacionCalculada.liquidacion.legajo.estadocivil.nombre}}</td>
           </tr>
           <tr>
             <td class="tg-8n49" colspan="2">Categoria: {{liquidacionCalculada.liquidacion.legajo.categoria}}</td>
@@ -51,6 +51,17 @@
             <td class="tg-8n49" colspan="2">Nacionalidad: {{liquidacionCalculada.liquidacion.legajo.pais.nombre}}</td>
             <td class="tg-8n49"></td>
             <td class="tg-8n49" colspan="2">Modalidad: {{liquidacionCalculada.liquidacion.legajo.modalidadcontratacion.nombre}}</td>
+          </tr>
+          <tr class="simple-line-top">
+            <td class="tg-8n49" colspan="5">BENEFICIARIOS AA/FF</td>
+          </tr>
+          <tr *ngIf="liquidacionCalculada.hijosasignacionfamiliar.length==0">
+            <td class="tg-8n49" colspan="5">Sin beneficiarios</td>
+          </tr>
+          <tr *ngFor="let hijo of liquidacionCalculada.hijosasignacionfamiliar; let i = index; let firstItem = first; let lastItem = last">
+            <td class="tg-8n49" colspan="2">Apellido y Nombre: {{hijo.apellido + ", " + hijo.nombre}}</td>
+            <td class="tg-8n49">CUIL: {{hijo.cuil}}</td>
+            <td class="tg-8n49" colspan="2"></td>
           </tr>
           <tr class="simple-line-top">
             <td class="tg-8n49" colspan="5">CONCEPTOS LIQUIDADOS</td>

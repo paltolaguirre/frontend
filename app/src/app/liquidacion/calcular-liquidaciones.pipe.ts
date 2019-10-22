@@ -14,11 +14,15 @@ export class CalcularLiquidacionesPipe implements PipeTransform {
       let liquidacionCalculada: LiquidacionCalculada;
       liquidacionCalculada = {
         liquidacion: null,
-        calculo: null
+        calculo: null,
+        hijosasignacionfamiliar: null
       };
 
       liquidacionCalculada.liquidacion = liquidacion;
       liquidacionCalculada.calculo = this.liquidacionService.calcularLiquidacion(liquidacion);
+      liquidacionCalculada.hijosasignacionfamiliar = liquidacion.legajo.hijos.filter((hijo)=>{
+        return hijo.beneficiarioasignacionfamiliar;
+      });
 
       output.push(liquidacionCalculada);
     });

@@ -57,7 +57,7 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
   async onClickSave(data: Concepto): Promise<Concepto> {
     let conceptosItem: Concepto;
 
-    if(data.cuenta)data.cuentacontable = data.cuenta.ID;
+    if(data.cuenta)data.cuentacontableid = data.cuenta.ID;
 
     if (this.id) {
       console.log("Updated Concepto");
@@ -87,7 +87,7 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
   selectChange(event,data)
   {
     data.cuenta = event
-    data.cuentacontable = event.id
+    data.cuentacontableid = event.id
   }
 
   
