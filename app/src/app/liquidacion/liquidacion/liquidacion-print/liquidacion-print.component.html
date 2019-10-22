@@ -15,10 +15,12 @@
         <col style="width: 90px">
       </colgroup>
       <tr>
-        <th class="tg-0pky hidden-right" colspan="4">(logo)</th>
+        <th class="tg-0pky hidden-right" colspan="4">
+          <div *ngIf="empresa" class="logo-empresa"><img *ngIf="empresa.logobase64" src="{{'data:image/png;base64,'+empresa.logobase64}}" /></div>
+        </th>
         <th class="tg-0lax hidden-left hidden-right" colspan="5">
           <div class="empresa">
-            <ul>
+            <ul *ngIf="empresa">
               <li>EMPLEADOR: {{empresa.nombre}}</li>
               <li>DOMICILIO: {{empresa.domicilio}}</li>
               <li>LOCALIDAD: {{empresa.localidad}}</li>
@@ -90,7 +92,7 @@
         <td class="tg-0lax"><div class="dato total">{{totalNeto}}</div></td>
       </tr>
       <tr>
-        <td class="tg-0lax" colspan="5">lugar de pago<div class="dato">{{empresa.localidad}}</div></td>
+        <td class="tg-0lax" colspan="5">lugar de pago<div *ngIf="empresa" class="dato">{{empresa.localidad}}</div></td>
         <td class="tg-0lax hidden-right" colspan="4" alt="Leyenda y Firma">
           <div class="leyenda">Recibi el importe neto de esta liquidacion en pago de mi remuneracion correspondiente al periodo indicado y duplicado de
           la misma, conforme a la ley vigente.</div>
@@ -117,10 +119,12 @@
         <col style="width: 90px">
       </colgroup>
       <tr>
-        <th class="tg-0pky hidden-right" colspan="4">(logo)</th>
+        <th class="tg-0pky hidden-right" colspan="4">
+          <div *ngIf="empresa" class="logo-empresa"><img *ngIf="empresa.logobase64" src="{{'data:image/png;base64,'+empresa.logobase64}}" /></div>
+        </th>
         <th class="tg-0lax hidden-left hidden-right" colspan="5">
           <div class="empresa">
-            <ul>
+            <ul *ngIf="empresa">
               <li>EMPLEADOR: {{empresa.nombre}}</li>
               <li>DOMICILIO: {{empresa.domicilio}}</li>
               <li>LOCALIDAD: {{empresa.localidad}}</li>
@@ -230,7 +234,7 @@
         </td>
       </tr>
       <tr>
-        <td class="tg-0lax" colspan="5">lugar de pago<div class="dato">{{empresa.localidad}}</div>
+        <td class="tg-0lax" colspan="5">lugar de pago<div *ngIf="empresa" class="dato">{{empresa.localidad}}</div>
         </td>
         <td class="tg-0lax hidden-right" colspan="4" alt="Leyenda y Firma">
           <div class="firma" style="padding-bottom: 65px; margin-top: 10px;">Firma del empleador:</div>
