@@ -39,9 +39,7 @@ export class ContabilizarDialogComponent implements OnInit {
     if(this.faltanRequeridos()) return null;
 
     this.data.forEach(function (el) {
-      if (el.checked == true) {
         this.contabilizacion.idsliquidacionesacontabilizar.push(el.ID)
-      };
     }, this);
 
     console.log("Contabilizando Liquidaciones");
