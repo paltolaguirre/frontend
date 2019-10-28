@@ -11,6 +11,7 @@ import { PrintService } from 'src/app/print/print.service';
 import { DuplicarDialogComponent } from './duplicar-dialog/duplicar-dialog.component';
 import { ContabilizarDialogComponent } from './contabilizar-dialog/contabilizar-dialog.component';
 import { DatePipe } from '@angular/common';
+import { TableService } from 'src/app/shared/services/table.service';
 
 export interface LiquidacionTable {
   ID: number;
@@ -50,7 +51,8 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
     private liquidacionService: LiquidacionService,
     public dialog: MatDialog,
     private notificationService: NotificationService,
-    public printService : PrintService
+    public printService: PrintService,
+    private tableService: TableService, 
   ) { }
 
   ngOnInit() {
@@ -60,41 +62,11 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
   async ngAfterViewInit() {
 
       const liquidacionesApi: ListaItems = await this.liquidacionService.getLiquidaciones(this.sort.active, this.sort.direction, 1);
-      this.setDataSource(liquidacionesApi.items);
+      this.dataSource = this.tableService.getDataSource(liquidacionesApi.items, this.parseLiquidacionToLiquidacionTable);
       this.dataSource.paginator = this.paginator;
       this.paginator._intl.itemsPerPageLabel = "Items por página";
       this.isLoadingResults = false;
 
-  }
-
-  setDataSource(liquidaciones: Liquidacion[]) {
-    const dataTable: LiquidacionTable[] = this.parseLiquidacionesToTable(liquidaciones);
-    this.dataSource = new MatTableDataSource<LiquidacionTable>(dataTable);
-  }
-
-  addDataSource(liquidacion: Liquidacion) {
-    const item = this.parseLiquidacionToLiquidacionTable(liquidacion);
-    this.dataSource.data.push(item);
-
-    this.dataSource = new MatTableDataSource<LiquidacionTable>(this.dataSource.data);
-  }
-
-  updateDataSource(liquidacion: Liquidacion) {
-    const item = this.parseLiquidacionToLiquidacionTable(liquidacion);
-    this.dataSource.data.forEach(function (el, index) {
-      if (el.ID == item.ID) this.dataSource.data.splice(index, 1, item);
-    }, this);
-
-    this.dataSource = new MatTableDataSource<LiquidacionTable>(this.dataSource.data);
-  }
-
-  deleteDataSource(liquidacion: Liquidacion) {
-    //const item = this.parseLiquidacionToLiquidacionTable(liquidacion);
-    this.dataSource.data.forEach(function (el, index) {
-      if (el.ID == liquidacion.ID) this.dataSource.data.splice(index, 1);
-    }, this);
-
-    this.dataSource = new MatTableDataSource<LiquidacionTable>(this.dataSource.data);
   }
 
   parseLiquidacionToLiquidacionTable(liquidacion: Liquidacion): LiquidacionTable {
@@ -112,16 +84,6 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
     };
 
     return liquidacionTable;
-  }
-
-  parseLiquidacionesToTable(liquidaciones: Liquidacion[]): LiquidacionTable[] {
-    const liquidacionesTable = [];
-    liquidaciones.forEach(liquidacion => {
-      const liquidacionTable: LiquidacionTable = this.parseLiquidacionToLiquidacionTable(liquidacion);
-      liquidacionesTable.push(liquidacionTable);
-    }, this);
-
-    return liquidacionesTable;
   }
 
   getPageSizeOptions(): number[] {
@@ -168,24 +130,26 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
     this.notificationService.notify(responseContabilizarLiq);
   }*/
 
-  onCreate(item: Liquidacion) {
-    console.log("Created Item: " + item.ID);
+  onCreate(liquidacion: Liquidacion) {
+    console.log("Created Item: " + liquidacion.ID);
 
-    this.addDataSource(item);
+    const item = this.parseLiquidacionToLiquidacionTable(liquidacion);
+    this.dataSource = this.tableService.addDataSource(this.dataSource, item);
   }
 
   public doFilter = (value: string) => {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
 
-  onUpdate(item: Liquidacion) {
-    console.log("Updated Item: " + item.ID);
-    this.updateDataSource(item);
+  onUpdate(liquidacion: Liquidacion) {
+    console.log("Updated Item: " + liquidacion.ID);
+    const item: any = this.parseLiquidacionToLiquidacionTable(liquidacion);
+    this.dataSource = this.tableService.updateDataSource(this.dataSource, item);
   }
 
-  onDelete(item: Liquidacion) {
-    console.log("Deleted Item: " + item.ID);
-    this.deleteDataSource(item);
+  onDelete(liquidacion: Liquidacion) {
+    console.log("Deleted Item: " + liquidacion.ID);
+    this.dataSource = this.tableService.deleteDataSource(this.dataSource, liquidacion.ID);
   }
 
   refreshTableSorce() {
