@@ -10,6 +10,20 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { PrintService } from 'src/app/print/print.service';
 import { DuplicarDialogComponent } from './duplicar-dialog/duplicar-dialog.component';
 import { ContabilizarDialogComponent } from './contabilizar-dialog/contabilizar-dialog.component';
+import { DatePipe } from '@angular/common';
+import { TableService } from 'src/app/shared/services/table.service';
+
+export interface LiquidacionTable {
+  ID: number;
+  item: Liquidacion;
+  legajo: string;
+  apellido: string;
+  nombre: string;
+  fechaliquidacion: string;
+  periodoliquidacion: string;
+  tipo: string;
+  contabilizada: string;
+}
 
 @Component({
   selector: 'app-liquidacion-list',
@@ -18,7 +32,7 @@ import { ContabilizarDialogComponent } from './contabilizar-dialog/contabilizar-
 })
 export class LiquidacionListComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['Seleccionar', 'Legajo', 'Apellido', 'Nombre', 'Fecha Liquidacion', 'Periodo Liquidacion', 'Tipo',  'Contabilizada', 'Acciones' ];
-  dataSource: MatTableDataSource<Liquidacion> = new MatTableDataSource<Liquidacion>();
+  dataSource: MatTableDataSource<LiquidacionTable> = new MatTableDataSource<LiquidacionTable>();
   //data: LiquidacionesApi;
 
   resultsLength = 0;
@@ -37,7 +51,8 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
     private liquidacionService: LiquidacionService,
     public dialog: MatDialog,
     private notificationService: NotificationService,
-    public printService : PrintService
+    public printService: PrintService,
+    private tableService: TableService, 
   ) { }
 
   ngOnInit() {
@@ -47,13 +62,30 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
   async ngAfterViewInit() {
 
       const liquidacionesApi: ListaItems = await this.liquidacionService.getLiquidaciones(this.sort.active, this.sort.direction, 1);
-      this.dataSource = new MatTableDataSource<Liquidacion>(liquidacionesApi.items);
+      this.dataSource = this.tableService.getDataSource(liquidacionesApi.items, this.parseLiquidacionToLiquidacionTable);
       this.dataSource.paginator = this.paginator;
       this.paginator._intl.itemsPerPageLabel = "Items por página";
       this.isLoadingResults = false;
 
   }
-  
+
+  parseLiquidacionToLiquidacionTable(liquidacion: Liquidacion): LiquidacionTable {
+    var datePipe = new DatePipe('es-Ar');
+    const liquidacionTable: LiquidacionTable = {
+      ID: liquidacion.ID,
+      item: liquidacion,
+      legajo: liquidacion.legajo.legajo,
+      apellido: liquidacion.legajo.apellido,
+      nombre: liquidacion.legajo.nombre,
+      fechaliquidacion: datePipe.transform(liquidacion.fecha, 'd MMMM, yyyy'),
+      periodoliquidacion: datePipe.transform(liquidacion.fechaperiodoliquidacion, 'MMMM yyyy'),
+      tipo: liquidacion.tipo.nombre,
+      contabilizada: liquidacion.estacontabilizada?'Si':'No',
+    };
+
+    return liquidacionTable;
+  }
+
   getPageSizeOptions(): number[] {
     if (this.dataSource.data.length>20)
     return [5, 10, 20,  this.dataSource.paginator.length];
@@ -61,7 +93,7 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
     return [5, 10, 20];
   }
 
-  onClickContabilizar(data): void {
+  onClickContabilizar(data: LiquidacionTable[]): void {
     data = data.filter(this.isSelected);
 
     if(data.length == 0) {
@@ -98,33 +130,26 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
     this.notificationService.notify(responseContabilizarLiq);
   }*/
 
-  onCreate(item: Liquidacion) {
-    console.log("Created Item: " + item.ID);
-    this.dataSource.data.push(item);
+  onCreate(liquidacion: Liquidacion) {
+    console.log("Created Item: " + liquidacion.ID);
 
-    this.dataSource = new MatTableDataSource<Liquidacion>(this.dataSource.data);
+    const item = this.parseLiquidacionToLiquidacionTable(liquidacion);
+    this.dataSource = this.tableService.addDataSource(this.dataSource, item);
   }
 
   public doFilter = (value: string) => {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
 
-  onUpdate(item: Liquidacion) {
-    console.log("Updated Item: " + item.ID);
-    this.dataSource.data.forEach(function (el, index) {
-      if (el.ID == item.ID) this.dataSource.data.splice(index, 1, item);
-    }, this);
-
-    this.dataSource = new MatTableDataSource<Liquidacion>(this.dataSource.data);
+  onUpdate(liquidacion: Liquidacion) {
+    console.log("Updated Item: " + liquidacion.ID);
+    const item: any = this.parseLiquidacionToLiquidacionTable(liquidacion);
+    this.dataSource = this.tableService.updateDataSource(this.dataSource, item);
   }
 
-  onDelete(item: Liquidacion) {
-    console.log("Deleted Item: " + item.ID);
-    this.dataSource.data.forEach(function (el, index) {
-      if (el.ID == item.ID) this.dataSource.data.splice(index, 1);
-    }, this);
-
-    this.dataSource = new MatTableDataSource<Liquidacion>(this.dataSource.data);
+  onDelete(liquidacion: Liquidacion) {
+    console.log("Deleted Item: " + liquidacion.ID);
+    this.dataSource = this.tableService.deleteDataSource(this.dataSource, liquidacion.ID);
   }
 
   refreshTableSorce() {
