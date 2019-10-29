@@ -17,6 +17,7 @@ import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es-AR';
 import localeEsExtra from '@angular/common/locales/extra/es-AR';
 import { DemoMaterialModule } from './material.module';
+import { TableService } from './shared/services/table.service';
 
 //registerLocaleData(localeEs, 'es-AR', localeEsExtra);
 registerLocaleData(localeEs, 'es-Ar');
@@ -39,7 +40,8 @@ registerLocaleData(localeEs, 'es-Ar');
     { provide: LOCALE_ID, useValue: 'es-Ar' },
     AuthGuard,
     NotificationService,
-    PrintService
+    PrintService,
+    TableService,
   ],
   bootstrap: [AppComponent]
 })

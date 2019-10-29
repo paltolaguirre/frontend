@@ -13,6 +13,7 @@ import { LiquidacionPrintComponent } from './liquidacion/liquidacion-print/liqui
 import { CalcularLiquidacionesPipe } from './calcular-liquidaciones.pipe';
 import { DuplicarDialogComponent } from './liquidacion-list/duplicar-dialog/duplicar-dialog.component';
 import { ContabilizarDialogComponent } from './liquidacion-list/contabilizar-dialog/contabilizar-dialog.component';
+import { MatNativeDateModule } from '@angular/material';
 
 @NgModule({
   declarations: [LiquidacionComponent, LiquidacionListComponent, ActionsComponent ,DialogLiquidaciones, LiquidacionPrintComponent, CalcularLiquidacionesPipe, DuplicarDialogComponent, ContabilizarDialogComponent],
@@ -22,6 +23,7 @@ import { ContabilizarDialogComponent } from './liquidacion-list/contabilizar-dia
     ReactiveFormsModule,
     LiquidacionRoutingModule,
     DemoMaterialModule,
+    MatNativeDateModule,
     SharedModule
   ],
   entryComponents: [DialogLiquidaciones, DuplicarDialogComponent, ContabilizarDialogComponent],
