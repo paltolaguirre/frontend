@@ -11,6 +11,8 @@ export interface Concepto {
     cuentacontableid: number;
     cuenta?: Cuenta;
     esimprimible: Boolean;
+    esliquidacion?: Boolean;
+    tipoliquidacionid?: number;
 }
 
 export interface Cuenta {  
