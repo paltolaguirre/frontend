@@ -26,3 +26,10 @@ export interface Cuenta {
     activo?: Number
 }
 
+export enum TIPO_CONCEPTO {
+    IMPORTE_REMUNERATIVO = -1,
+    IMPORTE_NO_REMUNERATIVO = -2,
+    DESCUENTO = -3,
+    RETENCION = -4,
+    APORTE_PATRONAL = 5,
+}

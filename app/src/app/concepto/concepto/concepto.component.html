@@ -27,10 +27,10 @@
       <mat-form-field class="standard-input">
         <input [disabled]=isDefault(data) matInput [(ngModel)]="data.descripcion" placeholder="Descripción" type="text" autocomplete="off">
       </mat-form-field>
-      <mat-checkbox color="primary" class="example-margin"  [(ngModel)]="data.esnovedad">Es Novedad</mat-checkbox>
+      <mat-checkbox [disabled]=isDefault(data) color="primary" class="example-margin"  [(ngModel)]="data.esnovedad">Es Novedad</mat-checkbox>
     </div>
     <div>
-      <mat-checkbox color="primary" class="example-margin"  [(ngModel)]="data.esimprimible">Es Imprimible</mat-checkbox>
+      <mat-checkbox [disabled]=isDefault(data) color="primary" class="example-margin"  [(ngModel)]="data.esimprimible">Es Imprimible</mat-checkbox>
     </div>
     <br/>    
     <mat-divider></mat-divider>
