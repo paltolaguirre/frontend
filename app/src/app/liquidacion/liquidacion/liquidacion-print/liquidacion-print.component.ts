@@ -51,7 +51,7 @@ export class LiquidacionPrintComponent implements OnInit {
     const bancoaportejubilatorioid = this.liquidacion.bancoaportejubilatorioid;
     if(bancos && bancoaportejubilatorioid!=0) {
       banco = bancos.filter((banco)=>{
-        return banco.id == bancoaportejubilatorioid
+        return banco.ID == bancoaportejubilatorioid
       })[0];
       console.log("Banco Aporte Jubilatorio: ", banco);
     } else {
