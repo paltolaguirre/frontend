@@ -9,19 +9,19 @@ export class Models {
       switch (nombre) { 
           case 'condicionpago': 
           // TODO: Se debe llamar al helper de liquidacioncondicionpago
-            return [{nombre: 'Contado', id: 1},{nombre: 'Cuenta Corriente', id: 2}]; 
+            return [{nombre: 'Contado', ID: 1},{nombre: 'Cuenta Corriente', ID: 2}]; 
           case 'tipo': 
           // TODO: Se debe llamar al helper de liquidaciontipo
-            return [{nombre: 'Mensual', codigo: 'Mensual',id: 1},{nombre: 'Primer Quincena', id: 2},{nombre: 'Segunda Quincena', id: 3},{nombre: 'Vacaciones', id: 4},{nombre: 'SAC', id: 5},{nombre: 'Liquidacion Final', id: 6}]; 
+            return [{nombre: 'Mensual', codigo: 'Mensual',ID: 1},{nombre: 'Primer Quincena', ID: 2},{nombre: 'Segunda Quincena', ID: 3},{nombre: 'Vacaciones', ID: 4},{nombre: 'SAC', ID: 5},{nombre: 'Liquidacion Final', ID: 6}]; 
           case 'liquidacion-novedades': 
-            return [{nombre: 'Descuentos', id: 1},{nombre: 'Retenciones', id: 2},{nombre: 'Importes Remunerativos', id: 3},{nombre: 'Importes No Remunerativos', id: 4},{nombre: 'Aportes Patronales', id: 5}]; 
+            return [{nombre: 'Descuentos', ID: -1},{nombre: 'Retenciones', ID: -2},{nombre: 'Importes Remunerativos', ID: -3},{nombre: 'Importes No Remunerativos', ID: -4},{nombre: 'Aportes Patronales', ID: -5}]; 
           case 'mes': 
-            return [{nombre: 'Enero', id: 1},{nombre: 'Febrero', id: 2},{nombre: 'Marzo', id: 3},
-                    {nombre: 'Abril', id: 4},{nombre: 'Mayo', id: 5},{nombre: 'Junio', id: 6},
-                    {nombre: 'Julio', id: 7},{nombre: 'Agosto', id: 8},{nombre: 'Septiembre', id: 9},
-                    {nombre: 'Octubre', id: 10},{nombre: 'Noviembre', id: 11},{nombre: 'Diciembre', id: 12}];
+            return [{nombre: 'Enero', ID: 1},{nombre: 'Febrero', ID: 2},{nombre: 'Marzo', ID: 3},
+                    {nombre: 'Abril', ID: 4},{nombre: 'Mayo', ID: 5},{nombre: 'Junio', ID: 6},
+                    {nombre: 'Julio', ID: 7},{nombre: 'Agosto', ID: 8},{nombre: 'Septiembre', ID: 9},
+                    {nombre: 'Octubre', ID: 10},{nombre: 'Noviembre', ID: 11},{nombre: 'Diciembre', ID: 12}];
           case 'si/no': 
-            return [{nombre: 'Si', id: 1},{nombre: 'No', id: 0}];
+            return [{nombre: 'Si', ID: 1},{nombre: 'No', ID: 0}];
           default: 
           return []; 
       } 
@@ -61,7 +61,9 @@ export class Models {
       case 'mes': 
          return "Mes"; 
       case 'anio': 
-         return "Año"; 
+         return "Año";
+      case 'tipoconcepto':
+          return "Tipo de Concepto"
       default: 
       return "Seleccione..."; 
     } 

@@ -8,7 +8,7 @@ import { Options } from 'selenium-webdriver';
 import { Models } from './selector-default.models';
 
 export interface SelectorElement {
-  id: any;
+  ID: any;
   nombre: string;
   codigo?: string;
   descripcion?: string;
@@ -56,7 +56,7 @@ export class SelectorDefaultComponent implements OnInit {
         map(value => typeof value === 'string' ? value : ''), 
         map(name => name ? this._filter(name) : this.options.slice()) 
       ); 
-      let filter = this.options.filter(option => option.id == this.matSelect); 
+      let filter = this.options.filter(option => option.ID == this.matSelect); 
       let option = filter.length>0?filter[0]:null; 
       this.myControl.setValue(option); 
       if (this.disabled == true) {this.myControl.disable();}
@@ -86,9 +86,9 @@ export class SelectorDefaultComponent implements OnInit {
 
   itemSelected(evt: any) {
     const value = evt.option.value;
-    console.log(value);
-    this.value = value; 
-    value.ID = value.id;
+    console.log("Option selected: ", value);
+    /*this.value = value; 
+    value.ID = value.id;*/
     this.optionSelected.emit(value);
   }
 
