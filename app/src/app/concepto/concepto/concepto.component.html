@@ -18,9 +18,10 @@
       </mat-form-field>
     </div>
     <div>
-        <app-selector-default nombre="cuenta" [disabled]=isDefault(data) required=true [(matSelect)]="data.cuentacontableid"
-        (optionSelected)="data.cuenta=$event"></app-selector-default>
-        <app-selector-default nombre="liquidacion-novedades" type="hardcode" [(matSelect)]="data.tipoliquidacion" (optionSelected)="data.tipoliquidacionid=$event.ID"></app-selector-default> 
+      <app-selector-default nombre="cuenta" [disabled]=isDefault(data) required=true [(matSelect)]="data.cuentacontableid"
+      (optionSelected)="data.cuentacontableid=$event.ID"></app-selector-default>
+      <app-selector-default nombre="tipoconcepto" [disabled]=isDefault(data) required=true [(matSelect)]="data.tipoconceptoid"
+      (optionSelected)="data.tipoconceptoid=$event.ID"></app-selector-default> 
     </div>
     <div>
       <mat-form-field class="standard-input">
