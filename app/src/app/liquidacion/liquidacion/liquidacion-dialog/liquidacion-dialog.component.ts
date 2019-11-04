@@ -56,7 +56,8 @@ export class DialogLiquidaciones {
   }
 
   private agregarTablas() {
-    this.dataSource.data.forEach((element: Novedad) => {   
+    const seleccionados = this.dataSource.data.filter(element => element.checked);
+    seleccionados.forEach((element: Novedad) => {   
       var pushData = {conceptoid : element.conceptoid , importeunitario : element.importe};
       switch (element.concepto.tipoconceptoid) {
         case TIPO_CONCEPTO.DESCUENTO:
