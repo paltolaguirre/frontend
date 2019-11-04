@@ -10,22 +10,27 @@
 
   <div mat-dialog-content class="content" id="contentTOPDF">
     <div>
-      <mat-form-field class="standard-input"><input ng-class="{submitted:data.submitted}" [disabled]=isDefault(data)
-          matInput required [(ngModel)]="data.nombre" placeholder="Nombre" type="text" autocomplete="off">
+      <mat-form-field class="standard-input"><input [disabled]=isDefault(data)
+        matInput required [(ngModel)]="data.nombre" placeholder="Nombre" type="text" autocomplete="off">
       </mat-form-field>
-      <mat-form-field class="standard-input"><input [disabled]=isDefault(data) matInput [(ngModel)]="data.codigo"
-          placeholder="Código" type="text" autocomplete="off"></mat-form-field>
+      <mat-form-field class="standard-input"><input [disabled]=isDefault(data) 
+        matInput [(ngModel)]="data.codigo" placeholder="Código" type="text" autocomplete="off">
+      </mat-form-field>
     </div>
     <div>
       <app-selector-default nombre="cuenta" [disabled]=isDefault(data) required=true [(matSelect)]="data.cuentacontableid"
-        (optionSelected)="data.cuenta=$event"></app-selector-default>
+      (optionSelected)="data.cuentacontableid=$event.ID"></app-selector-default>
+      <app-selector-default nombre="tipoconcepto" [disabled]=isDefault(data) required=true [(matSelect)]="data.tipoconceptoid"
+      (optionSelected)="data.tipoconceptoid=$event.ID"></app-selector-default> 
     </div>
     <div>
-      <mat-form-field class="standard-input"><input [disabled]=isDefault(data) matInput [(ngModel)]="data.descripcion"
-          placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
+      <mat-form-field class="standard-input">
+        <input [disabled]=isDefault(data) matInput [(ngModel)]="data.descripcion" placeholder="Descripción" type="text" autocomplete="off">
+      </mat-form-field>
+      <mat-checkbox [disabled]=isDefault(data) color="primary" class="example-margin"  [(ngModel)]="data.esnovedad">Es Novedad</mat-checkbox>
     </div>
     <div>
-      <mat-checkbox color="primary" class="example-margin"  [(ngModel)]="data.esimprimible">Es Imprimible</mat-checkbox>
+      <mat-checkbox [disabled]=isDefault(data) color="primary" class="example-margin"  [(ngModel)]="data.esimprimible">Es Imprimible</mat-checkbox>
     </div>
     <br/>    
     <mat-divider></mat-divider>
