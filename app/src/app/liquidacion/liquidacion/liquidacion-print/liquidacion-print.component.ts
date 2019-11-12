@@ -38,6 +38,8 @@ export class LiquidacionPrintComponent implements OnInit {
   totalDeducciones: number;
   totalNeto: number;
 
+  logobase64: String;
+
   constructor(private empresaService: EmpresaService, private selectorService: SelectorService) { 
     this.items = new Array();
   }
@@ -49,7 +51,7 @@ export class LiquidacionPrintComponent implements OnInit {
     const bancoaportejubilatorioid = this.liquidacion.bancoaportejubilatorioid;
     if(bancos && bancoaportejubilatorioid!=0) {
       banco = bancos.filter((banco)=>{
-        return banco.id == bancoaportejubilatorioid
+        return banco.ID == bancoaportejubilatorioid
       })[0];
       console.log("Banco Aporte Jubilatorio: ", banco);
     } else {
@@ -63,7 +65,6 @@ export class LiquidacionPrintComponent implements OnInit {
     };
 
     console.log(this.empresa);
-
     this.obtenerItems();
   }
 

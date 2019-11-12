@@ -72,17 +72,10 @@
                     (click)="onClickDeleteChild(importesremunerativos, data.importesremunerativos)">
                     <mat-icon>delete_forever</mat-icon>
                   </button>
-                  <app-selector-default nombre="concepto" [(matSelect)]="importesremunerativos.conceptoid"
+                  <app-selector-default nombre="concepto" filter="tipoconcepto=IMPORTE_REMUNERATIVO" [(matSelect)]="importesremunerativos.conceptoid"
                     (optionSelected)="importesremunerativos.concepto=$event"></app-selector-default>
                   <mat-form-field class="children-input"><input matInput
-                      [(ngModel)]="importesremunerativos.importeunitario" placeholder="Importe" type="number"
-                      autocomplete="off"></mat-form-field>
-                  <!--
-                          <mat-form-field class="children-input"><input matInput [(ngModel)]="importesremunerativos.total" placeholder="total" type="Number" autocomplete="off"></mat-form-field>
-                          <mat-form-field class="children-input"><input matInput [(ngModel)]="importesremunerativos.cantidad" placeholder="Cantidad" type="number" autocomplete="off"></mat-form-field>
-                          <mat-form-field class="children-input"><input matInput [(ngModel)]="importesremunerativos.porcentaje" placeholder="Porcentaje" type="number" autocomplete="off"></mat-form-field>
-                          <app-selector-default nombre="concepto" [(matSelect)]="importesremunerativos.sobreconceptoid" (optionSelected)="importesremunerativos.sobreconcepto=$event" ></app-selector-default>
-                          -->
+                    [(ngModel)]="importesremunerativos.importeunitario" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
                 </div>
               </tr>
             </table>
@@ -110,18 +103,10 @@
                     (click)="onClickDeleteChild(importesnoremunerativos, data.importesnoremunerativos)">
                     <mat-icon>delete_forever</mat-icon>
                   </button>
-                  <app-selector-default nombre="concepto" [(matSelect)]="importesnoremunerativos.conceptoid"
+                  <app-selector-default nombre="concepto" filter="tipoconcepto=IMPORTE_NO_REMUNERATIVO" [(matSelect)]="importesnoremunerativos.conceptoid"
                     (optionSelected)="importesnoremunerativos.concepto=$event"></app-selector-default>
                   <mat-form-field class="children-input"><input matInput
-                      [(ngModel)]="importesnoremunerativos.importeunitario" placeholder="Importe" type="number"
-                      autocomplete="off"></mat-form-field>
-
-                  <!--  
-                          <mat-form-field class="children-input"><input matInput [(ngModel)]="importesnoremunerativos.cantidad" placeholder="Cantidad" type="number" autocomplete="off"></mat-form-field>
-                          <mat-form-field class="children-input"><input matInput [(ngModel)]="importesnoremunerativos.porcentaje" placeholder="Porcentaje" type="number" autocomplete="off"></mat-form-field>
-                          <mat-form-field class="children-input"><input matInput [(ngModel)]="importesnoremunerativos.total" placeholder="total" type="Number" autocomplete="off"></mat-form-field>
-                          <app-selector-default nombre="concepto" [(matSelect)]="importesnoremunerativos.sobreconceptoid" (optionSelected)="importesnoremunerativos.sobreconcepto=$event" ></app-selector-default>
-                          -->
+                    [(ngModel)]="importesnoremunerativos.importeunitario" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
                 </div>
               </tr>
             </table>
@@ -148,18 +133,10 @@
                   <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(descuentos, data.descuentos)">
                     <mat-icon>delete_forever</mat-icon>
                   </button>
-                  <app-selector-default nombre="concepto" [(matSelect)]="descuentos.conceptoid"
+                  <app-selector-default nombre="concepto" filter="tipoconcepto=DESCUENTO" [(matSelect)]="descuentos.conceptoid"
                     (optionSelected)="descuentos.concepto=$event"></app-selector-default>
                   <mat-form-field class="children-input"><input matInput [(ngModel)]="descuentos.importeunitario"
-                      placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
-
-                  <!--  
-                          <mat-form-field class="children-input"><input matInput [(ngModel)]="descuentos.cantidad" placeholder="Cantidad" type="number" autocomplete="off"></mat-form-field>
-                          <mat-form-field class="children-input"><input matInput [(ngModel)]="descuentos.porcentaje" placeholder="Porcentaje" type="number" autocomplete="off"></mat-form-field>
-                          <app-selector-default nombre="concepto" [(matSelect)]="descuentos.sobreconceptoid" (optionSelected)="descuentos.sobreconcepto=$event" ></app-selector-default>
-                          <mat-form-field class="children-input"><input matInput [(ngModel)]="descuentos.total" placeholder="total" type="Number" autocomplete="off"></mat-form-field>
-                          -->
-
+                    placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
                 </div>
               </tr>
             </table>
@@ -186,11 +163,10 @@
                   <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(retenciones, data.retenciones)">
                     <mat-icon>delete_forever</mat-icon>
                   </button>
-                  <app-selector-default nombre="concepto" [(matSelect)]="retenciones.conceptoid"
+                  <app-selector-default nombre="concepto" filter="tipoconcepto=RETENCION" [(matSelect)]="retenciones.conceptoid"
                     (optionSelected)="retenciones.concepto=$event"></app-selector-default>
                   <mat-form-field class="children-input"><input matInput [(ngModel)]="retenciones.importeunitario"
-                      placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
-
+                    placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
                 </div>
               </tr>
             </table>
@@ -217,11 +193,10 @@
                   <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(aportespatronales, data.aportespatronales)">
                     <mat-icon>delete_forever</mat-icon>
                   </button>
-                  <app-selector-default nombre="concepto" [(matSelect)]="aportespatronales.conceptoid"
+                  <app-selector-default nombre="concepto" filter="tipoconcepto=APORTE_PATRONAL" [(matSelect)]="aportespatronales.conceptoid"
                     (optionSelected)="aportespatronales.concepto=$event"></app-selector-default>
                   <mat-form-field class="children-input"><input matInput [(ngModel)]="aportespatronales.importeunitario"
-                      placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
-
+                    placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
                 </div>
               </tr>
             </table>

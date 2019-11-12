@@ -39,6 +39,7 @@ export interface Liquidacion {
     descuentos : [Descuentos];
     retenciones : [Retenciones];
     aportespatronales  : [Aportespatronales];
+    estacontabilizada? : boolean;
 }
 
 export interface Tipo {

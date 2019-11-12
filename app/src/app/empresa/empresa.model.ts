@@ -6,4 +6,5 @@ export interface Empresa {
     domicilio: string;
     localidad: string;
     cuit: string;
+    logo?: string;
 }

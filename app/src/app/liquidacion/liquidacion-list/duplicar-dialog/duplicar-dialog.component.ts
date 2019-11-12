@@ -127,8 +127,8 @@ export class DuplicarDialogComponent implements OnInit {
   legajosRepetidosEnLiquidaciones(): boolean {
     var hash = {};
     var sinRepetidos = this.data.filter(function(current) {
-      var exists = !hash[current.legajoid] || false;
-      hash[current.legajoid] = true;
+      var exists = !hash[current.item.legajoid] || false;
+      hash[current.item.legajoid] = true;
       return exists;
     });
 
@@ -146,7 +146,7 @@ export class DuplicarDialogComponent implements OnInit {
 
   mismoPeriodoLiquidacion(periodoSeleccionado): boolean {
     let mismoPeriodo = this.data.filter(function(current) {
-      return current.fechaperiodoliquidacion.substring(0, 7) == periodoSeleccionado;
+      return current.item.fechaperiodoliquidacion.substring(0, 7) == periodoSeleccionado;
     });
 
     let result = mismoPeriodo.length > 0;

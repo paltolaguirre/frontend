@@ -35,37 +35,37 @@
       <!-- Legajo -->
       <ng-container matColumnDef="Legajo">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Legajo</th>
-        <td mat-cell *matCellDef="let row">{{row.legajo.legajo}}</td>
+        <td mat-cell *matCellDef="let row">{{row.legajo}}</td>
       </ng-container>
  
       <!-- Apellido -->
       <ng-container matColumnDef="Apellido">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Apellido</th>
-        <td mat-cell *matCellDef="let row">{{row.legajo.apellido}}</td>
+        <td mat-cell *matCellDef="let row">{{row.apellido}}</td>
       </ng-container>
       
       <!-- Nombre -->
       <ng-container matColumnDef="Nombre">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
-        <td mat-cell *matCellDef="let row">{{row.legajo.nombre}}</td>
+        <td mat-cell *matCellDef="let row">{{row.nombre}}</td>
       </ng-container>
 
       <!-- Fecha Liquidacion -->
       <ng-container matColumnDef="Fecha Liquidacion">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha Liquidación</th>
-        <td mat-cell *matCellDef="let row">{{row.fecha | date}}</td>
+        <td mat-cell *matCellDef="let row">{{row.fechaliquidacion}}</td>
       </ng-container>
 
       <!-- Periodo Liquidacion -->
       <ng-container matColumnDef="Periodo Liquidacion">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Periodo Liquidación</th>
-        <td mat-cell *matCellDef="let row">{{row.fechaperiodoliquidacion | date: 'MMMM yyyy'}}</td>
+        <td mat-cell *matCellDef="let row">{{row.periodoliquidacion}}</td>
       </ng-container>
 
       <!-- Tipo -->
       <ng-container matColumnDef="Tipo">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Tipo</th>
-        <td mat-cell *matCellDef="let row">{{row.tipo.nombre}}</td>
+        <td mat-cell *matCellDef="let row">{{row.tipo}}</td>
       </ng-container>
 
       <!-- Total -->
@@ -79,7 +79,7 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
             Contabilizada
         </th>
-        <td mat-cell *matCellDef="let row">{{row.estacontabilizada?'Si':'No'}}</td>        
+        <td mat-cell *matCellDef="let row">{{row.contabilizada}}</td>        
       </ng-container>
       
       <!-- Acciones -->
