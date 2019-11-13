@@ -81,7 +81,7 @@ export class SelectorDefaultComponent implements OnInit {
   private _filter(name: string): SelectorElement[] {
     const filterValue = name.toLowerCase();
 
-    return this.options.filter(option => option.nombre.toLowerCase().indexOf(filterValue) === 0);
+    return this.options.filter(option => option.nombre.toLowerCase().indexOf(filterValue) >= 0);
   }
 
   itemSelected(evt: any) {
