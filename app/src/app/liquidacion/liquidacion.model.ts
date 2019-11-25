@@ -34,12 +34,13 @@ export interface Liquidacion {
     fechaperiodoliquidacion : string;
     fechaperiodoliquidacionmes : string;
     fechaperiodoliquidacionanio : string;
-    importesremunerativos : [Importesremunerativos];
-    importesnoremunerativos : [Importesnoremunerativos];
-    descuentos : [Descuentos];
-    retenciones : [Retenciones];
-    aportespatronales  : [Aportespatronales];
-    estacontabilizada? : boolean;
+    importesremunerativos : Liquidacionitem[];
+    importesnoremunerativos : Liquidacionitem[];
+    descuentos : Liquidacionitem[];
+    retenciones : Liquidacionitem[];
+    aportespatronales  : Liquidacionitem[];
+    liquidacionitems?: Liquidacionitem[];
+    estacontabilizada?: boolean;
 }
 
 export interface Tipo {
@@ -160,6 +161,16 @@ export interface Aportespatronales {
     activo?: number;    
     importeunitario: number;    
     total: number;
+}
+export interface Liquidacionitem {
+    ID?: number;
+    CreatedAt?: string;
+    UpdatedAt?: string;
+    DeletedAt?: Date;
+    concepto: Concepto;
+    conceptoid: number;
+    importeunitario: number;
+    cantidad?: number;
 }
 
 export interface Fechaliquidaciones {
