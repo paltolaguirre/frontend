@@ -58,30 +58,30 @@
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Importes Remunerativos ({{childrenCounter(data.importesremunerativos)}})
+              Importes Remunerativos ({{cantidadRemunerativo(data.liquidacionitems)}})
             </mat-panel-title>
             <mat-panel-description>
-              {{ calcularTotal(data.importesremunerativos) | number:'1.2-2':'en' }}
+              {{ calcularTotalRemunerativo(data.liquidacionitems) | number:'1.2-2':'en' }}
             </mat-panel-description>
           </mat-expansion-panel-header>
           <div class="children-container">
             <table style="width:100%">
-              <tr *ngFor="let importesremunerativos of data.importesremunerativos">
-                <div *ngIf="(importesremunerativos.DeletedAt == null)">
+              <tr *ngFor="let item of data.liquidacionitems">
+                <div *ngIf="!isDeleted(item) && isRemunerativo(item)">
                   <button mat-icon-button class="actions-icon" color="warn"
-                    (click)="onClickDeleteChild(importesremunerativos, data.importesremunerativos)">
+                    (click)="onClickDeleteChild(item, data.liquidacionitems)">
                     <mat-icon>delete_forever</mat-icon>
                   </button>
-                  <app-selector-default nombre="concepto" filter="tipoconcepto=IMPORTE_REMUNERATIVO" [(matSelect)]="importesremunerativos.conceptoid"
-                    (optionSelected)="importesremunerativos.concepto=$event"></app-selector-default>
+                  <app-selector-default nombre="concepto" filter="tipoconcepto=IMPORTE_REMUNERATIVO" [(matSelect)]="item.conceptoid"
+                    (optionSelected)="item.concepto=getConcepto($event, 'IMPORTE_REMUNERATIVO')"></app-selector-default>
                   <mat-form-field class="children-input"><input matInput
-                    [(ngModel)]="importesremunerativos.importeunitario" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                    [(ngModel)]="item.importeunitario" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
                 </div>
               </tr>
             </table>
           </div>
           <button style="margin-left: 17px;margin-bottom: 17px;" mat-raised-button
-            (click)="onClickNewImportesremunerativos(data)">Agregar Item</button>
+            (click)="onClickNewImportesremunerativos(data.liquidacionitems)">Agregar Item</button>
         </mat-expansion-panel>
       </div>
 
@@ -89,30 +89,30 @@
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Importes No Remunerativos ({{childrenCounter(data.importesnoremunerativos)}})
+              Importes No Remunerativos ({{cantidadNoRemunerativo(data.liquidacionitems)}})
             </mat-panel-title>
             <mat-panel-description>
-              {{ calcularTotal(data.importesnoremunerativos) | number:'1.2-2':'en' }}
+              {{ calcularTotalNoRemunerativo(data.liquidacionitems) | number:'1.2-2':'en' }}
             </mat-panel-description>
           </mat-expansion-panel-header>
           <div class="children-container">
             <table style="width:100%">
-              <tr *ngFor="let importesnoremunerativos of data.importesnoremunerativos">
-                <div *ngIf="(importesnoremunerativos.DeletedAt == null)">
+              <tr *ngFor="let item of data.liquidacionitems">
+                <div *ngIf="item.DeletedAt == null && isNoRemunerativo(item)">
                   <button mat-icon-button class="actions-icon" color="warn"
-                    (click)="onClickDeleteChild(importesnoremunerativos, data.importesnoremunerativos)">
+                    (click)="onClickDeleteChild(item, data.liquidacionitems)">
                     <mat-icon>delete_forever</mat-icon>
                   </button>
-                  <app-selector-default nombre="concepto" filter="tipoconcepto=IMPORTE_NO_REMUNERATIVO" [(matSelect)]="importesnoremunerativos.conceptoid"
-                    (optionSelected)="importesnoremunerativos.concepto=$event"></app-selector-default>
+                  <app-selector-default nombre="concepto" filter="tipoconcepto=IMPORTE_NO_REMUNERATIVO" [(matSelect)]="item.conceptoid"
+                    (optionSelected)="item.concepto=getConcepto($event, 'IMPORTE_NO_REMUNERATIVO')"></app-selector-default>
                   <mat-form-field class="children-input"><input matInput
-                    [(ngModel)]="importesnoremunerativos.importeunitario" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                    [(ngModel)]="item.importeunitario" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
                 </div>
               </tr>
             </table>
           </div>
           <button style="margin-left: 17px;margin-bottom: 17px;" mat-raised-button
-            (click)="onClickNewImportesNoremunerativos(data)">Agregar Item</button>
+            (click)="onClickNewImportesNoremunerativos(data.liquidacionitems)">Agregar Item</button>
         </mat-expansion-panel>
       </div>
 
@@ -120,29 +120,29 @@
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Descuentos ({{childrenCounter(data.descuentos)}})
+              Descuentos ({{cantidadDescuento(data.liquidacionitems)}})
             </mat-panel-title>
             <mat-panel-description>
-              {{ calcularTotal(data.descuentos) | number:'1.2-2':'en' }}
+              {{ calcularTotalDescuento(data.liquidacionitems) | number:'1.2-2':'en' }}
             </mat-panel-description>
           </mat-expansion-panel-header>
           <div class="children-container">
             <table style="width:100%">
-              <tr *ngFor="let descuentos of data.descuentos">
-                <div *ngIf="(descuentos.DeletedAt == null)">
-                  <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(descuentos, data.descuentos)">
+              <tr *ngFor="let item of data.liquidacionitems">
+                <div *ngIf="item.DeletedAt == null && isDescuento(item)">
+                  <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item, data.liquidacionitems)">
                     <mat-icon>delete_forever</mat-icon>
                   </button>
-                  <app-selector-default nombre="concepto" filter="tipoconcepto=DESCUENTO" [(matSelect)]="descuentos.conceptoid"
-                    (optionSelected)="descuentos.concepto=$event"></app-selector-default>
-                  <mat-form-field class="children-input"><input matInput [(ngModel)]="descuentos.importeunitario"
+                  <app-selector-default nombre="concepto" filter="tipoconcepto=DESCUENTO" [(matSelect)]="item.conceptoid"
+                    (optionSelected)="item.concepto=getConcepto($event, 'DESCUENTO')"></app-selector-default>
+                  <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importeunitario"
                     placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
                 </div>
               </tr>
             </table>
           </div>
           <button style="margin-left: 17px;margin-bottom: 17px;" mat-raised-button
-            (click)="onClickNewDescuento(data)">Agregar Item</button>
+            (click)="onClickNewDescuento(data.liquidacionitems)">Agregar Item</button>
         </mat-expansion-panel>
       </div>
 
@@ -150,29 +150,29 @@
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Retenciones ({{childrenCounter(data.retenciones)}})
+              Retenciones ({{cantidadRetencion(data.liquidacionitems)}})
             </mat-panel-title>
             <mat-panel-description>
-              {{ calcularTotal(data.retenciones) | number:'1.2-2':'en' }}
+              {{ calcularTotalRetencion(data.liquidacionitems) | number:'1.2-2':'en' }}
             </mat-panel-description>
           </mat-expansion-panel-header>
           <div class="children-container">
             <table style="width:100%">
-              <tr *ngFor="let retenciones of data.retenciones">
-                <div *ngIf="(retenciones.DeletedAt == null)">
-                  <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(retenciones, data.retenciones)">
+              <tr *ngFor="let item of data.liquidacionitems">
+                <div *ngIf="item.DeletedAt == null && isRetencion(item)">
+                  <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item, data.liquidacionitems)">
                     <mat-icon>delete_forever</mat-icon>
                   </button>
-                  <app-selector-default nombre="concepto" filter="tipoconcepto=RETENCION" [(matSelect)]="retenciones.conceptoid"
-                    (optionSelected)="retenciones.concepto=$event"></app-selector-default>
-                  <mat-form-field class="children-input"><input matInput [(ngModel)]="retenciones.importeunitario"
+                  <app-selector-default nombre="concepto" filter="tipoconcepto=RETENCION" [(matSelect)]="item.conceptoid"
+                    (optionSelected)="item.concepto=getConcepto($event, 'RETENCION')"></app-selector-default>
+                  <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importeunitario"
                     placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
                 </div>
               </tr>
             </table>
           </div>
           <button style="margin-left: 17px;margin-bottom: 17px;" mat-raised-button
-            (click)="onClickNewRetenciones(data)">Agregar Item</button>
+            (click)="onClickNewRetenciones(data.liquidacionitems)">Agregar Item</button>
         </mat-expansion-panel>
       </div>
 
@@ -180,35 +180,35 @@
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Aportes Patronales ({{childrenCounter(data.aportespatronales)}})
+              Aportes Patronales ({{cantidadAportePatronal(data.liquidacionitems)}})
             </mat-panel-title>
             <mat-panel-description>
-              {{ calcularTotal(data.aportespatronales) | number:'1.2-2':'en' }}
+              {{ calcularTotalAportePatronal(data.liquidacionitems) | number:'1.2-2':'en' }}
             </mat-panel-description>
           </mat-expansion-panel-header>
           <div class="children-container">
             <table style="width:100%">
-              <tr *ngFor="let aportespatronales of data.aportespatronales">
-                <div *ngIf="(aportespatronales.DeletedAt == null)">
-                  <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(aportespatronales, data.aportespatronales)">
+              <tr *ngFor="let item of data.liquidacionitems">
+                <div *ngIf="item.DeletedAt == null && isAportePatronal(item)">
+                  <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item, data.liquidacionitems)">
                     <mat-icon>delete_forever</mat-icon>
                   </button>
-                  <app-selector-default nombre="concepto" filter="tipoconcepto=APORTE_PATRONAL" [(matSelect)]="aportespatronales.conceptoid"
-                    (optionSelected)="aportespatronales.concepto=$event"></app-selector-default>
-                  <mat-form-field class="children-input"><input matInput [(ngModel)]="aportespatronales.importeunitario"
+                  <app-selector-default nombre="concepto" filter="tipoconcepto=APORTE_PATRONAL" [(matSelect)]="item.conceptoid"
+                    (optionSelected)="item.concepto=getConcepto($event, 'APORTE_PATRONAL')"></app-selector-default>
+                  <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importeunitario"
                     placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
                 </div>
               </tr>
             </table>
           </div>
           <button style="margin-left: 17px;margin-bottom: 17px;" mat-raised-button
-            (click)="onClickNewAportespatronales(data)">Agregar Item</button>
+            (click)="onClickNewAportespatronales(data.liquidacionitems)">Agregar Item</button>
         </mat-expansion-panel>
       </div>
 
       <div class="totales">
-        <p><span>Total: </span>{{ (calcularTotal(data.importesremunerativos) + calcularTotal(data.importesnoremunerativos) - calcularTotal(data.descuentos) + calcularTotal(data.aportespatronales)) | number:'1.2-2':'en' }}</p>
-        <p><span>Total Recibo: </span>{{ (calcularTotal(data.importesremunerativos) + calcularTotal(data.importesnoremunerativos) - calcularTotal(data.descuentos) - calcularTotal(data.retenciones)) | number:'1.2-2':'en' }}</p>
+        <p><span>Total: </span>{{ (calcularTotalRemunerativo(data.liquidacionitems) + calcularTotalNoRemunerativo(data.liquidacionitems) - calcularTotalDescuento(data.liquidacionitems) + calcularTotalAportePatronal(data.liquidacionitems)) | number:'1.2-2':'en' }}</p>
+        <p><span>Total Recibo: </span>{{ (calcularTotalRemunerativo(data.liquidacionitems) + calcularTotalNoRemunerativo(data.liquidacionitems) - calcularTotalDescuento(data.liquidacionitems) - calcularTotalRetencion(data.liquidacionitems)) | number:'1.2-2':'en' }}</p>
       </div>
       <mat-divider></mat-divider>
     </div>
