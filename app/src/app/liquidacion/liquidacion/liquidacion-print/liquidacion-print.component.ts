@@ -1,10 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Source } from 'webpack-sources';
-import { Liquidacion } from '../../liquidacion.model';
+import { Liquidacion, Liquidacionitem } from '../../liquidacion.model';
 import { EmpresaService } from 'src/app/empresa/empresa.service';
 import { Empresa } from 'src/app/empresa/empresa.model';
 import { Observable } from 'rxjs';
 import { SelectorService } from 'src/app/shared/selector-default/selector-default.service';
+import { TIPO_CONCEPTO_CODIGO } from 'src/app/concepto/concepto.model';
 
 export interface LiquidacionItem {
   haber: {
@@ -45,6 +46,8 @@ export class LiquidacionPrintComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.obtenerArraysImportes();
+
     this.empresa = await this.empresaService.getEmpresa();
     const bancos = await this.selectorService.getSelector("banco" , null);
     let banco;
@@ -129,5 +132,13 @@ export class LiquidacionPrintComponent implements OnInit {
     }
 
     this.totalNeto = this.totalImpRemunerativo + this.totalImpNoRemunerativo - this.totalDeducciones
+  }
+
+  obtenerArraysImportes() {
+    this.liquidacion.importesremunerativos = this.liquidacion.liquidacionitems.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.REMUNERATIVO);
+    this.liquidacion.importesnoremunerativos = this.liquidacion.liquidacionitems.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.NO_REMUNERATIVO);
+    this.liquidacion.descuentos = this.liquidacion.liquidacionitems.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.DESCUENTO);
+    this.liquidacion.retenciones = this.liquidacion.liquidacionitems.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.RETENCION);
+    this.liquidacion.aportespatronales = this.liquidacion.liquidacionitems.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.APORTE_PATRONAL);
   }
 }
