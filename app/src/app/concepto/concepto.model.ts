@@ -13,6 +13,19 @@ export interface Concepto {
     esimprimible: Boolean;
     esnovedad?: Boolean;
     tipoconceptoid?: number;
+    tipoconcepto?:  Tipoconcepto;
+    porcentaje?: number;
+}
+
+export interface Tipoconcepto {  
+    ID?: any;
+    CreatedAt?: string;
+    UpdatedAt?: string;
+    DeletedAt?: string;
+    nombre: string;
+    codigo: string;
+    descripcion?: string;
+    activo?: Number;
 }
 
 export interface Cuenta {  
@@ -32,4 +45,12 @@ export enum TIPO_CONCEPTO {
     DESCUENTO = -3,
     RETENCION = -4,
     APORTE_PATRONAL = 5,
+}
+
+export enum TIPO_CONCEPTO_CODIGO {
+    REMUNERATIVO = "IMPORTE_REMUNERATIVO",
+    NO_REMUNERATIVO = "IMPORTE_NO_REMUNERATIVO",
+    DESCUENTO = "DESCUENTO",
+    RETENCION = "RETENCION",
+    APORTE_PATRONAL = "APORTE_PATRONAL",
 }

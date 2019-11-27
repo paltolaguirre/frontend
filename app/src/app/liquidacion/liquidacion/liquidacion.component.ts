@@ -1,5 +1,5 @@
 import { LiquidacionService } from '../liquidacion.service';
-import { Liquidacion } from '../liquidacion.model';
+import { Liquidacion, Liquidacionitem, LiquidacionItems } from '../liquidacion.model';
 import { formatDate } from "@angular/common";
 import { FormControl ,} from '@angular/forms';
 import { Component, ViewChild, AfterViewInit, OnInit , Inject } from '@angular/core';
@@ -15,6 +15,9 @@ import { ListaItems , NovedadService } from 'src/app/novedad/novedad.service';
 import { Novedad } from '../../novedad/novedad.model';
 import { AnonymousSubject } from 'rxjs/internal/Subject';
 import { variable } from '@angular/compiler/src/output/output_ast';
+import { LiquidacionItem } from './liquidacion-print/liquidacion-print.component';
+import { TIPO_CONCEPTO_CODIGO, Concepto } from 'src/app/concepto/concepto.model';
+import { isNgTemplate } from '@angular/compiler';
 
 export interface ImporteUnitario {
   importeunitario: number;    
@@ -174,207 +177,76 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
     return data.ID==null?false:true;
   }
   
-
-  onClickNewImportesremunerativos(data: Liquidacion) {
-    if(data.importesremunerativos == null) {
-      data.importesremunerativos = [{
+  onClickNewLiquidacionItem(items: Liquidacionitem[], tipoCodigo: string) {
+    if(items == null) {
+      items = [{
         ID: null,
         CreatedAt: null,
         UpdatedAt: null,
         DeletedAt: null,
-        codigo: null,
-        descripcion: null,
-        concepto: null,
+        concepto: {
+          nombre: null,
+          codigo: null,
+          descripcion: null,
+          activo: null,
+          tipo: null,
+          cuentacontableid: null,
+          esimprimible: null,
+          tipoconcepto: {
+            nombre: null,
+            codigo: tipoCodigo,
+          }
+        },
         conceptoid: null,
-        cantidad: null,
-        porcentaje: null,
-        sobreconcepto: null,
-        sobreconceptoid: null,
-        activo: 1,
         importeunitario: null,
-        total: null
+        cantidad: null,
       }];      
     } else {
-      data.importesremunerativos.push({
+      items.push({
         ID: null,
         CreatedAt: null,
         UpdatedAt: null,
         DeletedAt: null,
-        codigo: null,
-        descripcion: null,
-        concepto: null,
+        concepto: {
+          nombre: null,
+          codigo: null,
+          descripcion: null,
+          activo: null,
+          tipo: null,
+          cuentacontableid: null,
+          esimprimible: null,
+          tipoconcepto: {
+            nombre: null,
+            codigo: tipoCodigo,
+          }
+        },
         conceptoid: null,
-        cantidad: null,
-        porcentaje: null,
-        sobreconcepto: null,
-        sobreconceptoid: null,
-        activo: 1,
         importeunitario: null,
-        total: null
+        cantidad: null,
       });
     }
   }
 
-
-  onClickNewImportesNoremunerativos(data: Liquidacion) {
-    if(data.importesnoremunerativos == null) {
-      data.importesnoremunerativos = [{
-        ID: null,
-        CreatedAt: null,
-        UpdatedAt: null,
-        DeletedAt: null,
-        codigo: null,
-        descripcion: null,
-        concepto: null,
-        conceptoid: null,
-        cantidad: null,
-        porcentaje: null,
-        sobreconcepto: null,
-        sobreconceptoid: null,
-        activo: 1,
-        importeunitario: null,
-        total: null
-      }];      
-    } else {
-      data.importesnoremunerativos.push({
-        ID: null,
-        CreatedAt: null,
-        UpdatedAt: null,
-        DeletedAt: null,
-        codigo: null,
-        descripcion: null,
-        concepto: null,
-        conceptoid: null,
-        cantidad: null,
-        porcentaje: null,
-        sobreconcepto: null,
-        sobreconceptoid: null,
-        activo: 1,
-        importeunitario: null,
-        total: null
-      });
-    }
+  onClickNewImportesremunerativos(items: Liquidacionitem[]) {
+    this.onClickNewLiquidacionItem(items, TIPO_CONCEPTO_CODIGO.REMUNERATIVO);
   }
 
-  onClickNewDescuento(data: Liquidacion) {
-    if(data.descuentos == null) {
-      data.descuentos = [{
-        ID: null,
-        CreatedAt: null,
-        UpdatedAt: null,
-        DeletedAt: null,
-        codigo: null,
-        descripcion: null,
-        concepto: null,
-        conceptoid: null,
-        cantidad: null,
-        porcentaje: null,
-        sobreconcepto: null,
-        sobreconceptoid: null,
-        activo: 1,
-        importeunitario: null,
-        total: null
-      }];      
-    } else {
-      data.descuentos.push({
-        ID: null,
-        CreatedAt: null,
-        UpdatedAt: null,
-        DeletedAt: null,
-        codigo: null,
-        descripcion: null,
-        concepto: null,
-        conceptoid: null,
-        cantidad: null,
-        porcentaje: null,
-        sobreconcepto: null,
-        sobreconceptoid: null,
-        activo: 1,
-        importeunitario: null,
-        total: null
-      });
-    }
+
+  onClickNewImportesNoremunerativos(items: Liquidacionitem[]) {
+    this.onClickNewLiquidacionItem(items, TIPO_CONCEPTO_CODIGO.NO_REMUNERATIVO);
+  }
+
+  onClickNewDescuento(items: Liquidacionitem[]) {
+    this.onClickNewLiquidacionItem(items, TIPO_CONCEPTO_CODIGO.DESCUENTO);
   }
   
 
-  onClickNewAportespatronales(data: Liquidacion) {
-    if(data.aportespatronales == null) {
-      data.aportespatronales = [{
-        ID: null,
-        CreatedAt: null,
-        UpdatedAt: null,
-        DeletedAt: null,
-        codigo: null,
-        descripcion: null,
-        concepto: null,
-        conceptoid: null,
-        cantidad: null,
-        porcentaje: null,
-        sobreconcepto: null,
-        sobreconceptoid: null,
-        activo: 1,
-        importeunitario: null,
-        total: null
-      }];      
-    } else {
-      data.aportespatronales.push({
-        ID: null,
-        CreatedAt: null,
-        UpdatedAt: null,
-        DeletedAt: null,
-        codigo: null,
-        descripcion: null,
-        concepto: null,
-        conceptoid: null,
-        cantidad: null,
-        porcentaje: null,
-        sobreconcepto: null,
-        sobreconceptoid: null,
-        activo: 1,
-        importeunitario: null,
-        total: null
-      });
-    }
+  onClickNewAportespatronales(items: Liquidacionitem[]) {
+    this.onClickNewLiquidacionItem(items, TIPO_CONCEPTO_CODIGO.APORTE_PATRONAL);
   }
 
-  onClickNewRetenciones(data: Liquidacion) {
-    if(data.retenciones == null) {
-      data.retenciones = [{
-        ID: null,
-        CreatedAt: null,
-        UpdatedAt: null,
-        DeletedAt: null,
-        codigo: null,
-        descripcion: null,
-        concepto: null,
-        conceptoid: null,
-        cantidad: null,
-        porcentaje: null,
-        sobreconcepto: null,
-        sobreconceptoid: null,
-        activo: 1,
-        importeunitario: null,
-        total: null
-      }];      
-    } else {
-      data.retenciones.push({
-        ID: null,
-        CreatedAt: null,
-        UpdatedAt: null,
-        DeletedAt: null,
-        codigo: null,
-        descripcion: null,
-        concepto: null,
-        conceptoid: null,
-        cantidad: null,
-        porcentaje: null,
-        sobreconcepto: null,
-        sobreconceptoid: null,
-        activo: 1,
-        importeunitario: null,
-        total: null
-      });
-    }
+  onClickNewRetenciones(items: Liquidacionitem[]) {
+    this.onClickNewLiquidacionItem(items, TIPO_CONCEPTO_CODIGO.RETENCION);
   }
 
   calcularTotal(array: ImporteUnitario[]): number {
@@ -385,5 +257,125 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
       });
     }
     return total;
+  }
+
+  calcularTotalRemunerativo(items: Liquidacionitem[]): number {
+    const array = items.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.REMUNERATIVO);
+    const total = this.calcularTotal(array);
+
+    return total;
+  }
+
+  calcularTotalNoRemunerativo(items: Liquidacionitem[]): number {
+    const array = items.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.NO_REMUNERATIVO);
+    const total = this.calcularTotal(array);
+
+    return total;
+  }
+
+  calcularTotalDescuento(items: Liquidacionitem[]): number {
+    const array = items.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.DESCUENTO);
+    const total = this.calcularTotal(array);
+
+    return total;
+  }
+
+  calcularTotalRetencion(items: Liquidacionitem[]): number {
+    const array = items.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.RETENCION);
+    const total = this.calcularTotal(array);
+
+    return total;
+  }
+
+  calcularTotalAportePatronal(items: Liquidacionitem[]): number {
+    const array = items.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.APORTE_PATRONAL);
+    const total = this.calcularTotal(array);
+
+    return total;
+  }
+
+  cantidadRemunerativo(items: Liquidacionitem[]): number {
+    const array = items.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.REMUNERATIVO);
+    const cantidad = this.childrenCounter(array);
+
+    return cantidad;
+  }
+
+  cantidadNoRemunerativo(items: Liquidacionitem[]): number {
+    const array = items.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.NO_REMUNERATIVO);
+    const cantidad = this.childrenCounter(array);
+
+    return cantidad;
+  }
+
+  cantidadDescuento(items: Liquidacionitem[]): number {
+    const array = items.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.DESCUENTO);
+    const cantidad = this.childrenCounter(array);
+
+    return cantidad;
+  }
+
+  cantidadRetencion(items: Liquidacionitem[]): number {
+    const array = items.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.RETENCION);
+    const cantidad = this.childrenCounter(array);
+
+    return cantidad;
+  }
+
+  cantidadAportePatronal(items: Liquidacionitem[]): number {
+    const array = items.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.APORTE_PATRONAL);
+    const cantidad = this.childrenCounter(array);
+
+    return cantidad;
+  }
+
+  isDeleted(item: Liquidacionitem): boolean {
+    return !(item && item.DeletedAt == null);
+  }
+
+  isRemunerativo(item: Liquidacionitem): boolean {
+    return (item && item.concepto.tipoconcepto && item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.REMUNERATIVO);
+  }
+  
+  isNoRemunerativo(item: Liquidacionitem): boolean {
+    return (item && item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.NO_REMUNERATIVO);
+  }
+
+  isDescuento(item: Liquidacionitem): boolean {
+    return (item && item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.DESCUENTO);
+  }
+
+  isRetencion(item: Liquidacionitem): boolean {
+    return (item && item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.RETENCION);
+  }
+
+  isAportePatronal(item: Liquidacionitem): boolean {
+    return (item && item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.APORTE_PATRONAL);
+  }
+
+  getConcepto(conceptoSelected, tipoconcepto): Concepto {
+    console.log(conceptoSelected);
+
+    conceptoSelected.tipoconcepto = {
+      nombre: null,
+      codigo: tipoconcepto,
+    };
+
+    return conceptoSelected;
+  }
+
+  async conceptoSelected(currentLiquidacion: Liquidacion, item: Liquidacionitem, conceptoSelected, tipoconcepto) {
+    item.concepto = this.getConcepto(conceptoSelected, tipoconcepto);
+    const data = await this.liquidacionService.calculoAutomaticoLiquidacionByConcepto(currentLiquidacion, item.concepto.ID);
+    if(data.importeunitario) item.importeunitario = data.importeunitario;
+  }
+
+  async onClickCalculoAutomatico(currentLiquidacion: Liquidacion) {
+    const data = await this.liquidacionService.calculoAutomaticoLiquidacion(currentLiquidacion);
+    currentLiquidacion.liquidacionitems = data.liquidacionitems;
+  }
+
+  setCurrentLiquidacion(liquidacion: Liquidacion) {
+
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable, Pipe, PipeTransform } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SelectorElement } from '../shared/selector-default/selector-default.component';
-import { Liquidacion , Fechaliquidaciones, LiquidacionItems, LiquidacionCalculada, TipoItem, DuplicarLiquidaciones, ResultProcesamientoMasivo, Contabilizar } from './liquidacion.model';
+import { Liquidacion , Fechaliquidaciones, LiquidacionItems, LiquidacionCalculada, TipoItem, DuplicarLiquidaciones, ResultProcesamientoMasivo, Contabilizar, CalculoAutomatico } from './liquidacion.model';
 
 export interface ListaItems {
   items: any[];
@@ -15,6 +15,7 @@ export class LiquidacionService {
   href = '/api/liquidacion/liquidaciones';
   hrefContabilizar = 'api/liquidacion/contabilizar';
   hrefDuplicar = 'api/liquidacion/duplicar';
+  hrefCalculoAutomatico = 'api/liquidacion/calculoautomatico';
   
   constructor(private http: HttpClient) { }
 
@@ -140,4 +141,21 @@ export class LiquidacionService {
     return result;
   }
   
+  public async calculoAutomaticoLiquidacion(liquidacion: Liquidacion): Promise<Liquidacion> {
+    const requestUrl =
+      `${this.hrefCalculoAutomatico}`;
+    
+    const new_liquidacion = await this.http.put<Liquidacion>(requestUrl, liquidacion).toPromise();
+
+    return new_liquidacion;
+  }
+
+  public async calculoAutomaticoLiquidacionByConcepto(liquidacion: Liquidacion, conceptoid: number): Promise<CalculoAutomatico> {
+    const requestUrl =
+      `${this.hrefCalculoAutomatico}/${conceptoid}`;
+    
+    const calculo = await this.http.put<CalculoAutomatico>(requestUrl, liquidacion).toPromise();
+
+    return calculo;
+  }
 }
