@@ -239,3 +239,8 @@ export interface Contabilizar {
     descripcion: string;
     fechaasiento: string;
 }
+
+export interface CalculoAutomatico {
+    conceptoid: number;
+    importeunitario: number;
+}

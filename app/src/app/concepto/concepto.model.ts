@@ -14,6 +14,7 @@ export interface Concepto {
     esnovedad?: Boolean;
     tipoconceptoid?: number;
     tipoconcepto?:  Tipoconcepto;
+    porcentaje?: number;
 }
 
 export interface Tipoconcepto {  
