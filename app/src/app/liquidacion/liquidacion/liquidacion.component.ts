@@ -246,6 +246,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   }
 
   onClickNewRetenciones(items: Liquidacionitem[]) {
+    this.onClickNewLiquidacionItem(items, TIPO_CONCEPTO_CODIGO.RETENCION);
   }
 
   calcularTotal(array: ImporteUnitario[]): number {
@@ -361,5 +362,20 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
     };
 
     return conceptoSelected;
+  }
+
+  async conceptoSelected(currentLiquidacion: Liquidacion, item: Liquidacionitem, conceptoSelected, tipoconcepto) {
+    item.concepto = this.getConcepto(conceptoSelected, tipoconcepto);
+    const data = await this.liquidacionService.calculoAutomaticoLiquidacionByConcepto(currentLiquidacion, item.concepto.ID);
+    if(data.importeunitario) item.importeunitario = data.importeunitario;
+  }
+
+  async onClickCalculoAutomatico(currentLiquidacion: Liquidacion) {
+    const data = await this.liquidacionService.calculoAutomaticoLiquidacion(currentLiquidacion);
+    currentLiquidacion.liquidacionitems = data.liquidacionitems;
+  }
+
+  setCurrentLiquidacion(liquidacion: Liquidacion) {
+
   }
 }
