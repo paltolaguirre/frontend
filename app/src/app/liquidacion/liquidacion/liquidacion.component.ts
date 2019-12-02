@@ -75,7 +75,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-
+    if(this.data && !this.data.liquidacionitems) this.data.liquidacionitems = new Array();
   }
   
   
@@ -120,16 +120,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   async onClickSave(data: Liquidacion): Promise<Liquidacion> {
     let liquidacionesItem: Liquidacion;    
     
-    if(data.fecha)data.fecha = formatDate(data.fecha, "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
-    if(this.fechaperiododepositado)data.fechaperiododepositado = formatDate(this.fechaperiododepositado+"-01", "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
-    if(this.fechaperiodoliquidacion)data.fechaperiodoliquidacion = formatDate(this.fechaperiodoliquidacion+"-01", "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
-    if(data.fechaultimodepositoaportejubilatorio)data.fechaultimodepositoaportejubilatorio = formatDate(data.fechaultimodepositoaportejubilatorio, "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
- 
-    if(data.legajo)data.legajoid = data.legajo.ID;
-    if(data.banco)data.cuentabancoid = data.banco.ID;
-    if(data.bancoaportejubilatorio)data.bancoaportejubilatorioid = data.bancoaportejubilatorio.ID;
-    if(data.condicionpagos)data.condicionpago = data.condicionpagos.ID;
-    if(data.tipo)data.tipoid = data.tipo.ID;
+    this.formatData(data);
 
     if (this.id) {
       console.log("Updated Liquidacion");
@@ -154,12 +145,28 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
     }
   }
 
+  public formatData(data: any) {
+    if(data.fecha)data.fecha = formatDate(data.fecha, "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
+    if(this.fechaperiododepositado)data.fechaperiododepositado = formatDate(this.fechaperiododepositado+"-01", "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
+    if(this.fechaperiodoliquidacion)data.fechaperiodoliquidacion = formatDate(this.fechaperiodoliquidacion+"-01", "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
+    if(data.fechaultimodepositoaportejubilatorio)data.fechaultimodepositoaportejubilatorio = formatDate(data.fechaultimodepositoaportejubilatorio, "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
+ 
+    if(data.legajo)data.legajoid = data.legajo.ID;
+    if(data.banco)data.cuentabancoid = data.banco.ID;
+    if(data.bancoaportejubilatorio)data.bancoaportejubilatorioid = data.bancoaportejubilatorio.ID;
+    if(data.condicionpagos)data.condicionpago = data.condicionpagos.ID;
+    if(data.tipo)data.tipoid = data.tipo.ID;
+  }
+
   removeItemFromArr(arr: Array<any>, item: any) {
     const i = arr.indexOf(item);
     if (i !== -1) arr.splice(i, 1);
   }
 
-  childrenCounter(arr: Array<any>) {
+  childrenCounter(items: Array<any>, tipoconcepto: string) {
+    let arr;
+    if(items) arr = items.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == tipoconcepto);
+
     let ret;
     if(arr) {
       const elementosNoBorrados = arr.filter(function (child) {
@@ -177,9 +184,9 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
     return data.ID==null?false:true;
   }
   
-  onClickNewLiquidacionItem(items: Liquidacionitem[], tipoCodigo: string) {
-    if(items == null) {
-      items = [{
+  onClickNewLiquidacionItem(data: any, tipoCodigo: string) {
+    if(!data.liquidacionitems) {
+      data.liquidacionitems = [{
         ID: null,
         CreatedAt: null,
         UpdatedAt: null,
@@ -202,7 +209,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
         cantidad: null,
       }];      
     } else {
-      items.push({
+      data.liquidacionitems.push({
         ID: null,
         CreatedAt: null,
         UpdatedAt: null,
@@ -227,29 +234,33 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
     }
   }
 
-  onClickNewImportesremunerativos(items: Liquidacionitem[]) {
-    this.onClickNewLiquidacionItem(items, TIPO_CONCEPTO_CODIGO.REMUNERATIVO);
+  onClickNewImportesremunerativos(data: any) {
+    this.onClickNewLiquidacionItem(data, TIPO_CONCEPTO_CODIGO.REMUNERATIVO);
   }
 
 
-  onClickNewImportesNoremunerativos(items: Liquidacionitem[]) {
-    this.onClickNewLiquidacionItem(items, TIPO_CONCEPTO_CODIGO.NO_REMUNERATIVO);
+  onClickNewImportesNoremunerativos(data: any) {
+    this.onClickNewLiquidacionItem(data, TIPO_CONCEPTO_CODIGO.NO_REMUNERATIVO);
   }
 
-  onClickNewDescuento(items: Liquidacionitem[]) {
-    this.onClickNewLiquidacionItem(items, TIPO_CONCEPTO_CODIGO.DESCUENTO);
+  onClickNewDescuento(data: any) {
+    this.onClickNewLiquidacionItem(data, TIPO_CONCEPTO_CODIGO.DESCUENTO);
   }
   
 
-  onClickNewAportespatronales(items: Liquidacionitem[]) {
-    this.onClickNewLiquidacionItem(items, TIPO_CONCEPTO_CODIGO.APORTE_PATRONAL);
+  onClickNewAportespatronales(data: any) {
+    this.onClickNewLiquidacionItem(data, TIPO_CONCEPTO_CODIGO.APORTE_PATRONAL);
   }
 
-  onClickNewRetenciones(items: Liquidacionitem[]) {
-    this.onClickNewLiquidacionItem(items, TIPO_CONCEPTO_CODIGO.RETENCION);
+  onClickNewRetenciones(data: any) {
+    this.onClickNewLiquidacionItem(data, TIPO_CONCEPTO_CODIGO.RETENCION);
   }
 
-  calcularTotal(array: ImporteUnitario[]): number {
+  calcularTotal(items: ImporteUnitario[], tipoconcepto: string): number {
+    let array;
+    if(items) array = items.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == tipoconcepto);
+
+
     let total: number= 0;
     if(array) {
       array.forEach(element => {
@@ -260,71 +271,61 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   }
 
   calcularTotalRemunerativo(items: Liquidacionitem[]): number {
-    const array = items.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.REMUNERATIVO);
-    const total = this.calcularTotal(array);
+    const total = this.calcularTotal(items, TIPO_CONCEPTO_CODIGO.REMUNERATIVO);
 
     return total;
   }
 
   calcularTotalNoRemunerativo(items: Liquidacionitem[]): number {
-    const array = items.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.NO_REMUNERATIVO);
-    const total = this.calcularTotal(array);
+    const total = this.calcularTotal(items, TIPO_CONCEPTO_CODIGO.NO_REMUNERATIVO);
 
     return total;
   }
 
   calcularTotalDescuento(items: Liquidacionitem[]): number {
-    const array = items.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.DESCUENTO);
-    const total = this.calcularTotal(array);
+    const total = this.calcularTotal(items, TIPO_CONCEPTO_CODIGO.DESCUENTO);
 
     return total;
   }
 
   calcularTotalRetencion(items: Liquidacionitem[]): number {
-    const array = items.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.RETENCION);
-    const total = this.calcularTotal(array);
+    const total = this.calcularTotal(items, TIPO_CONCEPTO_CODIGO.RETENCION);
 
     return total;
   }
 
   calcularTotalAportePatronal(items: Liquidacionitem[]): number {
-    const array = items.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.APORTE_PATRONAL);
-    const total = this.calcularTotal(array);
+    const total = this.calcularTotal(items, TIPO_CONCEPTO_CODIGO.APORTE_PATRONAL);
 
     return total;
   }
 
   cantidadRemunerativo(items: Liquidacionitem[]): number {
-    const array = items.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.REMUNERATIVO);
-    const cantidad = this.childrenCounter(array);
+    const cantidad = this.childrenCounter(items, TIPO_CONCEPTO_CODIGO.REMUNERATIVO);
 
     return cantidad;
   }
 
   cantidadNoRemunerativo(items: Liquidacionitem[]): number {
-    const array = items.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.NO_REMUNERATIVO);
-    const cantidad = this.childrenCounter(array);
+    const cantidad = this.childrenCounter(items, TIPO_CONCEPTO_CODIGO.NO_REMUNERATIVO);
 
     return cantidad;
   }
 
   cantidadDescuento(items: Liquidacionitem[]): number {
-    const array = items.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.DESCUENTO);
-    const cantidad = this.childrenCounter(array);
+    const cantidad = this.childrenCounter(items, TIPO_CONCEPTO_CODIGO.DESCUENTO);
 
     return cantidad;
   }
 
   cantidadRetencion(items: Liquidacionitem[]): number {
-    const array = items.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.RETENCION);
-    const cantidad = this.childrenCounter(array);
+    const cantidad = this.childrenCounter(items, TIPO_CONCEPTO_CODIGO.RETENCION);
 
     return cantidad;
   }
 
   cantidadAportePatronal(items: Liquidacionitem[]): number {
-    const array = items.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.APORTE_PATRONAL);
-    const cantidad = this.childrenCounter(array);
+    const cantidad = this.childrenCounter(items, TIPO_CONCEPTO_CODIGO.APORTE_PATRONAL);
 
     return cantidad;
   }
@@ -366,11 +367,13 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
 
   async conceptoSelected(currentLiquidacion: Liquidacion, item: Liquidacionitem, conceptoSelected, tipoconcepto) {
     item.concepto = this.getConcepto(conceptoSelected, tipoconcepto);
+    this.formatData(currentLiquidacion);
     const data = await this.liquidacionService.calculoAutomaticoLiquidacionByConcepto(currentLiquidacion, item.concepto.ID);
     if(data.importeunitario) item.importeunitario = data.importeunitario;
   }
 
   async onClickCalculoAutomatico(currentLiquidacion: Liquidacion) {
+    this.formatData(currentLiquidacion);
     const data = await this.liquidacionService.calculoAutomaticoLiquidacion(currentLiquidacion);
     currentLiquidacion.liquidacionitems = data.liquidacionitems;
   }
