@@ -14,7 +14,7 @@ export class DialogLiquidaciones {
  
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  displayedColumns: string[] = ['Seleccionar', 'Concepto',  'Importe'];
+  displayedColumns: string[] = ['Seleccionar', 'Concepto', 'Cantidad', 'Importe'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   isLoadingResults = true;
   
@@ -58,43 +58,17 @@ export class DialogLiquidaciones {
   private agregarTablas() {
     const seleccionados = this.dataSource.data.filter(element => element.checked);
     seleccionados.forEach((element: Novedad) => {   
-      var pushData = {conceptoid : element.conceptoid , importeunitario : element.importe};
-      switch (element.concepto.tipoconceptoid) {
-        case TIPO_CONCEPTO.DESCUENTO:
-          if(this.data.descuentos == null) {
-            this.data.descuentos = [pushData];      
-          } else {
-            this.data.descuentos.push(pushData);
-          }
-          break;
-        case TIPO_CONCEPTO.RETENCION:
-          if(this.data.retenciones == null) {
-            this.data.retenciones = [pushData];      
-          } else {
-            this.data.retenciones.push(pushData);
-          }
-          break;
-        case TIPO_CONCEPTO.IMPORTE_REMUNERATIVO:
-          if(this.data.importesremunerativos == null) {
-            this.data.importesremunerativos = [pushData];      
-          } else {
-            this.data.importesremunerativos.push(pushData);
-          }
-          break;
-        case TIPO_CONCEPTO.IMPORTE_NO_REMUNERATIVO:
-          if(this.data.importesnoremunerativos == null) {
-            this.data.importesnoremunerativos = [pushData];      
-          } else {
-            this.data.importesnoremunerativos.push(pushData);
-          }
-          break;
-        case TIPO_CONCEPTO.APORTE_PATRONAL:
-          if(this.data.aportespatronales == null) {
-            this.data.aportespatronales = [pushData];      
-          } else {
-            this.data.aportespatronales.push(pushData);
-          }
-          break;
+      var pushData = {
+        conceptoid: element.conceptoid,
+        cantidad: element.cantidad,
+        importeunitario: element.importe,
+        concepto: element.concepto
+      };
+      
+      if(this.data.liquidacionitems == null) {
+        this.data.liquidacionitems = [pushData];      
+      } else {
+        this.data.liquidacionitems.push(pushData);
       }
     });
   }

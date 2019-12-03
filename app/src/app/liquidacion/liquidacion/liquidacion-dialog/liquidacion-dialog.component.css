@@ -46,9 +46,9 @@
       max-height: 600px;
   }
   
-  table {
+  .example-table {
       background: #ffffff;
-      min-width: 400px;
+      min-width: 500px;
       width: 100%;
   }
   
