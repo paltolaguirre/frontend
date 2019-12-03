@@ -22,22 +22,16 @@
                     <td mat-cell *matCellDef="let row">{{row.concepto.nombre}}</td>
                   </ng-container>
 
-                  <!-- Number Column
-                  <div data-html2canvas-ignore="true">
-                    <ng-container  matColumnDef="Acciones">
-                      <th mat-header-cell *matHeaderCellDef>Acciones</th>
-                      <td mat-cell *matCellDef="let row">                        
-                        <app-selector-default nombre="liquidacion-novedades" type="hardcode" [(matSelect)]="row.tipoliquidacion" (optionSelected)="row.tipoliquidacion=$event.ID"></app-selector-default> 
-                      </td>
-                    </ng-container>
-                  </div>
-                  -->
+                  <!-- Number Column-->
+                  <ng-container matColumnDef="Cantidad">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Cantidad</th>
+                    <td mat-cell *matCellDef="let row" style="text-align: center;">{{row.cantidad}}</td>        
+                  </ng-container>
+
                   <!-- Created Column -->
                   <ng-container matColumnDef="Importe">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
-                            Importe
-                    </th>
-                  <td mat-cell *matCellDef="let row">{{row.importe}}</td>        
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Importe Total</th>
+                    <td mat-cell *matCellDef="let row">{{row.importe}}</td>        
                   </ng-container>
             
                   <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
