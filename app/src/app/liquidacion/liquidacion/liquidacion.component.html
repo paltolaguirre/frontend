@@ -76,7 +76,9 @@
                   <app-selector-default nombre="concepto" filter="tipoconcepto=IMPORTE_REMUNERATIVO" [(matSelect)]="item.conceptoid"
                     (optionSelected)="conceptoSelected(data, item, $event, 'IMPORTE_REMUNERATIVO')"></app-selector-default>
                   <mat-form-field class="children-input"><input matInput
-                    [(ngModel)]="item.importeunitario" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                    [(ngModel)]="item.cantidad" placeholder="Cantidad" type="number" autocomplete="off"></mat-form-field>
+                  <mat-form-field class="children-input"><input matInput 
+                    [(ngModel)]="item.importeunitario" placeholder="Importe Total" type="number" autocomplete="off"></mat-form-field>
                 </div>
               </tr>
             </table>
@@ -107,7 +109,9 @@
                   <app-selector-default nombre="concepto" filter="tipoconcepto=IMPORTE_NO_REMUNERATIVO" [(matSelect)]="item.conceptoid"
                     (optionSelected)="conceptoSelected(data, item, $event, 'IMPORTE_NO_REMUNERATIVO')"></app-selector-default>
                   <mat-form-field class="children-input"><input matInput
-                    [(ngModel)]="item.importeunitario" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                    [(ngModel)]="item.cantidad" placeholder="Cantidad" type="number" autocomplete="off"></mat-form-field>
+                  <mat-form-field class="children-input"><input matInput 
+                    [(ngModel)]="item.importeunitario" placeholder="Importe Total" type="number" autocomplete="off"></mat-form-field>
                 </div>
               </tr>
             </table>
@@ -136,8 +140,10 @@
                   </button> 
                   <app-selector-default nombre="concepto" filter="tipoconcepto=DESCUENTO" [(matSelect)]="item.conceptoid"
                     (optionSelected)="conceptoSelected(data, item, $event, 'DESCUENTO')"></app-selector-default>
-                  <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importeunitario"
-                    placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                  <mat-form-field class="children-input"><input matInput
+                    [(ngModel)]="item.cantidad" placeholder="Cantidad" type="number" autocomplete="off"></mat-form-field>
+                  <mat-form-field class="children-input"><input matInput 
+                    [(ngModel)]="item.importeunitario" placeholder="Importe Total" type="number" autocomplete="off"></mat-form-field>
                 </div>
               </tr>
             </table>
@@ -166,8 +172,10 @@
                   </button>
                   <app-selector-default nombre="concepto" filter="tipoconcepto=RETENCION" [(matSelect)]="item.conceptoid"
                     (optionSelected)="conceptoSelected(data, item, $event, 'RETENCION')"></app-selector-default>
-                  <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importeunitario"
-                    placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                  <mat-form-field class="children-input"><input matInput
+                    [(ngModel)]="item.cantidad" placeholder="Cantidad" type="number" autocomplete="off"></mat-form-field>
+                  <mat-form-field class="children-input"><input matInput 
+                    [(ngModel)]="item.importeunitario" placeholder="Importe Total" type="number" autocomplete="off"></mat-form-field>
                 </div>
               </tr>
             </table>
@@ -196,8 +204,10 @@
                   </button>
                   <app-selector-default nombre="concepto" filter="tipoconcepto=APORTE_PATRONAL" [(matSelect)]="item.conceptoid"
                     (optionSelected)="conceptoSelected(data, item, $event, 'APORTE_PATRONAL')"></app-selector-default>
-                  <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importeunitario"
-                    placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                  <mat-form-field class="children-input"><input matInput
+                    [(ngModel)]="item.cantidad" placeholder="Cantidad" type="number" autocomplete="off"></mat-form-field>
+                  <mat-form-field class="children-input"><input matInput 
+                    [(ngModel)]="item.importeunitario" placeholder="Importe Total" type="number" autocomplete="off"></mat-form-field>
                 </div>
               </tr>
             </table>

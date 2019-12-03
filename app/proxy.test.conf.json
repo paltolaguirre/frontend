@@ -1,0 +1,42 @@
+{
+    "/api/auth/*": {
+        "target": "https://ecs-lb-sueldos-staging-1075887112.us-east-1.elb.amazonaws.com",
+        "secure": false,
+        "logLevel": "debug"
+    },
+    "/api/legajo/*": {
+        "target": "https://ecs-lb-sueldos-staging-1075887112.us-east-1.elb.amazonaws.com",
+        "secure": false,
+        "logLevel": "debug"
+    },
+    "/api/concepto/*": {
+        "target": "https://ecs-lb-sueldos-staging-1075887112.us-east-1.elb.amazonaws.com",
+        "secure": false,
+        "logLevel": "debug"
+    },
+    "/api/liquidacion/*": {
+        "target": "https://ecs-lb-sueldos-staging-1075887112.us-east-1.elb.amazonaws.com",
+        "secure": false,
+        "logLevel": "debug"
+    },
+    "/api/novedad/*": {
+        "target": "https://ecs-lb-sueldos-staging-1075887112.us-east-1.elb.amazonaws.com",
+        "secure": false,
+        "logLevel": "debug"
+    },
+    "/api/helper/*": {
+        "target": "https://ecs-lb-sueldos-staging-1075887112.us-east-1.elb.amazonaws.com",
+        "secure": false,
+        "logLevel": "debug"
+    },
+    "/api/informe/*": {
+        "target": "https://ecs-lb-sueldos-staging-1075887112.us-east-1.elb.amazonaws.com",
+        "secure": false,
+        "logLevel": "debug"
+    },
+    "/api/empresa/*": {
+        "target": "https://ecs-lb-sueldos-staging-1075887112.us-east-1.elb.amazonaws.com",
+        "secure": false,
+        "logLevel": "debug"
+    }
+}
