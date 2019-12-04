@@ -367,6 +367,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
 
   async conceptoSelected(currentLiquidacion: Liquidacion, item: Liquidacionitem, conceptoSelected, tipoconcepto) {
     item.concepto = this.getConcepto(conceptoSelected, tipoconcepto);
+    item.conceptoid = item.concepto.ID;
     this.formatData(currentLiquidacion);
     const data = await this.liquidacionService.calculoAutomaticoLiquidacionByConcepto(currentLiquidacion, item.concepto.ID);
     if(data.importeunitario) item.importeunitario = data.importeunitario;
