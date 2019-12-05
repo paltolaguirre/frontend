@@ -1,7 +1,8 @@
 import { Injectable, Pipe, PipeTransform } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SelectorElement } from '../shared/selector-default/selector-default.component';
-import { Liquidacion , Fechaliquidaciones, LiquidacionItems, LiquidacionCalculada, TipoItem, DuplicarLiquidaciones, ResultProcesamientoMasivo, Contabilizar, CalculoAutomatico } from './liquidacion.model';
+import { Liquidacion , Fechaliquidaciones, LiquidacionItems, LiquidacionCalculada, TipoItem, DuplicarLiquidaciones, ResultProcesamientoMasivo, Contabilizar, CalculoAutomatico, Liquidacionitem } from './liquidacion.model';
+import { TIPO_CONCEPTO_CODIGO } from '../concepto/concepto.model';
 
 export interface ListaItems {
   items: any[];
@@ -96,7 +97,12 @@ export class LiquidacionService {
       }
     };
 
-    liquidacion.importesremunerativos.forEach(element => {
+    const importesremunerativos = liquidacion.liquidacionitems.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.REMUNERATIVO);
+    const importesnoremunerativos = liquidacion.liquidacionitems.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.NO_REMUNERATIVO);
+    const descuentos = liquidacion.liquidacionitems.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.DESCUENTO);
+    const retenciones = liquidacion.liquidacionitems.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.RETENCION);
+
+    importesremunerativos.forEach(element => {
       let item = { codigo: "", detalle: "", cantidad: "", importe: null, tipo: null };
       item.codigo = element.conceptoid.toString();
       item.detalle = element.concepto.nombre;
@@ -106,7 +112,7 @@ export class LiquidacionService {
       result.items.push(item);
     });
 
-    liquidacion.descuentos.forEach(element => {
+    descuentos.forEach(element => {
       let item = { codigo: "", detalle: "", cantidad: "", importe: null, tipo: null };
       item.codigo = element.conceptoid.toString();
       item.detalle = element.concepto.nombre;
@@ -116,7 +122,7 @@ export class LiquidacionService {
       result.items.push(item);
     });
 
-    liquidacion.retenciones.forEach(element => {
+    retenciones.forEach(element => {
       let item = { codigo: "", detalle: "", cantidad: "", importe: null, tipo: null };
       item.codigo = element.conceptoid.toString();
       item.detalle = element.concepto.nombre;
@@ -126,7 +132,7 @@ export class LiquidacionService {
       result.items.push(item);
     });
 
-    liquidacion.importesnoremunerativos.forEach(element => {
+    importesnoremunerativos.forEach(element => {
       let item = { codigo: "", detalle: "", cantidad: "", importe: null, tipo: null };
       item.codigo = element.conceptoid.toString();
       item.detalle = element.concepto.nombre;

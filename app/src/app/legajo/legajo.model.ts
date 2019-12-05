@@ -42,6 +42,8 @@ export interface Legajo {
     centrodecosto?: CentroDeCosto,
     centrodecostoid: number;
     cbu: string;
+    estadocivilid?: number;
+    estadocivil?: EstadoCivil;
 }
 
 export interface Localidad {
@@ -190,6 +192,17 @@ export interface Hijo {
 }
 
 export interface CentroDeCosto {
+    ID: number;
+    CreatedAt: string;
+    UpdatedAt: string;
+    DeletedAt: string;
+    nombre: string;
+    codigo: string;
+    descripcion: string;
+    activo: number;
+}
+
+export interface EstadoCivil {
     ID: number;
     CreatedAt: string;
     UpdatedAt: string;
