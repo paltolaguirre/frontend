@@ -64,6 +64,8 @@ export class Models {
          return "Año";
       case 'tipoconcepto':
           return "Tipo de Concepto"
+      case 'tipodecalculo':
+      return "Tipo de Calculo"
       default: 
       return "Seleccione..."; 
     } 

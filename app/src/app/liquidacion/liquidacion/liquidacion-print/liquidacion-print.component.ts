@@ -1,10 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Source } from 'webpack-sources';
-import { Liquidacion } from '../../liquidacion.model';
+import { Liquidacion, Liquidacionitem } from '../../liquidacion.model';
 import { EmpresaService } from 'src/app/empresa/empresa.service';
 import { Empresa } from 'src/app/empresa/empresa.model';
 import { Observable } from 'rxjs';
 import { SelectorService } from 'src/app/shared/selector-default/selector-default.service';
+import { TIPO_CONCEPTO_CODIGO } from 'src/app/concepto/concepto.model';
 
 export interface LiquidacionItem {
   haber: {
@@ -45,6 +46,8 @@ export class LiquidacionPrintComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.obtenerArraysImportes();
+
     this.empresa = await this.empresaService.getEmpresa();
     const bancos = await this.selectorService.getSelector("banco" , null);
     let banco;
@@ -106,11 +109,13 @@ export class LiquidacionPrintComponent implements OnInit {
         item.haber.codigo = this.liquidacion.importesremunerativos[index].conceptoid.toString();
         item.haber.detalle = this.liquidacion.importesremunerativos[index].concepto.nombre;
         item.haber.remunerativo = this.liquidacion.importesremunerativos[index].importeunitario;
+        item.haber.cantidad = this.liquidacion.importesremunerativos[index].cantidad.toString();
         this.totalImpRemunerativo += this.liquidacion.importesremunerativos[index].importeunitario;
       } else if (posicionImpNoRemunerativos < this.liquidacion.importesnoremunerativos.length) {
         item.haber.codigo = this.liquidacion.importesnoremunerativos[posicionImpNoRemunerativos].conceptoid.toString();
         item.haber.detalle = this.liquidacion.importesnoremunerativos[posicionImpNoRemunerativos].concepto.nombre;
         item.haber.noremunerativo = this.liquidacion.importesnoremunerativos[posicionImpNoRemunerativos].importeunitario;
+        item.haber.cantidad = this.liquidacion.importesnoremunerativos[posicionImpNoRemunerativos].cantidad.toString();
         this.totalImpNoRemunerativo += this.liquidacion.importesnoremunerativos[posicionImpNoRemunerativos].importeunitario;
       }
 
@@ -118,10 +123,12 @@ export class LiquidacionPrintComponent implements OnInit {
         item.deduccion.codigo = this.liquidacion.descuentos[index].conceptoid.toString();
         item.deduccion.detalle = this.liquidacion.descuentos[index].concepto.nombre;
         item.deduccion.importe = this.liquidacion.descuentos[index].importeunitario;
+        item.deduccion.cantidad = this.liquidacion.descuentos[index].cantidad.toString();
       } else if (posicionRetenciones < this.liquidacion.retenciones.length) {
         item.deduccion.codigo = this.liquidacion.retenciones[posicionRetenciones].conceptoid.toString();
         item.deduccion.detalle = this.liquidacion.retenciones[posicionRetenciones].concepto.nombre;
         item.deduccion.importe = this.liquidacion.retenciones[posicionRetenciones].importeunitario;
+        item.deduccion.cantidad = this.liquidacion.retenciones[posicionRetenciones].cantidad.toString();
       }
       this.totalDeducciones += item.deduccion.importe;
       
@@ -129,5 +136,13 @@ export class LiquidacionPrintComponent implements OnInit {
     }
 
     this.totalNeto = this.totalImpRemunerativo + this.totalImpNoRemunerativo - this.totalDeducciones
+  }
+
+  obtenerArraysImportes() {
+    this.liquidacion.importesremunerativos = this.liquidacion.liquidacionitems.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.REMUNERATIVO);
+    this.liquidacion.importesnoremunerativos = this.liquidacion.liquidacionitems.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.NO_REMUNERATIVO);
+    this.liquidacion.descuentos = this.liquidacion.liquidacionitems.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.DESCUENTO);
+    this.liquidacion.retenciones = this.liquidacion.liquidacionitems.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.RETENCION);
+    this.liquidacion.aportespatronales = this.liquidacion.liquidacionitems.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.APORTE_PATRONAL);
   }
 }
