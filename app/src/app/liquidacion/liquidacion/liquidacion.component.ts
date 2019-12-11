@@ -370,7 +370,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
     item.conceptoid = item.concepto.ID;
     this.formatData(currentLiquidacion);
     const data = await this.liquidacionService.calculoAutomaticoLiquidacionByConcepto(currentLiquidacion, item.concepto.ID);
-    if(data.importeunitario) item.importeunitario = data.importeunitario;
+    if(data.importeunitario != null) item.importeunitario = data.importeunitario;
   }
 
   async onClickCalculoAutomatico(currentLiquidacion: Liquidacion) {
