@@ -8,7 +8,7 @@
     </div>
 
     <div *ngIf="currentLiquidaciones$ | async as data">
-      
+      <div *ngIf="show">
         <table *ngFor="let liquidacionCalculada of data | calcularLiquidaciones" class="tg" style="table-layout:fixed;width:696px">
           <colgroup>
             <col style="width: 166px">
@@ -25,25 +25,25 @@
           <tr>
             <td class="tg-8n49" colspan="2">Apellido y nombre: {{liquidacionCalculada.liquidacion.legajo.apellido + ", " + liquidacionCalculada.liquidacion.legajo.nombre}}</td>
             <td class="tg-8n49"></td>
-            <td class="tg-8n49" colspan="2">Fecha nacimiento</td>
+            <td class="tg-8n49" colspan="2">Fecha nacimiento:</td>
           </tr>
           <tr>
-            <td class="tg-8n49" colspan="2">Sexo:</td>
-            <td class="tg-8n49">Dirección: {{liquidacionCalculada.liquidacion.legajo.direccion}}</td>
+            <td class="tg-8n49" colspan="2">Dirección: {{liquidacionCalculada.liquidacion.legajo.direccion}}</td>
+            <td class="tg-8n49"></td>
             <td class="tg-8n49" colspan="2">Documento: {{obtenerDniFromCuil(liquidacionCalculada.liquidacion.legajo.cuil)}}</td>
           </tr>
           <tr>
-            <td class="tg-8n49" colspan="2">Fecha ingreso: {{liquidacionCalculada.liquidacion.legajo.fechaalta}}</td>
-            <td class="tg-8n49">Fecha egreso</td>
+            <td class="tg-8n49" colspan="2">Fecha ingreso: {{liquidacionCalculada.liquidacion.legajo.fechaalta | date: 'dd/MM/yyyy'}}</td>
+            <td class="tg-8n49">Fecha egreso: {{liquidacionCalculada.liquidacion.legajo.fechabaja | date: 'dd/MM/yyyy'}}</td>
             <td class="tg-8n49" colspan="2">Estado civil: {{liquidacionCalculada.liquidacion.legajo.estadocivil.nombre}}</td>
           </tr>
           <tr>
             <td class="tg-8n49" colspan="2">Categoria: {{liquidacionCalculada.liquidacion.legajo.categoria}}</td>
             <td class="tg-8n49"></td>
-            <td class="tg-8n49" colspan="2">Sueldo/Jornal: {{liquidacionCalculada.liquidacion.legajo.remuneracion}}</td>
+            <td class="tg-8n49" colspan="2">Sueldo/Jornal: {{liquidacionCalculada.liquidacion.legajo.remuneracion | number:'1.2-2':'en'}}</td>
           </tr>
           <tr>
-            <td class="tg-8n49" colspan="2">Sueldo - Período: {{liquidacionCalculada.liquidacion.fechaperiodoliquidacion}}</td>
+            <td class="tg-8n49" colspan="2">Sueldo - Período: {{liquidacionCalculada.liquidacion.fechaperiodoliquidacion | date: 'MM/yyyy'}}</td>
             <td class="tg-8n49"></td>
             <td class="tg-8n49" colspan="2">Contratación: {{liquidacionCalculada.liquidacion.legajo.situacion.nombre}}</td>
           </tr>
@@ -104,13 +104,13 @@
             <td class="tg-oe15"></td>
           </tr>
         </table>
-        
+      </div>
     </div>
   </div>
 
   <div mat-dialog-actions class="actions">
     <button mat-raised-button mat-button (click)="onClickAbort()">Cerrar</button>
-    <button mat-raised-button color="primary" mat-button (click)="onClickPrint()">Descargar</button>
+    <button *ngIf="show" mat-raised-button color="primary" mat-button (click)="onClickPrint()">Descargar</button>
   </div>
 
 </div>
