@@ -1,0 +1,28 @@
+<div class="container">
+  <div mat-dialog-content class="content" style="padding: 5em 0.5em 5em 0.5em; overflow: auto;">
+    <div id="contentTOPDF">
+      <div *ngIf="encabezado$ | async as data">
+        <div *ngFor="let hoja of hojas">
+          <div  *ngIf="show" class="cabecera">
+            <ul>
+              <li><span *ngIf="!data.descripcion">-</span>{{data.descripcion}}</li>
+              <li><span *ngIf="!data.nombreempresa">-</span>{{data.nombreempresa}}</li>
+              <li>Domicilio: {{data.domicilioempresa}}</li>
+              <li>Actividad SIJP: {{data.actividadempresa}}</li>
+              <li><span *ngIf="!data.cuitempresa">-</span>{{data.cuitempresa}}</li>
+              <li>Hoja N° {{hoja}}</li>
+            </ul>
+          </div>
+      
+          <div style="width:696px; height: 1400px;">
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div mat-dialog-actions class="actions">
+      <button mat-raised-button mat-button (click)="onClickAbort()">Cerrar</button>
+      <button *ngIf="show" mat-raised-button color="primary" mat-button (click)="onClickPrint()">Descargar</button>
+    </div>
+  </div>
+</div>
