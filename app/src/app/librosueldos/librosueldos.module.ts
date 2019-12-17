@@ -10,9 +10,11 @@ import { LibrosueldosListComponent } from './librosueldos-list/librosueldos-list
 import { ActionsComponent } from './librosueldos-list/actions/actions.component';
 import { LibrosueldosListPrintComponent } from './librosueldos-list/librosueldos-list-print/librosueldos-list-print.component';
 import { LiquidacionModule } from '../liquidacion/liquidacion.module';
+import { DialogEncabezado } from './librosueldos-list/encabezado-dialog/encabezado-dialog.component';
+import { LibrosueldosEncabezadoPrintComponent } from './librosueldos-list/librosueldos-encabezado-print/librosueldos-encabezado-print.component';
 
 @NgModule({
-  declarations: [ LibrosueldosListComponent, ActionsComponent, LibrosueldosListPrintComponent],
+  declarations: [ LibrosueldosListComponent, ActionsComponent, LibrosueldosListPrintComponent, DialogEncabezado, LibrosueldosEncabezadoPrintComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -22,6 +24,7 @@ import { LiquidacionModule } from '../liquidacion/liquidacion.module';
     LiquidacionModule
   ],
   entryComponents: [
+    DialogEncabezado
   ]
 })
 export class LibrosueldosModule { }
