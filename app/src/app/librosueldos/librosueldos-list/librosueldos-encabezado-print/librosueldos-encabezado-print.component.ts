@@ -5,6 +5,7 @@ import { NotificationService } from 'src/app/handler-error/notification.service'
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { LibrosueldosService } from '../../librosueldos.service';
+import { LibrosueldosEncabezado } from '../../librosueldos.model';
 
 @Component({
   selector: 'app-librosueldos-encabezado-print',
@@ -14,8 +15,8 @@ import { LibrosueldosService } from '../../librosueldos.service';
 export class LibrosueldosEncabezadoPrintComponent implements OnInit {
   public encabezado$: Observable<any> = null;
 
-  hojadesde: any;
-  hojahasta: any;
+  hojadesde: number;
+  hojahasta: number;
   show: boolean;
   hojas: number[];
 
@@ -30,22 +31,15 @@ export class LibrosueldosEncabezadoPrintComponent implements OnInit {
   ngOnInit() {
     this.encabezado$ = this.route.paramMap.pipe(
       switchMap(async (params: ParamMap) => {
-        this.hojadesde = this.route.snapshot.queryParamMap.get("hojadesde");
-        this.hojahasta = this.route.snapshot.queryParamMap.get("hojahasta");
+        this.hojadesde = parseInt(this.route.snapshot.queryParamMap.get("hojadesde"), 10);
+        this.hojahasta = parseInt(this.route.snapshot.queryParamMap.get("hojahasta"), 10);
 
         const datosEncabezado = await this.librosueldosService.getLibrosueldosEncabezado();
 
-        if(!this.isEncabezadoValido()) {
-          const notificacion = {
-            codigo: 400,
-            mensaje: "Los parametros 'hojadesde' y 'hojahasta' deben ser igual o mayor a 1"
-          }
-          const ret = this.notificationService.notify(notificacion);
-        } else {
+        if(this.isEncabezadoValido(datosEncabezado)) {
           this.show = true;
+          this.hojas = this.generarArrayHojas();
         }
-
-        this.hojas = this.generarArrayHojas();
         
         return datosEncabezado;
       })
@@ -61,10 +55,28 @@ export class LibrosueldosEncabezadoPrintComponent implements OnInit {
     return array;
   }
 
-  isEncabezadoValido(): boolean {
-    const ret = this.hojadesde && this.hojadesde > 0;
+  isEncabezadoValido(encabezado: LibrosueldosEncabezado): boolean {
+    if(!this.hojadesde || !this.hojahasta || this.hojadesde < 1 || this.hojahasta < 1) {
+      const notificacion = {
+        codigo: 400,
+        mensaje: "Los parametros 'hojadesde' y 'hojahasta' deben ser igual o mayor a 1"
+      }
+      const ret = this.notificationService.notify(notificacion);
+      
+      return false;
+    }
     
-    return ret;
+    if(encabezado.actividadempresa == "" || encabezado.cuitempresa == "" || encabezado.descripcion == "" || encabezado.domicilioempresa == "" || encabezado.nombreempresa == "") {
+      const notificacion = {
+        codigo: 400,
+        mensaje: "Para poder realizar esta acción primero deberá completar todos los datos de la empresa"
+      }
+      const ret = this.notificationService.notify(notificacion);
+      
+      return false;
+    }
+
+    return true;
   }
 
   async ngAfterViewInit() {
