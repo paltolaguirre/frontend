@@ -12,5 +12,4 @@ export interface LibrosueldosEncabezado {
     descripcion: string;
     domicilioempresa: string;
     nombreempresa: string;
-    hojanumero: string;
 }
