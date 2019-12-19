@@ -65,7 +65,9 @@ export class Models {
       case 'tipoconcepto':
           return "Tipo de Concepto"
       case 'tipodecalculo':
-      return "Tipo de Calculo"
+        return "Tipo de Calculo"
+      case 'tipoimpuestosganancias':
+        return "Impuesto a las Ganancias"
       default: 
       return "Seleccione..."; 
     } 
