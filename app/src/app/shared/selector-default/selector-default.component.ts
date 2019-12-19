@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material';
 import { Observable } from 'rxjs';
@@ -42,25 +42,7 @@ export class SelectorDefaultComponent implements OnInit {
   constructor(private selectorService: SelectorService, public models: Models) { }
     
   async ngOnInit() {
-    if (this.placeholder == null) this.placeholder = await this.models.setPlaceHolder(this.nombre);
-    if (this.required == null) this.required = false;
-    if (this.tipo == "hardcode") {
-      this.options = this.models.valor(this.nombre);
-    } else {
-      this.options = await this.selectorService.getSelector(this.nombre , this.filter);
-    }
-    if (this.options) {
-      this.filteredOptions = this.myControl.valueChanges 
-      .pipe( 
-        startWith<string | SelectorElement>(''), 
-        map(value => typeof value === 'string' ? value : ''), 
-        map(name => name ? this._filter(name) : this.options.slice()) 
-      ); 
-      let filter = this.options.filter(option => option.ID == this.matSelect); 
-      let option = filter.length>0?filter[0]:null; 
-      this.myControl.setValue(option); 
-      if (this.disabled == true) {this.myControl.disable();}
-    }
+    this.initialize();
   }
   
   public onSelectChangeEvent(event,data)
@@ -71,7 +53,7 @@ export class SelectorDefaultComponent implements OnInit {
 
  
   ngAfterViewInit() {
-  
+
   }
 
   displayFn(selectorElement?: SelectorElement): string | undefined {
@@ -97,4 +79,30 @@ export class SelectorDefaultComponent implements OnInit {
     //evt.srcElement.value = "";
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    console.log("changed app-selector-default: ", changes);
+    this.initialize();
+  }
+
+  async initialize() {
+    if (this.placeholder == null) this.placeholder = await this.models.setPlaceHolder(this.nombre);
+    if (this.required == null) this.required = false;
+    if (this.tipo == "hardcode") {
+      this.options = this.models.valor(this.nombre);
+    } else {
+      this.options = await this.selectorService.getSelector(this.nombre , this.filter);
+    }
+    if (this.options) {
+      this.filteredOptions = this.myControl.valueChanges 
+      .pipe( 
+        startWith<string | SelectorElement>(''), 
+        map(value => typeof value === 'string' ? value : ''), 
+        map(name => name ? this._filter(name) : this.options.slice()) 
+      ); 
+      let filter = this.options.filter(option => option.ID == this.matSelect); 
+      let option = filter.length>0?filter[0]:null; 
+      this.myControl.setValue(option); 
+      if (this.disabled == true) {this.myControl.disable();}
+    }
+  }
 }

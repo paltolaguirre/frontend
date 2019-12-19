@@ -15,6 +15,12 @@ export interface Concepto {
     tipoconceptoid?: number;
     tipoconcepto?:  Tipoconcepto;
     porcentaje?: number;
+    tipodecalculo: object;
+    tipodecalculoid: number;
+    prorrateo: boolean;
+    basesac: boolean;
+    tipoimpuestoganancias: object;
+    tipoimpuestogananciasid: number;
 }
 
 export interface Tipoconcepto {  
