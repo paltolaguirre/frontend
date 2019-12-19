@@ -55,6 +55,8 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
   }
 
   async onClickSave(data: Concepto): Promise<Concepto> {
+    if(this.faltanRequeridos()) return null;
+
     let conceptosItem: Concepto;
 
     //if(data.cuenta)data.cuentacontableid = data.cuenta.ID;
@@ -90,5 +92,41 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
     data.cuentacontableid = event.id
   }
 
-  
+  getFilterTipoimpuestosganancias(concepto: Concepto) {
+    console.log("Concepto: ", concepto);
+    let filterTipoconcepto = "";
+    if(concepto && concepto.tipoconcepto && concepto.tipoconcepto.codigo) {
+      filterTipoconcepto = "tipoconcepto="+concepto.tipoconcepto.codigo;
+    }
+    
+    return filterTipoconcepto;
+  }
+
+  changeHandler(data, tipoimpuestosganancias) {
+    console.log("tipoimpuestosganancias: ", tipoimpuestosganancias);
+
+    if(tipoimpuestosganancias.myControl.value == "") {
+      data.tipoimpuestogananciasid = null;
+      data.tipoimpuestoganancias = null;
+    }
+    /*mat-input-7 */
+  }
+
+  faltanRequeridos() {
+    var todos = document.getElementsByTagName('*');
+    var requeridos = new Array();
+    for (let obj of todos as any) {
+      if (obj.required && obj.value == "") {
+        // requeridos.push(obj);
+        let placeholder = obj.getAttribute("placeholder");
+        const notificacion = {
+          codigo: 400,
+          mensaje: `El campo "${placeholder}" es obligatorio.`
+        }
+        const ret = this.notificationService.notify(notificacion);
+        return true;
+      }
+    }
+    return false;
+  }
 }

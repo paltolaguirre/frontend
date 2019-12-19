@@ -9,42 +9,64 @@
   <mat-divider></mat-divider>
 
   <div mat-dialog-content class="content" id="contentTOPDF">
-    <div>
-      <mat-form-field class="standard-input"><input [disabled]=isDefault(data)
-        matInput required [(ngModel)]="data.nombre" placeholder="Nombre" type="text" autocomplete="off">
-      </mat-form-field>
-      <mat-form-field class="standard-input"><input [disabled]=isDefault(data) 
-        matInput [(ngModel)]="data.codigo" placeholder="Código" type="text" autocomplete="off">
-      </mat-form-field>
-    </div>
-    <div>
-      <app-selector-default nombre="cuenta" [disabled]=isDefault(data) required=true [(matSelect)]="data.cuentacontableid"
-      (optionSelected)="data.cuentacontableid=$event.ID"></app-selector-default>
-      <app-selector-default nombre="tipoconcepto" [disabled]=isDefault(data) required=true [(matSelect)]="data.tipoconceptoid"
-      (optionSelected)="data.tipoconceptoid=$event.ID"></app-selector-default>
-    </div>
-    <div>
-      <mat-form-field class="standard-input">
-        <input [disabled]=isDefault(data) matInput [(ngModel)]="data.descripcion" placeholder="Descripción" type="text" autocomplete="off">
-      </mat-form-field>
-    </div>
-    <div style="margin: 15px 0px;">
-      <mat-checkbox [disabled]=isDefault(data) color="primary" class="example-margin"  [(ngModel)]="data.esnovedad">Es Novedad</mat-checkbox>
-    </div>
-    <div style="margin: 15px 0px;">
-      <mat-checkbox [disabled]=isDefault(data) color="primary" class="example-margin"  [(ngModel)]="data.esimprimible">Es Imprimible</mat-checkbox>
-    </div>
-    <mat-divider></mat-divider>
-    <div style="margin-top: 20px;">
-      <mat-form-field class="standard-input" style="width: 100px;">
-        <input [disabled]=isDefault(data) matInput [(ngModel)]="data.porcentaje" placeholder="Porcentaje" type="number" autocomplete="off">
-      </mat-form-field>
-      <span style="margin: 0px 10px; color: #808080;">Aplicable sobre</span>
-      <app-selector-default nombre="tipodecalculo" [disabled]=isDefault(data) required=true [(matSelect)]="data.tipodecalculoid"
-      (optionSelected)="data.tipodecalculoid=$event.ID"></app-selector-default>
-    </div>
-    <br/>    
-    <mat-divider></mat-divider>
+    <mat-accordion>
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Datos Básicos</mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div>
+          <mat-form-field class="standard-input"><input [disabled]=isDefault(data)
+            matInput required [(ngModel)]="data.nombre" placeholder="Nombre" type="text" autocomplete="off">
+          </mat-form-field>
+          <mat-form-field class="standard-input"><input [disabled]=isDefault(data) 
+            matInput [(ngModel)]="data.codigo" placeholder="Código" type="text" autocomplete="off">
+          </mat-form-field>
+        </div>
+        <div>
+          <app-selector-default nombre="cuenta" [disabled]=isDefault(data) required=true [(matSelect)]="data.cuentacontableid"
+          (optionSelected)="data.cuentacontableid=$event.ID"></app-selector-default>
+          <app-selector-default nombre="tipoconcepto" [disabled]=isDefault(data) required=true [(matSelect)]="data.tipoconceptoid"
+          (optionSelected)="data.tipoconceptoid=$event.ID;data.tipoconcepto=$event"></app-selector-default>
+        </div>
+        <div>
+          <mat-form-field class="standard-input">
+            <input [disabled]=isDefault(data) matInput [(ngModel)]="data.descripcion" placeholder="Descripción" type="text" autocomplete="off">
+          </mat-form-field>
+        </div>
+        <div style="margin: 15px 0px;">
+          <mat-checkbox [disabled]=isDefault(data) color="primary" class="example-margin"  [(ngModel)]="data.esnovedad">Es Novedad</mat-checkbox>
+        </div>
+        <div style="margin: 15px 0px;">
+          <mat-checkbox [disabled]=isDefault(data) color="primary" class="example-margin"  [(ngModel)]="data.esimprimible">Es Imprimible</mat-checkbox>
+        </div>
+
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Cálculo Automático</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div>
+          <mat-form-field class="standard-input" style="width: 100px;">
+            <input [disabled]=isDefault(data) matInput [(ngModel)]="data.porcentaje" placeholder="Porcentaje" type="number" autocomplete="off">
+          </mat-form-field>
+          <span style="margin: 0px 10px; color: #808080;">Aplicable sobre </span>
+          <app-selector-default nombre="tipodecalculo" [disabled]=isDefault(data) required=false [(matSelect)]="data.tipodecalculoid"
+          (optionSelected)="data.tipodecalculoid=$event.ID; data.tipoconcepto.codigo=$event.codigo"></app-selector-default> 
+        </div>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Impuesto a las Ganancias</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div>
+          <app-selector-default #tipoimpuestosganancias nombre="tipoimpuestosganancias" [filter]="getFilterTipoimpuestosganancias(data)" [(matSelect)]="data.tipoimpuestogananciasid"
+          (optionSelected)="data.tipoimpuestogananciasid=$event.ID" (change)="changeHandler(data, tipoimpuestosganancias)"></app-selector-default> 
+          <app-selector-default type="hardcode" nombre="si/no" [(matSelect)]="data.prorrateo" (optionSelected)="data.prorrateo=$event.nombre.toLowerCase() == 'si'" placeholder="Prorrateo" autocomplete="off" [required]="data.tipoimpuestogananciasid != null"></app-selector-default>
+          <app-selector-default type="hardcode" nombre="si/no" [(matSelect)]="data.basesac" (optionSelected)="data.basesac=$event.nombre.toLowerCase() == 'si'" placeholder="Base del SAC" autocomplete="off" [required]="data.tipoimpuestogananciasid != null"></app-selector-default>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
   </div>
   <div mat-dialog-actions class="actions">
     <button mat-raised-button color="primary" mat-button *ngIf=!isDefault(data)
