@@ -102,7 +102,11 @@ export class SelectorDefaultComponent implements OnInit {
       let filter = this.options.filter(option => option.ID == this.matSelect); 
       let option = filter.length>0?filter[0]:null; 
       this.myControl.setValue(option); 
-      if (this.disabled == true) {this.myControl.disable();}
+      if (this.disabled == true) {
+        this.myControl.disable();
+      } else {
+        this.myControl.enable();
+      }
     }
   }
 }
