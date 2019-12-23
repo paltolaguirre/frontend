@@ -62,8 +62,10 @@
         <div>
           <app-selector-default #tipoimpuestosganancias nombre="tipoimpuestosganancias" [filter]="getFilterTipoimpuestosganancias(data)" [(matSelect)]="data.tipoimpuestogananciasid"
           (optionSelected)="data.tipoimpuestogananciasid=$event.ID" (change)="changeHandler(data, tipoimpuestosganancias)"></app-selector-default> 
-          <app-selector-default type="hardcode" nombre="si/no" [(matSelect)]="data.prorrateo" (optionSelected)="data.prorrateo=$event.nombre.toLowerCase() == 'si'" placeholder="Prorrateo" autocomplete="off" [required]="data.tipoimpuestogananciasid != null"></app-selector-default>
-          <app-selector-default type="hardcode" nombre="si/no" [(matSelect)]="data.basesac" (optionSelected)="data.basesac=$event.nombre.toLowerCase() == 'si'" placeholder="Base del SAC" autocomplete="off" [required]="data.tipoimpuestogananciasid != null"></app-selector-default>
+          <div *ngIf="data && data.tipoconcepto && data.tipoconcepto.codigo != 'RETENCION'">
+            <app-selector-default type="hardcode" nombre="si/no" [(matSelect)]="data.prorrateo" (optionSelected)="data.prorrateo=$event.nombre.toLowerCase() == 'si'" placeholder="Prorrateo" autocomplete="off" [required]="data.tipoimpuestogananciasid != null"></app-selector-default>
+            <app-selector-default type="hardcode" nombre="si/no" [(matSelect)]="data.basesac" (optionSelected)="data.basesac=$event.nombre.toLowerCase() == 'si'" placeholder="Base del SAC" autocomplete="off" [required]="data.tipoimpuestogananciasid != null"></app-selector-default>
+          </div>
         </div>
       </mat-expansion-panel>
     </mat-accordion>
