@@ -376,7 +376,13 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   async onClickCalculoAutomatico(currentLiquidacion: Liquidacion) {
     this.formatData(currentLiquidacion);
     const data = await this.liquidacionService.calculoAutomaticoLiquidacion(currentLiquidacion);
-    currentLiquidacion.liquidacionitems = data.liquidacionitems;
+    if(currentLiquidacion.liquidacionitems.length == data.liquidacionitems.length) {
+      data.liquidacionitems.forEach((element, index) => {
+        if(currentLiquidacion.liquidacionitems[index].conceptoid == element.conceptoid) {
+          currentLiquidacion.liquidacionitems[index].importeunitario = element.importeunitario;
+        }
+      });
+    }
   }
 
   setCurrentLiquidacion(liquidacion: Liquidacion) {
