@@ -320,8 +320,113 @@
           </table>
         </div>
         <button  style="margin-left: 17px;" mat-raised-button (click)="onClickNewImportegananciasotroempleosiradig(data)">Agregar Item</button>
+        <h2>Gastos de representación e intereses de corredores y viajantes de comercio</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.deducciondesgravacionsiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'CODIGO_SIRADIG' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.mes" placeholder="Mes" type="text" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button  style="margin-left: 17px;" mat-raised-button (click)="onClickNewImportegananciasotroempleosiradig(data)">Agregar Item</button>
+        <h2>Otras</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.deducciondesgravacionsiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'CODIGO_SIRADIG' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.mes" placeholder="Mes" type="text" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button  style="margin-left: 17px;" mat-raised-button (click)="onClickNewImportegananciasotroempleosiradig(data)">Agregar Item</button>
+        <h2>Adquisición de cuotapartes de FCI con fines de retiro</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.deducciondesgravacionsiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'CODIGO_SIRADIG' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.mes" placeholder="Mes" type="text" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button  style="margin-left: 17px;" mat-raised-button (click)="onClickNewImportegananciasotroempleosiradig(data)">Agregar Item</button>
+        <h2>Honorarios serv. Asistencia sanitaria, médica y paramédica</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.deducciondesgravacionsiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'CODIGO_SIRADIG' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.mes" placeholder="Mes" type="text" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button  style="margin-left: 17px;" mat-raised-button (click)="onClickNewImportegananciasotroempleosiradig(data)">Agregar Item</button>
+        <h2>Aportes cajas complementarias / Fondos compensadores de prev. / Similares</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.deducciondesgravacionsiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'CODIGO_SIRADIG' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.mes" placeholder="Mes" type="text" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button  style="margin-left: 17px;" mat-raised-button (click)="onClickNewImportegananciasotroempleosiradig(data)">Agregar Item</button>
       </mat-expansion-panel>
     
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Deducciones y desgravaciones
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <h2>Cuota médica asistencial</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.deducciondesgravacionsiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'CUOTA_MEDICA_ASISTENCIAL' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(hijo)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.mes" placeholder="Mes" type="text" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.meshasta" placeholder="Mes Hasta" type="text" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button  style="margin-left: 17px;" mat-raised-button (click)="onClickNewImportegananciasotroempleosiradig(data)">Agregar Item</button>
+        <mat-divider></mat-divider>
+      </mat-expansion-panel>
     </div>
 
     <div mat-dialog-actions class="actions">
