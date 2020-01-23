@@ -31,8 +31,8 @@ export class FcargassocialesListComponent implements OnInit, AfterViewInit {
   isLoadingResults = true;
   isRateLimitReached = false;
 
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   fcargassocialesID$: Observable<String>;
   public currentFcargassociales$: Observable<Fcargassociales> = null;
   id: number;

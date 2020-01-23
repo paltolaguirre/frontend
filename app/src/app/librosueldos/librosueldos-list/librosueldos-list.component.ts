@@ -28,8 +28,8 @@ export class LibrosueldosListComponent implements OnInit, AfterViewInit {
   isLoadingResults = true;
   isRateLimitReached = false;
 
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   librosueldosID$: Observable<String>;
   public currentLibrosueldos$: Observable<Librosueldos> = null;
   id: number;

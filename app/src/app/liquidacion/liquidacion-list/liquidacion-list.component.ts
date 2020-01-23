@@ -40,8 +40,8 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
   isRateLimitReached = false;
   disabled = false;
 
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   liquidacionID$: Observable<String>;
   public currentLiquidacion$: Observable<Liquidacion> = null;
   id: number;

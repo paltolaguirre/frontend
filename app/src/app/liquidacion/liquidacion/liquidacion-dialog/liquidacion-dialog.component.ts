@@ -12,8 +12,8 @@ import { TIPO_CONCEPTO } from 'src/app/concepto/concepto.model';
 })
 export class DialogLiquidaciones {
  
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   displayedColumns: string[] = ['Seleccionar', 'Concepto', 'Cantidad', 'Importe'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   isLoadingResults = true;
