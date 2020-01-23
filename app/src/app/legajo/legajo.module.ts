@@ -6,7 +6,7 @@ import { LegajoRoutingModule } from './legajo-routing.module';
 
 import { SharedModule } from '../shared/shared.module';
 import { LegajoComponent } from './legajo/legajo.component';
-import { DemoMaterialModule } from '../material.module';
+import { MaterialModule } from '../material.module';
 import { LegajoListComponent } from './legajo-list/legajo-list.component';
 import { ActionsComponent } from './legajo-list/actions/actions.component';
 import { MatSortModule } from '@angular/material/sort';
@@ -18,7 +18,7 @@ import {MatTableModule} from '@angular/material/table';
     CommonModule,
     FormsModule,
     LegajoRoutingModule,
-    DemoMaterialModule,
+    MaterialModule,
     SharedModule,
     MatTableModule,
     MatSortModule,

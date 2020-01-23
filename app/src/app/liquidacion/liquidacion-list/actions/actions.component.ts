@@ -1,5 +1,5 @@
 import { Component, AfterViewInit, Inject, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ListaItems, LiquidacionService } from '../../liquidacion.service';
 import { Liquidacion } from '../../liquidacion.model';
 import { Router } from '@angular/router';

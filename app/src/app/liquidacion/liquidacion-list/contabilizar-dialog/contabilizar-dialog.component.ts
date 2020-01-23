@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { DialogLiquidaciones } from '../../liquidacion/liquidacion-dialog/liquidacion-dialog.component';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NotificationService } from 'src/app/handler-error/notification.service';
 import { LiquidacionService } from '../../liquidacion.service';
 import { Contabilizar } from '../../liquidacion.model';

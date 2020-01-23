@@ -6,14 +6,14 @@ import { LiquidacionRoutingModule } from './liquidacion-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { LiquidacionComponent } from './liquidacion/liquidacion.component';
 import { DialogLiquidaciones } from './liquidacion/liquidacion-dialog/liquidacion-dialog.component';
-import { DemoMaterialModule } from '../material.module';
+import { MaterialModule } from '../material.module';
 import { LiquidacionListComponent } from './liquidacion-list/liquidacion-list.component';
 import { ActionsComponent } from './liquidacion-list/actions/actions.component';
 import { LiquidacionPrintComponent } from './liquidacion/liquidacion-print/liquidacion-print.component';
 import { CalcularLiquidacionesPipe } from './calcular-liquidaciones.pipe';
 import { DuplicarDialogComponent } from './liquidacion-list/duplicar-dialog/duplicar-dialog.component';
 import { ContabilizarDialogComponent } from './liquidacion-list/contabilizar-dialog/contabilizar-dialog.component';
-import { MatNativeDateModule } from '@angular/material';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [LiquidacionComponent, LiquidacionListComponent, ActionsComponent ,DialogLiquidaciones, LiquidacionPrintComponent, CalcularLiquidacionesPipe, DuplicarDialogComponent, ContabilizarDialogComponent],
@@ -22,7 +22,7 @@ import { MatNativeDateModule } from '@angular/material';
     FormsModule,
     ReactiveFormsModule,
     LiquidacionRoutingModule,
-    DemoMaterialModule,
+    MaterialModule,
     MatNativeDateModule,
     SharedModule
   ],

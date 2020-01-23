@@ -7,7 +7,13 @@ import { MainComponent } from './shell/main/main.component';
 import { MenuComponent } from './shell/menu/menu.component';
 import { FooterComponent } from './shell/footer/footer.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { MatToolbarModule, MatTabsModule, MatIconModule, MatSidenavModule, MatListModule, MatMenuModule, MatButtonModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [ShellComponent, HeaderComponent, MainComponent, MenuComponent, FooterComponent, NotFoundComponent],

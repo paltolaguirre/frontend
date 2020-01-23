@@ -4,7 +4,6 @@ import { NgModule, LOCALE_ID } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TemplateModule } from './template/template.module';
 import { LoginModule } from './auth/login.module';
 import { AuthGuard } from './auth/auth.guard';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -15,8 +14,7 @@ import { NotificationService } from './handler-error/notification.service';
 import { PrintService } from './print/print.service';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es-AR';
-import localeEsExtra from '@angular/common/locales/extra/es-AR';
-import { DemoMaterialModule } from './material.module';
+import { MaterialModule } from './material.module';
 import { TableService } from './shared/services/table.service';
 
 //registerLocaleData(localeEs, 'es-AR', localeEsExtra);
@@ -30,7 +28,7 @@ registerLocaleData(localeEs, 'es-Ar');
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    DemoMaterialModule,
+    MaterialModule,
     LoginModule,
     HandlerErrorModule
   ],

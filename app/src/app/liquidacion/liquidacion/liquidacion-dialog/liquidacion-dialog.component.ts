@@ -1,6 +1,8 @@
 import { Component, ViewChild, AfterViewInit, OnInit , Inject } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ListaItems , NovedadService } from 'src/app/novedad/novedad.service';
 import { Novedad } from '../../../novedad/novedad.model';
 import { TIPO_CONCEPTO } from 'src/app/concepto/concepto.model';
