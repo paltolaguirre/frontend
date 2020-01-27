@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 export interface ItemMenu {
-  nombre: string;
+  name: string;
   url: string;
 }
 
@@ -13,12 +13,13 @@ export interface ItemMenu {
 
 export class MenuComponent implements OnInit {
   itemsMenu: ItemMenu[] = [
-    {nombre: 'Legajos', url: '/legajos'},
-    {nombre: 'Conceptos', url: '/conceptos'},
-    {nombre: 'Novedades', url: '/novedades'},
-    {nombre: 'Liquidaciones', url: '/liquidaciones'},
-    {nombre: 'Informe 931', url: '/informes/cargas-sociales-f931'},
-    {nombre: 'Libro Sueldos', url: '/informes/libro-sueldos'},
+    {name: 'Legajos', url: '/legajos'},
+    {name: 'Conceptos', url: '/conceptos'},
+    {name: 'Fórmulas', url: '/formulas'},
+    {name: 'Novedades', url: '/novedades'},
+    {name: 'Liquidaciones', url: '/liquidaciones'},
+    {name: 'Informe 931', url: '/informes/cargas-sociales-f931'},
+    {name: 'Libro Sueldos', url: '/informes/libro-sueldos'},
   ];
 
   constructor() { }

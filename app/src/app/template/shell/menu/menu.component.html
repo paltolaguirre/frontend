@@ -1,11 +1,5 @@
-<!--<mat-selection-list #item>
-  <mat-list-option *ngFor="let item of itemsMenu" [routerLink]="item.url">
-    {{item.nombre}}
-  </mat-list-option>
-</mat-selection-list>-->
-
 <mat-nav-list>
   <mat-list-item *ngFor="let item of itemsMenu">
-    <a routerLink="{{ item.url }}" matLine [routerLinkActive]="['is-active']">{{ item.nombre }}</a>
+    <a routerLink="{{ item.url }}" matLine [routerLinkActive]="['is-active']">{{ item.name }}</a>
   </mat-list-item>
 </mat-nav-list>

@@ -1,6 +1,6 @@
 import { FormulasContainer } from './formulas.container';
 import { NgModule } from "@angular/core";
-import { Routes } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
@@ -10,6 +10,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [FormulasContainer]
+  declarations: [FormulasContainer],
+  imports: [
+    RouterModule.forChild(routes)
+  ]
 })
 export class FormulasContainerModule {}
