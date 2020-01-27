@@ -1,3 +1,4 @@
+import { SharedModule } from './../../../shared/shared.module';
 import { FormulasContainer } from './formulas.container';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -12,7 +13,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [FormulasContainer],
   imports: [
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    SharedModule
   ]
 })
 export class FormulasContainerModule {}
