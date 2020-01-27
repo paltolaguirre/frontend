@@ -135,5 +135,10 @@
       }
     }
   },
-  "defaultProject": "legajo-frontend"
+  "defaultProject": "legajo-frontend",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }
