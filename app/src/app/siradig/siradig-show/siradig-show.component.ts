@@ -62,6 +62,34 @@ export class SiradigShowComponent implements OnInit {
     );
   }
 
+  private gotoGrilla() {
+    this.router.navigate(['/informes/siradig']);
+  }
+
+  onClickAbort(): void {
+    this.gotoGrilla();
+  }
+
+  async onClickSave(data: Siradig): Promise<Siradig> {
+    //if(this.faltanRequeridos()) return null;
+
+    let item: Siradig;
+
+    if (this.id) {
+      console.log("Updated Siradig");
+      //item = await this.siradigService.putSiradig(data);
+      this.gotoGrilla();
+    } else {
+      console.log("Created Siradig");
+      //item = await this.siradigService.postSiradig(data);
+      this.gotoGrilla();
+    }
+
+    console.log(data);
+    //this.create.emit(legajosItem)
+    return item;
+  }
+
   private procesarSiradig(siradig: Siradig) {
     this.procesarConyuge(siradig);
     this.procesarHijos(siradig);
@@ -319,6 +347,72 @@ export class SiradigShowComponent implements OnInit {
         mes: 0,
         importe: null,
         descripcion: null
+      });
+    }
+  }
+
+  onClickNewBeneficiosiradig(siradig: Siradig, siradigtipogrillaCodigo: String, siradigtipogrillaId: number) {
+    if(siradig.beneficiosiradig == null) {
+      siradig.beneficiosiradig = [{
+        ID: null,
+        siradigtipogrilla: {
+            ID: siradigtipogrillaId,
+            codigo: siradigtipogrillaCodigo,
+        },
+        siradigtipogrillaid: siradigtipogrillaId,
+        mesdesde: null,
+        meshasta: null,
+        valor: false
+      }];      
+    } else {
+      siradig.beneficiosiradig.push({
+        ID: null,
+        siradigtipogrilla: {
+            ID: siradigtipogrillaId,
+            codigo: siradigtipogrillaCodigo,
+        },
+        siradigtipogrillaid: siradigtipogrillaId,
+        mesdesde: null,
+        meshasta: null,
+        valor: false
+      });
+    }
+  }
+
+  onClickNewAjustesiradig(siradig: Siradig, siradigtipogrillaCodigo: String, siradigtipogrillaId: number) {
+    if(siradig.ajustesiradig == null) {
+      siradig.ajustesiradig = [{
+        ID: null,
+        siradigtipogrilla: {
+            ID: siradigtipogrillaId,
+            codigo: siradigtipogrillaCodigo,
+        },
+        siradigtipogrillaid: siradigtipogrillaId,
+        cuit: null,
+        razonsocial: null,
+        anio: null,
+        montoretroactivocobrado: null,
+        cumplesegundoparrafoley24467: false,
+        montoreintegrar: null,
+        cumpletercerparrafoley24467: false,
+        montoreintegrar3: null
+      }];      
+    } else {
+      siradig.ajustesiradig.push({
+        ID: null,
+        siradigtipogrilla: {
+            ID: siradigtipogrillaId,
+            codigo: siradigtipogrillaCodigo,
+        },
+        siradigtipogrillaid: siradigtipogrillaId,
+        cuit: null,
+        razonsocial: null,
+        anio: null,
+        montoretroactivocobrado: null,
+        cumplesegundoparrafoley24467: false,
+        montoreintegrar: null,
+        cumpletercerparrafoley24467: false,
+        montoreintegrar3: null
       });
     }
   }
