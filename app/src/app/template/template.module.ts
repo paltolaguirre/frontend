@@ -1,3 +1,4 @@
+import { FormulasContainer } from './containers/formulas/formulas.container';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -39,6 +40,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
           {
             path: 'conceptos',
             loadChildren: () => import('../concepto/concepto.module').then(m => m.ConceptoModule),
+          },
+          {
+            path: 'fomulas',
+            loadChildren: () => import('./containers/formulas/formulas.container.module').then(m => m.FormulasContainerModule),
           },
           {
             path: 'novedades',
