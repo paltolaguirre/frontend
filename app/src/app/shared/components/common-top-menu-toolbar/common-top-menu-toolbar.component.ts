@@ -8,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class CommonTopMenuToolbarComponent implements OnInit {
   @Input() newResourceUrl: string;
-  @Input() subCollection?: string | string[];
+  @Input() subCollection?: string;
 
   constructor(private printService: PrintService) { }
 
