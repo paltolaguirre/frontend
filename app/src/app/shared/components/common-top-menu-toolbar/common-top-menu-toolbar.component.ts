@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { PrintService } from 'src/app/print/print.service';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-common-top-menu-toolbar',
@@ -6,10 +7,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./common-top-menu-toolbar.component.scss']
 })
 export class CommonTopMenuToolbarComponent implements OnInit {
+  @Input() newResourceUrl: string;
+  @Input() subCollection?: string | string[];
 
-  constructor() { }
+  constructor(private printService: PrintService) { }
 
   ngOnInit() {
+  }
+
+  public onPrintButtonClick() {
+    this.printService.printTOPDF();
+  }
+
+  public doFilter(event) {
+    console.log(event.target.value);
   }
 
 }
