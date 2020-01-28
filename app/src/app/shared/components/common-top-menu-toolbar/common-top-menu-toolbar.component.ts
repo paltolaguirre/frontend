@@ -1,5 +1,5 @@
 import { PrintService } from 'src/app/print/print.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-common-top-menu-toolbar',
@@ -9,6 +9,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class CommonTopMenuToolbarComponent implements OnInit {
   @Input() newResourceUrl: string;
   @Input() subCollection?: string;
+  @Output() filterEmitter: EventEmitter<string> = new EventEmitter();
 
   constructor(private printService: PrintService) { }
 
@@ -20,7 +21,7 @@ export class CommonTopMenuToolbarComponent implements OnInit {
   }
 
   public doFilter(event) {
-    console.log(event.target.value);
+    this.filterEmitter.emit(event.target.value);
   }
 
 }
