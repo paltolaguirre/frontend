@@ -19,6 +19,7 @@ export class MenuComponent implements OnInit {
     {nombre: 'Liquidaciones', url: '/liquidaciones'},
     {nombre: 'Informe 931', url: '/informes/cargas-sociales-f931'},
     {nombre: 'Libro Sueldos', url: '/informes/libro-sueldos'},
+    {nombre: 'SiRADIG', url: '/informes/siradig'},
   ];
 
   constructor() { }
