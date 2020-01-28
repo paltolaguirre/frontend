@@ -11,7 +11,8 @@ export interface ListaItems {
   providedIn: 'root'
 })
 export class SiradigService {
-  href = 'https://f4a8d118-b5de-4c0a-b0bd-a79fce89631b.mock.pstmn.io/api/siradig/siradigs';
+  // href = 'https://f4a8d118-b5de-4c0a-b0bd-a79fce89631b.mock.pstmn.io/api/siradig/siradigs'; //  mock
+  href = '/api/siradig/siradigs';
   
   constructor(private http: HttpClient) { }
 
