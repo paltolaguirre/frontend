@@ -51,7 +51,7 @@ import { MatToolbarModule, MatTabsModule, MatIconModule, MatSidenavModule, MatLi
             loadChildren: '../fcargassociales/fcargassociales.module#FcargassocialesModule',
           },
           {
-            path: 'informes/siradig',
+            path: 'siradig',
             loadChildren: '../siradig/siradig.module#SiradigModule',
           },
           {
