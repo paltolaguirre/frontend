@@ -51,6 +51,10 @@ import { MatToolbarModule, MatTabsModule, MatIconModule, MatSidenavModule, MatLi
             loadChildren: '../fcargassociales/fcargassociales.module#FcargassocialesModule',
           },
           {
+            path: 'informes/siradig',
+            loadChildren: '../siradig/siradig.module#SiradigModule',
+          },
+          {
             path: '',
             redirectTo: 'legajos',
           }
