@@ -1,11 +1,11 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'app-common-table-row-actions',
-  templateUrl: './common-table-row-actions.component.html',
-  styleUrls: ['./common-table-row-actions.component.scss']
+  selector: 'app-table-row-actions',
+  templateUrl: './table-row-actions.component.html',
+  styleUrls: ['./table-row-actions.component.scss']
 })
-export class CommonTableRowActionsComponent implements OnInit {
+export class TableRowActionsComponent implements OnInit {
   @Output() editEmitter: EventEmitter<any> = new EventEmitter();
   @Output() deleteEmitter: EventEmitter<any> = new EventEmitter();
 
