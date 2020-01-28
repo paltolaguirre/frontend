@@ -63,7 +63,7 @@ export class SiradigShowComponent implements OnInit {
   }
 
   private gotoGrilla() {
-    this.router.navigate(['/informes/siradig']);
+    this.router.navigate(['/siradig']);
   }
 
   onClickAbort(): void {
@@ -77,11 +77,11 @@ export class SiradigShowComponent implements OnInit {
 
     if (this.id) {
       console.log("Updated Siradig");
-      //item = await this.siradigService.putSiradig(data);
+      item = await this.siradigService.putSiradig(data);
       this.gotoGrilla();
     } else {
       console.log("Created Siradig");
-      //item = await this.siradigService.postSiradig(data);
+      item = await this.siradigService.postSiradig(data);
       this.gotoGrilla();
     }
 

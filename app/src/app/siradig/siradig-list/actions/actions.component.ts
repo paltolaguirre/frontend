@@ -24,7 +24,7 @@ export class ActionsComponent implements OnInit {
   }
 
   editItem() {
-    this.router.navigate(['/informes/siradig', this.itemID]);
+    this.router.navigate(['/siradig', this.itemID]);
   }
 
   async deleteItem() {
