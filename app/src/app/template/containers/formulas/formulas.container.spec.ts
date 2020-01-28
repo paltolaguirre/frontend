@@ -1,3 +1,4 @@
+import { FormulaService } from './../../../core/services/formula/formula.service';
 import { LegajoServiceMock } from './../../../core/mocks/legajo.service.mock';
 import { LegajoService } from './../../../legajo/legajo.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -10,6 +11,7 @@ import { FormulasContainer } from './formulas.container';
 describe('FormulasContainer', () => {
   let component: FormulasContainer;
   let fixture: ComponentFixture<FormulasContainer>;
+  let formulaService: FormulaService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -24,6 +26,8 @@ describe('FormulasContainer', () => {
       ]
     })
     .compileComponents();
+
+    formulaService = TestBed.get(FormulaService);
   }));
 
   beforeEach(() => {
@@ -34,5 +38,15 @@ describe('FormulasContainer', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('ngAfterViewInit()', () => {
+    it('should fetch formulas from FormulaService', async () => {
+      const getFormulasSpy = spyOn(formulaService, 'getAll');
+
+      await component.ngAfterViewInit();
+
+      expect(getFormulasSpy).toHaveBeenCalledTimes(1);
+    });
   });
 });

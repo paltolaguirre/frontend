@@ -1,3 +1,4 @@
+import { FormulaService } from './../../../core/services/formula/formula.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LegajoService } from './../../../legajo/legajo.service';
 import { ListaItems } from './../../../fcargassociales/fcargassociales.service';
@@ -7,6 +8,7 @@ import { MatSort } from '@angular/material/sort';
 import { Legajo } from 'src/app/legajo/legajo.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Formula } from 'src/app/core/models/formula.model';
 
 @Component({
   selector: 'app-formulas',
@@ -17,8 +19,8 @@ export class FormulasContainer implements OnInit, AfterViewInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['Legajo', 'Apellido', 'Nombre', 'Acciones'];
-  dataSource: MatTableDataSource<Legajo> = new MatTableDataSource<Legajo>();
+  displayedColumns: string[] = ['Formula', 'Nombre', 'Descripcion', 'Acciones'];
+  dataSource: MatTableDataSource<Formula> = new MatTableDataSource<Formula>();
 
   resultsLength = 0;
   isLoadingResults = true;
@@ -30,7 +32,8 @@ export class FormulasContainer implements OnInit, AfterViewInit {
 
   constructor(
     private legajoService: LegajoService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private formulaService: FormulaService
   ) { }
 
   ngOnInit() {
@@ -41,12 +44,16 @@ export class FormulasContainer implements OnInit, AfterViewInit {
   }
 
   async ngAfterViewInit() {
-    const legajosApi: ListaItems = await this.legajoService.getLegajos(this.sort.active, this.sort.direction, 1);
-    this.dataSource = new MatTableDataSource<Legajo>(legajosApi.items);
+    // const legajosApi: ListaItems = await this.legajoService.getLegajos(this.sort.active, this.sort.direction, 1);
+    // this.dataSource = new MatTableDataSource<Legajo>(legajosApi.items);
+    // this.dataSource.paginator = this.paginator;
+    // this.paginator._intl.itemsPerPageLabel = 'Items por página';
+    // this.isLoadingResults = false;
+    const formulas = await this.formulaService.getAll();
+    this.dataSource = new MatTableDataSource<Formula>(formulas);
     this.dataSource.paginator = this.paginator;
     this.paginator._intl.itemsPerPageLabel = 'Items por página';
     this.isLoadingResults = false;
-
   }
 
   public getPageSizeOptions(): number[] {
@@ -57,10 +64,10 @@ export class FormulasContainer implements OnInit, AfterViewInit {
     return [5, 10, 20];
   }
 
-  public onCreate(item: Legajo) {
+  public onCreate(item: Formula) {
     this.dataSource.data.push(item);
 
-    this.dataSource = new MatTableDataSource<Legajo>(this.dataSource.data);
+    this.dataSource = new MatTableDataSource<Formula>(this.dataSource.data);
   }
 
   public editFormula(item: Legajo) {
@@ -70,21 +77,21 @@ export class FormulasContainer implements OnInit, AfterViewInit {
   }
 
   // TODO: Remove if it is not being used.
-  public onUpdate(event, item: Legajo) {
+  public onUpdate(event, item: Formula) {
     const data = [...this.dataSource.data];
 
     const index = data.findIndex((element) => {
-      return element.ID === item.ID;
+      return element.id === item.id;
     });
 
     data.splice(index, 1, item);
 
-    this.dataSource = new MatTableDataSource<Legajo>(data);
+    this.dataSource = new MatTableDataSource<Formula>(data);
   }
 
-  public async onDelete(item: Legajo) {
+  public async onDelete(item: Formula) {
     try {
-      await this.legajoService.deleteLegajo(item);
+      // await this.legajoService.deleteLegajo(item);
 
       this.removeItemFromTable(item);
     } catch (e) {
@@ -93,11 +100,11 @@ export class FormulasContainer implements OnInit, AfterViewInit {
     }
   }
 
-  private removeItemFromTable(item: Legajo) {
+  private removeItemFromTable(item: Formula) {
     const data = this.dataSource.data.filter((file) => {
-      return file.ID !== item.ID;
+      return file.id !== item.id;
     });
 
-    this.dataSource = new MatTableDataSource<Legajo>(data);
+    this.dataSource = new MatTableDataSource<Formula>(data);
   }
 }
