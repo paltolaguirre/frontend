@@ -1,3 +1,5 @@
+import { LegajoServiceMock } from './../../../core/mocks/legajo.service.mock';
+import { LegajoService } from './../../../legajo/legajo.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SharedModule } from './../../../shared/shared.module';
@@ -16,6 +18,9 @@ describe('FormulasContainer', () => {
         RouterTestingModule,
         SharedModule,
         BrowserAnimationsModule
+      ],
+      providers: [
+        { provide: LegajoService, useClass: LegajoServiceMock }
       ]
     })
     .compileComponents();
