@@ -6,18 +6,18 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Legajo } from 'src/app/legajo/legajo.model';
 import { MatTableDataSource } from '@angular/material/table';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'app-formulas',
   templateUrl: './formulas.container.html',
   styleUrls: ['./formulas.container.scss']
 })
-export class FormulasContainer implements OnInit {
+export class FormulasContainer implements OnInit, AfterViewInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  displayedColumns: string[] = [ 'Legajo' , 'Apellido',  'Nombre', 'Acciones'];
+  displayedColumns: string[] = ['Legajo', 'Apellido', 'Nombre', 'Acciones'];
   dataSource: MatTableDataSource<Legajo> = new MatTableDataSource<Legajo>();
 
   resultsLength = 0;
@@ -30,65 +30,63 @@ export class FormulasContainer implements OnInit {
 
   constructor(
     private legajoService: LegajoService,
-    public dialog: MatDialog,
-    // public printService : PrintService
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
   }
 
   public filterResults(payload: string) {
-    console.log(payload);
+    this.dataSource.filter = payload.trim().toLocaleLowerCase();
   }
 
   async ngAfterViewInit() {
-
-    //this.isLoadingResults = false;
     const legajosApi: ListaItems = await this.legajoService.getLegajos(this.sort.active, this.sort.direction, 1);
     this.dataSource = new MatTableDataSource<Legajo>(legajosApi.items);
     this.dataSource.paginator = this.paginator;
-    this.paginator._intl.itemsPerPageLabel = "Items por página";
+    this.paginator._intl.itemsPerPageLabel = 'Items por página';
     this.isLoadingResults = false;
 
-}
+  }
 
-getPageSizeOptions(): number[] {
-  if (this.dataSource.data.length>20)
-  return [5, 10, 20,  this.dataSource.paginator.length];
-  else
-  return [5, 10, 20];
-}
+  getPageSizeOptions(): number[] {
+    if (this.dataSource.data.length > 20) {
+      return [5, 10, 20, this.dataSource.paginator.length];
+    }
 
-onCreate(item: Legajo) {
-  console.log("Created Item: " + item.ID);
-  this.dataSource.data.push(item);
+    return [5, 10, 20];
+  }
 
-  this.dataSource = new MatTableDataSource<Legajo>(this.dataSource.data);
-}
+  onCreate(item: Legajo) {
+    this.dataSource.data.push(item);
 
-public doFilter = (value: string) => {
-  this.dataSource.filter = value.trim().toLocaleLowerCase();
-}
+    this.dataSource = new MatTableDataSource<Legajo>(this.dataSource.data);
+  }
 
-onUpdate(item: Legajo) {
-  console.log("Updated Item: " + item.ID);
-  this.dataSource.data.forEach(function (el, index) {
-    if (el.ID == item.ID) this.dataSource.data.splice(index, 1, item);
-  }, this);
+  onUpdate(item: Legajo) {
+    // this.dataSource.data.forEach((el, index) => {
+    //   if (el.ID == item.ID) this.dataSource.data.splice(index, 1, item);
+    // });
 
-  this.dataSource = new MatTableDataSource<Legajo>(this.dataSource.data);
-}
+    // this.dataSource = new MatTableDataSource<Legajo>(this.dataSource.data);
 
-onDelete(item: Legajo) {
-  console.log("Deleted Item: " + item.ID);
-  this.dataSource.data.forEach(function (el, index) {
-    if (el.ID == item.ID) this.dataSource.data.splice(index, 1);
-  }, this);
+    // /////
+    const data = [...this.dataSource.data];
 
-  this.dataSource = new MatTableDataSource<Legajo>(this.dataSource.data);
-}
+    const index = data.findIndex((element) => {
+      return element.ID === item.ID;
+    });
 
-refreshTableSorce() {
+    data.splice(index, 1, item);
 
-}
+    this.dataSource = new MatTableDataSource<Legajo>(data);
+  }
+
+  onDelete(item: Legajo) {
+    const data = this.dataSource.data.filter((file) => {
+      return file.ID !== item.ID;
+    });
+
+    this.dataSource = new MatTableDataSource<Legajo>(data);
+  }
 }
