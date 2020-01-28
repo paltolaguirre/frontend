@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { FormulaService } from './../../../core/services/formula/formula.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LegajoService } from './../../../legajo/legajo.service';
@@ -33,10 +34,15 @@ export class FormulasContainer implements OnInit, AfterViewInit {
   constructor(
     private legajoService: LegajoService,
     public dialog: MatDialog,
-    private formulaService: FormulaService
+    private formulaService: FormulaService,
+    private router: Router
   ) { }
 
   ngOnInit() {
+  }
+
+  public async createFormula() {
+    await this.router.navigate(['/formulas/create']); // Test that.
   }
 
   public filterResults(payload: string) {

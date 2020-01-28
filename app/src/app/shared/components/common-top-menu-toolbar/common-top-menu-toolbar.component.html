@@ -1,6 +1,6 @@
 <div class="topmenu-container" >
   <div>
-    <button mat-raised-button color="primary" class="topmenu-button" mat-button [routerLink]="[newResourceUrl, subCollection]">Nuevo</button>
+    <button mat-raised-button color="primary" class="topmenu-button" mat-button (click)="onNewButtonClick()">Nuevo</button>
     <button mat-raised-button color="secondary" class="topmenu-button" mat-button (click)="onPrintButtonClick()">Imprimir</button>
 
     <mat-form-field class="topmenu-search">

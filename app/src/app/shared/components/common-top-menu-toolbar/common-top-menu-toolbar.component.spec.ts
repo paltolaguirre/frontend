@@ -35,6 +35,16 @@ describe('CommonTopMenuToolbarComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  describe('onNewButtonClick()', () => {
+    it('should emit from newResourceEmitter', () => {
+      const emitterSpy = spyOn(component.newResourceEmitter, 'emit');
+
+      component.onNewButtonClick();
+
+      expect(emitterSpy).toHaveBeenCalledTimes(1);
+    });
+  });
+
   describe('onPrintButtonClick()', () => {
     it('should call PrintService to print in pdf', () => {
       const printToPdfSpy = spyOn(printService, 'printTOPDF');
