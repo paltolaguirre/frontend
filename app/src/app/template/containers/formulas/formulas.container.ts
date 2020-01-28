@@ -12,4 +12,7 @@ export class FormulasContainer implements OnInit {
   ngOnInit() {
   }
 
+  public filterResults(payload: string) {
+    console.log(payload);
+  }
 }

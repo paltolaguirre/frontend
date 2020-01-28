@@ -1,3 +1,7 @@
-<app-common-top-menu-toolbar [newResourceUrl]="'/formulas'" [subCollection]="'create'"></app-common-top-menu-toolbar>
+<app-common-top-menu-toolbar 
+  [newResourceUrl]="'/formulas'" 
+  [subCollection]="'create'"
+  (filterEmitter)="filterResults($event)">
+</app-common-top-menu-toolbar>
 
 <p>formulas works!</p>
