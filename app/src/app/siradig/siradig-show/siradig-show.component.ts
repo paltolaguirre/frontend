@@ -9,6 +9,7 @@ import { of, Observable } from 'rxjs';
 import { SiradigService } from '../siradig.service';
 import { Siradig } from '../siradig.model';
 import { calculateBorderBoxPath } from 'html2canvas/dist/types/render/bound-curves';
+import { LegajoService } from 'src/app/legajo/legajo.service';
 
 @Component({
   selector: 'app-siradig-show',
@@ -30,7 +31,8 @@ export class SiradigShowComponent implements OnInit {
     public dialog: MatDialog,
     private notificationService: NotificationService,
     private router: Router,
-    public printService: PrintService
+    public printService: PrintService,
+    private legajoService: LegajoService, 
   ) { }
 
   ngOnInit() {
@@ -96,13 +98,14 @@ export class SiradigShowComponent implements OnInit {
   }
 
   private procesarConyuge(siradig: Siradig) {
-    if(siradig.legajo.conyuge.length > 0) {
+    if(siradig && siradig.legajo && siradig.legajo.conyuge.length > 0) {
       const conyugesiradigArray = new Array();
       siradig.legajo.conyuge.forEach(conyuge => {
         const itemSiradig = siradig.detallecargofamiliarsiradig.filter(item => item.siradigtipogrilla.codigo == "CONYUGE_SIRADIG" && item.conyuge.ID == conyuge.ID)[0];
         let conyugesiradig;
         if(itemSiradig) {
           conyugesiradig = {
+            conyugeid: conyuge.ID,
             nombre: itemSiradig.conyuge.nombre,
             aplica: true,
             estaacargo: itemSiradig.estaacargo,
@@ -114,6 +117,7 @@ export class SiradigShowComponent implements OnInit {
           }
         } else {
           conyugesiradig = {
+            conyugeid: null,
             nombre: conyuge.nombre,
             aplica: false,
             estaacargo: false,
@@ -133,13 +137,14 @@ export class SiradigShowComponent implements OnInit {
   }
 
   private procesarHijos(siradig: Siradig) {
-    if(siradig.legajo.hijos.length > 0) {
+    if(siradig && siradig.legajo && siradig.legajo.hijos.length > 0) {
       const hijosiradigArray = new Array();
       siradig.legajo.hijos.forEach(hijo => {
         const itemSiradig = siradig.detallecargofamiliarsiradig.filter(item => item.siradigtipogrilla.codigo == "HIJO_SIRADIG" && item.hijo.ID == hijo.ID)[0];
         let hijosiradig;
         if(itemSiradig) {
           hijosiradig = {
+            hijoid: hijo.ID,
             nombre: itemSiradig.hijo.nombre,
             aplica: true,
             estaacargo: itemSiradig.estaacargo,
@@ -151,6 +156,7 @@ export class SiradigShowComponent implements OnInit {
           }
         } else {
           hijosiradig = {
+            hijoid: null,
             nombre: hijo.nombre,
             aplica: false,
             estaacargo: false,
@@ -416,4 +422,14 @@ export class SiradigShowComponent implements OnInit {
       });
     }
   }
+
+  async legajoSelected(e, data) {
+    data.legajoid=e.ID;
+
+    const legajo = await this.legajoService.getLegajo(data.legajoid);
+    data.legajo = legajo;
+
+    //this.procesarSiradig(data);
+  }
+  
 }
