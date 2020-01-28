@@ -26,4 +26,24 @@ describe('CommonTableRowActionsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  describe('onEditClick', () => {
+    it('should emit from editEmiiter', () => {
+      const emitterSpy = spyOn(component.editEmitter, 'emit');
+
+      component.onEditClick();
+
+      expect(emitterSpy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('onDeleteClick', () => {
+    it('should emit from deleteEmitter', () => {
+      const emitterSpy = spyOn(component.deleteEmitter, 'emit');
+
+      component.onDeleteClick();
+
+      expect(emitterSpy).toHaveBeenCalledTimes(1);
+    });
+  });
 });
