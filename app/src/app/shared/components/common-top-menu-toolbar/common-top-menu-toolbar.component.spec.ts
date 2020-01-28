@@ -1,3 +1,4 @@
+import { PrintService } from 'src/app/print/print.service';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './../../../material.module';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -8,6 +9,7 @@ import { CommonTopMenuToolbarComponent } from './common-top-menu-toolbar.compone
 describe('CommonTopMenuToolbarComponent', () => {
   let component: CommonTopMenuToolbarComponent;
   let fixture: ComponentFixture<CommonTopMenuToolbarComponent>;
+  let printService: PrintService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -19,6 +21,8 @@ describe('CommonTopMenuToolbarComponent', () => {
       ]
     })
     .compileComponents();
+
+    printService = TestBed.get(PrintService);
   }));
 
   beforeEach(() => {
@@ -29,5 +33,15 @@ describe('CommonTopMenuToolbarComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('onPrintButtonClick()', () => {
+    it('should call PrintService to print in pdf', () => {
+      const printToPdfSpy = spyOn(printService, 'printTOPDF');
+
+      component.onPrintButtonClick();
+
+      expect(printToPdfSpy).toHaveBeenCalledTimes(1);
+    });
   });
 });
