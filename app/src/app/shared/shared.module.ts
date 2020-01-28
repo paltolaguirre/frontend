@@ -5,11 +5,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SelectorDefaultComponent } from './selector-default/selector-default.component';
 import { MaterialModule } from '../material.module';
 import { CommonTopMenuToolbarComponent } from './components/common-top-menu-toolbar/common-top-menu-toolbar.component';
+import { CommonTableRowActionsComponent } from './components/common-table-row-actions/common-table-row-actions.component';
 
 @NgModule({
   declarations: [
     SelectorDefaultComponent,
-    CommonTopMenuToolbarComponent
+    CommonTopMenuToolbarComponent,
+    CommonTableRowActionsComponent
   ],
   imports: [
     CommonModule,
@@ -21,6 +23,7 @@ import { CommonTopMenuToolbarComponent } from './components/common-top-menu-tool
   entryComponents: [],
   exports: [
     SelectorDefaultComponent,
+    CommonTableRowActionsComponent,
     CommonTopMenuToolbarComponent,
     FormsModule,
     MaterialModule,

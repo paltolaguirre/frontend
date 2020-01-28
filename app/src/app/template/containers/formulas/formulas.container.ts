@@ -49,7 +49,7 @@ export class FormulasContainer implements OnInit, AfterViewInit {
 
   }
 
-  getPageSizeOptions(): number[] {
+  public getPageSizeOptions(): number[] {
     if (this.dataSource.data.length > 20) {
       return [5, 10, 20, this.dataSource.paginator.length];
     }
@@ -57,20 +57,20 @@ export class FormulasContainer implements OnInit, AfterViewInit {
     return [5, 10, 20];
   }
 
-  onCreate(item: Legajo) {
+  public onCreate(item: Legajo) {
     this.dataSource.data.push(item);
 
     this.dataSource = new MatTableDataSource<Legajo>(this.dataSource.data);
   }
 
-  onUpdate(item: Legajo) {
-    // this.dataSource.data.forEach((el, index) => {
-    //   if (el.ID == item.ID) this.dataSource.data.splice(index, 1, item);
-    // });
+  public editFormula(item: Legajo) {
+    console.log(item);
 
-    // this.dataSource = new MatTableDataSource<Legajo>(this.dataSource.data);
+    // this.router.navigate(['/legajos', this.legajo]);
+  }
 
-    // /////
+  // TODO: Remove if it is not being used.
+  public onUpdate(event, item: Legajo) {
     const data = [...this.dataSource.data];
 
     const index = data.findIndex((element) => {
@@ -82,7 +82,18 @@ export class FormulasContainer implements OnInit, AfterViewInit {
     this.dataSource = new MatTableDataSource<Legajo>(data);
   }
 
-  onDelete(item: Legajo) {
+  public async onDelete(item: Legajo) {
+    try {
+      await this.legajoService.deleteLegajo(item);
+
+      this.removeItemFromTable(item);
+    } catch (e) {
+      console.log(e);
+      // TODO: Use error logging tool.
+    }
+  }
+
+  private removeItemFromTable(item: Legajo) {
     const data = this.dataSource.data.filter((file) => {
       return file.ID !== item.ID;
     });
