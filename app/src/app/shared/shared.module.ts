@@ -21,7 +21,10 @@ import { CommonTopMenuToolbarComponent } from './components/common-top-menu-tool
   entryComponents: [],
   exports: [
     SelectorDefaultComponent,
-    CommonTopMenuToolbarComponent
+    CommonTopMenuToolbarComponent,
+    FormsModule,
+    MaterialModule,
+    ReactiveFormsModule
   ]
 })
 export class SharedModule { }
