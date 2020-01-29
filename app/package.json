@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "coverage": "ng test -- --watch=false --codeCoverage=true && http-server /coverage"
+    "coverage": "ng test -- --watch=false --codeCoverage=true && http-server coverage/"
   },
   "private": true,
   "dependencies": {
