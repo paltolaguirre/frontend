@@ -64,5 +64,13 @@ describe('FormulasContainer', () => {
 
       expect(deleteSpy).toHaveBeenCalledWith(fakeFormulaItem);
     });
+
+    it('should call removeItemFromTable', async () => {
+      const deleteSpy = spyOn(component, 'removeItemFromTable');
+
+      await component.onDelete(fakeFormulaItem);
+
+      expect(deleteSpy).toHaveBeenCalledWith(fakeFormulaItem);
+    });
   });
 });

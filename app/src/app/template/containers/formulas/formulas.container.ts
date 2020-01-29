@@ -106,7 +106,7 @@ export class FormulasContainer implements OnInit, AfterViewInit {
     }
   }
 
-  private removeItemFromTable(item: Formula) {
+  public removeItemFromTable(item: Formula) {
     const data = this.dataSource.data.filter((file) => {
       return file.id !== item.id;
     });
