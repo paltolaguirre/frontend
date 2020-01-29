@@ -1,9 +1,6 @@
 import { Router } from '@angular/router';
 import { FormulaService } from './../../../core/services/formula/formula.service';
 import { MatDialog } from '@angular/material/dialog';
-import { LegajoService } from './../../../legajo/legajo.service';
-import { ListaItems } from './../../../fcargassociales/fcargassociales.service';
-import { Observable } from 'rxjs';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Legajo } from 'src/app/legajo/legajo.model';
@@ -27,12 +24,9 @@ export class FormulasContainer implements OnInit, AfterViewInit {
   isLoadingResults = true;
   isRateLimitReached = false;
 
-  legajoID$: Observable<string>;
-  public currentLegajo$: Observable<Legajo> = null;
   id: number;
 
   constructor(
-    private legajoService: LegajoService,
     public dialog: MatDialog,
     private formulaService: FormulaService,
     private router: Router

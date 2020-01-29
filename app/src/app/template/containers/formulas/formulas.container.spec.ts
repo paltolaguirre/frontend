@@ -7,11 +7,13 @@ import { SharedModule } from './../../../shared/shared.module';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FormulasContainer } from './formulas.container';
+import { Router } from '@angular/router';
 
 describe('FormulasContainer', () => {
   let component: FormulasContainer;
   let fixture: ComponentFixture<FormulasContainer>;
   let formulaService: FormulaService;
+  let router: Router;
 
   const fakeFormulaItem = {
     id: 1,
@@ -34,6 +36,7 @@ describe('FormulasContainer', () => {
     .compileComponents();
 
     formulaService = TestBed.get(FormulaService);
+    router = TestBed.get(Router);
   }));
 
   beforeEach(() => {
@@ -53,6 +56,16 @@ describe('FormulasContainer', () => {
       await component.ngAfterViewInit();
 
       expect(getFormulasSpy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('createFormula', () => {
+    it('should navigate to the formula create page', async () => {
+      const routerSpy = spyOn(router, 'navigate');
+
+      await component.createFormula();
+
+      expect(routerSpy).toHaveBeenCalledWith(['/formulas/create']);
     });
   });
 
