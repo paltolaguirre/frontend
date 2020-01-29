@@ -36,7 +36,7 @@ export class FormulasContainer implements OnInit, AfterViewInit {
   }
 
   public async createFormula() {
-    await this.router.navigate(['/formulas/create']); // Test that.
+    await this.router.navigate(['/formulas/create']);
   }
 
   public filterResults(payload: string) {
