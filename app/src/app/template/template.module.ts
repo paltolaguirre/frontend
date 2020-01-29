@@ -42,7 +42,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
           },
           {
             path: 'formulas',
-            loadChildren: () => import('../formula/formulas.container.module').then(m => m.FormulasContainerModule),
+            loadChildren: () => import('../formula/formulas.module').then(m => m.FormulasContainerModule),
           },
           {
             path: 'novedades',
