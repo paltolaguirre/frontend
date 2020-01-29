@@ -97,7 +97,7 @@ export class FormulasContainer implements OnInit, AfterViewInit {
 
   public async onDelete(item: Formula) {
     try {
-      // await this.legajoService.deleteLegajo(item);
+      await this.formulaService.delete(item);
 
       this.removeItemFromTable(item);
     } catch (e) {

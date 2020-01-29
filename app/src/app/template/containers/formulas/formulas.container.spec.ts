@@ -13,6 +13,12 @@ describe('FormulasContainer', () => {
   let fixture: ComponentFixture<FormulasContainer>;
   let formulaService: FormulaService;
 
+  const fakeFormulaItem = {
+    id: 1,
+    name: 'Formula 1',
+    description: 'Esta es una formula'
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ FormulasContainer ],
@@ -40,13 +46,23 @@ describe('FormulasContainer', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('ngAfterViewInit()', () => {
+  describe('ngAfterViewInit', () => {
     it('should fetch formulas from FormulaService', async () => {
       const getFormulasSpy = spyOn(formulaService, 'getAll');
 
       await component.ngAfterViewInit();
 
       expect(getFormulasSpy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('onDelete', () => {
+    it('should delete the formula from the source', async () => {
+      const deleteSpy = spyOn(formulaService, 'delete');
+
+      await component.onDelete(fakeFormulaItem);
+
+      expect(deleteSpy).toHaveBeenCalledWith(fakeFormulaItem);
     });
   });
 });

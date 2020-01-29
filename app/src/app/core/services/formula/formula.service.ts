@@ -22,4 +22,9 @@ export class FormulaService {
       }
     ];
   }
+
+  // TODO: Remove from API.
+  public delete(formula: Formula): Promise<any> {
+    return Promise.resolve();
+  }
 }
