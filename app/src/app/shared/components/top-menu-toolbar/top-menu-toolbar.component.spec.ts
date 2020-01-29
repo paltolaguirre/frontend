@@ -4,16 +4,16 @@ import { MaterialModule } from './../../../material.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CommonTopMenuToolbarComponent } from './common-top-menu-toolbar.component';
+import { TopMenuToolbarComponent } from './top-menu-toolbar.component';
 
-describe('CommonTopMenuToolbarComponent', () => {
-  let component: CommonTopMenuToolbarComponent;
-  let fixture: ComponentFixture<CommonTopMenuToolbarComponent>;
+describe('TopMenuToolbarComponent', () => {
+  let component: TopMenuToolbarComponent;
+  let fixture: ComponentFixture<TopMenuToolbarComponent>;
   let printService: PrintService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CommonTopMenuToolbarComponent ],
+      declarations: [ TopMenuToolbarComponent ],
       imports: [
         RouterTestingModule,
         MaterialModule,
@@ -26,7 +26,7 @@ describe('CommonTopMenuToolbarComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CommonTopMenuToolbarComponent);
+    fixture = TestBed.createComponent(TopMenuToolbarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
