@@ -69,6 +69,17 @@ describe('FormulasContainer', () => {
     });
   });
 
+  describe('editFormula', () => {
+    it('should navigate to the formula edition page', async () => {
+      const routerSpy = spyOn(router, 'navigate');
+
+      await component.editFormula(fakeFormulaItem);
+
+      expect(routerSpy).toHaveBeenCalledWith(['/formulas/edit', fakeFormulaItem.id]);
+    });
+  });
+
+
   describe('onDelete', () => {
     it('should delete the formula from the source', async () => {
       const deleteSpy = spyOn(formulaService, 'delete');

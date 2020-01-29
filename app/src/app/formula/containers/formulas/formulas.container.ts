@@ -70,10 +70,8 @@ export class FormulasContainer implements OnInit, AfterViewInit {
     this.dataSource = new MatTableDataSource<Formula>(this.dataSource.data);
   }
 
-  public editFormula(item: Legajo) {
-    console.log(item);
-
-    // this.router.navigate(['/legajos', this.legajo]);
+  public editFormula(item: Formula) {
+    this.router.navigate(['/formulas/edit', item.id]);
   }
 
   // TODO: Remove if it is not being used.
