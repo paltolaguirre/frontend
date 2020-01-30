@@ -61,6 +61,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
             loadChildren: () => import('../fcargassociales/fcargassociales.module').then(m => m.FcargassocialesModule),
           },
           {
+            path: 'siradig',
+            loadChildren: () => import('../siradig/siradig.module').then(m => m.SiradigModule)
+          },
+          {
             path: '',
             redirectTo: 'legajos',
           }
