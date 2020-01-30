@@ -6,10 +6,10 @@ import { Formula } from '../../models/formula.model';
 })
 export class FormulaService {
 
-  constructor() { }
+  public formulas: Formula[];
 
-  public async getAll(): Promise<Formula[]> {
-    return[
+  constructor() {
+    this.formulas = [
       {
         id: 1,
         name: 'Formula 1',
@@ -23,8 +23,16 @@ export class FormulaService {
     ];
   }
 
+  public async getAll(): Promise<Formula[]> {
+    return this.formulas;
+  }
+
   // TODO: Remove from API.
   public delete(formula: Formula): Promise<any> {
     return Promise.resolve();
+  }
+
+  public find(id: number): Formula {
+    return this.formulas.find(formula => formula.id === id);
   }
 }
