@@ -4,8 +4,7 @@ import { SharedModule } from './../shared/shared.module';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { FormulaCreateContainer } from './containers/formula-create/formula-create.container';
-import { FormulaEditContainer } from './containers/formula-edit/formula-edit.container';
+import { FormulaContainer } from './containers/formula/formula.container';
 
 const routes: Routes = [
   {
@@ -14,16 +13,16 @@ const routes: Routes = [
   },
   {
     path: 'create',
-    component: FormulaCreateContainer
+    component: FormulaContainer
   },
   {
     path: 'edit/:id',
-    component: FormulaCreateContainer
+    component: FormulaContainer
   }
 ];
 
 @NgModule({
-  declarations: [FormulasContainer, FormulaCreateContainer, FormulaEditContainer],
+  declarations: [FormulasContainer, FormulaContainer],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

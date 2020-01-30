@@ -1,5 +1,5 @@
-import { Formula } from './../../../core/models/formula.model';
-import { FormulaService } from './../../../core/services/formula/formula.service';
+import { Formula } from '../../../core/models/formula.model';
+import { FormulaService } from '../../../core/services/formula/formula.service';
 import { pluck, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -7,11 +7,11 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import {componentDestroyed} from '@w11k/ngx-componentdestroyed';
 
 @Component({
-  selector: 'app-formula-create',
-  templateUrl: './formula-create.container.html',
-  styleUrls: ['./formula-create.container.scss']
+  selector: 'app-formula',
+  templateUrl: './formula.container.html',
+  styleUrls: ['./formula.container.scss']
 })
-export class FormulaCreateContainer implements OnInit, OnDestroy {
+export class FormulaContainer implements OnInit, OnDestroy {
 
   public form: FormGroup;
   public currentFormula: Formula;
