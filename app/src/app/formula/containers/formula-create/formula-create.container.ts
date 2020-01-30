@@ -13,7 +13,7 @@ import { ReplaySubject } from 'rxjs';
 })
 export class FormulaCreateContainer implements OnInit, OnDestroy {
 
-  private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
+  public destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
   public form: FormGroup;
   public currentFormula: Formula;
 
