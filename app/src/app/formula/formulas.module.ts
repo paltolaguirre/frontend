@@ -1,3 +1,4 @@
+import { ReactiveFormsModule } from '@angular/forms';
 import { FormulasContainer } from './containers/formulas/formulas.container';
 import { SharedModule } from './../shared/shared.module';
 import { CommonModule } from '@angular/common';
@@ -26,7 +27,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule
   ]
 })
 export class FormulasContainerModule {}

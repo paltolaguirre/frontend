@@ -6,9 +6,33 @@
   <mat-divider></mat-divider>
 
   <div mat-dialog-content class="content" id="contentTOPDF">
-    <div class="columns">
-      <div class="column">asd</div>
-      <div class="column">fadfd</div>
-    </div>
+
+    <mat-accordion>
+      <mat-expansion-panel class="space-right">
+
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Datos de la formula (?)
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
+          <div class="columns">
+            <div class="column">
+              <mat-form-field>
+                <input matInput type="text" formControlName="name" placeholder="Nombre" cdkFocusInitial autocomplete="off">
+              </mat-form-field>
+            </div>
+            <div class="column">
+              <mat-form-field>
+                <input matInput type="text" formControlName="description" placeholder="Descripción">
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+        
+      </mat-expansion-panel>
+    </mat-accordion>
+    
   </div>
 </div>
