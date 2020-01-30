@@ -1,5 +1,5 @@
 import { Component, AfterViewInit, Inject, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ListaItems, LibrosueldosService } from '../../librosueldos.service';
 import { Librosueldos } from '../../librosueldos.model';
 import { Router } from '@angular/router';

@@ -1,7 +1,7 @@
 import { ConceptoService } from '../concepto.service';
 import { Concepto } from '../concepto.model';
 import { Component, AfterViewInit, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { NotificationService } from 'src/app/handler-error/notification.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
