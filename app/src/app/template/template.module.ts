@@ -58,7 +58,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
           },
           {
             path: 'siradig',
-            loadChildren: '../siradig/siradig.module#SiradigModule',
+            loadChildren: () => import('../siradig/siradig.module').then(m => m.SiradigModule)
           },
           {
             path: '',
