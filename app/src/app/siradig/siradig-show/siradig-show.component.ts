@@ -75,6 +75,28 @@ export class SiradigShowComponent implements OnInit {
   async onClickSave(data: Siradig): Promise<Siradig> {
     //if(this.faltanRequeridos()) return null;
 
+    // Se elimina
+    if(this.conyugesiradig.ID && !this.conyugesiradig.aplica) {
+      this.conyugesiradig.DeletedAt = new Date();
+      data.detallecargofamiliarsiradig.push(this.conyugesiradig);
+    }
+    // Se crea o actualiza
+    if(this.conyugesiradig.aplica) {
+      data.detallecargofamiliarsiradig.push(this.conyugesiradig);
+    }
+
+    this.hijossiradig.forEach(hijo => {
+      // Se elimina
+      if(hijo.ID && !hijo.aplica) {
+        hijo.DeletedAt = new Date();
+        data.detallecargofamiliarsiradig.push(hijo);
+      }
+      // Se crea o actualiza
+      if(hijo.aplica) {
+        data.detallecargofamiliarsiradig.push(hijo);
+      }
+    });
+
     let item: Siradig;
 
     if (this.id) {
@@ -101,31 +123,55 @@ export class SiradigShowComponent implements OnInit {
     if(siradig && siradig.legajo && siradig.legajo.conyuge.length > 0) {
       const conyugesiradigArray = new Array();
       siradig.legajo.conyuge.forEach(conyuge => {
-        const itemSiradig = siradig.detallecargofamiliarsiradig.filter(item => item.siradigtipogrilla.codigo == "CONYUGE_SIRADIG" && item.conyuge.ID == conyuge.ID)[0];
+        const indexItemSiradig = siradig.detallecargofamiliarsiradig.findIndex(item => item.siradigtipogrilla.codigo == "CONYUGE_SIRADIG" && item.conyuge.ID == conyuge.ID);
         let conyugesiradig;
-        if(itemSiradig) {
+        if(indexItemSiradig >= 0) {
           conyugesiradig = {
-            conyugeid: conyuge.ID,
-            nombre: itemSiradig.conyuge.nombre,
+            nombre: conyuge.nombre,
             aplica: true,
-            estaacargo: itemSiradig.estaacargo,
-            residenteenelpais: itemSiradig.residenteenelpais,
-            obtuvoingresos: itemSiradig.obtuvoingresos,
-            montoanual: itemSiradig.montoanual,
-            mesdesde: itemSiradig.mesdesde,
-            meshasta: itemSiradig.meshasta 
+            ID: siradig.detallecargofamiliarsiradig[indexItemSiradig].ID,
+            siradigtipogrilla: {
+              ID: -2,
+              codigo: "CONYUGE_SIRADIG",
+            },
+            siradigtipogrillaid: -2,
+            siradigid: siradig.detallecargofamiliarsiradig[indexItemSiradig].siradigid,
+            hijo: null,
+            hijoid: null,
+            conyuge: conyuge,
+            conyugeid: conyuge.ID,
+            estaacargo: siradig.detallecargofamiliarsiradig[indexItemSiradig].estaacargo,
+            residenteenelpais: siradig.detallecargofamiliarsiradig[indexItemSiradig].residenteenelpais,
+            obtuvoingresos: siradig.detallecargofamiliarsiradig[indexItemSiradig].obtuvoingresos,
+            montoanual: siradig.detallecargofamiliarsiradig[indexItemSiradig].montoanual,
+            mesdesde: siradig.detallecargofamiliarsiradig[indexItemSiradig].mesdesde,
+            meshasta: siradig.detallecargofamiliarsiradig[indexItemSiradig].meshasta,
+            porcentaje: siradig.detallecargofamiliarsiradig[indexItemSiradig].porcentaje
           }
+
+          siradig.detallecargofamiliarsiradig.splice(indexItemSiradig, 1);
         } else {
           conyugesiradig = {
-            conyugeid: null,
+            ID: null,
             nombre: conyuge.nombre,
             aplica: false,
-            estaacargo: false,
-            residenteenelpais: false,
-            obtuvoingresos: false,
-            montoanual: "",
-            mesdesde: "",
-            meshasta: ""
+            siradigtipogrilla: {
+              ID: -2,
+              codigo: "CONYUGE_SIRADIG",
+            },
+            siradigtipogrillaid: -2,
+            siradigid: siradig.ID,
+            hijo: null,
+            hijoid: null,
+            conyuge: conyuge,
+            conyugeid: conyuge.ID,
+            estaacargo: null,
+            residenteenelpais: null,
+            obtuvoingresos: null,
+            montoanual: null,
+            mesdesde: null,
+            meshasta: null,
+            porcentaje: null
           }
         }
 
@@ -140,31 +186,55 @@ export class SiradigShowComponent implements OnInit {
     if(siradig && siradig.legajo && siradig.legajo.hijos.length > 0) {
       const hijosiradigArray = new Array();
       siradig.legajo.hijos.forEach(hijo => {
-        const itemSiradig = siradig.detallecargofamiliarsiradig.filter(item => item.siradigtipogrilla.codigo == "HIJO_SIRADIG" && item.hijo.ID == hijo.ID)[0];
+        const indexItemSiradig = siradig.detallecargofamiliarsiradig.findIndex(item => item.siradigtipogrilla.codigo == "HIJO_SIRADIG" && item.hijo.ID == hijo.ID);
         let hijosiradig;
-        if(itemSiradig) {
+        if(indexItemSiradig >= 0) {
           hijosiradig = {
-            hijoid: hijo.ID,
-            nombre: itemSiradig.hijo.nombre,
+            nombre: hijo.nombre,
             aplica: true,
-            estaacargo: itemSiradig.estaacargo,
-            residenteenelpais: itemSiradig.residenteenelpais,
-            obtuvoingresos: itemSiradig.obtuvoingresos,
-            montoanual: itemSiradig.montoanual,
-            mesdesde: itemSiradig.mesdesde,
-            meshasta: itemSiradig.meshasta 
+            ID: siradig.detallecargofamiliarsiradig[indexItemSiradig].ID,
+            siradigtipogrilla: {
+              ID: -1,
+              codigo: "HIJO_SIRADIG",
+            },
+            siradigtipogrillaid: -1,
+            siradigid: siradig.detallecargofamiliarsiradig[indexItemSiradig].siradigid,
+            hijo: hijo,
+            hijoid: hijo.ID,
+            conyuge: null,
+            conyugeid: null,
+            estaacargo: siradig.detallecargofamiliarsiradig[indexItemSiradig].estaacargo,
+            residenteenelpais: siradig.detallecargofamiliarsiradig[indexItemSiradig].residenteenelpais,
+            obtuvoingresos: siradig.detallecargofamiliarsiradig[indexItemSiradig].obtuvoingresos,
+            montoanual: siradig.detallecargofamiliarsiradig[indexItemSiradig].montoanual,
+            mesdesde: siradig.detallecargofamiliarsiradig[indexItemSiradig].mesdesde,
+            meshasta: siradig.detallecargofamiliarsiradig[indexItemSiradig].meshasta,
+            porcentaje: siradig.detallecargofamiliarsiradig[indexItemSiradig].porcentaje
           }
+
+          siradig.detallecargofamiliarsiradig.splice(indexItemSiradig, 1);
         } else {
           hijosiradig = {
-            hijoid: null,
+            ID: null,
             nombre: hijo.nombre,
             aplica: false,
-            estaacargo: false,
-            residenteenelpais: false,
-            obtuvoingresos: false,
-            montoanual: "",
-            mesdesde: "",
-            meshasta: ""
+            siradigtipogrilla: {
+              ID: -1,
+              codigo: "HIJO_SIRADIG",
+            },
+            siradigtipogrillaid: -1,
+            siradigid: siradig.ID,
+            hijo: hijo,
+            hijoid: hijo.ID,
+            conyuge: null,
+            conyugeid: null,
+            estaacargo: null,
+            residenteenelpais: null,
+            obtuvoingresos: null,
+            montoanual: null,
+            mesdesde: null,
+            meshasta: null,
+            porcentaje: null
           }
         }
 
@@ -306,21 +376,7 @@ export class SiradigShowComponent implements OnInit {
           codigo: siradigtipogrillaCodigo,
         },
         siradigtipogrillaid: siradigtipogrillaId,
-        /*siradigtipoimpuesto: {
-            ID: -1,
-            nombre: "Impuestos sobre créditos y débitos en cuenta Bancaria",
-            codigo: "IMPUESTOS_SOBRE_CREDITOS_Y_DEBITOS_EN_CUENTA_BANCARIA",
-            descripcion: "",
-            activo: 1
-        },*/
         siradigtipoimpuestoid: null,
-        /*siradigtipooperacion: {
-            ID: 0,
-            nombre: "",
-            codigo: "",
-            descripcion: "",
-            activo: 0
-        },*/
         siradigtipooperacionid: null,
         mes: 0,
         importe: null,
@@ -334,21 +390,7 @@ export class SiradigShowComponent implements OnInit {
           codigo: siradigtipogrillaCodigo,
         },
         siradigtipogrillaid: siradigtipogrillaId,
-        /*siradigtipoimpuesto: {
-            ID: -1,
-            nombre: "Impuestos sobre créditos y débitos en cuenta Bancaria",
-            codigo: "IMPUESTOS_SOBRE_CREDITOS_Y_DEBITOS_EN_CUENTA_BANCARIA",
-            descripcion: "",
-            activo: 1
-        },*/
         siradigtipoimpuestoid: null,
-        /*siradigtipooperacion: {
-            ID: 0,
-            nombre: "",
-            codigo: "",
-            descripcion: "",
-            activo: 0
-        },*/
         siradigtipooperacionid: null,
         mes: 0,
         importe: null,
@@ -432,4 +474,7 @@ export class SiradigShowComponent implements OnInit {
     //this.procesarSiradig(data);
   }
   
+  existe(array, codigo) {
+    return array.findIndex(element => element.siradigtipogrilla.codigo == codigo && element.DeletedAt == null) >= 0;
+  }
 }
