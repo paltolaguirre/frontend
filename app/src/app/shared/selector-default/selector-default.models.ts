@@ -16,10 +16,10 @@ export class Models {
           case 'liquidacion-novedades': 
             return [{nombre: 'Descuentos', ID: -1},{nombre: 'Retenciones', ID: -2},{nombre: 'Importes Remunerativos', ID: -3},{nombre: 'Importes No Remunerativos', ID: -4},{nombre: 'Aportes Patronales', ID: -5}]; 
           case 'mes': 
-            return [{nombre: 'Enero', ID: 1},{nombre: 'Febrero', ID: 2},{nombre: 'Marzo', ID: 3},
-                    {nombre: 'Abril', ID: 4},{nombre: 'Mayo', ID: 5},{nombre: 'Junio', ID: 6},
-                    {nombre: 'Julio', ID: 7},{nombre: 'Agosto', ID: 8},{nombre: 'Septiembre', ID: 9},
-                    {nombre: 'Octubre', ID: 10},{nombre: 'Noviembre', ID: 11},{nombre: 'Diciembre', ID: 12}];
+            return [{nombre: 'Enero', ID: 0},{nombre: 'Febrero', ID: 1},{nombre: 'Marzo', ID: 2},
+                    {nombre: 'Abril', ID: 3},{nombre: 'Mayo', ID: 4},{nombre: 'Junio', ID: 5},
+                    {nombre: 'Julio', ID: 6},{nombre: 'Agosto', ID: 7},{nombre: 'Septiembre', ID: 8},
+                    {nombre: 'Octubre', ID: 9},{nombre: 'Noviembre', ID: 10},{nombre: 'Diciembre', ID: 11}];
           case 'si/no': 
             return [{nombre: 'Si', ID: 1},{nombre: 'No', ID: 0}];
           default: 
@@ -63,13 +63,15 @@ export class Models {
       case 'anio': 
          return "Año";
       case 'tipoconcepto':
-          return "Tipo de Concepto"
+          return "Tipo de Concepto";
       case 'tipodecalculo':
-        return "Tipo de Calculo"
+        return "Tipo de Calculo";
       case 'tipoimpuestosganancias':
-        return "Impuesto a las Ganancias"
+        return "Impuesto a las Ganancias";
+      case 'siradigtipoimpuesto':
+        return "Tipo de Impuesto";
       default: 
-      return "Seleccione..."; 
+        return "Seleccione..."; 
     } 
   }
 
