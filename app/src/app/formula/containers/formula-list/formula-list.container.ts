@@ -1,19 +1,18 @@
 import { Router } from '@angular/router';
-import { FormulaService } from './../../../core/services/formula/formula.service';
+import { FormulaService } from '../../../core/services/formula/formula.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { Legajo } from 'src/app/legajo/legajo.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Formula } from 'src/app/core/models/formula.model';
 
 @Component({
-  selector: 'app-formulas',
-  templateUrl: './formulas.container.html',
-  styleUrls: ['./formulas.container.scss']
+  selector: 'app-formula-list',
+  templateUrl: './formula-list.container.html',
+  styleUrls: ['./formula-list.container.scss']
 })
-export class FormulasContainer implements OnInit, AfterViewInit {
+export class FormulaListContainer implements OnInit, AfterViewInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -44,11 +43,6 @@ export class FormulasContainer implements OnInit, AfterViewInit {
   }
 
   async ngAfterViewInit() {
-    // const legajosApi: ListaItems = await this.legajoService.getLegajos(this.sort.active, this.sort.direction, 1);
-    // this.dataSource = new MatTableDataSource<Legajo>(legajosApi.items);
-    // this.dataSource.paginator = this.paginator;
-    // this.paginator._intl.itemsPerPageLabel = 'Items por página';
-    // this.isLoadingResults = false;
     const formulas = await this.formulaService.getAll();
     this.dataSource = new MatTableDataSource<Formula>(formulas);
     this.dataSource.paginator = this.paginator;

@@ -1,17 +1,17 @@
-import { FormulaService } from './../../../core/services/formula/formula.service';
-import { LegajoServiceMock } from './../../../core/mocks/legajo.service.mock';
-import { LegajoService } from './../../../legajo/legajo.service';
+import { FormulaService } from '../../../core/services/formula/formula.service';
+import { LegajoServiceMock } from '../../../core/mocks/legajo.service.mock';
+import { LegajoService } from '../../../legajo/legajo.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { SharedModule } from './../../../shared/shared.module';
+import { SharedModule } from '../../../shared/shared.module';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FormulasContainer } from './formulas.container';
+import { FormulaListContainer } from './formula-list.container';
 import { Router } from '@angular/router';
 
 describe('FormulasContainer', () => {
-  let component: FormulasContainer;
-  let fixture: ComponentFixture<FormulasContainer>;
+  let component: FormulaListContainer;
+  let fixture: ComponentFixture<FormulaListContainer>;
   let formulaService: FormulaService;
   let router: Router;
 
@@ -23,7 +23,7 @@ describe('FormulasContainer', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FormulasContainer ],
+      declarations: [ FormulaListContainer ],
       imports: [
         RouterTestingModule,
         SharedModule,
@@ -40,7 +40,7 @@ describe('FormulasContainer', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FormulasContainer);
+    fixture = TestBed.createComponent(FormulaListContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
