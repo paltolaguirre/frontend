@@ -1008,6 +1008,13 @@
     "@types/source-list-map" "*"
     source-map "^0.6.1"
 
+"@w11k/ngx-componentdestroyed@^4.1.4":
+  version "4.1.4"
+  resolved "https://registry.yarnpkg.com/@w11k/ngx-componentdestroyed/-/ngx-componentdestroyed-4.1.4.tgz#6a7b36ac0667d2595281e18f78c37aa185cbb795"
+  integrity sha512-Cq13priGy7faL6aghrE442fy4g33hEFJ/dK0MWFilfmlUGDVPB8y/yKt1tPyO7YrFN5wVZbzEl7YXevrRevkgQ==
+  dependencies:
+    rxjs ">=6.0.0"
+
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.8.5.tgz#51b1c5fe6576a34953bf4b253df9f0d490d9e359"
@@ -6432,7 +6439,7 @@ rxjs@6.4.0:
   dependencies:
     tslib "^1.9.0"
 
-rxjs@^6.4.0, rxjs@^6.5.4:
+rxjs@>=6.0.0, rxjs@^6.4.0, rxjs@^6.5.4:
   version "6.5.4"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.5.4.tgz#e0777fe0d184cec7872df147f303572d414e211c"
   integrity sha512-naMQXcgEo3csAEGvw/NydRA0fuS2nDZJiw1YUWFKU7aPPAPGZEsD4Iimit96qwCieH6y614MCLYwdkrWx7z/7Q==

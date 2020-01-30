@@ -23,6 +23,7 @@
     "@angular/platform-browser": "~8.2.14",
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
+    "@w11k/ngx-componentdestroyed": "^4.1.4",
     "bulma": "^0.8.0",
     "core-js": "^2.5.4",
     "file-saver": "^2.0.2",

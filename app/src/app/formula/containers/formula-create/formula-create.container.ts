@@ -1,10 +1,10 @@
 import { Formula } from './../../../core/models/formula.model';
 import { FormulaService } from './../../../core/services/formula/formula.service';
-import { switchMap, pluck, takeUntil } from 'rxjs/operators';
-import { ActivatedRoute, Params } from '@angular/router';
+import { pluck, takeUntil } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { ReplaySubject } from 'rxjs';
+import {componentDestroyed} from '@w11k/ngx-componentdestroyed';
 
 @Component({
   selector: 'app-formula-create',
@@ -13,7 +13,6 @@ import { ReplaySubject } from 'rxjs';
 })
 export class FormulaCreateContainer implements OnInit, OnDestroy {
 
-  public destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
   public form: FormGroup;
   public currentFormula: Formula;
 
@@ -27,7 +26,7 @@ export class FormulaCreateContainer implements OnInit, OnDestroy {
 
   async ngOnInit() {
     this.route.params.pipe(
-      takeUntil(this.destroyed$),
+      takeUntil(componentDestroyed(this)),
       pluck('id')).subscribe(id => {
         if (!id) {
           console.log('NO ID');
@@ -40,8 +39,6 @@ export class FormulaCreateContainer implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.destroyed$.next(true);
-    this.destroyed$.complete();
   }
 
   private buildEmptyForm() {
