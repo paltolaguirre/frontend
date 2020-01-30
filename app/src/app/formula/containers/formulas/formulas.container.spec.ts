@@ -79,7 +79,6 @@ describe('FormulasContainer', () => {
     });
   });
 
-
   describe('onDelete', () => {
     it('should delete the formula from the source', async () => {
       const deleteSpy = spyOn(formulaService, 'delete');
