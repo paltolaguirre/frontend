@@ -1,5 +1,3 @@
-@import "~bulma/sass/utilities/_all.sass";
-
 div.formula-create-container {
   margin: 1em;
   padding: 1em 1em 3em 1em;
@@ -11,14 +9,5 @@ div.formula-create-container {
 
   mat-form-field {
     width: 100%;
-  }
-
-  @include tablet {
-    mat-accordion {
-      mat-expansion-panel {
-        // display: none;
-        // padding-right: 15rem;
-      }
-    }
   }
 }

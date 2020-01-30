@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-formula-create',
@@ -7,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FormulaCreateContainer implements OnInit {
 
-  constructor() { }
+  public form: FormGroup;
+
+  constructor(
+    private formBuilder: FormBuilder
+  ) {
+    this.buildEmptyForm();
+  }
 
   ngOnInit() {
   }
 
+  private buildEmptyForm() {
+    this.form = this.formBuilder.group({
+      name: ['', [Validators.required]],
+      description: ['', [Validators.required]]
+    });
+  }
 }
