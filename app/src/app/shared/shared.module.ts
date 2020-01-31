@@ -6,12 +6,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SelectorDefaultComponent } from './selector-default/selector-default.component';
 import { MaterialModule } from '../material.module';
 import { TopMenuToolbarComponent } from './components/top-menu-toolbar/top-menu-toolbar.component';
+import { InfoDialogComponent } from './components/info-dialog/info-dialog.component';
 
 @NgModule({
   declarations: [
     SelectorDefaultComponent,
     TopMenuToolbarComponent,
-    TableRowActionsComponent
+    TableRowActionsComponent,
+    InfoDialogComponent
   ],
   imports: [
     CommonModule,
@@ -20,8 +22,11 @@ import { TopMenuToolbarComponent } from './components/top-menu-toolbar/top-menu-
     MaterialModule,
     RouterModule
   ],
-  entryComponents: [],
+  entryComponents: [
+    InfoDialogComponent
+  ],
   exports: [
+    InfoDialogComponent,
     SelectorDefaultComponent,
     TableRowActionsComponent,
     TopMenuToolbarComponent,

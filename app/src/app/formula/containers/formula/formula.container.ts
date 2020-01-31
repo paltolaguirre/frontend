@@ -1,3 +1,5 @@
+import { InfoDialogComponent } from './../../../shared/components/info-dialog/info-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 import { Formula } from '../../../core/models/formula.model';
 import { FormulaService } from '../../../core/services/formula/formula.service';
 import { pluck, takeUntil } from 'rxjs/operators';
@@ -5,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import {componentDestroyed} from '@w11k/ngx-componentdestroyed';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-formula',
@@ -19,7 +22,9 @@ export class FormulaContainer implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private formulaService: FormulaService
+    private location: Location,
+    private formulaService: FormulaService,
+    private dialog: MatDialog
   ) {
     this.buildEmptyForm();
   }
@@ -45,6 +50,10 @@ export class FormulaContainer implements OnInit, OnDestroy {
     try {
       this.currentFormula = this.formulaService.find(id);
 
+      if (!this.currentFormula) {
+        return this.showNoDataDialog();
+      }
+
       this.buildPreLoadedForm();
     } catch (e) {
       console.log(e);
@@ -55,6 +64,20 @@ export class FormulaContainer implements OnInit, OnDestroy {
     this.form = this.formBuilder.group({
       name: ['', [Validators.required]],
       description: ['', [Validators.required]]
+    });
+  }
+
+  public showNoDataDialog() {
+    const dialogRef = this.dialog.open(InfoDialogComponent, {
+      width: '250px',
+      data: {
+        title: 'Hubo un problema',
+        text: 'No se pudieron cargar los datos de la fórmula, por favor intente nuevamente.'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.location.back();
     });
   }
 

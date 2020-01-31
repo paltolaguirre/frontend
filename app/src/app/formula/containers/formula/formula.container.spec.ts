@@ -1,3 +1,4 @@
+import { MatDialog } from '@angular/material/dialog';
 import { FormulaService } from './../../../core/services/formula/formula.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -11,6 +12,7 @@ describe('FormulaContainer', () => {
   let component: FormulaContainer;
   let fixture: ComponentFixture<FormulaContainer>;
   let formulaService: FormulaService;
+  let dialog: MatDialog;
 
   const fakeFormulaItem = {
     id: 1,
@@ -31,6 +33,7 @@ describe('FormulaContainer', () => {
     .compileComponents();
 
     formulaService = TestBed.get(FormulaService);
+    dialog = TestBed.get(MatDialog);
   }));
 
   beforeEach(() => {
@@ -64,12 +67,13 @@ describe('FormulaContainer', () => {
       expect(buildFormSpy).toHaveBeenCalledTimes(1);
     });
 
-    it('should show an error if the current formula is null', () => {
+    it('should call to showNoDataDialog() if the current formula is null', () => {
       spyOn(formulaService, 'find').and.returnValue(null);
+      const spy = spyOn(component, 'showNoDataDialog');
 
       component.setCurrentFormula(1);
 
-      // expect()
+      expect(spy).toHaveBeenCalledTimes(1);
     });
   });
 });
