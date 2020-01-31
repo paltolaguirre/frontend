@@ -12,6 +12,12 @@ describe('FormulaContainer', () => {
   let fixture: ComponentFixture<FormulaContainer>;
   let formulaService: FormulaService;
 
+  const fakeFormulaItem = {
+    id: 1,
+    name: 'Formula 1',
+    description: 'Esta es una formula'
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ FormulaContainer ],
@@ -38,12 +44,17 @@ describe('FormulaContainer', () => {
   });
 
   describe('setCurrentFormula', () => {
-    it('should get the current formula by id from FormulaService', () => {
-      const findSpy = spyOn(formulaService, 'find');
+    it('should set the current formula', () => {
+      expect(component.currentFormula).toBeNull();
+
+      const findSpy = spyOn(formulaService, 'find').and.returnValue(fakeFormulaItem);
 
       component.setCurrentFormula(1);
 
       expect(findSpy).toHaveBeenCalledWith(1);
+      expect(component.currentFormula).toEqual(fakeFormulaItem);
     });
+
+    // it('should ')
   });
 });
