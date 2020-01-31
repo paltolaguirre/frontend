@@ -57,6 +57,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
       this.buildPreLoadedForm();
     } catch (e) {
       console.log(e);
+      // TODO: Show an error message and log error. (Maybe go back to FormulaList).
     }
   }
 
