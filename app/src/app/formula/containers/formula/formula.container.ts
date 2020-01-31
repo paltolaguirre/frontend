@@ -29,22 +29,39 @@ export class FormulaContainer implements OnInit, OnDestroy {
       takeUntil(componentDestroyed(this)),
       pluck('id')).subscribe(id => {
         if (!id) {
-          console.log('NO ID');
-          return this.currentFormula = null;
+          this.currentFormula = null;
+
+          return this.buildEmptyForm();
         }
 
-        console.log('ID GIVEN: ', id);
-        this.currentFormula = this.formulaService.find(id);
+        this.setCurrentFormula(Number(id));
     });
   }
 
   ngOnDestroy() {
   }
 
+  public setCurrentFormula(id: number) {
+    try {
+      this.currentFormula = this.formulaService.find(id);
+
+      this.buildPreLoadedForm();
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   private buildEmptyForm() {
     this.form = this.formBuilder.group({
       name: ['', [Validators.required]],
       description: ['', [Validators.required]]
+    });
+  }
+
+  public buildPreLoadedForm() {
+    this.form = this.formBuilder.group({
+      name: [this.currentFormula.name, [Validators.required]],
+      description: [this.currentFormula.description, [Validators.required]]
     });
   }
 }

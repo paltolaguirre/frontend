@@ -1,7 +1,13 @@
 <div class="formula-create-container">
-  <h1 class="page-title">
-    Nueva fórmula
+  <h1 *ngIf="currentFormula; else newFormulaTitle" class="page-title">
+    Editar Fórmula
   </h1>
+
+  <ng-template #newFormulaTitle>
+    <h1 class="page-title">
+      Nueva fórmula
+    </h1>
+  </ng-template>
 
   <mat-divider></mat-divider>
 
