@@ -55,6 +55,21 @@ describe('FormulaContainer', () => {
       expect(component.currentFormula).toEqual(fakeFormulaItem);
     });
 
-    // it('should ')
+    it('should build a form with preloaded data', () => {
+      spyOn(formulaService, 'find').and.returnValue(fakeFormulaItem);
+      const buildFormSpy = spyOn(component, 'buildPreLoadedForm');
+
+      component.setCurrentFormula(1);
+
+      expect(buildFormSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should show an error if the current formula is null', () => {
+      spyOn(formulaService, 'find').and.returnValue(null);
+
+      component.setCurrentFormula(1);
+
+      // expect()
+    });
   });
 });
