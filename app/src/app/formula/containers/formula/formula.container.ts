@@ -77,7 +77,10 @@ export class FormulaContainer implements OnInit, OnDestroy {
       }
     });
 
-    dialogRef.afterClosed().subscribe(() => {
+    dialogRef.afterClosed()
+      .pipe(
+        takeUntil(componentDestroyed(this))
+      ).subscribe(() => {
       this.location.back();
     });
   }
