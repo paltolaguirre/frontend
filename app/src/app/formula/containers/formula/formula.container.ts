@@ -1,9 +1,10 @@
+import { PrintService } from './../../../print/print.service';
 import { InfoDialogComponent } from './../../../shared/components/info-dialog/info-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Formula } from '../../../core/models/formula.model';
 import { FormulaService } from '../../../core/services/formula/formula.service';
 import { pluck, takeUntil } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import {componentDestroyed} from '@w11k/ngx-componentdestroyed';
@@ -24,7 +25,9 @@ export class FormulaContainer implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private location: Location,
     private formulaService: FormulaService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private printService: PrintService,
+    private router: Router
   ) {
     this.buildEmptyForm();
   }
@@ -90,5 +93,18 @@ export class FormulaContainer implements OnInit, OnDestroy {
       name: [this.currentFormula.name, [Validators.required]],
       description: [this.currentFormula.description, [Validators.required]]
     });
+  }
+
+  public onClickSave() {
+    console.log(this.form.value);
+    // TODO save.
+  }
+
+  public async onClickAbort() {
+    await this.router.navigate(['/formulas']);
+  }
+
+  public onPrintClick() {
+    this.printService.printTOPDF();
   }
 }
