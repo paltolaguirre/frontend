@@ -470,8 +470,14 @@ export class SiradigShowComponent implements OnInit {
 
     const legajo = await this.legajoService.getLegajo(data.legajoid);
     data.legajo = legajo;
+    data.detallecargofamiliarsiradig = [];
+    data.importegananciasotroempleosiradig = [];
+    data.deducciondesgravacionsiradig = [];
+    data.retencionpercepcionsiradig = [];
+    data.beneficiosiradig = [];
+    data.ajustesiradig = [];
 
-    //this.procesarSiradig(data);
+    this.procesarSiradig(data);
   }
   
   existe(array, codigo) {
