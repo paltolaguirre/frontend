@@ -1,12 +1,12 @@
 import { ListaItems, LiquidacionService } from '../liquidacion.service';
 import { Liquidacion } from '../liquidacion.model';
 import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { merge, Observable, of as observableOf } from 'rxjs';
-import { catchError, map, startWith, switchMap } from 'rxjs/operators';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
 import { NotificationService } from 'src/app/handler-error/notification.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
 import { PrintService } from 'src/app/print/print.service';
 import { DuplicarDialogComponent } from './duplicar-dialog/duplicar-dialog.component';
 import { ContabilizarDialogComponent } from './contabilizar-dialog/contabilizar-dialog.component';
@@ -40,14 +40,13 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
   isRateLimitReached = false;
   disabled = false;
 
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   liquidacionID$: Observable<String>;
   public currentLiquidacion$: Observable<Liquidacion> = null;
   id: number;
 
   constructor(
-    private route: ActivatedRoute,
     private liquidacionService: LiquidacionService,
     public dialog: MatDialog,
     private notificationService: NotificationService,

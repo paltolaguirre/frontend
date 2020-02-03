@@ -6,7 +6,7 @@ import { NovedadRoutingModule } from './novedad-routing.module';
 
 import { SharedModule } from '../shared/shared.module';
 import { NovedadComponent } from './novedad/novedad.component';
-import { DemoMaterialModule } from '../material.module';
+import { MaterialModule } from '../material.module';
 import { NovedadListComponent } from './novedad-list/novedad-list.component';
 import { ActionsComponent } from './novedad-list/actions/actions.component';
 
@@ -16,7 +16,7 @@ import { ActionsComponent } from './novedad-list/actions/actions.component';
     CommonModule,
     FormsModule,
     NovedadRoutingModule,
-    DemoMaterialModule,
+    MaterialModule,
     SharedModule
   ],
   entryComponents: [
