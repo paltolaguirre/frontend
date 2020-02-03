@@ -3,8 +3,10 @@ import { Liquidacion, Liquidacionitem, LiquidacionItems } from '../liquidacion.m
 import { formatDate } from "@angular/common";
 import { FormControl ,} from '@angular/forms';
 import { Component, ViewChild, AfterViewInit, OnInit , Inject } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { merge, Observable, of as observableOf, of } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { NotificationService } from 'src/app/handler-error/notification.service';
@@ -376,7 +378,13 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   async onClickCalculoAutomatico(currentLiquidacion: Liquidacion) {
     this.formatData(currentLiquidacion);
     const data = await this.liquidacionService.calculoAutomaticoLiquidacion(currentLiquidacion);
-    currentLiquidacion.liquidacionitems = data.liquidacionitems;
+    if(currentLiquidacion.liquidacionitems.length == data.liquidacionitems.length) {
+      data.liquidacionitems.forEach((element, index) => {
+        if(currentLiquidacion.liquidacionitems[index].conceptoid == element.conceptoid) {
+          currentLiquidacion.liquidacionitems[index].importeunitario = element.importeunitario;
+        }
+      });
+    }
   }
 
   setCurrentLiquidacion(liquidacion: Liquidacion) {

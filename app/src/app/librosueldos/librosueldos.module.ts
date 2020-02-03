@@ -1,3 +1,4 @@
+import { MaterialModule } from './../material.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -5,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { LibrosueldosRoutingModule } from './librosueldos-routing.module';
 
 import { SharedModule } from '../shared/shared.module';
-import { DemoMaterialModule } from '../material.module';
 import { LibrosueldosListComponent } from './librosueldos-list/librosueldos-list.component';
 import { ActionsComponent } from './librosueldos-list/actions/actions.component';
 import { LibrosueldosListPrintComponent } from './librosueldos-list/librosueldos-list-print/librosueldos-list-print.component';
@@ -19,8 +19,8 @@ import { LibrosueldosEncabezadoPrintComponent } from './librosueldos-list/libros
     CommonModule,
     FormsModule,
     LibrosueldosRoutingModule,
-    DemoMaterialModule,
     SharedModule,
+    MaterialModule,
     LiquidacionModule
   ],
   entryComponents: [
