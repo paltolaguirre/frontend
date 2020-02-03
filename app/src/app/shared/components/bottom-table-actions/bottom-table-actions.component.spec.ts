@@ -1,3 +1,4 @@
+import { PrintServiceMock } from './../../../core/mocks/print.service.mock';
 import { PrintService } from './../../../print/print.service';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
@@ -10,7 +11,10 @@ describe('BottomTableActionsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BottomTableActionsComponent ]
+      declarations: [ BottomTableActionsComponent ],
+      providers: [
+        { provide: PrintService, useClass: PrintServiceMock }
+      ]
     })
     .compileComponents();
 
