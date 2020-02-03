@@ -475,6 +475,10 @@ export class SiradigShowComponent implements OnInit {
   }
   
   existe(array, codigo) {
-    return array.findIndex(element => element.siradigtipogrilla.codigo == codigo && element.DeletedAt == null) >= 0;
+    if(array) {
+      return array.findIndex(element => element.siradigtipogrilla.codigo == codigo && element.DeletedAt == null) >= 0;
+    } else {
+      return false;
+    }
   }
 }

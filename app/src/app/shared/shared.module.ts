@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SelectorDefaultComponent } from './selector-default/selector-default.component';
-import { DemoMaterialModule } from '../material.module';
+import { MaterialModule } from '../material.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +12,7 @@ import { DemoMaterialModule } from '../material.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    DemoMaterialModule
+    MaterialModule
   ],
   entryComponents: [],
   exports: [SelectorDefaultComponent]

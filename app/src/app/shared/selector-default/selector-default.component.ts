@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import { Observable } from 'rxjs';
 import { SelectorService } from './selector-default.service';
 import { startWith, map } from 'rxjs/operators';
