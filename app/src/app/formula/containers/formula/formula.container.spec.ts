@@ -1,3 +1,4 @@
+import { SharedModule } from './../../../shared/shared.module';
 import { MatDialog } from '@angular/material/dialog';
 import { FormulaService } from './../../../core/services/formula/formula.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -27,7 +28,8 @@ describe('FormulaContainer', () => {
         MaterialModule,
         ReactiveFormsModule,
         RouterTestingModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        SharedModule
       ]
     })
     .compileComponents();
