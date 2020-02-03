@@ -7,13 +7,15 @@ import { SelectorDefaultComponent } from './selector-default/selector-default.co
 import { MaterialModule } from '../material.module';
 import { TopMenuToolbarComponent } from './components/top-menu-toolbar/top-menu-toolbar.component';
 import { InfoDialogComponent } from './components/info-dialog/info-dialog.component';
+import { BottomTableActionsComponent } from './components/bottom-table-actions/bottom-table-actions.component';
 
 @NgModule({
   declarations: [
     SelectorDefaultComponent,
     TopMenuToolbarComponent,
     TableRowActionsComponent,
-    InfoDialogComponent
+    InfoDialogComponent,
+    BottomTableActionsComponent
   ],
   imports: [
     CommonModule,
@@ -26,6 +28,7 @@ import { InfoDialogComponent } from './components/info-dialog/info-dialog.compon
     InfoDialogComponent
   ],
   exports: [
+    BottomTableActionsComponent,
     InfoDialogComponent,
     SelectorDefaultComponent,
     TableRowActionsComponent,
