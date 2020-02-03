@@ -1,4 +1,3 @@
-import { PrintService } from './../../../print/print.service';
 import { InfoDialogComponent } from './../../../shared/components/info-dialog/info-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Formula } from '../../../core/models/formula.model';
@@ -26,7 +25,6 @@ export class FormulaContainer implements OnInit, OnDestroy {
     private location: Location,
     private formulaService: FormulaService,
     private dialog: MatDialog,
-    private printService: PrintService,
     private router: Router
   ) {
     this.buildEmptyForm();
@@ -95,16 +93,12 @@ export class FormulaContainer implements OnInit, OnDestroy {
     });
   }
 
-  public onClickSave() {
+  public save() {
     console.log(this.form.value);
     // TODO save.
   }
 
-  public async onClickAbort() {
+  public async abort() {
     await this.router.navigate(['/formulas']);
-  }
-
-  public onPrintClick() {
-    this.printService.printTOPDF();
   }
 }

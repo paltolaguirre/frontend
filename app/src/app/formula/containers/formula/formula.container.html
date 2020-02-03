@@ -42,9 +42,9 @@
     
   </div>
 
-  <div mat-dialog-actions class="actions">
-    <button mat-raised-button color="primary" mat-button (click)="onClickSave()">Guardar</button>
-    <button mat-raised-button mat-button color="secondary"  (click)="onClickAbort()">Cerrar</button>
-    <button *ngIf="currentFormula" mat-raised-button color="secondary" mat-button (click)="onPrintClick()">Imprimir</button>
-  </div>
+  <app-bottom-table-actions
+   [isNew]="!currentFormula"
+   (saveEmitter)="save()"
+   (abortEmitter)="abort()">
+  </app-bottom-table-actions>
 </div>
