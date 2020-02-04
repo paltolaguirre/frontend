@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SelectorDefaultComponent } from './selector-default/selector-default.component';
 import { MaterialModule } from '../material.module';
+import { YearSelectorComponent } from './components/year-selector/year-selector.component';
 
 @NgModule({
   declarations: [
-    SelectorDefaultComponent
+    SelectorDefaultComponent,
+    YearSelectorComponent
   ],
   imports: [
     CommonModule,
@@ -15,6 +17,9 @@ import { MaterialModule } from '../material.module';
     MaterialModule
   ],
   entryComponents: [],
-  exports: [SelectorDefaultComponent]
+  exports: [
+    SelectorDefaultComponent,
+    YearSelectorComponent
+  ]
 })
 export class SharedModule { }
