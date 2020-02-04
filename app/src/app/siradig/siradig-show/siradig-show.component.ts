@@ -19,7 +19,7 @@ export class SiradigShowComponent implements OnInit {
   public currentItem$: Observable<Siradig> = null;
   public print$: Observable<boolean> = null;
   id: number;
-  public startDate$: Observable<Date>;
+  public defaultDate$: Observable<Date>;
 
   hijossiradig: any[];
   conyugesiradig: any;
@@ -53,7 +53,7 @@ export class SiradigShowComponent implements OnInit {
         const siradig = await this.siradigService.getSiradig(this.id);
 
         this.procesarSiradig(siradig);
-        this.setStartDate(siradig);
+        this.setDefaultDate(siradig);
 
         return siradig;
       })
@@ -75,8 +75,8 @@ export class SiradigShowComponent implements OnInit {
     this.router.navigate(['/siradig']);
   }
 
-  private setStartDate(siradig: Siradig) {
-    this.startDate$ = new Observable((observer) => {
+  private setDefaultDate(siradig: Siradig) {
+    this.defaultDate$ = new Observable((observer) => {
       observer.next(this.getSiradigPeriodDate(siradig.periodosiradig));
       observer.complete();
     });
