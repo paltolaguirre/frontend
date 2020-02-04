@@ -19,7 +19,7 @@ export class SiradigShowComponent implements OnInit {
   public currentItem$: Observable<Siradig> = null;
   public print$: Observable<boolean> = null;
   id: number;
-  public startDate: Date;
+  public startDate$: Observable<Date>;
 
   hijossiradig: any[];
   conyugesiradig: any;
@@ -76,11 +76,19 @@ export class SiradigShowComponent implements OnInit {
   }
 
   private setStartDate(siradig: Siradig) {
-    this.startDate = this.getSiradigPeriodDate(siradig.periodosiradig);
+    this.startDate$ = new Observable((observer) => {
+      observer.next(this.getSiradigPeriodDate(siradig.periodosiradig));
+      observer.complete();
+    });
   }
 
   public onDatePickerChange(event, data) {
     data.periodosiradig = event;
+  }
+
+  public onYearSelectChange(payload: number, data: Siradig) {
+    const date = new Date(payload, 0, 1).toISOString();
+    data.periodosiradig = date;
   }
 
   onClickAbort(): void {

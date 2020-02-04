@@ -17,26 +17,10 @@
       <app-selector-default nombre="legajo" [(matSelect)]="data.legajoid" (optionSelected)="legajoSelected($event, data)">
       </app-selector-default>
 
-        <!--<mat-form-field class="standard-input">
-          <input required=true matInput type="number" placeholder="Periodo" [value]="getYear(data.periodosiradig)" (change)="data.periodosiradig=getDateFromYear($event)" autocomplete="off" min="1950" [max]="currentYear">
-        </mat-form-field>-->
-
-        <!--<mat-form-field>
-          <input 
-            matInput 
-            [matDatepicker]="picker" 
-            placeholder="Período"
-            (ngModelChange)="onDatePickerChange($event, data)"
-            [min]="minDate" [max]="currentDate"
-            [formControl]="startDate">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker startView="year" #picker></mat-datepicker>
-        </mat-form-field>-->
-
-        <app-year-selector
-          [defaultDate]="startDate">
-        </app-year-selector>
-
+      <app-year-selector
+        [defaultDate]="startDate$"
+        (yearEmitter)="onYearSelectChange($event, data)">
+      </app-year-selector>
     </div>
 
     <div>
