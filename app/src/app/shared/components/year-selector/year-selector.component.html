@@ -1,1 +1,18 @@
-<p>year-selector works!</p>
+<!-- <mat-form-field class="selector"> -->
+  <!-- <input type="text" [required]="required" [placeholder]="placeholder" aria-label="Assignee" matInput [formControl]="myControl" (focusout)="closed($event)"
+    [matAutocomplete]="auto" minlength="5" autocomplete="off">
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="itemSelected($event)">
+    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+      {{option.nombre}}
+    </mat-option> -->
+  <!-- </mat-autocomplete> -->
+<!-- </mat-form-field> -->
+
+<mat-form-field class="selector">
+  <mat-label>Período</mat-label>
+  <mat-select [(ngModel)]="selectedYear" (ngModelChange)="onSelectorChange()" name="year">
+    <mat-option *ngFor="let year of years" [value]="year">
+      {{ year }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
