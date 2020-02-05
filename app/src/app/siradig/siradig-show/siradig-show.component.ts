@@ -99,26 +99,28 @@ export class SiradigShowComponent implements OnInit {
     //if(this.faltanRequeridos()) return null;
 
     // Se elimina
-    if(this.conyugesiradig.ID && !this.conyugesiradig.aplica) {
+    if(this.conyugesiradig && this.conyugesiradig.ID && !this.conyugesiradig.aplica) {
       this.conyugesiradig.DeletedAt = new Date();
       data.detallecargofamiliarsiradig.push(this.conyugesiradig);
     }
     // Se crea o actualiza
-    if(this.conyugesiradig.aplica) {
+    if(this.conyugesiradig && this.conyugesiradig.aplica) {
       data.detallecargofamiliarsiradig.push(this.conyugesiradig);
     }
 
-    this.hijossiradig.forEach(hijo => {
-      // Se elimina
-      if(hijo.ID && !hijo.aplica) {
-        hijo.DeletedAt = new Date();
-        data.detallecargofamiliarsiradig.push(hijo);
-      }
-      // Se crea o actualiza
-      if(hijo.aplica) {
-        data.detallecargofamiliarsiradig.push(hijo);
-      }
-    });
+    if(this.hijossiradig) {
+      this.hijossiradig.forEach(hijo => {
+        // Se elimina
+        if(hijo.ID && !hijo.aplica) {
+          hijo.DeletedAt = new Date();
+          data.detallecargofamiliarsiradig.push(hijo);
+        }
+        // Se crea o actualiza
+        if(hijo.aplica) {
+          data.detallecargofamiliarsiradig.push(hijo);
+        }
+      });
+    }
 
     let item: Siradig;
 
