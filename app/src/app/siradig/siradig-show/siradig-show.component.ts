@@ -516,4 +516,8 @@ export class SiradigShowComponent implements OnInit {
       return false;
     }
   }
+
+  public updateMonthlyReportItem(data: Siradig, item: any, monthIndex: number) {
+    item.mes = this.getDateFromYearMonth(this.getYear(data.periodosiradig), monthIndex);
+  }
 }

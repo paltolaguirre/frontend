@@ -14,7 +14,11 @@ export class DateUtilsService {
     ];
   }
 
-  public getMonthName(date: Date) {
+  public getMonthNames(): string[] {
+    return this.monthNames;
+  }
+
+  public getMonthName(date: Date): string {
     return this.monthNames[date.getMonth()];
   }
 }
