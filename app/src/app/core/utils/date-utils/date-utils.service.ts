@@ -21,4 +21,8 @@ export class DateUtilsService {
   public getMonthName(date: Date): string {
     return this.monthNames[date.getMonth()];
   }
+
+  public getMonthIndexFromName(monthName: string) {
+    return this.monthNames.indexOf(monthName);
+  }
 }
