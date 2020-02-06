@@ -20,6 +20,7 @@ export class SiradigShowComponent implements OnInit {
   public print$: Observable<boolean> = null;
   id: number;
   public defaultDate$: Observable<Date>;
+  public selectedMonthsFromMonthlyReports: number[] = [];
 
   hijossiradig: any[];
   conyugesiradig: any;
@@ -51,6 +52,8 @@ export class SiradigShowComponent implements OnInit {
 
         this.id = +params.get('id');
         const siradig = await this.siradigService.getSiradig(this.id);
+
+        console.log("SIRADIG:", siradig);
 
         this.procesarSiradig(siradig);
         this.setDefaultDate(siradig);
@@ -523,5 +526,13 @@ export class SiradigShowComponent implements OnInit {
 
   public updateMonthlyReportItem(data: Siradig, item: any, monthIndex: number) {
     item.mes = this.getDateFromYearMonth(this.getYear(data.periodosiradig), monthIndex);
+
+    this.updateSelectedMonthsFromMonthlyReports(data);
+  }
+
+  private updateSelectedMonthsFromMonthlyReports(data: Siradig) {
+    this.selectedMonthsFromMonthlyReports = data.importegananciasotroempleosiradig.map((monthlyReport: any) => {
+      return new Date(monthlyReport.mes).getMonth();
+    });
   }
 }
