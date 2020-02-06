@@ -8,7 +8,7 @@ import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 })
 export class MonthSelectorComponent implements OnInit {
   @Input() defaultDate: Date;
-  @Input() selectedMonths: number[];
+  @Input() selectedMonths?: number[];
   @Output() monthIndexEmitter: EventEmitter<number> = new EventEmitter();
 
   public months: string[] = [];

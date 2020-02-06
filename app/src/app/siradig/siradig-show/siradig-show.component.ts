@@ -52,8 +52,6 @@ export class SiradigShowComponent implements OnInit {
         this.id = +params.get('id');
         const siradig = await this.siradigService.getSiradig(this.id);
 
-        console.log("SIRADIG:", siradig);
-
         this.procesarSiradig(siradig);
         this.setDefaultDate(siradig);
 
