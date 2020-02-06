@@ -1,8 +1,6 @@
-import { FormControl } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { MatDialog } from '@angular/material';
-import { NotificationService } from 'src/app/handler-error/notification.service';
 import { PrintService } from 'src/app/print/print.service';
 import { switchMap } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
@@ -34,7 +32,8 @@ export class SiradigShowComponent implements OnInit {
     public dialog: MatDialog,
     private router: Router,
     public printService: PrintService,
-    private legajoService: LegajoService, 
+    private legajoService: LegajoService,
+    private cdr: ChangeDetectorRef
   ) {
     this.currentDate = new Date();
     this.currentYear = this.currentDate.getFullYear();
@@ -534,5 +533,7 @@ export class SiradigShowComponent implements OnInit {
     this.selectedMonthsFromMonthlyReports = data.importegananciasotroempleosiradig.map((monthlyReport: any) => {
       return new Date(monthlyReport.mes).getMonth();
     });
+
+    this.cdr.detectChanges();
   }
 }

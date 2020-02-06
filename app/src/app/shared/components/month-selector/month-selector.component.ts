@@ -31,6 +31,8 @@ export class MonthSelectorComponent implements OnInit {
     }
 
     this.selectedMonth = this.dateUtils.getMonthName(this.defaultDate);
+
+    this.onSelectorChange();
   }
 
   public onSelectorChange() {
@@ -39,9 +41,22 @@ export class MonthSelectorComponent implements OnInit {
     this.monthIndexEmitter.emit(index);
   }
 
-  public isDisabled(month: string): boolean {
-    const index = this.dateUtils.getMonthIndexFromName(month);
+  public isDisabled(optionMonthName: string): boolean {
+    if (!this.selectedMonths) {
+      return false;
+    }
 
-    return !!this.selectedMonths.find((monthIndex) => monthIndex === index);
+    const optionMonthIndex: number = this.dateUtils.getMonthIndexFromName(optionMonthName);
+    const optionMonthAlreadySelectedInTheTable: boolean =
+      this.selectedMonths.some((selectedMonthIndex) => selectedMonthIndex === optionMonthIndex);
+
+    const selectedMonth: number = this.selectedMonths.find((index) => index === optionMonthIndex);
+    const indexOfSelectedMonth: number = this.dateUtils.getMonthIndexFromName(this.selectedMonth);
+    const isOptionCurrentlyOpen: boolean = selectedMonth === indexOfSelectedMonth;
+
+    return (
+      optionMonthAlreadySelectedInTheTable &&
+      !isOptionCurrentlyOpen
+    );
   }
 }
