@@ -283,6 +283,10 @@ export class SiradigShowComponent implements OnInit {
   }
 
   getSiradigPeriodDate(date): Date {
+    if (!date) {
+      return null;
+    }
+
     return new Date(date);
   }
 
