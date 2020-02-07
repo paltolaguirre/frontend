@@ -1,3 +1,4 @@
+import { Formula } from 'src/app/core/models/formula.model';
 import { ConceptoService } from '../concepto.service';
 import { Concepto } from '../concepto.model';
 import { Component, AfterViewInit, OnInit } from '@angular/core';
@@ -11,12 +12,14 @@ import { PrintService } from 'src/app/print/print.service';
 @Component({
   selector: 'app-concepto',
   templateUrl: './concepto.component.html',
-  styleUrls: ['./concepto.component.css']
+  styleUrls: ['./concepto.component.scss']
 })
 export class ConceptoComponent implements OnInit, AfterViewInit {
   public currentConcepto$: Observable<Concepto> = null;
   paises: any[];
   id: number;
+  public selectedFormula: Formula;
+  public selectedGroupAutomaticCalculation: string;
   
   constructor(
     private route: ActivatedRoute,
@@ -128,5 +131,9 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
       }
     }
     return false;
+  }
+
+  public onAutomaticCalcGroupSelected() {
+    console.log(this.selectedGroupAutomaticCalculation);
   }
 }
