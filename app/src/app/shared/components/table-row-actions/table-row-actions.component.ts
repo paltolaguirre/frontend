@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'app-table-row-actions',
@@ -6,6 +6,8 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./table-row-actions.component.scss']
 })
 export class TableRowActionsComponent implements OnInit {
+  @Input() editIconEnabled: boolean;
+  @Input() deleteIconEnabled: boolean;
   @Output() editEmitter: EventEmitter<any> = new EventEmitter();
   @Output() deleteEmitter: EventEmitter<any> = new EventEmitter();
 

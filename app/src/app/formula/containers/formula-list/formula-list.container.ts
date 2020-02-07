@@ -16,7 +16,7 @@ export class FormulaListContainer implements OnInit, AfterViewInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['Formula', 'Nombre', 'Descripcion', 'Acciones'];
+  displayedColumns: string[] = ['Nombre', 'Acciones'];
   dataSource: MatTableDataSource<Formula> = new MatTableDataSource<Formula>();
 
   resultsLength = 0;
