@@ -13,50 +13,45 @@
 
   <div mat-dialog-content class="content" id="contentTOPDF">
 
-    <mat-accordion>
-      <mat-expansion-panel class="space-right" expanded>
+    <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
+      <mat-accordion>
+        <mat-expansion-panel class="space-right" expanded>
 
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Datos Básicos
-          </mat-panel-title>
-        </mat-expansion-panel-header>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Datos Básicos
+            </mat-panel-title>
+          </mat-expansion-panel-header>
 
-        <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
-          <div class="columns">
-            <div class="column is-5">
-              <mat-form-field>
-                <input matInput type="text" formControlName="name" placeholder="Nombre" cdkFocusInitial autocomplete="off">
-              </mat-form-field>
+            <div class="columns">
+              <div class="column is-5">
+                <mat-form-field>
+                  <input matInput type="text" formControlName="name" placeholder="Nombre" cdkFocusInitial autocomplete="off">
+                </mat-form-field>
+              </div>
             </div>
-          </div>
-          <div class="columns">
-            <div class="column is-9">
-              <mat-form-field>
-                <input matInput type="text" formControlName="description" placeholder="Descripción" autocomplete="off">
-              </mat-form-field>
+            <div class="columns">
+              <div class="column is-9">
+                <mat-form-field>
+                  <input matInput type="text" formControlName="description" placeholder="Descripción" autocomplete="off">
+                </mat-form-field>
+              </div>
             </div>
-          </div>
 
-          <mat-expansion-panel class="no-shadow" [togglePosition]="'before'">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                Más Opciones
-              </mat-panel-title>
-              <!-- <mat-panel-description>
-                Type your name and age
-              </mat-panel-description> -->
-            </mat-expansion-panel-header>
-        
-            <mat-form-field>
-              <mat-label>First name</mat-label>
-              <input matInput>
-            </mat-form-field>
-          </mat-expansion-panel>
-        </form>
-        
-      </mat-expansion-panel>
-    </mat-accordion>
+            <mat-expansion-panel class="no-shadow" [togglePosition]="'before'">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Más Opciones
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+          
+              Crear opciones acá
+            </mat-expansion-panel>
+          
+        </mat-expansion-panel>
+      </mat-accordion>
+
+    </form>
     
   </div>
 
