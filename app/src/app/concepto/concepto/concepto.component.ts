@@ -1,3 +1,4 @@
+import { FormulaService } from './../../core/services/formula/formula.service';
 import { Formula } from 'src/app/core/models/formula.model';
 import { ConceptoService } from '../concepto.service';
 import { Concepto } from '../concepto.model';
@@ -20,6 +21,7 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
   id: number;
   public selectedFormula: Formula;
   public selectedGroupAutomaticCalculation: string;
+  public availableFormulas: Formula[];
   
   constructor(
     private route: ActivatedRoute,
@@ -27,7 +29,8 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog,
     private notificationService: NotificationService,
     private router: Router,
-    public printService : PrintService
+    public printService : PrintService,
+    private formulaService: FormulaService
     ) { }
 
  async ngOnInit() {
@@ -43,10 +46,20 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
         return concepto;
       })
     );
+
+    this.fetchFormulas();
   }
 
   ngAfterViewInit() {
 
+  }
+
+  public async fetchFormulas() {
+    try {
+      this.availableFormulas = await this.formulaService.getAll();
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   private gotoGrilla() {

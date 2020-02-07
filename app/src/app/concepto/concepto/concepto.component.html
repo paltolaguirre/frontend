@@ -70,8 +70,8 @@
             <mat-form-field class="selector">
               <mat-label>Seleccionar Fórmula</mat-label>
               <mat-select [(ngModel)]="selectedFormula" name="formula" [disabled]="selectedGroupAutomaticCalculation !== 'formulas'">
-                <mat-option [value]="'test'">
-                  Formula de ejemplo  
+                <mat-option *ngFor="let formula of availableFormulas" [value]="formula">
+                  {{ formula.name }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
