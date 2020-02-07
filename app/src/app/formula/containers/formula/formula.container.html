@@ -18,23 +18,41 @@
 
         <mat-expansion-panel-header>
           <mat-panel-title>
-            Datos de la formula (?)
+            Datos Básicos
           </mat-panel-title>
         </mat-expansion-panel-header>
 
         <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
           <div class="columns">
-            <div class="column">
+            <div class="column is-5">
               <mat-form-field>
                 <input matInput type="text" formControlName="name" placeholder="Nombre" cdkFocusInitial autocomplete="off">
               </mat-form-field>
             </div>
-            <div class="column">
+          </div>
+          <div class="columns">
+            <div class="column is-9">
               <mat-form-field>
-                <input matInput type="text" formControlName="description" placeholder="Descripción">
+                <input matInput type="text" formControlName="description" placeholder="Descripción" autocomplete="off">
               </mat-form-field>
             </div>
           </div>
+
+          <mat-expansion-panel class="no-shadow" [togglePosition]="'before'">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Más Opciones
+              </mat-panel-title>
+              <!-- <mat-panel-description>
+                Type your name and age
+              </mat-panel-description> -->
+            </mat-expansion-panel-header>
+        
+            <mat-form-field>
+              <mat-label>First name</mat-label>
+              <input matInput>
+            </mat-form-field>
+          </mat-expansion-panel>
         </form>
         
       </mat-expansion-panel>

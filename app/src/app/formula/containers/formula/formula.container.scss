@@ -7,6 +7,10 @@ div.formula-create-container {
     font: 500 20px/32px Roboto,"Helvetica Neue",sans-serif;
   }
 
+  .no-shadow {
+    box-shadow: none;
+  }
+
   mat-form-field {
     width: 100%;
   }
