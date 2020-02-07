@@ -84,6 +84,26 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
+
+              <div class="columns" *ngIf="selectedFormula">
+                <div class="column is-3">
+                  <mat-form-field>
+                    <mat-label>Período desde</mat-label>
+                    <input matInput [matDatepicker]="fromDatePicker" [value]="formulaFromDate" readonly required>
+                    <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #fromDatePicker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div class="column is-3">
+                  <mat-form-field>
+                    <mat-label>Período hasta</mat-label>
+                    <input matInput [matDatepicker]="toDatePicker" [value]="toDatePicker" readonly required>
+                    <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #toDatePicker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </div>
+              
             </div>
           </div>
         </mat-radio-group>

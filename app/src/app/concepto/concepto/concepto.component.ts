@@ -23,7 +23,9 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
   public selectedFormula: Formula;
   public selectedGroupAutomaticCalculation: string;
   public availableFormulas: Formula[];
-  
+  public formulaFromDate: Date;
+  public formulaToDate: Date;
+
   constructor(
     private route: ActivatedRoute,
     private conceptoService: ConceptoService,
