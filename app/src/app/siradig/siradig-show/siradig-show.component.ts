@@ -1,6 +1,6 @@
+import { FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
-import { LiquidacionService } from 'src/app/liquidacion/liquidacion.service';
 import { MatDialog } from '@angular/material';
 import { NotificationService } from 'src/app/handler-error/notification.service';
 import { PrintService } from 'src/app/print/print.service';
@@ -8,7 +8,6 @@ import { switchMap } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
 import { SiradigService } from '../siradig.service';
 import { Siradig } from '../siradig.model';
-import { calculateBorderBoxPath } from 'html2canvas/dist/types/render/bound-curves';
 import { LegajoService } from 'src/app/legajo/legajo.service';
 
 @Component({
@@ -20,20 +19,28 @@ export class SiradigShowComponent implements OnInit {
   public currentItem$: Observable<Siradig> = null;
   public print$: Observable<boolean> = null;
   id: number;
+  public defaultDate$: Observable<Date>;
 
   hijossiradig: any[];
   conyugesiradig: any;
-  currentYear = new Date().getFullYear();
+  currentDate: Date;
+  currentYear;
+  minDate: Date;
 
   constructor(
     private route: ActivatedRoute,
     private siradigService: SiradigService, 
     public dialog: MatDialog,
-    private notificationService: NotificationService,
     private router: Router,
     public printService: PrintService,
     private legajoService: LegajoService, 
-  ) { }
+  ) {
+    this.currentDate = new Date();
+    this.currentYear = this.currentDate.getFullYear();
+
+    this.minDate = new Date();
+    this.minDate.setFullYear(1950);
+  }
 
   ngOnInit() {
     this.currentItem$ = this.route.paramMap.pipe(
@@ -41,12 +48,12 @@ export class SiradigShowComponent implements OnInit {
         if (params.get('id') == "nuevo") {
           console.log("Nuevo SiRADIG");
         }
+
         this.id = +params.get('id');
         const siradig = await this.siradigService.getSiradig(this.id);
 
-        console.log(siradig);
-        
         this.procesarSiradig(siradig);
+        this.setDefaultDate(siradig);
 
         return siradig;
       })
@@ -68,6 +75,22 @@ export class SiradigShowComponent implements OnInit {
     this.router.navigate(['/siradig']);
   }
 
+  private setDefaultDate(siradig: Siradig) {
+    this.defaultDate$ = new Observable((observer) => {
+      observer.next(this.getSiradigPeriodDate(siradig.periodosiradig));
+      observer.complete();
+    });
+  }
+
+  public onDatePickerChange(event, data) {
+    data.periodosiradig = event;
+  }
+
+  public onYearSelectChange(payload: number, data: Siradig) {
+    const date = new Date(payload, 0, 1).toISOString();
+    data.periodosiradig = date;
+  }
+
   onClickAbort(): void {
     this.gotoGrilla();
   }
@@ -76,26 +99,28 @@ export class SiradigShowComponent implements OnInit {
     //if(this.faltanRequeridos()) return null;
 
     // Se elimina
-    if(this.conyugesiradig.ID && !this.conyugesiradig.aplica) {
+    if(this.conyugesiradig && this.conyugesiradig.ID && !this.conyugesiradig.aplica) {
       this.conyugesiradig.DeletedAt = new Date();
       data.detallecargofamiliarsiradig.push(this.conyugesiradig);
     }
     // Se crea o actualiza
-    if(this.conyugesiradig.aplica) {
+    if(this.conyugesiradig && this.conyugesiradig.aplica) {
       data.detallecargofamiliarsiradig.push(this.conyugesiradig);
     }
 
-    this.hijossiradig.forEach(hijo => {
-      // Se elimina
-      if(hijo.ID && !hijo.aplica) {
-        hijo.DeletedAt = new Date();
-        data.detallecargofamiliarsiradig.push(hijo);
-      }
-      // Se crea o actualiza
-      if(hijo.aplica) {
-        data.detallecargofamiliarsiradig.push(hijo);
-      }
-    });
+    if(this.hijossiradig) {
+      this.hijossiradig.forEach(hijo => {
+        // Se elimina
+        if(hijo.ID && !hijo.aplica) {
+          hijo.DeletedAt = new Date();
+          data.detallecargofamiliarsiradig.push(hijo);
+        }
+        // Se crea o actualiza
+        if(hijo.aplica) {
+          data.detallecargofamiliarsiradig.push(hijo);
+        }
+      });
+    }
 
     let item: Siradig;
 
@@ -255,6 +280,10 @@ export class SiradigShowComponent implements OnInit {
 
   getYear(fecha) {
     return new Date(fecha).getFullYear();
+  }
+
+  getSiradigPeriodDate(date): Date {
+    return new Date(date);
   }
 
   getMonth(fecha, periodosiradig=null) {

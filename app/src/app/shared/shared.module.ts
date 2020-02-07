@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SelectorDefaultComponent } from './selector-default/selector-default.component';
 import { MaterialModule } from '../material.module';
+import { YearSelectorComponent } from './components/year-selector/year-selector.component';
 import { TopMenuToolbarComponent } from './components/top-menu-toolbar/top-menu-toolbar.component';
 import { InfoDialogComponent } from './components/info-dialog/info-dialog.component';
 import { BottomTableActionsComponent } from './components/bottom-table-actions/bottom-table-actions.component';
@@ -15,7 +16,8 @@ import { BottomTableActionsComponent } from './components/bottom-table-actions/b
     TopMenuToolbarComponent,
     TableRowActionsComponent,
     InfoDialogComponent,
-    BottomTableActionsComponent
+    BottomTableActionsComponent,
+    YearSelectorComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +37,8 @@ import { BottomTableActionsComponent } from './components/bottom-table-actions/b
     TopMenuToolbarComponent,
     FormsModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    YearSelectorComponent
   ]
 })
 export class SharedModule { }
