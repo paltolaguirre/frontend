@@ -154,4 +154,8 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
   public onAutomaticCalcGroupSelected() {
     console.log(this.selectedGroupAutomaticCalculation);
   }
+
+  public onFormulaSelected() {
+    console.log(this.selectedFormula);
+  }
 }
