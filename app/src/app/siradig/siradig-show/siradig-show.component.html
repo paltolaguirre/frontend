@@ -75,7 +75,7 @@
           <table style="width:100%">
               <tr *ngFor="let item of data.importegananciasotroempleosiradig">
                 <div *ngIf="(item.DeletedAt == null)">
-                  <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <button mat-icon-button class="actions-icon" color="warn" (click)="onDeleteMonthlyReportItemClick(item)">
                     <mat-icon>delete_forever</mat-icon>
                   </button>
                   <app-month-selector 

@@ -310,6 +310,15 @@ export class SiradigShowComponent implements OnInit {
     child.DeletedAt = new Date();
   }
 
+  onDeleteMonthlyReportItemClick(child: any) {
+    this.onClickDeleteChild(child);
+
+    const itemMonth = new Date(child.mes).getMonth();
+    const index = this.selectedMonthsFromMonthlyReports.findIndex((item) => item === itemMonth);
+
+    this.selectedMonthsFromMonthlyReports.splice(index, 1);
+  }
+
   onClickNewImportegananciasotroempleosiradig(siradig: Siradig) {
     if(siradig.importegananciasotroempleosiradig == null) {
       siradig.importegananciasotroempleosiradig = [{
