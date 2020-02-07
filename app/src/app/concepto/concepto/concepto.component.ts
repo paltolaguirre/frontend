@@ -1,3 +1,4 @@
+import { AutomaticCalculationTypes } from './../../core/enums/automatic-calc-types.enum';
 import { FormulaService } from './../../core/services/formula/formula.service';
 import { Formula } from 'src/app/core/models/formula.model';
 import { ConceptoService } from '../concepto.service';
@@ -51,7 +52,11 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    this.setDefaultSelectedCalculationType();
+  }
 
+  public setDefaultSelectedCalculationType() {
+    this.selectedGroupAutomaticCalculation = AutomaticCalculationTypes.PERCENTAGE;
   }
 
   public async fetchFormulas() {
