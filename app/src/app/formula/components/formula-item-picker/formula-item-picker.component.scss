@@ -1,0 +1,10 @@
+div.flex-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+  
+  div.item-picker {
+    margin-bottom: 2rem;
+  }
+}

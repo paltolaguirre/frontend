@@ -1,3 +1,4 @@
+import { FormulaItemPickerComponent } from './components/formula-item-picker/formula-item-picker.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormulaListContainer } from './containers/formula-list/formula-list.container';
 import { SharedModule } from './../shared/shared.module';
@@ -22,7 +23,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [FormulaListContainer, FormulaContainer],
+  declarations: [FormulaListContainer, FormulaContainer, FormulaItemPickerComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

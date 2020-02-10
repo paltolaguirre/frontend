@@ -19,5 +19,11 @@ div.formula-create-container {
     h2.subtitle {
       font-size: 1.2rem;
     }
+
+    &.formula-calculation-content {
+      .bg-gray {
+        background-color: #d3d3d3;
+      }
+    }
   }
 }
