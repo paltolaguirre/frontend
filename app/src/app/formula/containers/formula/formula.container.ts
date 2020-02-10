@@ -65,7 +65,10 @@ export class FormulaContainer implements OnInit, OnDestroy {
   private buildEmptyForm() {
     this.form = this.formBuilder.group({
       name: ['', [Validators.required]],
-      description: ['', [Validators.required]]
+      description: ['', [Validators.required]],
+      inputParamDataType: [''],
+      inputParamName: [''],
+      outParamDataType: ['Numérico', Validators.required]
     });
   }
 
@@ -89,7 +92,10 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public buildPreLoadedForm() {
     this.form = this.formBuilder.group({
       name: [this.currentFormula.name, [Validators.required]],
-      description: [this.currentFormula.description, [Validators.required]]
+      description: [this.currentFormula.description, [Validators.required]],
+      inputParamDataType: [this.currentFormula.inputParamDataType],
+      inputParamName: [this.currentFormula.inputParamName],
+      outParamDataType: [this.currentFormula.outParamDataType, Validators.required]
     });
   }
 

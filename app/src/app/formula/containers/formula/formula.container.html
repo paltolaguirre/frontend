@@ -45,7 +45,33 @@
                 </mat-panel-title>
               </mat-expansion-panel-header>
           
-              Crear opciones acá
+              <div class="columns">
+                <div class="column">
+                  <h2 class="subtitle">
+                    Parámetro de Salida
+                  </h2>
+                  <mat-form-field>
+                    <input matInput type="text" formControlName="outParamDataType" placeholder="Tipo Dato" autocomplete="off">
+                  </mat-form-field>
+                </div>
+                <div class="column">
+                  <h2 class="subtitle">
+                    Parámetro de Entrada
+                  </h2>
+                  <div class="columns">
+                    <div class="column">
+                      <mat-form-field>
+                        <input matInput type="text" formControlName="inputParamDataType" placeholder="Tipo Dato" autocomplete="off">
+                      </mat-form-field>
+                    </div>
+                    <div class="column">
+                      <mat-form-field>
+                        <input matInput type="text" formControlName="inputParamName" placeholder="Nombre Parámetro" autocomplete="off">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </mat-expansion-panel>
           
         </mat-expansion-panel>

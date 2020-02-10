@@ -14,4 +14,10 @@ div.formula-create-container {
   mat-form-field {
     width: 100%;
   }
+
+  mat-expansion-panel {
+    h2.subtitle {
+      font-size: 1.2rem;
+    }
+  }
 }

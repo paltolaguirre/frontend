@@ -13,7 +13,7 @@ export class FormulaService {
       {
         id: 1,
         name: 'Formula 1',
-        description: 'Esta es una formula'
+        description: '("Mejor remuneracion Remunerativa del Periodo" /2)*("Días del Período Trabajados" /180)'
       },
       {
         id: 2,
