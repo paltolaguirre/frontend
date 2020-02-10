@@ -18,6 +18,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
 
   public form: FormGroup;
   public currentFormula: Formula;
+  public isItemPickerExpanded: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -106,5 +107,9 @@ export class FormulaContainer implements OnInit, OnDestroy {
 
   public async abort() {
     await this.router.navigate(['/formulas']);
+  }
+
+  public onItemPickerExpandedStateChanged(isExpanded: boolean) {
+    this.isItemPickerExpanded = isExpanded;
   }
 }
