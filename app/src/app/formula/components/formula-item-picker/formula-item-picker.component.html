@@ -51,7 +51,19 @@
           </div>
         </div>
         <div class="column">
-          asdsad
+          <div class="search-bar-container">
+            <!-- <mat-form-field class="search">
+              
+            </mat-form-field> -->
+
+            <div class="search-content border-regular">
+              <!-- <mat-label>Buscar...</mat-label> -->
+              <input type="text" (keyup)="doFilter($event)" placeholder="Buscar...">
+              <div class="search-icon bg-gray no-selectable">
+                <mat-icon>search</mat-icon>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
