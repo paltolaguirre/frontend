@@ -5,7 +5,7 @@
         <div class="column">
           <div class="category-box">
             <div class="columns">
-              <div class="column is-1">
+              <div *ngIf="isExpanded" class="column is-1">
                 <div class="category-name-container">
                   <p class="category-name">Elementos</p>
                 </div>
@@ -14,15 +14,15 @@
                 <div class="items-box-container">
                   <div class="category-item-container">
                     <img src="assets/img/descarga.jpg" alt="item-icon" class="item-icon">
-                    <p class="item-name">Variables</p>
+                    <p *ngIf="isExpanded" class="item-name">Variables</p>
                   </div>
                   <div class="category-item-container">
                     <img src="assets/img/descarga.jpg" alt="item-icon" class="item-icon">
-                    <p class="item-name">Conceptos en la liquidación</p>
+                    <p *ngIf="isExpanded" class="item-name">Conceptos en la liquidación</p>
                   </div>
                   <div class="category-item-container">
                     <img src="assets/img/descarga.jpg" alt="item-icon" class="item-icon">
-                    <p class="item-name">Parámetros de entrada</p>
+                    <p *ngIf="isExpanded" class="item-name">Parámetros de entrada</p>
                   </div>
                 </div>
               </div>
@@ -30,7 +30,7 @@
           </div>
           <div class="category-box">
             <div class="columns">
-              <div class="column is-1">
+              <div *ngIf="isExpanded" class="column is-1">
                 <div class="category-name-container">
                   <p class="category-name">Fórmulas</p>
                 </div>
@@ -39,11 +39,11 @@
                 <div class="items-box-container">
                   <div class="category-item-container">
                     <img src="assets/img/descarga.jpg" alt="item-icon" class="item-icon">
-                    <p class="item-name">Fórmulas estandar</p>
+                    <p *ngIf="isExpanded" class="item-name">Fórmulas estandar</p>
                   </div>
                   <div class="category-item-container">
                     <img src="assets/img/descarga.jpg" alt="item-icon" class="item-icon">
-                    <p class="item-name">Mis fórmulas</p>
+                    <p *ngIf="isExpanded" class="item-name">Mis fórmulas</p>
                   </div>
                 </div>
               </div>
@@ -97,7 +97,16 @@
       </div>
     </div>
     <div class="collapse-badge-container" (click)="onExpandClick()">
-      Plegar
+      <div *ngIf="isExpanded; else expand" class="badge">
+        <mat-icon>keyboard_arrow_left</mat-icon>
+        Plegar
+      </div>
+      <ng-template #expand>
+        <div class="badge">
+          Abrir
+          <mat-icon>keyboard_arrow_right</mat-icon>
+        </div>
+      </ng-template>
     </div>
   </div>
 </div>

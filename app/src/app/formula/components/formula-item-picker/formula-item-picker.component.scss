@@ -126,5 +126,9 @@ div.flex-container {
 
   div.collapse-badge-container {
     cursor: pointer;
+    div.badge {
+      display: flex;
+      align-items: center;
+    }
   }
 }

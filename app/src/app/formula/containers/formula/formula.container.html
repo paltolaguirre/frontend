@@ -85,8 +85,8 @@
 
           <div class="columns">
             <div class="column bg-gray" [ngClass]="{ 
-              'is-5': !isItemPickerExpanded,
-              'is-2': isItemPickerExpanded
+              'is-5': isItemPickerExpanded,
+              'is-3': !isItemPickerExpanded
               }">
               <app-formula-item-picker (expandedStateEmitter)="onItemPickerExpandedStateChanged($event)"></app-formula-item-picker>
             </div>

@@ -8,7 +8,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 export class FormulaItemPickerComponent implements OnInit {
   @Output() expandedStateEmitter: EventEmitter<boolean> = new EventEmitter();
 
-  public isExpanded: boolean;
+  public isExpanded: boolean = true;
 
   constructor() { }
 

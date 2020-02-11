@@ -18,7 +18,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
 
   public form: FormGroup;
   public currentFormula: Formula;
-  public isItemPickerExpanded: boolean;
+  public isItemPickerExpanded: boolean = true;
 
   constructor(
     private formBuilder: FormBuilder,
