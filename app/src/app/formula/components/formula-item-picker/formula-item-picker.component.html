@@ -3,47 +3,18 @@
     <div class="item-picker">
       <div class="columns">
         <div class="column">
-          <div class="category-box">
+          <div class="category-box" *ngFor="let category of categories">
             <div class="columns">
               <div *ngIf="isExpanded" class="column is-1">
                 <div class="category-name-container">
-                  <p class="category-name">Elementos</p>
+                  <p class="category-name">{{ category.title }}</p>
                 </div>
               </div>
               <div class="column is-11 items-column">
                 <div class="items-box-container">
-                  <div class="category-item-container">
-                    <img src="assets/img/descarga.jpg" alt="item-icon" class="item-icon">
-                    <p *ngIf="isExpanded" class="item-name">Variables</p>
-                  </div>
-                  <div class="category-item-container">
-                    <img src="assets/img/descarga.jpg" alt="item-icon" class="item-icon">
-                    <p *ngIf="isExpanded" class="item-name">Conceptos en la liquidación</p>
-                  </div>
-                  <div class="category-item-container">
-                    <img src="assets/img/descarga.jpg" alt="item-icon" class="item-icon">
-                    <p *ngIf="isExpanded" class="item-name">Parámetros de entrada</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="category-box">
-            <div class="columns">
-              <div *ngIf="isExpanded" class="column is-1">
-                <div class="category-name-container">
-                  <p class="category-name">Fórmulas</p>
-                </div>
-              </div>
-              <div class="column is-11 items-column">
-                <div class="items-box-container">
-                  <div class="category-item-container">
-                    <img src="assets/img/descarga.jpg" alt="item-icon" class="item-icon">
-                    <p *ngIf="isExpanded" class="item-name">Fórmulas estandar</p>
-                  </div>
-                  <div class="category-item-container">
-                    <img src="assets/img/descarga.jpg" alt="item-icon" class="item-icon">
-                    <p *ngIf="isExpanded" class="item-name">Mis fórmulas</p>
+                  <div class="category-item-container" *ngFor="let item of category.items">
+                    <img [src]="item.img" alt="item-icon" class="item-icon">
+                    <p *ngIf="isExpanded" class="item-name">{{ item.title }}</p>
                   </div>
                 </div>
               </div>
