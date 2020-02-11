@@ -1,8 +1,6 @@
-import { FormControl } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { MatDialog } from '@angular/material';
-import { NotificationService } from 'src/app/handler-error/notification.service';
 import { PrintService } from 'src/app/print/print.service';
 import { switchMap } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
@@ -20,6 +18,7 @@ export class SiradigShowComponent implements OnInit {
   public print$: Observable<boolean> = null;
   id: number;
   public defaultDate$: Observable<Date>;
+  public selectedMonthsFromMonthlyReports: number[] = [];
 
   hijossiradig: any[];
   conyugesiradig: any;
@@ -33,7 +32,8 @@ export class SiradigShowComponent implements OnInit {
     public dialog: MatDialog,
     private router: Router,
     public printService: PrintService,
-    private legajoService: LegajoService, 
+    private legajoService: LegajoService,
+    private cdr: ChangeDetectorRef
   ) {
     this.currentDate = new Date();
     this.currentYear = this.currentDate.getFullYear();
@@ -283,6 +283,10 @@ export class SiradigShowComponent implements OnInit {
   }
 
   getSiradigPeriodDate(date): Date {
+    if (!date) {
+      return null;
+    }
+
     return new Date(date);
   }
 
@@ -304,6 +308,15 @@ export class SiradigShowComponent implements OnInit {
 
   onClickDeleteChild(child: any) {
     child.DeletedAt = new Date();
+  }
+
+  onDeleteMonthlyReportItemClick(child: any) {
+    this.onClickDeleteChild(child);
+
+    const itemMonth = new Date(child.mes).getMonth();
+    const index = this.selectedMonthsFromMonthlyReports.findIndex((item) => item === itemMonth);
+
+    this.selectedMonthsFromMonthlyReports.splice(index, 1);
   }
 
   onClickNewImportegananciasotroempleosiradig(siradig: Siradig) {
@@ -515,5 +528,19 @@ export class SiradigShowComponent implements OnInit {
     } else {
       return false;
     }
+  }
+
+  public updateMonthlyReportItem(data: Siradig, item: any, monthIndex: number) {
+    item.mes = this.getDateFromYearMonth(this.getYear(data.periodosiradig), monthIndex);
+
+    this.updateSelectedMonthsFromMonthlyReports(data);
+  }
+
+  private updateSelectedMonthsFromMonthlyReports(data: Siradig) {
+    this.selectedMonthsFromMonthlyReports = data.importegananciasotroempleosiradig.map((monthlyReport: any) => {
+      return new Date(monthlyReport.mes).getMonth();
+    });
+
+    this.cdr.detectChanges();
   }
 }

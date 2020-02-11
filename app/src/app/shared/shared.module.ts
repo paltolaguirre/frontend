@@ -4,9 +4,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SelectorDefaultComponent } from './selector-default/selector-default.component';
 import { MaterialModule } from '../material.module';
 import { YearSelectorComponent } from './components/year-selector/year-selector.component';
+import { MonthSelectorComponent } from './components/month-selector/month-selector.component';
 
 @NgModule({
   declarations: [
+    MonthSelectorComponent,
     SelectorDefaultComponent,
     YearSelectorComponent
   ],
@@ -18,6 +20,7 @@ import { YearSelectorComponent } from './components/year-selector/year-selector.
   ],
   entryComponents: [],
   exports: [
+    MonthSelectorComponent,
     SelectorDefaultComponent,
     YearSelectorComponent
   ]
