@@ -25,5 +25,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     color: rgba(0,0,0,.87);
 }
 
+@import "./styles/variables.scss";
 @import "./styles/bulma-setup.scss";
 @import "./styles/material-reset.scss";
+@import "./styles/classes.scss";
