@@ -84,13 +84,13 @@
           </mat-expansion-panel-header>
 
           <div class="columns">
-            <div class="column bg-gray is-4" [ngClass]="{ 
+            <div class="column bg-gray" [ngClass]="{ 
               'is-4': !isItemPickerExpanded,
               'is-2': isItemPickerExpanded
               }">
               <app-formula-item-picker (expandedStateEmitter)="onItemPickerExpandedStateChanged($event)"></app-formula-item-picker>
             </div>
-            <div class="column">
+            <div class="column is-auto">
               Herramienta para armar fomulas
             </div>
           </div>

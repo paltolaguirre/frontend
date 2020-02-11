@@ -6,5 +6,50 @@ div.flex-container {
   
   div.item-picker {
     margin-bottom: 2rem;
+    div.category-box {
+      div.category-name-container {
+        display: flex;
+        align-items: center;
+        border: 0.5px solid gray;
+        height: 100%;
+        width: 100%;
+        padding-left: 0.3rem;
+        padding-right: 0.3rem;
+
+        p.category-name {
+          writing-mode: tb;
+          transform: rotate(180deg);
+          font-weight: bold;
+          font-size: 0.7rem;
+          letter-spacing: 0.7px;
+          margin: 0;
+        }
+      }
+
+      div.items-box-container {
+        height: 100%;
+        width: 100%;
+
+        div.category-item-container {
+          display: flex;
+          align-items: center;
+          border: 0.5px solid gray;
+          margin-top: -1px;
+  
+          img.item-icon {
+            width: 2rem;
+            margin-left: 0.3rem;
+          }
+  
+          p.item-name {
+            margin-left: 0.6rem;
+          }
+        }
+      }
+    }
+  }
+
+  div.collapse-badge-container {
+    cursor: pointer;
   }
 }
