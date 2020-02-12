@@ -12,7 +12,13 @@
               </div>
               <div class="column is-11 items-column pb-0">
                 <div class="items-box-container">
-                  <div class="category-item-container border-light" *ngFor="let item of category.items" (click)="onCategoryItemClick(item)">
+                  <div 
+                    class="category-item-container border-light"
+                    *ngFor="let item of category.items"
+                    [ngClass]="{
+                      'active': selectedCategoryItem?.id === item.id
+                    }"
+                    (click)="onCategoryItemClick(item)">
                     <img [src]="item.img" alt="item-icon" class="item-icon">
                     <p *ngIf="isExpanded" class="item-name">{{ item.title }}</p>
                   </div>
@@ -33,34 +39,30 @@
             </div>
 
             <div class="toolbox custom-vertical-scroll">
-              <p>asd</p>
-              <p>asd</p>
-              <p>asd</p>
-              <p>asd</p>
-              <p>asd</p>
-              <p>asd</p>
-              <p>asd</p>
-              <p>asd</p>
-              <p>asd</p>
-              <p>asd</p>
-              <p>asd</p>
-              <p>asd</p>
-              <p>asd</p>
-              <p>asd</p>
-              <p>asd</p>
-              <p>asd</p>
-              <p>asd</p>
-              <p>asd</p>
-              <p>asd</p>
-              <p>asd</p>
-              <p>asd</p>
-              <p>asd</p>
-              <p>asd</p>
-              <p>asd</p>
-              <p>asd</p>
-              <p>asd</p>
-              <p>asd</p>
-              <p>asd</p>
+              <div *ngIf="selectedCategoryItem">
+                <p>{{ selectedCategoryItem.title }}</p>
+                <p>{{ selectedCategoryItem.title }}</p>
+                <p>{{ selectedCategoryItem.title }}</p>
+                <p>{{ selectedCategoryItem.title }}</p>
+                <p>{{ selectedCategoryItem.title }}</p>
+                <p>{{ selectedCategoryItem.title }}</p>
+                <p>{{ selectedCategoryItem.title }}</p>
+                <p>{{ selectedCategoryItem.title }}</p>
+                <p>{{ selectedCategoryItem.title }}</p>
+                <p>{{ selectedCategoryItem.title }}</p>
+                <p>{{ selectedCategoryItem.title }}</p>
+                <p>{{ selectedCategoryItem.title }}</p>
+                <p>{{ selectedCategoryItem.title }}</p>
+                <p>{{ selectedCategoryItem.title }}</p>
+                <p>{{ selectedCategoryItem.title }}</p>
+                <p>{{ selectedCategoryItem.title }}</p>
+                <p>{{ selectedCategoryItem.title }}</p>
+                <p>{{ selectedCategoryItem.title }}</p>
+                <p>{{ selectedCategoryItem.title }}</p>
+                <p>{{ selectedCategoryItem.title }}</p>
+                <p>{{ selectedCategoryItem.title }}</p>
+                <p>{{ selectedCategoryItem.title }}</p>
+              </div>
             </div>
       
           </div>
