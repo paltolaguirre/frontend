@@ -17,6 +17,7 @@ div.flex-container {
       div.category-name-container {
         display: flex;
         align-items: center;
+        justify-content: center;
         height: 100%;
         width: 100%;
 
@@ -120,6 +121,7 @@ div.flex-container {
       div.toolbox {
         max-height: 22rem;
         overflow-y: scroll;
+        overflow-x: auto;
       }
     }
   }
