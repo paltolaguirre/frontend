@@ -12,7 +12,7 @@
               </div>
               <div class="column is-11 items-column">
                 <div class="items-box-container">
-                  <div class="category-item-container" *ngFor="let item of category.items">
+                  <div class="category-item-container" *ngFor="let item of category.items" (click)="onCategoryItemClick(item)">
                     <img [src]="item.img" alt="item-icon" class="item-icon">
                     <p *ngIf="isExpanded" class="item-name">{{ item.title }}</p>
                   </div>

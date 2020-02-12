@@ -1,3 +1,4 @@
+import { FormulaCategoryItem } from './../../../core/models/formula-category-item.model';
 import { FormulaService } from './../../../core/services/formula/formula.service';
 import { FormulaCategory } from './../../../core/models/formula-category.model';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
@@ -12,6 +13,7 @@ export class FormulaItemPickerComponent implements OnInit {
 
   public isExpanded: boolean = true;
   public categories: FormulaCategory[];
+  public selectedCategoryItem: FormulaCategoryItem;
 
   constructor(private formulaService: FormulaService) {}
 
@@ -23,5 +25,10 @@ export class FormulaItemPickerComponent implements OnInit {
     this.isExpanded = !this.isExpanded;
 
     this.expandedStateEmitter.emit(this.isExpanded);
+  }
+
+  public onCategoryItemClick(item: FormulaCategoryItem) {
+    console.log(item);
+    this.selectedCategoryItem = item;
   }
 }

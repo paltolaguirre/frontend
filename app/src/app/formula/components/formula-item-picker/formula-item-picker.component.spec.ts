@@ -1,3 +1,6 @@
+import { FormulaCategoryItem } from './../../../core/models/formula-category-item.model';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './../../../material.module';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FormulaItemPickerComponent } from './formula-item-picker.component';
@@ -5,12 +8,24 @@ import { FormulaItemPickerComponent } from './formula-item-picker.component';
 describe('FormulaItemPickerComponent', () => {
   let component: FormulaItemPickerComponent;
   let fixture: ComponentFixture<FormulaItemPickerComponent>;
+  let fakeCategoryItem: FormulaCategoryItem;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FormulaItemPickerComponent ]
+      declarations: [ FormulaItemPickerComponent ],
+      imports: [
+        MaterialModule,
+        BrowserAnimationsModule
+      ]
     })
     .compileComponents();
+
+    fakeCategoryItem = {
+      id: 1,
+      img: 'assets/img/descarga.jpg',
+      title: 'Variables',
+      categoryId: 1
+    };
   }));
 
   beforeEach(() => {
@@ -21,5 +36,15 @@ describe('FormulaItemPickerComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('onCategoryItemClick', () => {
+    it('should set the received item as selectedCategoryItem', () => {
+      expect(component.selectedCategoryItem).toBeUndefined();
+
+      component.onCategoryItemClick(fakeCategoryItem);
+
+      expect(component.selectedCategoryItem).toEqual(fakeCategoryItem);
+    });
   });
 });

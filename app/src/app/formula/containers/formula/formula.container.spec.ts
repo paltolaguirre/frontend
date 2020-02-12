@@ -1,3 +1,4 @@
+import { FormulaItemPickerComponent } from './../../components/formula-item-picker/formula-item-picker.component';
 import { SharedModule } from './../../../shared/shared.module';
 import { MatDialog } from '@angular/material/dialog';
 import { FormulaService } from './../../../core/services/formula/formula.service';
@@ -23,7 +24,7 @@ describe('FormulaContainer', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FormulaContainer ],
+      declarations: [ FormulaContainer, FormulaItemPickerComponent ],
       imports: [
         MaterialModule,
         ReactiveFormsModule,
