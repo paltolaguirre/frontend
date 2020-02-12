@@ -50,6 +50,14 @@ describe('FormulaItemPickerComponent', () => {
 
       expect(component.isExpanded).toEqual(false);
     });
+
+    it('should emit the isExpanded value', () => {
+      const emitterSpy = spyOn(component.expandedStateEmitter, 'emit');
+
+      component.onExpandClick();
+
+      expect(emitterSpy).toHaveBeenCalledWith(component.isExpanded);
+    });
   });
 
   describe('onCategoryItemClick', () => {
