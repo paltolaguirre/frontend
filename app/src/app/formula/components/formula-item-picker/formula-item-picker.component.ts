@@ -18,7 +18,20 @@ export class FormulaItemPickerComponent implements OnInit {
   constructor(private formulaService: FormulaService) {}
 
   ngOnInit() {
+    this.setFormulaCategories();
+    this.setDefaultCategoryItem();
+  }
+
+  public setFormulaCategories() {
     this.categories = this.formulaService.getFormulaCategories();
+  }
+
+  public setDefaultCategoryItem() {
+    if (!this.categories) {
+      return null;
+    }
+
+    this.selectedCategoryItem = this.categories[0].items[0];
   }
 
   public onExpandClick() {

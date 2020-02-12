@@ -1,16 +1,20 @@
 <div class="formula-item-picker-container">
   <div class="flex-container">
     <div class="item-picker">
-      <div class="columns">
+      <div class="columns is-gapless">
         <div class="column">
-          <div class="category-box" *ngFor="let category of categories">
-            <div class="columns">
-              <div *ngIf="isExpanded" class="column is-1 pb-0">
+          <div class="category-box" 
+            *ngFor="let category of categories"
+            [ngClass]="{
+              'active': selectedCategoryItem?.categoryId === category.id
+            }">
+            <div class="columns is-gapless">
+              <div *ngIf="isExpanded" class="column is-2">
                 <div class="category-name-container border-light">
                   <p class="category-name">{{ category.title }}</p>
                 </div>
               </div>
-              <div class="column is-11 items-column pb-0">
+              <div class="column is-9 items-column">
                 <div class="items-box-container">
                   <div 
                     class="category-item-container border-light"

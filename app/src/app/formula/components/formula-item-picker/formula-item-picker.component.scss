@@ -9,13 +9,16 @@ div.flex-container {
   div.item-picker {
     margin-bottom: 2rem;
     div.category-box {
+
+      &.active {
+        background-color: #fff;
+      }
+
       div.category-name-container {
         display: flex;
         align-items: center;
         height: 100%;
         width: 100%;
-        padding-left: 0.3rem;
-        padding-right: 0.3rem;
 
         p.category-name {
           writing-mode: tb;
@@ -28,17 +31,14 @@ div.flex-container {
       }
 
       div.items-column {
-        padding-left: 0;
-
         div.items-box-container {
           height: 100%;
-          width: 90%;
   
           div.category-item-container {
             display: flex;
             align-items: center;
             cursor: pointer;
-    
+
             img.item-icon {
               width: 2rem;
               margin-left: 0.3rem;
@@ -46,10 +46,16 @@ div.flex-container {
     
             p.item-name {
               margin-left: 0.6rem;
+              color: $GRAY_REGULAR;
+              font-size: 0.8rem;
             }
 
             &.active {
               border: 2px solid $ACTIVE;
+              
+              p.item-name {
+                color: #000;
+              }
             }
           }
         }
