@@ -38,6 +38,20 @@ describe('FormulaItemPickerComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  describe('onExpandClick', () => {
+    it('should toggle the isExpanded state', () => {
+      component.isExpanded = false;
+
+      component.onExpandClick();
+
+      expect(component.isExpanded).toEqual(true);
+
+      component.onExpandClick();
+
+      expect(component.isExpanded).toEqual(false);
+    });
+  });
+
   describe('onCategoryItemClick', () => {
     it('should set the received item as selectedCategoryItem', () => {
       expect(component.selectedCategoryItem).toBeUndefined();
