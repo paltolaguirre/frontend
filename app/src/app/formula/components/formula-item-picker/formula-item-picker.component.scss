@@ -52,6 +52,7 @@ div.flex-container {
 
             &.active {
               border: 2px solid $ACTIVE;
+              border-right: none;
               
               p.item-name {
                 color: #000;
@@ -63,6 +64,10 @@ div.flex-container {
     }
 
     div.items-toolbar-container {
+      background-color: #fff;
+      border: 2px solid $ACTIVE;
+      padding: 1rem;
+
       div.search-bar-container {
         div.search-content {
           display: flex;
