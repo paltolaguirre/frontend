@@ -9,9 +9,11 @@ import { YearSelectorComponent } from './components/year-selector/year-selector.
 import { TopMenuToolbarComponent } from './components/top-menu-toolbar/top-menu-toolbar.component';
 import { InfoDialogComponent } from './components/info-dialog/info-dialog.component';
 import { BottomTableActionsComponent } from './components/bottom-table-actions/bottom-table-actions.component';
+import { MonthSelectorComponent } from './components/month-selector/month-selector.component';
 
 @NgModule({
   declarations: [
+    MonthSelectorComponent,
     SelectorDefaultComponent,
     TopMenuToolbarComponent,
     TableRowActionsComponent,
@@ -32,6 +34,7 @@ import { BottomTableActionsComponent } from './components/bottom-table-actions/b
   exports: [
     BottomTableActionsComponent,
     InfoDialogComponent,
+    MonthSelectorComponent,
     SelectorDefaultComponent,
     TableRowActionsComponent,
     TopMenuToolbarComponent,
