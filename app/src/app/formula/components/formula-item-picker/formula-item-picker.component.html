@@ -5,14 +5,14 @@
         <div class="column">
           <div class="category-box" *ngFor="let category of categories">
             <div class="columns">
-              <div *ngIf="isExpanded" class="column is-1">
-                <div class="category-name-container">
+              <div *ngIf="isExpanded" class="column is-1 pb-0">
+                <div class="category-name-container border-light">
                   <p class="category-name">{{ category.title }}</p>
                 </div>
               </div>
-              <div class="column is-11 items-column">
+              <div class="column is-11 items-column pb-0">
                 <div class="items-box-container">
-                  <div class="category-item-container" *ngFor="let item of category.items" (click)="onCategoryItemClick(item)">
+                  <div class="category-item-container border-light" *ngFor="let item of category.items" (click)="onCategoryItemClick(item)">
                     <img [src]="item.img" alt="item-icon" class="item-icon">
                     <p *ngIf="isExpanded" class="item-name">{{ item.title }}</p>
                   </div>

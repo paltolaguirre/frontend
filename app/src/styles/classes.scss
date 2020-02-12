@@ -9,7 +9,7 @@
 }
 
 .border-light {
-  border: 1px solid rgba(#d3d3d3, 0.5);
+  border: 1px solid rgba(#d3d3d3, 0.7);
 }
 
 .no-selectable {
@@ -19,6 +19,10 @@
   -moz-user-select: none; /* Old versions of Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none;
+}
+
+.pb-0 {
+  padding-bottom: 0;
 }
 
 .custom-vertical-scroll  {

@@ -12,7 +12,7 @@ div.flex-container {
       div.category-name-container {
         display: flex;
         align-items: center;
-        border: 0.5px solid gray;
+        // border: 0.5px solid gray;
         height: 100%;
         width: 100%;
         padding-left: 0.3rem;
@@ -38,21 +38,7 @@ div.flex-container {
           div.category-item-container {
             display: flex;
             align-items: center;
-            border: 1px solid gray;
-            // border-top: 0.5px solid gray;
-            // border-bottom: 0.5px solid gray;
-            // margin-top: -1px;
-            // &:nth-child(1) {
-            //   border-left: 0.5px solid gray;
-            //   border-right: 0.5px solid gray;
-            //   border-bottom: none;
-            // }
-
-            // &:nth-last-child(1) {
-            //   border-left: 0.5px solid gray;
-            //   border-right: 0.5px solid gray;
-            //   border-top: none;
-            // }
+            // border: 1px solid gray;
     
             img.item-icon {
               width: 2rem;
