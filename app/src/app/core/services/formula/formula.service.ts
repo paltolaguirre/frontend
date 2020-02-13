@@ -35,8 +35,8 @@ export class FormulaService {
     return Promise.resolve();
   }
 
-  public find(id: number): Formula {
-    return this.formulas.find(formula => formula.id === id);
+  public async find(name: string): Promise<Formula> {
+    return await this.api.get(`${this.BASE_URL}/formulas/${name}`).toPromise() as Formula;
   }
 
   public getFormulaCategories(): FormulaCategory[] {

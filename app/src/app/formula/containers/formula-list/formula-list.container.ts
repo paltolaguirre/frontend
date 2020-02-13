@@ -65,7 +65,7 @@ export class FormulaListContainer implements OnInit, AfterViewInit {
   }
 
   public editFormula(item: Formula) {
-    this.router.navigate(['/formulas/edit', item.id]);
+    this.router.navigate(['/formulas/edit', item.name]);
   }
 
   // TODO: Remove if it is not being used.

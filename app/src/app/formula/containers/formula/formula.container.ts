@@ -34,23 +34,24 @@ export class FormulaContainer implements OnInit, OnDestroy {
   async ngOnInit() {
     this.route.params.pipe(
       takeUntil(componentDestroyed(this)),
-      pluck('id')).subscribe(id => {
-        if (!id) {
+      pluck('name')).subscribe(name => {
+        if (!name) {
           this.currentFormula = null;
 
           return this.buildEmptyForm();
         }
 
-        this.setCurrentFormula(Number(id));
+        this.setCurrentFormula(name);
     });
   }
 
   ngOnDestroy() {
   }
 
-  public setCurrentFormula(id: number) {
+  public async setCurrentFormula(name: string) {
     try {
-      this.currentFormula = this.formulaService.find(id);
+      this.currentFormula = await this.formulaService.find(name);
+      console.log(this.currentFormula);
 
       if (!this.currentFormula) {
         return this.showNoDataDialog();
@@ -69,7 +70,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
       description: ['', [Validators.required]],
       inputParamDataType: [''],
       inputParamName: [''],
-      outParamDataType: ['Numérico', Validators.required]
+      result: ['number', Validators.required]
     });
   }
 
@@ -96,7 +97,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
       description: [this.currentFormula.description, [Validators.required]],
       inputParamDataType: [this.currentFormula.inputParamDataType],
       inputParamName: [this.currentFormula.inputParamName],
-      outParamDataType: [this.currentFormula.outParamDataType, Validators.required]
+      result: [this.currentFormula.result, Validators.required]
     });
   }
 

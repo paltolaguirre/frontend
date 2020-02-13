@@ -18,7 +18,7 @@ const routes: Routes = [
     component: FormulaContainer
   },
   {
-    path: 'edit/:id',
+    path: 'edit/:name',
     component: FormulaContainer
   }
 ];
