@@ -1,3 +1,4 @@
+import { ApiHttpService } from './../api-http/api-http.service';
 import { FormulaCategory } from './../../models/formula-category.model';
 import { Injectable } from '@angular/core';
 import { Formula } from '../../models/formula.model';
@@ -7,9 +8,10 @@ import { Formula } from '../../models/formula.model';
 })
 export class FormulaService {
 
+  private readonly BASE_URL = '/api/formula';
   public formulas: Formula[];
 
-  constructor() {
+  constructor(private api: ApiHttpService) {
     this.formulas = [
       {
         id: 1,
@@ -25,7 +27,7 @@ export class FormulaService {
   }
 
   public async getAll(): Promise<Formula[]> {
-    return this.formulas;
+    return await this.api.get(`${this.BASE_URL}/formulas`).toPromise() as Formula[];
   }
 
   // TODO: Remove from API.

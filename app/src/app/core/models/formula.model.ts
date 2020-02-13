@@ -1,8 +1,14 @@
 export class Formula {
-  id: number;
   name: string;
+  CreatedAt: string;
+  UpdatedAt?: string;
+  DeletedAt?: string;
+  params: any[];
   description: string;
-  inputParamDataType?: string;
-  inputParamName?: string;
-  outParamDataType?: string;
+  origin: string;
+  type: string;
+  scope: string;
+  result: string;
+  value: any;
+  valueid: number;
 }

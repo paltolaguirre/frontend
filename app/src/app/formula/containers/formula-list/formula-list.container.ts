@@ -69,17 +69,17 @@ export class FormulaListContainer implements OnInit, AfterViewInit {
   }
 
   // TODO: Remove if it is not being used.
-  public onUpdate(event, item: Formula) {
-    const data = [...this.dataSource.data];
+  // public onUpdate(event, item: Formula) {
+  //   const data = [...this.dataSource.data];
 
-    const index = data.findIndex((element) => {
-      return element.id === item.id;
-    });
+  //   const index = data.findIndex((element) => {
+  //     return element.id === item.id;
+  //   });
 
-    data.splice(index, 1, item);
+  //   data.splice(index, 1, item);
 
-    this.dataSource = new MatTableDataSource<Formula>(data);
-  }
+  //   this.dataSource = new MatTableDataSource<Formula>(data);
+  // }
 
   public async onDelete(item: Formula) {
     try {
