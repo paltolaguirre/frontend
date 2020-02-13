@@ -5,7 +5,7 @@ import { FormulaService } from '../../../core/services/formula/formula.service';
 import { pluck, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 import {componentDestroyed} from '@w11k/ngx-componentdestroyed';
 import { Location } from '@angular/common';
 
@@ -68,8 +68,8 @@ export class FormulaContainer implements OnInit, OnDestroy {
     this.form = this.formBuilder.group({
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      inputParamDataType: [''],
-      inputParamName: [''],
+      // inputParamDataType: [''],
+      // inputParamName: [''],
       result: ['number', Validators.required]
     });
   }
@@ -95,10 +95,23 @@ export class FormulaContainer implements OnInit, OnDestroy {
     this.form = this.formBuilder.group({
       name: [this.currentFormula.name, [Validators.required]],
       description: [this.currentFormula.description, [Validators.required]],
-      inputParamDataType: [this.currentFormula.inputParamDataType],
-      inputParamName: [this.currentFormula.inputParamName],
+      // inputParamDataType: [this.currentFormula.inputParamDataType],
+      // inputParamName: [this.currentFormula.inputParamName],
+      params: this.formBuilder.array([ this.createItem() ]),
       result: [this.currentFormula.result, Validators.required]
     });
+  }
+
+  public createItem() {
+    return this.formBuilder.group({
+      name: 'val1',
+      type: 'number',
+      functionname: 'sum'
+    });
+  }
+
+  get formParams() {
+    return this.form.get('params') as FormArray;
   }
 
   public save() {

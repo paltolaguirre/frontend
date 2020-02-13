@@ -63,16 +63,23 @@
                   <h2 class="subtitle">
                     Parámetros de Entrada
                   </h2>
-                  <div class="columns">
-                    <div class="column">
-                      <mat-form-field>
-                        <input matInput type="text" formControlName="inputParamDataType" placeholder="Tipo Dato" autocomplete="off">
-                      </mat-form-field>
-                    </div>
-                    <div class="column">
-                      <mat-form-field>
-                        <input matInput type="text" formControlName="inputParamName" placeholder="Nombre Parámetro" autocomplete="off">
-                      </mat-form-field>
+                  <div *ngIf="currentFormula">
+                    <div class="columns" formArrayName="params" *ngFor="let param of formParams.controls; let i = index">
+                      <div class="column">
+                        <mat-form-field>
+                          <mat-label>Tipo Dato</mat-label>
+                          <mat-select [formControl]="form.get('result')" name="result" required>
+                            <mat-option [value]="form.get('result').value">
+                              Numérico
+                            </mat-option>
+                          </mat-select> 
+                        </mat-form-field>
+                      </div>
+                      <div class="column">
+                        <!--<mat-form-field>
+                          <input matInput type="text" formControlName="inputParamName" placeholder="Nombre Parámetro" autocomplete="off">
+                        </mat-form-field>-->
+                      </div>
                     </div>
                   </div>
                 </div>
