@@ -25,7 +25,7 @@ div.flex-container {
           writing-mode: tb;
           transform: rotate(180deg);
           font-weight: bold;
-          font-size: 0.7rem;
+          font-size: 0.8rem;
           letter-spacing: 0.7px;
           margin: 0;
         }
@@ -131,6 +131,9 @@ div.flex-container {
     div.badge {
       display: flex;
       align-items: center;
+      text-transform: uppercase;
+      font-weight: 600;
+      font-size: 0.7rem;
     }
   }
 }

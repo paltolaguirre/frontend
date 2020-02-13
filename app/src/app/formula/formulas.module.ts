@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { FormulaContainer } from './containers/formula/formula.container';
+import { OperatorsToolbarComponent } from './components/operators-toolbar/operators-toolbar.component';
 
 const routes: Routes = [
   {
@@ -23,7 +24,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [FormulaListContainer, FormulaContainer, FormulaItemPickerComponent],
+  declarations: [FormulaListContainer, FormulaContainer, FormulaItemPickerComponent, OperatorsToolbarComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
