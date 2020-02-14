@@ -1,3 +1,4 @@
+import { FormulaParam } from './../../../core/models/formula-param.model';
 import { InfoDialogComponent } from './../../../shared/components/info-dialog/info-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Formula } from '../../../core/models/formula.model';
@@ -19,6 +20,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public form: FormGroup;
   public currentFormula: Formula;
   public isItemPickerExpanded: boolean = true;
+  public params: FormArray;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -68,8 +70,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
     this.form = this.formBuilder.group({
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      // inputParamDataType: [''],
-      // inputParamName: [''],
+      params: this.formBuilder.array([ this.createFormulaParam() ]),
       result: ['number', Validators.required]
     });
   }
@@ -95,19 +96,35 @@ export class FormulaContainer implements OnInit, OnDestroy {
     this.form = this.formBuilder.group({
       name: [this.currentFormula.name, [Validators.required]],
       description: [this.currentFormula.description, [Validators.required]],
-      // inputParamDataType: [this.currentFormula.inputParamDataType],
-      // inputParamName: [this.currentFormula.inputParamName],
-      params: this.formBuilder.array([ this.createItem() ]),
+      params: this.formBuilder.array([]),
       result: [this.currentFormula.result, Validators.required]
+    });
+
+    this.updateFormulaParams();
+  }
+
+  public createFormulaParam(formulaParam?: FormulaParam) {
+    if (!formulaParam) {
+      return this.formBuilder.group({
+        name: '',
+        type: '',
+        functionname: ''
+      });
+    }
+
+    return this.formBuilder.group({
+      name: formulaParam.name,
+      type: formulaParam.type,
+      functionname: formulaParam.functionname
     });
   }
 
-  public createItem() {
-    return this.formBuilder.group({
-      name: 'val1',
-      type: 'number',
-      functionname: 'sum'
-    });
+  public updateFormulaParams() {
+    this.params = this.form.get('params') as FormArray;
+
+    for (const param of this.currentFormula.params) {
+      this.params.push(this.createFormulaParam(param));
+    }
   }
 
   get formParams() {

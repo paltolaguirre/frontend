@@ -75,10 +75,10 @@
                           </mat-select> 
                         </mat-form-field>
                       </div>
-                      <div class="column">
-                        <!--<mat-form-field>
-                          <input matInput type="text" formControlName="inputParamName" placeholder="Nombre Parámetro" autocomplete="off">
-                        </mat-form-field>-->
+                      <div class="column" [formGroupName]="i">
+                        <mat-form-field>
+                          <input matInput type="text" formControlName="name" placeholder="Nombre Parámetro" autocomplete="off">
+                        </mat-form-field>
                       </div>
                     </div>
                   </div>
