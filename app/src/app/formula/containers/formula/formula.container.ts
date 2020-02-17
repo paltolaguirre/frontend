@@ -53,7 +53,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public async setCurrentFormula(name: string) {
     try {
       this.currentFormula = await this.formulaService.find(name);
-      console.log(this.currentFormula);
+      console.log('current formula', this.currentFormula);
 
       if (!this.currentFormula) {
         return this.showNoDataDialog();

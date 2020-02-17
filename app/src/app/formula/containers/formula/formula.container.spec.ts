@@ -9,6 +9,7 @@ import { MaterialModule } from '../../../material.module';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FormulaContainer } from './formula.container';
+import { Formula } from 'src/app/core/models/formula.model';
 
 describe('FormulaContainer', () => {
   let component: FormulaContainer;
@@ -16,10 +17,19 @@ describe('FormulaContainer', () => {
   let formulaService: FormulaService;
   let dialog: MatDialog;
 
-  const fakeFormulaItem = {
-    id: 1,
+  const fakeFormulaItem: Formula = {
     name: 'Formula 1',
-    description: 'Esta es una formula'
+    CreatedAt: '',
+    UpdatedAt: '',
+    DeletedAt: '',
+    params: [],
+    description: 'Esta es una formula',
+    origin: '',
+    type: '',
+    scope: '',
+    result: '',
+    value: 1,
+    valueid: 1
   };
 
   beforeEach(async(() => {
@@ -50,12 +60,12 @@ describe('FormulaContainer', () => {
   });
 
   describe('setCurrentFormula', () => {
-    it('should set the current formula', () => {
+    it('should set the current formula by its name', () => {
       expect(component.currentFormula).toBeNull();
 
       const findSpy = spyOn(formulaService, 'find').and.returnValue(fakeFormulaItem);
 
-      component.setCurrentFormula(1);
+      component.setCurrentFormula('Formula 1');
 
       expect(findSpy).toHaveBeenCalledWith(1);
       expect(component.currentFormula).toEqual(fakeFormulaItem);
@@ -65,7 +75,7 @@ describe('FormulaContainer', () => {
       spyOn(formulaService, 'find').and.returnValue(fakeFormulaItem);
       const buildFormSpy = spyOn(component, 'buildPreLoadedForm');
 
-      component.setCurrentFormula(1);
+      component.setCurrentFormula('Formula 1');
 
       expect(buildFormSpy).toHaveBeenCalledTimes(1);
     });
@@ -74,7 +84,7 @@ describe('FormulaContainer', () => {
       spyOn(formulaService, 'find').and.returnValue(null);
       const spy = spyOn(component, 'showNoDataDialog');
 
-      component.setCurrentFormula(1);
+      component.setCurrentFormula('Formula 1');
 
       expect(spy).toHaveBeenCalledTimes(1);
     });
