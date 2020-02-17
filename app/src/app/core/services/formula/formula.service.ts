@@ -12,18 +12,6 @@ export class FormulaService {
   public formulas: Formula[];
 
   constructor(private api: ApiHttpService) {
-    this.formulas = [
-      {
-        id: 1,
-        name: 'Formula 1',
-        description: '("Mejor remuneracion Remunerativa del Periodo" /2)*("Días del Período Trabajados" /180)'
-      },
-      {
-        id: 2,
-        name: 'Formula 2',
-        description: 'Esta es otra'
-      }
-    ];
   }
 
   public async getAll(): Promise<Formula[]> {
