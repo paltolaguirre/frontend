@@ -1,3 +1,5 @@
+import { OperatorsToolbarComponent } from './../../components/operators-toolbar/operators-toolbar.component';
+import { FormulaServiceMock } from './../../../core/mocks/formula.service.mock';
 import { FormulaItemPickerComponent } from './../../components/formula-item-picker/formula-item-picker.component';
 import { SharedModule } from './../../../shared/shared.module';
 import { MatDialog } from '@angular/material/dialog';
@@ -6,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../../../material.module';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, flush } from '@angular/core/testing';
 
 import { FormulaContainer } from './formula.container';
 import { Formula } from 'src/app/core/models/formula.model';
@@ -34,13 +36,16 @@ describe('FormulaContainer', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FormulaContainer, FormulaItemPickerComponent ],
+      declarations: [ FormulaContainer, FormulaItemPickerComponent, OperatorsToolbarComponent ],
       imports: [
         MaterialModule,
         ReactiveFormsModule,
         RouterTestingModule,
         BrowserAnimationsModule,
         SharedModule
+      ],
+      providers: [
+        { provide: FormulaService, useClass: FormulaServiceMock }
       ]
     })
     .compileComponents();
@@ -60,31 +65,31 @@ describe('FormulaContainer', () => {
   });
 
   describe('setCurrentFormula', () => {
-    it('should set the current formula by its name', () => {
+    it('should set the current formula by its name', async () => {
       expect(component.currentFormula).toBeNull();
 
       const findSpy = spyOn(formulaService, 'find').and.returnValue(fakeFormulaItem);
 
-      component.setCurrentFormula('Formula 1');
+      await component.setCurrentFormula('Formula 1');
 
-      expect(findSpy).toHaveBeenCalledWith(1);
+      expect(findSpy).toHaveBeenCalledWith('Formula 1');
       expect(component.currentFormula).toEqual(fakeFormulaItem);
     });
 
-    it('should build a form with preloaded data', () => {
+    it('should build a form with preloaded data', async () => {
       spyOn(formulaService, 'find').and.returnValue(fakeFormulaItem);
       const buildFormSpy = spyOn(component, 'buildPreLoadedForm');
 
-      component.setCurrentFormula('Formula 1');
+      await component.setCurrentFormula('Formula 1');
 
       expect(buildFormSpy).toHaveBeenCalledTimes(1);
     });
 
-    it('should call to showNoDataDialog() if the current formula is null', () => {
+    it('should call to showNoDataDialog() if the current formula is null', async () => {
       spyOn(formulaService, 'find').and.returnValue(null);
       const spy = spyOn(component, 'showNoDataDialog');
 
-      component.setCurrentFormula('Formula 1');
+      await component.setCurrentFormula('Formula 1');
 
       expect(spy).toHaveBeenCalledTimes(1);
     });

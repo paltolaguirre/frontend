@@ -67,8 +67,6 @@ describe('FormulaItemPickerComponent', () => {
 
   describe('onCategoryItemClick', () => {
     it('should set the received item as selectedCategoryItem', () => {
-      expect(component.selectedCategoryItem).toBeUndefined();
-
       component.onCategoryItemClick(fakeCategoryItem);
 
       expect(component.selectedCategoryItem).toEqual(fakeCategoryItem);

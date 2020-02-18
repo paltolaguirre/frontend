@@ -1,3 +1,4 @@
+import { FormulaServiceMock } from './../../../core/mocks/formula.service.mock';
 import { FormulaService } from '../../../core/services/formula/formula.service';
 import { LegajoServiceMock } from '../../../core/mocks/legajo.service.mock';
 import { LegajoService } from '../../../legajo/legajo.service';
@@ -10,7 +11,7 @@ import { FormulaListContainer } from './formula-list.container';
 import { Router } from '@angular/router';
 import { Formula } from 'src/app/core/models/formula.model';
 
-describe('FormulasContainer', () => {
+describe('FormulaListContainer', () => {
   let component: FormulaListContainer;
   let fixture: ComponentFixture<FormulaListContainer>;
   let formulaService: FormulaService;
@@ -40,7 +41,8 @@ describe('FormulasContainer', () => {
         BrowserAnimationsModule
       ],
       providers: [
-        { provide: LegajoService, useClass: LegajoServiceMock }
+        { provide: LegajoService, useClass: LegajoServiceMock },
+        { provide: FormulaService, useClass: FormulaServiceMock }
       ]
     })
     .compileComponents();
