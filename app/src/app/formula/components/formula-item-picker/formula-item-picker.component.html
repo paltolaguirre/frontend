@@ -14,7 +14,11 @@
                   <p class="category-name">{{ category.title }}</p>
                 </div>
               </div>
-              <div class="column is-9 items-column">
+              <div class="column items-column" 
+                [ngClass]="{
+                  'is-12': !isExpanded,
+                  'is-9': isExpanded
+                }">
                 <div class="items-box-container">
                   <div 
                     class="category-item-container border-light"
@@ -31,7 +35,10 @@
             </div>
           </div>
         </div>
-        <div class="column">
+        <div class="column"
+          [ngClass]="{
+            'is-10': !isExpanded
+          }">
           <div class="items-toolbar-container">
             <div class="search-bar-container">
               <div class="search-content border-regular">
