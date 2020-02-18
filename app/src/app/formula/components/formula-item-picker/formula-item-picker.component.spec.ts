@@ -1,3 +1,5 @@
+import { FormulaServiceMock } from './../../../core/mocks/formula.service.mock';
+import { FormulaService } from './../../../core/services/formula/formula.service';
 import { FormulaCategoryItem } from './../../../core/models/formula-category-item.model';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './../../../material.module';
@@ -16,6 +18,9 @@ describe('FormulaItemPickerComponent', () => {
       imports: [
         MaterialModule,
         BrowserAnimationsModule
+      ],
+      providers: [
+        { provide: FormulaService, useClass: FormulaServiceMock }
       ]
     })
     .compileComponents();
