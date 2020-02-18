@@ -93,8 +93,8 @@ export class FormulaListContainer implements OnInit, AfterViewInit {
   }
 
   public removeItemFromTable(item: Formula) {
-    const data = this.dataSource.data.filter((file) => {
-      return file.id !== item.id;
+    const data = this.dataSource.data.filter((formula) => {
+      return formula.name !== item.name;
     });
 
     this.dataSource = new MatTableDataSource<Formula>(data);

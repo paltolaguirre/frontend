@@ -8,6 +8,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FormulaListContainer } from './formula-list.container';
 import { Router } from '@angular/router';
+import { Formula } from 'src/app/core/models/formula.model';
 
 describe('FormulasContainer', () => {
   let component: FormulaListContainer;
@@ -15,10 +16,19 @@ describe('FormulasContainer', () => {
   let formulaService: FormulaService;
   let router: Router;
 
-  const fakeFormulaItem = {
-    id: 1,
+  const fakeFormulaItem: Formula = {
     name: 'Formula 1',
-    description: 'Esta es una formula'
+    CreatedAt: '',
+    UpdatedAt: '',
+    DeletedAt: '',
+    params: [],
+    description: 'Esta es una formula',
+    origin: '',
+    type: '',
+    scope: '',
+    result: '',
+    value: 1,
+    valueid: 1
   };
 
   beforeEach(async(() => {
@@ -75,7 +85,7 @@ describe('FormulasContainer', () => {
 
       await component.editFormula(fakeFormulaItem);
 
-      expect(routerSpy).toHaveBeenCalledWith(['/formulas/edit', fakeFormulaItem.id]);
+      expect(routerSpy).toHaveBeenCalledWith(['/formulas/edit', fakeFormulaItem.name]);
     });
   });
 
