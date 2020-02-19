@@ -95,6 +95,10 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
     this.router.navigate([`/liquidaciones/${this.id}/imprimir`]);
   }
 
+  private gotoPreview2Hojas() {
+    this.router.navigate([`/liquidaciones/${this.id}/imprimircompleto`]);
+  }
+
   private gotoGrilla() {
     this.router.navigate(['/liquidaciones']);
   }
@@ -105,6 +109,10 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
 
   onClickPreview(): void {
     this.gotoPreview();
+  }
+
+  onClickPreview2Hojas(): void {
+    this.gotoPreview2Hojas();
   }
   
   onClickAbort(): void {
