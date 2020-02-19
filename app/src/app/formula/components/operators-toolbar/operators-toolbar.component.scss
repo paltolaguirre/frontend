@@ -2,9 +2,18 @@
 
 div.operators-general-container {
   padding: 0.8rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  div.columns {
+    width: 100%;
+  }
 
   div.operators-container {
     height: 100%;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -15,8 +24,9 @@ div.operators-general-container {
       justify-content: center;
       background: $ACTIVE;
       border-radius: 50%;
-      padding: 1px 8px;
+      padding: 0px 8px;
       margin: 0 0.2rem;
+      cursor: pointer;
   
       span.math-operator {  
         font-weight: 600;

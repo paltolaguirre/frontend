@@ -1,96 +1,94 @@
 <div class="formula-item-picker-container bg-gray">
-  <div class="flex-container">
-    <div class="item-picker">
-      <div class="columns is-gapless is-mobile">
-        <div class="column">
-          <div class="category-box" 
-            *ngFor="let category of categories"
-            [ngClass]="{
-              'active': selectedCategoryItem?.categoryId === category.id
-            }">
-            <div class="columns is-gapless is-mobile">
-              <div *ngIf="isExpanded" class="column is-3">
-                <div class="category-name-container border-light">
-                  <p class="category-name">{{ category.title }}</p>
-                </div>
-              </div>
-              <div class="column items-column" 
-                [ngClass]="{
-                  'is-12': !isExpanded,
-                  'is-9': isExpanded
-                }">
-                <div class="items-box-container">
-                  <div 
-                    class="category-item-container border-light"
-                    *ngFor="let item of category.items"
-                    [ngClass]="{
-                      'active': selectedCategoryItem?.id === item.id
-                    }"
-                    (click)="onCategoryItemClick(item)">
-                    <img [src]="item.img" alt="item-icon" class="item-icon">
-                    <p *ngIf="isExpanded" class="item-name">{{ item.title }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="column"
+  <div class="item-picker">
+    <div class="columns is-gapless is-mobile">
+      <div class="column">
+        <div class="category-box" 
+          *ngFor="let category of categories"
           [ngClass]="{
-            'is-10': !isExpanded
+            'active': selectedCategoryItem?.categoryId === category.id
           }">
-          <div class="items-toolbar-container">
-            <div class="search-bar-container">
-              <div class="search-content border-regular">
-                <input type="text" (keyup)="doFilter($event)" placeholder="Buscar...">
-                <div class="search-icon bg-gray no-selectable">
-                  <mat-icon>search</mat-icon>
+          <div class="columns is-gapless is-mobile">
+            <div *ngIf="isExpanded" class="column is-3">
+              <div class="category-name-container border-light">
+                <p class="category-name">{{ category.title }}</p>
+              </div>
+            </div>
+            <div class="column items-column" 
+              [ngClass]="{
+                'is-12': !isExpanded,
+                'is-9': isExpanded
+              }">
+              <div class="items-box-container">
+                <div 
+                  class="category-item-container border-light"
+                  *ngFor="let item of category.items"
+                  [ngClass]="{
+                    'active': selectedCategoryItem?.id === item.id
+                  }"
+                  (click)="onCategoryItemClick(item)">
+                  <img [src]="item.img" alt="item-icon" class="item-icon">
+                  <p *ngIf="isExpanded" class="item-name">{{ item.title }}</p>
                 </div>
               </div>
             </div>
-
-            <div class="toolbox custom-vertical-scroll">
-              <div *ngIf="selectedCategoryItem">
-                <p>{{ selectedCategoryItem.title }}</p>
-                <p>{{ selectedCategoryItem.title }}</p>
-                <p>{{ selectedCategoryItem.title }}</p>
-                <p>{{ selectedCategoryItem.title }}</p>
-                <p>{{ selectedCategoryItem.title }}</p>
-                <p>{{ selectedCategoryItem.title }}</p>
-                <p>{{ selectedCategoryItem.title }}</p>
-                <p>{{ selectedCategoryItem.title }}</p>
-                <p>{{ selectedCategoryItem.title }}</p>
-                <p>{{ selectedCategoryItem.title }}</p>
-                <p>{{ selectedCategoryItem.title }}</p>
-                <p>{{ selectedCategoryItem.title }}</p>
-                <p>{{ selectedCategoryItem.title }}</p>
-                <p>{{ selectedCategoryItem.title }}</p>
-                <p>{{ selectedCategoryItem.title }}</p>
-                <p>{{ selectedCategoryItem.title }}</p>
-                <p>{{ selectedCategoryItem.title }}</p>
-                <p>{{ selectedCategoryItem.title }}</p>
-                <p>{{ selectedCategoryItem.title }}</p>
-                <p>{{ selectedCategoryItem.title }}</p>
-                <p>{{ selectedCategoryItem.title }}</p>
-                <p>{{ selectedCategoryItem.title }}</p>
-              </div>
-            </div>
-      
           </div>
         </div>
       </div>
-    </div>
-    <div class="collapse-badge-container" (click)="onExpandClick()">
-      <div *ngIf="isExpanded; else expand" class="badge">
-        <mat-icon>keyboard_arrow_left</mat-icon>
-        Plegar
-      </div>
-      <ng-template #expand>
-        <div class="badge">
-          Abrir
-          <mat-icon>keyboard_arrow_right</mat-icon>
+      <div class="column"
+        [ngClass]="{
+          'is-10': !isExpanded
+        }">
+        <div class="items-toolbar-container">
+          <div class="search-bar-container">
+            <div class="search-content border-regular">
+              <input type="text" (keyup)="doFilter($event)" placeholder="Buscar...">
+              <div class="search-icon bg-gray no-selectable">
+                <mat-icon>search</mat-icon>
+              </div>
+            </div>
+          </div>
+
+          <div class="toolbox custom-vertical-scroll">
+            <div *ngIf="selectedCategoryItem">
+              <p>{{ selectedCategoryItem.title }}</p>
+              <p>{{ selectedCategoryItem.title }}</p>
+              <p>{{ selectedCategoryItem.title }}</p>
+              <p>{{ selectedCategoryItem.title }}</p>
+              <p>{{ selectedCategoryItem.title }}</p>
+              <p>{{ selectedCategoryItem.title }}</p>
+              <p>{{ selectedCategoryItem.title }}</p>
+              <p>{{ selectedCategoryItem.title }}</p>
+              <p>{{ selectedCategoryItem.title }}</p>
+              <p>{{ selectedCategoryItem.title }}</p>
+              <p>{{ selectedCategoryItem.title }}</p>
+              <p>{{ selectedCategoryItem.title }}</p>
+              <p>{{ selectedCategoryItem.title }}</p>
+              <p>{{ selectedCategoryItem.title }}</p>
+              <p>{{ selectedCategoryItem.title }}</p>
+              <p>{{ selectedCategoryItem.title }}</p>
+              <p>{{ selectedCategoryItem.title }}</p>
+              <p>{{ selectedCategoryItem.title }}</p>
+              <p>{{ selectedCategoryItem.title }}</p>
+              <p>{{ selectedCategoryItem.title }}</p>
+              <p>{{ selectedCategoryItem.title }}</p>
+              <p>{{ selectedCategoryItem.title }}</p>
+            </div>
+          </div>
+    
         </div>
-      </ng-template>
+      </div>
     </div>
+  </div>
+  <div class="collapse-badge-container" (click)="onExpandClick()">
+    <div *ngIf="isExpanded; else expand" class="badge">
+      <mat-icon>keyboard_arrow_left</mat-icon>
+      Plegar
+    </div>
+    <ng-template #expand>
+      <div class="badge">
+        Abrir
+        <mat-icon>keyboard_arrow_right</mat-icon>
+      </div>
+    </ng-template>
   </div>
 </div>
