@@ -10,7 +10,7 @@
           <div class="columns is-gapless is-mobile">
             <div *ngIf="isExpanded" class="column is-3">
               <div class="category-name-container border-light">
-                <p class="category-name">{{ category.title }}</p>
+                <p class="category-name no-selectable">{{ category.title }}</p>
               </div>
             </div>
             <div class="column items-column" 
@@ -27,7 +27,7 @@
                   }"
                   (click)="onCategoryItemClick(item)">
                   <img [src]="item.img" alt="item-icon" class="item-icon">
-                  <p *ngIf="isExpanded" class="item-name">{{ item.title }}</p>
+                  <p *ngIf="isExpanded" class="item-name no-selectable">{{ item.title }}</p>
                 </div>
               </div>
             </div>

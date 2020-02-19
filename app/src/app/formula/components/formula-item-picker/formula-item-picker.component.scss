@@ -21,7 +21,7 @@ div.formula-item-picker-container {
           writing-mode: tb;
           transform: rotate(180deg);
           font-weight: bold;
-          font-size: 0.8rem;
+          font-size: 0.7rem;
           letter-spacing: 0.7px;
           margin: 0;
         }
@@ -44,7 +44,8 @@ div.formula-item-picker-container {
             p.item-name {
               margin-left: 0.6rem;
               color: $GRAY_REGULAR;
-              font-size: 0.8rem;
+              font-size: 0.7rem;
+              line-height: 11px;
             }
 
             &.active {
@@ -118,6 +119,7 @@ div.formula-item-picker-container {
         max-height: 22rem;
         overflow-y: scroll;
         overflow-x: auto;
+        font-size: 0.7rem;
       }
     }
   }
