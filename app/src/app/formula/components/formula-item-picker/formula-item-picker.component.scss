@@ -35,6 +35,7 @@ div.formula-item-picker-container {
             display: flex;
             align-items: center;
             cursor: pointer;
+            position: relative;
 
             img.item-icon {
               width: 2rem;
@@ -54,6 +55,19 @@ div.formula-item-picker-container {
               
               p.item-name {
                 color: #000;
+              }
+
+              // Hides the right border of the selected item.
+              &::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                right: -2px;
+                color: #fff;
+                height: 100%;
+                width: 2px;
+                background: #fff;
+                border-right: 1px white;
               }
             }
           }
