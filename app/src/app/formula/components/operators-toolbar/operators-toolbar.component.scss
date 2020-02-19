@@ -11,6 +11,10 @@ div.operators-general-container {
     width: 100%;
   }
 
+  mat-divider {
+    margin: 0 4px;
+  }
+
   div.operators-container {
     height: 100%;
     width: 100%;
@@ -40,7 +44,7 @@ div.operators-general-container {
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
 
     div.logical-operator-container {
       display: flex;
@@ -63,7 +67,7 @@ div.operators-general-container {
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
 
     div.other-badge-container {
       display: flex;
@@ -94,7 +98,7 @@ div.operators-general-container {
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: flex-start;
 
     span.more-operators-badge {
       font-size: 0.6rem;
