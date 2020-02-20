@@ -38,6 +38,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   public print$: Observable<boolean> = null;
   fechaperiododepositado: any;
   fechaperiodoliquidacion: any;
+  public liquidacionItemHojaCalculo$: Observable<Liquidacionitem> = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -102,6 +103,25 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   private gotoGrilla() {
     this.router.navigate(['/liquidaciones']);
   }
+
+  private onClickVerHojaDeCalculo(item: Liquidacionitem) {
+    this.liquidacionItemHojaCalculo$ = this.route.paramMap.pipe(
+      switchMap(async (params: ParamMap) => {        
+        return item;
+      })
+    );
+   document.getElementById("liquidacionContenedor").classList.add("hidden");
+   document.getElementById("liquidacionContenedor").scrollTop = 0
+  }
+  private onClickCloseVerHojaDeCalculo() {
+    this.liquidacionItemHojaCalculo$ = this.route.paramMap.pipe(
+      switchMap(async (params: ParamMap) => {        
+        return null;
+      })
+    );
+    document.getElementById("liquidacionContenedor").classList.remove("hidden");
+
+  }
   
   onClickId(): void {
     this.gotoId();
@@ -109,6 +129,10 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
 
   onClickPreview(): void {
     this.gotoPreview();
+  }
+
+  tieneCalculoAutomatico(item: Liquidacionitem): boolean {
+    return item.acumuladores && item.acumuladores.length > 0 
   }
   
   onClickAbort(): void {

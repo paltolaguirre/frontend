@@ -1,0 +1,25 @@
+<div mat-dialog-content class="content" style="padding: 5em 0.5em 5em 0.5em; overflow: auto;">
+    <div id="contentTOPDF">
+      <!-- Original -->
+      <table class="tg">
+        <tr class="title">
+          <td class="tg-0lax">Orden</td>
+          <td class="tg-0lax">Concepto</td>
+          <td class="tg-0lax">importe</td>
+          <td class="tg-0lax">Tope Max. A Descontar</td>
+        </tr>
+        
+        <tr *ngFor="let item of items; let i = index; let firstItem = first; let lastItem = last" [ngClass]="{'item hidden-top':!firstItem,'hidden-bottom':!lastItem}">
+          <td class="tg-0lax"><div class="datoItem">{{item.orden}}</div></td>
+          <td class="tg-0lax"><div class="datoItem">{{item.nombre}}</div></td>
+          <td class="tg-0lax"><div class="datoItem">{{item.importe}}</div></td>
+          <td class="tg-0lax"><div class="datoItem">{{item.tope}}</div></td>
+        </tr>
+  
+      </table>
+    </div>
+  </div>
+  
+  
+  
+  

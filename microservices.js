@@ -35,6 +35,10 @@ for (let index = 0; index < myArgs.length; index++) {
             path = "~/go/src/github.com/xubiosueldos/informes";
             runService(serviceName, path);
             break;
+	case 'siradig':
+	    path = "~/go/src/github.com/xubiosueldos/siradig";
+	    runService(serviceName, path);
+	    break;
         default:
             console.log("* El servicio '" + serviceName + "' no existe.");
     }
