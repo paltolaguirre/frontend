@@ -17,13 +17,53 @@ export class HojadecalculoComponent implements OnInit {
    }
 
   async ngOnInit() {
-    const subtotalesOrden = [15, 35, 38, 43, 44, 51, 53]
-    this.items = this.liquidacionItem.acumuladores.map(function (a){
-      a.esSubtotal = subtotalesOrden.includes(a.orden)
-      return a
-    }).sort(function (a, b) {
+    
+    this.items = this.liquidacionItem.acumuladores;
+
+    //SOLO QUIERO AGREGAR TITULOS LOCOS CUANDO ES GANANCIAS
+    if (this.liquidacionItem.concepto.codigo == 'IMPUESTO_GANANCIAS' || this.liquidacionItem.concepto.codigo == 'IMPUESTO_GANANCIAS_DEVOLUCION'){
+      
+      //AGREGO SUBTOTALES
+      const subtotalesOrden = [15, 35, 38, 43, 44, 51, 53]
+      
+      this.items = this.items.map(function (a){
+        a.esSubtotal = subtotalesOrden.includes(a.orden)
+        return a
+      });
+
+      //AGREGO SUBTITULOS
+      var subtitles = [{
+        orden:38.5,
+        nombre:'Deducciones Personales',
+        codigo:'DEDUCCIONES_PERSONALES_TITLE',
+        importe: null,
+        esSubtitulo: true
+      },{
+        orden:0.5,
+        nombre:'Remuneraciones',
+        codigo:'REMUNERACIONES_TITLE',
+        importe: null,
+        esSubtitulo: true
+      },{
+        orden:15.5,
+        nombre:'Deducciones Generales',
+        codigo:'DEDUCCIONES_GENERALES_TITLE',
+        importe: null,
+        esSubtitulo: true
+      },{
+        orden:48.5,
+        nombre:'Determinacion de Impuesto',
+        codigo:'DETERMINACION_IMPUESTO_TITLE',
+        importe: null,
+        esSubtitulo: true
+      }];      
+      Array.prototype.push.apply(this.items, subtitles);
+
+    }
+    
+    this.items.sort(function (a, b) {
       if (a.orden > b.orden) {
-        return 1;
+        return 1; 
       }
       if (a.orden < b.orden) {
         return -1;
@@ -31,7 +71,5 @@ export class HojadecalculoComponent implements OnInit {
       // a must be equal to b
       return 0;
     });
-
   }
-
 }

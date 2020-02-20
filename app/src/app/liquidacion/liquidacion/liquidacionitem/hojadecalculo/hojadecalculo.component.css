@@ -63,7 +63,6 @@
   }
 
   td {
-    text-align: center;
     text-transform: uppercase;
     font-size: 13px !important;
   }
@@ -137,7 +136,22 @@
     border-left-style: hidden !important;
   }
 
-.subtitle {
+.subtotal {
   font-weight: bold;
   background-color: lightgrey;
+}
+
+.subtitle {
+  font-weight: bold;
+  text-decoration: underline;
+  background-color: #E0E0E0;
+}
+
+.ladosOcultos {
+  border-right-style: hidden !important;
+  border-left-style: hidden !important;
+}
+
+.hidden{
+  display: none;
 }

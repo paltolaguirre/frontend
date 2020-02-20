@@ -186,6 +186,7 @@ export interface Acumulador {
     tope?: number;
     liquidacionitemid?: number;
     esSubtotal?: boolean;
+    esSubtitulo?: boolean;
 }
 
 export interface Fechaliquidaciones {
