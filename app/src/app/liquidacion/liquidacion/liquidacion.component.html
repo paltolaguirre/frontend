@@ -12,7 +12,7 @@
 
   <mat-divider></mat-divider>
 
-  <div mat-dialog-content class="content" id="contentTOPDF">
+  <div mat-dialog-content class="content">
     <div>
       <app-selector-default nombre="legajo" [(matSelect)]="data.legajoid" (optionSelected)="data.legajo=$event">
       </app-selector-default>
@@ -250,6 +250,7 @@
   <app-hojadecalculo [liquidacionItem]="dataItem"></app-hojadecalculo>
   <div mat-dialog-actions class="actions">
     <button mat-raised-button mat-button color="secondary" (click)="onClickCloseVerHojaDeCalculo()">Cerrar</button>
+    <button mat-raised-button color="primary" mat-button (click)="onClickPrint()">Descargar</button>
   </div>
 </div>
 </ng-template>
