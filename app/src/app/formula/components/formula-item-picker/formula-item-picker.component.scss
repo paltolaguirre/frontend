@@ -130,10 +130,21 @@ div.formula-item-picker-container {
       }
 
       div.toolbox {
-        max-height: 22rem;
+        min-height: 15rem;
+        max-height: 15rem;
         overflow-y: scroll;
         overflow-x: auto;
         font-size: 0.7rem;
+
+        div.selectable-badges-container {
+          .selectable-badge {
+            background: $ACTIVE;
+            color: #fff;
+            border-radius: 10px;
+            max-width: fit-content;
+            padding: 0 9px;
+          }
+        }
       }
     }
   }
