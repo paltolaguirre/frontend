@@ -2,7 +2,7 @@
 </ng-container>
 
 <ng-template #default>
-<div *ngIf="currentLiquidacion$ | async as data" id="liquidacionContenedor" class="liquidacion-container">
+<div *ngIf="currentLiquidacion$ | async as data" class="liquidacion-container" [ngClass]="{hidden: !(mostrarLiquidacion$ | async)}">
   <h1 *ngIf="data.ID">
     Modificar liquidacion <span>{{data.liquidacion}}</span>
   </h1>

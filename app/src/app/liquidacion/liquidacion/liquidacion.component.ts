@@ -39,6 +39,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   fechaperiododepositado: any;
   fechaperiodoliquidacion: any;
   public liquidacionItemHojaCalculo$: Observable<Liquidacionitem> = null;
+  public mostrarLiquidacion$: Observable<boolean> = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -64,6 +65,8 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
         return liquidacion;
       })
     );
+
+    this.mostrarLiquidacion$ = of(true)
 
     this.print$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
@@ -110,17 +113,18 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
         return item;
       })
     );
-   document.getElementById("liquidacionContenedor").classList.add("hidden");
-   document.getElementById("liquidacionContenedor").scrollTop = 0
+   
+    this.mostrarLiquidacion$ = of(false)
   }
+
+
   private onClickCloseVerHojaDeCalculo() {
     this.liquidacionItemHojaCalculo$ = this.route.paramMap.pipe(
       switchMap(async (params: ParamMap) => {        
         return null;
       })
     );
-    document.getElementById("liquidacionContenedor").classList.remove("hidden");
-
+    this.mostrarLiquidacion$ = of(true);
   }
   
   onClickId(): void {
