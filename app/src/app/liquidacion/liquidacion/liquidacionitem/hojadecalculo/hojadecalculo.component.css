@@ -14,7 +14,7 @@
   }
 
   .title {
-    background: lightgrey;
+    background: grey;
     font-weight: bold;
   }
 
@@ -136,3 +136,8 @@
   .hidden-left {
     border-left-style: hidden !important;
   }
+
+.subtitle {
+  font-weight: bold;
+  background-color: lightgrey;
+}
