@@ -27,6 +27,7 @@ export class HojadecalculoComponent implements OnInit {
       const subtotalesOrden = [15, 35, 38, 43, 44, 51, 53]
       
       this.items = this.items.map(function (a){
+        a.importe = Math.round(a.importe * 100) / 100
         a.esSubtotal = subtotalesOrden.includes(a.orden)
         return a
       });
