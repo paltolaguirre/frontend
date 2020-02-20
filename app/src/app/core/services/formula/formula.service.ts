@@ -27,6 +27,10 @@ export class FormulaService {
     return await this.api.get(`${this.BASE_URL}/formulas/${name}`).toPromise() as Formula;
   }
 
+  public async update(name: string, formula: Formula) {
+    return await this.api.put(`${this.BASE_URL}/formulas/${name}`, formula).toPromise();
+  }
+
   public getFormulaCategories(): FormulaCategory[] {
     return [
       {

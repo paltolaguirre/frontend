@@ -21,6 +21,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public currentFormula: Formula;
   public isItemPickerExpanded: boolean = true;
   public params: FormArray;
+  public isNew: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -38,6 +39,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
       takeUntil(componentDestroyed(this)),
       pluck('name')).subscribe(name => {
         if (!name) {
+          this.isNew = true;
           this.currentFormula = null;
 
           return this.buildEmptyForm();
@@ -131,9 +133,27 @@ export class FormulaContainer implements OnInit, OnDestroy {
     return this.form.get('params') as FormArray;
   }
 
-  public save() {
+  public async save() {
     console.log(this.form.value);
-    // TODO save.
+    console.log('is new: ', this.isNew);
+
+    if (this.isNew) {
+      return this.createFormula();
+    }
+
+    this.updateFormula();
+  }
+
+  public createFormula() {
+    console.log('create formula');
+  }
+
+  public async updateFormula() {
+    try {
+      await this.formulaService.update(this.form.value.name, this.form.value);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   public async abort() {
