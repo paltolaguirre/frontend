@@ -23,6 +23,10 @@ export class FormulaService {
     return Promise.resolve();
   }
 
+  public async create(formula: Formula): Promise<any> {
+    return await this.api.post(`${this.BASE_URL}/formulas`, formula).toPromise();
+  }
+
   public async find(name: string): Promise<Formula> {
     return await this.api.get(`${this.BASE_URL}/formulas/${name}`).toPromise() as Formula;
   }
