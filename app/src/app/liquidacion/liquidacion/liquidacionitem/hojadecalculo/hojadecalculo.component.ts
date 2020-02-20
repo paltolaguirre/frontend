@@ -28,6 +28,7 @@ export class HojadecalculoComponent implements OnInit {
       
       this.items = this.items.map(function (a){
         a.importe = Math.round(a.importe * 100) / 100
+        a.tope = Math.round(a.tope * 100) / 100
         a.esSubtotal = subtotalesOrden.includes(a.orden)
         return a
       });
