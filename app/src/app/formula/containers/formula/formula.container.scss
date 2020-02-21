@@ -13,10 +13,14 @@ div.formula-create-container {
 
   mat-expansion-panel {
     h2.subtitle {
-      // font-size: 1.2rem;
-      // font-weight: 500;
       font: 500 15px/27px Roboto,"Helvetica Neue",sans-serif;
       color: grey;
+    }
+
+    button {
+      &.table-row-manipulator {
+        margin-top: 1rem;
+      }
     }
   }
 
