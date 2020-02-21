@@ -171,4 +171,8 @@ export class FormulaContainer implements OnInit, OnDestroy {
 
     this.formParams.push(this.createFormulaParam());
   }
+
+  public onDeleteInputParam(rowIndex: number) {
+    this.formParams.removeAt(rowIndex);
+  }
 }
