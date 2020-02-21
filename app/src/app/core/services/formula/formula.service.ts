@@ -18,9 +18,8 @@ export class FormulaService {
     return await this.api.get(`${this.BASE_URL}/formulas`).toPromise() as Formula[];
   }
 
-  // TODO: Remove from API.
-  public delete(formula: Formula): Promise<any> {
-    return Promise.resolve();
+  public async delete(name: string): Promise<any> {
+    return await this.api.delete(`${this.BASE_URL}/formulas/${name}`).toPromise();
   }
 
   public async create(formula: Formula): Promise<any> {

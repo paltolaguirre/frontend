@@ -83,7 +83,7 @@ export class FormulaListContainer implements OnInit, AfterViewInit {
 
   public async onDelete(item: Formula) {
     try {
-      await this.formulaService.delete(item);
+      await this.formulaService.delete(item.name);
 
       this.removeItemFromTable(item);
     } catch (e) {
