@@ -122,10 +122,8 @@ export class FormulaContainer implements OnInit, OnDestroy {
   }
 
   public updateFormulaParams() {
-    this.params = this.form.get('params') as FormArray;
-
     for (const param of this.currentFormula.params) {
-      this.params.push(this.createFormulaParam(param));
+      this.formParams.push(this.createFormulaParam(param));
     }
   }
 
@@ -166,5 +164,11 @@ export class FormulaContainer implements OnInit, OnDestroy {
 
   public onItemPickerExpandedStateChanged(isExpanded: boolean) {
     this.isItemPickerExpanded = isExpanded;
+  }
+
+  public onAddInputParamClick(event) {
+    event.preventDefault();
+
+    this.formParams.push(this.createFormulaParam());
   }
 }

@@ -67,7 +67,7 @@
                 Parámetros de Entrada
               </h2>
               <div class="children-container">
-                <table style="width:100%" *ngIf="currentFormula">
+                <table style="width:100%">
                   <tr formArrayName="params" *ngFor="let param of formParams.controls; let i = index">
                     <mat-form-field>
                       <mat-label>Tipo Dato</mat-label>
@@ -85,6 +85,7 @@
                   </tr>
                 </table>
               </div>
+              <button mat-raised-button (click)="onAddInputParamClick($event)">Agregar Item</button>
 
               <!--  Old columns code -->
           
