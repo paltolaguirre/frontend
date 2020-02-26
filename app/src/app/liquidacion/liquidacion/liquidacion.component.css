@@ -101,3 +101,11 @@ input::-webkit-inner-spin-button {
 .totales span {
   font-weight: 575;
 }
+
+.hidden {
+  display: none!important;
+}
+
+.colorGray {
+  color: darkgray;
+}
