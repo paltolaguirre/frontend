@@ -3,4 +3,5 @@ export class FormulaCategoryItem {
   title: string;
   img: string;
   categoryId: number;
+  slug: string;
 }

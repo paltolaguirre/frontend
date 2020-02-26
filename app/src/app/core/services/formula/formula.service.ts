@@ -44,7 +44,8 @@ export class FormulaService {
             id: 1,
             img: 'assets/img/descarga.jpg',
             title: 'Buscar',
-            categoryId: 1
+            categoryId: 1,
+            slug: 'search'
           }
         ]
       },
@@ -56,19 +57,22 @@ export class FormulaService {
             id: 2,
             img: 'assets/img/descarga.jpg',
             title: 'Variables',
-            categoryId: 2
+            categoryId: 2,
+            slug: 'variables'
           },
           {
             id: 3,
             img: 'assets/img/descarga.jpg',
             title: 'Conceptos en la liquidación',
-            categoryId: 2
+            categoryId: 2,
+            slug: 'concept'
           },
           {
             id: 4,
             img: 'assets/img/descarga.jpg',
             title: 'Parámetros de entrada',
-            categoryId: 2
+            categoryId: 2,
+            slug: 'input-params'
           }
         ]
       },
@@ -80,13 +84,15 @@ export class FormulaService {
             id: 5,
             img: 'assets/img/descarga.jpg',
             title: 'Fórmulas estandar',
-            categoryId: 3
+            categoryId: 3,
+            slug: 'standard-formulas'
           },
           {
             id: 6,
             img: 'assets/img/descarga.jpg',
             title: 'Mis fórmulas',
-            categoryId: 3
+            categoryId: 3,
+            slug: 'my-formulas'
           }
         ]
       }

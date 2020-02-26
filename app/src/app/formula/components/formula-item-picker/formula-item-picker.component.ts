@@ -44,4 +44,8 @@ export class FormulaItemPickerComponent implements OnInit {
     console.log(item);
     this.selectedCategoryItem = item;
   }
+
+  public isSearchItemSelected(item: FormulaCategoryItem): boolean {
+    
+  }
 }
