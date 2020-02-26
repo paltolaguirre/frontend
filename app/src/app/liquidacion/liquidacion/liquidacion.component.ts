@@ -33,7 +33,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   paises: any[];
   id: number;
   data: any;
-  public print$: Observable<boolean> = null;
+  public print$: Observable<string> = null;
   fechaperiododepositado: any;
   fechaperiodoliquidacion: any;
 
@@ -64,11 +64,9 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
 
     this.print$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
-        const print = (params.get('action') == "imprimir");
-        if (print) {
-          console.log("Action Imprimir");
-        }
-
+        let print = params.get('action');
+        if(!print) print = 'default';
+        
         return of(print);
       })
     );
