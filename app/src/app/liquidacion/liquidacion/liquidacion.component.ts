@@ -417,6 +417,10 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
     }
   }
 
+  public esNoEditable(item:Liquidacionitem){
+    return item.concepto.eseditable === false
+  }
+
   setCurrentLiquidacion(liquidacion: Liquidacion) {
 
   }
