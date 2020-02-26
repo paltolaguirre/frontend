@@ -2,7 +2,7 @@
 </ng-container>
 
 <ng-template #default>
-<div *ngIf="currentLiquidacion$ | async as data" class="liquidacion-container">
+<div *ngIf="currentLiquidacion$ | async as data" class="liquidacion-container" [ngClass]="{hidden: !(mostrarLiquidacion$ | async)}">
   <h1 *ngIf="data.ID">
     Modificar liquidacion <span>{{data.liquidacion}}</span>
   </h1>
@@ -12,7 +12,7 @@
 
   <mat-divider></mat-divider>
 
-  <div mat-dialog-content class="content" id="contentTOPDF">
+  <div mat-dialog-content class="content">
     <div>
       <app-selector-default nombre="legajo" [(matSelect)]="data.legajoid" (optionSelected)="data.legajo=$event">
       </app-selector-default>
@@ -75,10 +75,13 @@
                   </button>
                   <app-selector-default nombre="concepto" filter="tipoconcepto=IMPORTE_REMUNERATIVO" [(matSelect)]="item.conceptoid"
                     (optionSelected)="conceptoSelected(data, item, $event, 'IMPORTE_REMUNERATIVO')"></app-selector-default>
-                  <mat-form-field class="children-input"><input matInput
+                  <mat-form-field class="children-input"><input matInput [disabled]="esNoEditable(item)"
                     [(ngModel)]="item.cantidad" placeholder="Cantidad" type="number" autocomplete="off"></mat-form-field>
-                  <mat-form-field class="children-input"><input matInput 
+                  <mat-form-field class="children-input"><input matInput [disabled]="esNoEditable(item)"
                     [(ngModel)]="item.importeunitario" placeholder="Importe Total" type="number" autocomplete="off"></mat-form-field>
+                    <button *ngIf="tieneCalculoAutomatico(item)" mat-icon-button class="actions-icon" color="warn" (click)="onClickVerHojaDeCalculo(item)">
+                      <mat-icon class="colorGray">remove_red_eye</mat-icon>
+                    </button>
                 </div>
               </tr>
             </table>
@@ -108,10 +111,13 @@
                   </button>
                   <app-selector-default nombre="concepto" filter="tipoconcepto=IMPORTE_NO_REMUNERATIVO" [(matSelect)]="item.conceptoid"
                     (optionSelected)="conceptoSelected(data, item, $event, 'IMPORTE_NO_REMUNERATIVO')"></app-selector-default>
-                  <mat-form-field class="children-input"><input matInput
+                  <mat-form-field class="children-input"><input matInput [disabled]="esNoEditable(item)"
                     [(ngModel)]="item.cantidad" placeholder="Cantidad" type="number" autocomplete="off"></mat-form-field>
-                  <mat-form-field class="children-input"><input matInput 
+                  <mat-form-field class="children-input"><input matInput [disabled]="esNoEditable(item)"
                     [(ngModel)]="item.importeunitario" placeholder="Importe Total" type="number" autocomplete="off"></mat-form-field>
+                    <button *ngIf="tieneCalculoAutomatico(item)" mat-icon-button class="actions-icon" color="warn" (click)="onClickVerHojaDeCalculo(item)">
+                      <mat-icon class="colorGray">remove_red_eye</mat-icon>
+                    </button>
                 </div>
               </tr>
             </table>
@@ -140,10 +146,13 @@
                   </button> 
                   <app-selector-default nombre="concepto" filter="tipoconcepto=DESCUENTO" [(matSelect)]="item.conceptoid"
                     (optionSelected)="conceptoSelected(data, item, $event, 'DESCUENTO')"></app-selector-default>
-                  <mat-form-field class="children-input"><input matInput
+                  <mat-form-field class="children-input"><input matInput [disabled]="esNoEditable(item)"
                     [(ngModel)]="item.cantidad" placeholder="Cantidad" type="number" autocomplete="off"></mat-form-field>
-                  <mat-form-field class="children-input"><input matInput 
+                  <mat-form-field class="children-input"><input matInput [disabled]="esNoEditable(item)"
                     [(ngModel)]="item.importeunitario" placeholder="Importe Total" type="number" autocomplete="off"></mat-form-field>
+                    <button *ngIf="tieneCalculoAutomatico(item)" mat-icon-button class="actions-icon" color="warn" (click)="onClickVerHojaDeCalculo(item)">
+                      <mat-icon class="colorGray">remove_red_eye</mat-icon>
+                    </button>
                 </div>
               </tr>
             </table>
@@ -172,10 +181,13 @@
                   </button>
                   <app-selector-default nombre="concepto" filter="tipoconcepto=RETENCION" [(matSelect)]="item.conceptoid"
                     (optionSelected)="conceptoSelected(data, item, $event, 'RETENCION')"></app-selector-default>
-                  <mat-form-field class="children-input"><input matInput
+                  <mat-form-field class="children-input"><input matInput [disabled]="esNoEditable(item)"
                     [(ngModel)]="item.cantidad" placeholder="Cantidad" type="number" autocomplete="off"></mat-form-field>
-                  <mat-form-field class="children-input"><input matInput 
+                  <mat-form-field class="children-input"><input matInput [disabled]="esNoEditable(item)"
                     [(ngModel)]="item.importeunitario" placeholder="Importe Total" type="number" autocomplete="off"></mat-form-field>
+                  <button *ngIf="tieneCalculoAutomatico(item)" mat-icon-button class="actions-icon" color="warn" (click)="onClickVerHojaDeCalculo(item)">
+                    <mat-icon class="colorGray">remove_red_eye</mat-icon>
+                  </button>
                 </div>
               </tr>
             </table>
@@ -204,10 +216,13 @@
                   </button>
                   <app-selector-default nombre="concepto" filter="tipoconcepto=APORTE_PATRONAL" [(matSelect)]="item.conceptoid"
                     (optionSelected)="conceptoSelected(data, item, $event, 'APORTE_PATRONAL')"></app-selector-default>
-                  <mat-form-field class="children-input"><input matInput
+                  <mat-form-field class="children-input"><input matInput [disabled]="esNoEditable(item)"
                     [(ngModel)]="item.cantidad" placeholder="Cantidad" type="number" autocomplete="off"></mat-form-field>
-                  <mat-form-field class="children-input"><input matInput 
+                  <mat-form-field class="children-input"><input matInput [disabled]="esNoEditable(item)"
                     [(ngModel)]="item.importeunitario" placeholder="Importe Total" type="number" autocomplete="off"></mat-form-field>
+                    <button *ngIf="tieneCalculoAutomatico(item)" mat-icon-button class="actions-icon" color="warn" (click)="onClickVerHojaDeCalculo(item)">
+                      <mat-icon class="colorGray">remove_red_eye</mat-icon>
+                    </button>
                 </div>
               </tr>
             </table>
@@ -229,6 +244,13 @@
       <button mat-raised-button *ngIf=isNew(data) color="secondary" mat-button
         (click)="onClickPreview()">Imprimir</button>
     </div>
+  </div>
+</div>
+<div *ngIf="liquidacionItemHojaCalculo$ | async as dataItem">
+  <app-hojadecalculo [liquidacionItem]="dataItem"></app-hojadecalculo>
+  <div mat-dialog-actions class="actions">
+    <button mat-raised-button mat-button color="secondary" (click)="onClickCloseVerHojaDeCalculo()">Cerrar</button>
+    <button mat-raised-button color="primary" mat-button (click)="onClickPrint()">Descargar</button>
   </div>
 </div>
 </ng-template>
