@@ -21,6 +21,7 @@ export interface Concepto {
     basesac: boolean;
     tipoimpuestoganancias: object;
     tipoimpuestogananciasid: number;
+    eseditable?: boolean;
 }
 
 export interface Tipoconcepto {  
