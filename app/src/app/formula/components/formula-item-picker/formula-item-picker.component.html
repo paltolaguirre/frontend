@@ -40,10 +40,14 @@
         }">
         <div class="items-toolbar-container">
           <div *ngIf="isSearchItemSelected(selectedCategoryItem)" class="search-bar-container">
-            <div class="search-content border-regular">
-              <input type="text" (keyup)="doFilter($event)" placeholder="Buscar...">
-              <div class="search-icon bg-gray no-selectable">
-                <mat-icon>search</mat-icon>
+            <div class="columns is-gapless search-content border-regular">
+              <div class="column is-10">
+                <input type="text" (keyup)="doFilter($event)" placeholder="Buscar...">
+              </div>
+              <div class="column">
+                <div class="search-icon bg-gray no-selectable">
+                  <mat-icon>search</mat-icon>
+                </div>  
               </div>
             </div>
           </div>
