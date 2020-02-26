@@ -4,9 +4,10 @@ import { MatDialog } from '@angular/material';
 import { PrintService } from 'src/app/print/print.service';
 import { switchMap } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
-import { SiradigService } from '../siradig.service';
+import { SiradigService, ListaItems } from '../siradig.service';
 import { Siradig } from '../siradig.model';
 import { LegajoService } from 'src/app/legajo/legajo.service';
+import { NotificationService } from 'src/app/handler-error/notification.service';
 
 @Component({
   selector: 'app-siradig-show',
@@ -33,7 +34,8 @@ export class SiradigShowComponent implements OnInit {
     private router: Router,
     public printService: PrintService,
     private legajoService: LegajoService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private notificationService: NotificationService
   ) {
     this.currentDate = new Date();
     this.currentYear = this.currentDate.getFullYear();
@@ -89,6 +91,7 @@ export class SiradigShowComponent implements OnInit {
   public onYearSelectChange(payload: number, data: Siradig) {
     const date = new Date(payload, 0, 1).toISOString();
     data.periodosiradig = date;
+    this.siradigValidator(data);
   }
 
   onClickAbort(): void {
@@ -168,7 +171,7 @@ export class SiradigShowComponent implements OnInit {
             estaacargo: siradig.detallecargofamiliarsiradig[indexItemSiradig].estaacargo,
             residenteenelpais: siradig.detallecargofamiliarsiradig[indexItemSiradig].residenteenelpais,
             obtuvoingresos: siradig.detallecargofamiliarsiradig[indexItemSiradig].obtuvoingresos,
-            montoanual: siradig.detallecargofamiliarsiradig[indexItemSiradig].montoanual,
+            montoanual: siradig.detallecargofamiliarsiradig[indexItemSiradig].montoanual==null?0:siradig.detallecargofamiliarsiradig[indexItemSiradig].montoanual,
             mesdesde: siradig.detallecargofamiliarsiradig[indexItemSiradig].mesdesde,
             meshasta: siradig.detallecargofamiliarsiradig[indexItemSiradig].meshasta,
             porcentaje: siradig.detallecargofamiliarsiradig[indexItemSiradig].porcentaje
@@ -193,7 +196,7 @@ export class SiradigShowComponent implements OnInit {
             estaacargo: null,
             residenteenelpais: null,
             obtuvoingresos: null,
-            montoanual: null,
+            montoanual: 0,
             mesdesde: null,
             meshasta: null,
             porcentaje: null
@@ -231,7 +234,7 @@ export class SiradigShowComponent implements OnInit {
             estaacargo: siradig.detallecargofamiliarsiradig[indexItemSiradig].estaacargo,
             residenteenelpais: siradig.detallecargofamiliarsiradig[indexItemSiradig].residenteenelpais,
             obtuvoingresos: siradig.detallecargofamiliarsiradig[indexItemSiradig].obtuvoingresos,
-            montoanual: siradig.detallecargofamiliarsiradig[indexItemSiradig].montoanual,
+            montoanual: siradig.detallecargofamiliarsiradig[indexItemSiradig].montoanual==null?0:siradig.detallecargofamiliarsiradig[indexItemSiradig].montoanual,
             mesdesde: siradig.detallecargofamiliarsiradig[indexItemSiradig].mesdesde,
             meshasta: siradig.detallecargofamiliarsiradig[indexItemSiradig].meshasta,
             porcentaje: siradig.detallecargofamiliarsiradig[indexItemSiradig].porcentaje
@@ -256,7 +259,7 @@ export class SiradigShowComponent implements OnInit {
             estaacargo: null,
             residenteenelpais: null,
             obtuvoingresos: null,
-            montoanual: null,
+            montoanual: 0,
             mesdesde: null,
             meshasta: null,
             porcentaje: null
@@ -520,6 +523,8 @@ export class SiradigShowComponent implements OnInit {
     data.ajustesiradig = [];
 
     this.procesarSiradig(data);
+
+    this.siradigValidator(data);
   }
   
   existe(array, codigo) {
@@ -542,5 +547,18 @@ export class SiradigShowComponent implements OnInit {
     });
 
     this.cdr.detectChanges();
+  }
+
+  private async siradigValidator(data: Siradig) {
+    if(data && data.legajoid && data.periodosiradig) {
+      const itemsApi: ListaItems = await this.siradigService.getSiradigs(data.legajoid, data.periodosiradig.split("-")[0]);
+      if(itemsApi.total_count > 0) {
+        const notificacion = {
+          codigo: 400,
+          mensaje: `Ya existe un SiRADIG para el legajo "${data.legajo.nombre}" correspondiente al periodo "${data.periodosiradig.split("-")[0]}"`
+        }
+        const ret = this.notificationService.notify(notificacion);
+      }
+    }
   }
 }

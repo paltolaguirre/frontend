@@ -35,7 +35,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   paises: any[];
   id: number;
   data: any;
-  public print$: Observable<boolean> = null;
+  public print$: Observable<string> = null;
   fechaperiododepositado: any;
   fechaperiodoliquidacion: any;
   public liquidacionItemHojaCalculo$: Observable<Liquidacionitem> = null;
@@ -70,11 +70,9 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
 
     this.print$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
-        const print = (params.get('action') == "imprimir");
-        if (print) {
-          console.log("Action Imprimir");
-        }
-
+        let print = params.get('action');
+        if(!print) print = 'default';
+        
         return of(print);
       })
     );
@@ -101,6 +99,10 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
 
   private gotoPreview() {
     this.router.navigate([`/liquidaciones/${this.id}/imprimir`]);
+  }
+
+  private gotoPreview2Hojas() {
+    this.router.navigate([`/liquidaciones/${this.id}/imprimircompleto`]);
   }
 
   private gotoGrilla() {
@@ -133,6 +135,10 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
 
   onClickPreview(): void {
     this.gotoPreview();
+  }
+
+  onClickPreview2Hojas(): void {
+    this.gotoPreview2Hojas();
   }
 
   tieneCalculoAutomatico(item: Liquidacionitem): boolean {

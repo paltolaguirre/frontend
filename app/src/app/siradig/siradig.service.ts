@@ -16,12 +16,15 @@ export class SiradigService {
   
   constructor(private http: HttpClient) { }
 
-  public async getSiradigs(): Promise<ListaItems> {
+  public async getSiradigs(legajoID?: number, year?: string): Promise<ListaItems> {
     const requestUrl =
       `${this.href}`;
 
     let listaItems: ListaItems = { items: null, total_count: null };
     listaItems.items = await this.http.get<Siradig[]>(requestUrl).toPromise();
+    if(legajoID && year) {
+      listaItems.items = listaItems.items.filter(item => item.legajoid == legajoID && item.periodosiradig.split("-")[0] == year)
+    }
     listaItems.total_count = listaItems.items.length;
 
     return listaItems;
