@@ -39,7 +39,7 @@
           'is-10': !isExpanded
         }">
         <div class="items-toolbar-container">
-          <div class="search-bar-container">
+          <div *ngIf="isSearchItemSelected(selectedCategoryItem)" class="search-bar-container">
             <div class="search-content border-regular">
               <input type="text" (keyup)="doFilter($event)" placeholder="Buscar...">
               <div class="search-icon bg-gray no-selectable">

@@ -1,3 +1,4 @@
+import { FormulaCategoryItemTypes } from './../../../core/enums/formula-category-item-types.enum';
 import { FormulaCategoryItem } from './../../../core/models/formula-category-item.model';
 import { FormulaService } from './../../../core/services/formula/formula.service';
 import { FormulaCategory } from './../../../core/models/formula-category.model';
@@ -46,6 +47,6 @@ export class FormulaItemPickerComponent implements OnInit {
   }
 
   public isSearchItemSelected(item: FormulaCategoryItem): boolean {
-    
+    return item.slug === FormulaCategoryItemTypes.Search;
   }
 }
