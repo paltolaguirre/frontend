@@ -68,6 +68,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
     }
   }
 
+  // TODO: Build with all required params. Create dates on iso string format.
   private buildEmptyForm() {
     this.form = this.formBuilder.group({
       name: ['', [Validators.required]],
@@ -96,10 +97,19 @@ export class FormulaContainer implements OnInit, OnDestroy {
 
   public buildPreLoadedForm() {
     this.form = this.formBuilder.group({
-      name: [this.currentFormula.name, [Validators.required]],
-      description: [this.currentFormula.description, [Validators.required]],
+      ...this.currentFormula,
+      // CreatedAt: [this.currentFormula.CreatedAt],
+      // UpdatedAt: [this.currentFormula.UpdatedAt],
+      // DeletedAt: [this.currentFormula.DeletedAt],
+      // origin: [this.currentFormula.origin],
+      // type: [this.currentFormula.type],
+      // scope: [this.currentFormula.scope],
+      // value: [this.currentFormula.value],
+      // valueid: [this.currentFormula.valueid],
+      // name: [this.currentFormula.name, [Validators.required]],
+      // description: [this.currentFormula.description, [Validators.required]],
       params: this.formBuilder.array([]),
-      result: [this.currentFormula.result, Validators.required]
+      // result: [this.currentFormula.result, Validators.required]
     });
 
     this.updateFormulaParams();
@@ -125,6 +135,8 @@ export class FormulaContainer implements OnInit, OnDestroy {
     for (const param of this.currentFormula.params) {
       this.formParams.push(this.createFormulaParam(param));
     }
+
+    console.log('Updated formula', this.form.value);
   }
 
   get formParams() {
@@ -132,7 +144,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
   }
 
   public async save() {
-    console.log(this.form.value);
+    console.log('Formula that will be saved: ', this.form.value);
     console.log('is new: ', this.isNew);
 
     if (this.isNew) {
