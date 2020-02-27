@@ -6,9 +6,10 @@ import { FormulaService } from '../../../core/services/formula/formula.service';
 import { pluck, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
 import {componentDestroyed} from '@w11k/ngx-componentdestroyed';
 import { Location } from '@angular/common';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-formula',
@@ -171,11 +172,13 @@ export class FormulaContainer implements OnInit, OnDestroy {
     this.formParams.push(this.createFormulaParam());
   }
 
-  public onDeleteInputParam(rowIndex: number) {
-    this.formParams.removeAt(rowIndex);
+  public onDeleteInputParam(event, rowIndex: number) {
+    event.preventDefault();
+
+    this.formParams.value[rowIndex].DeletedAt = new Date();
   }
 
-  public isFormulaParamAvailable(param: FormulaParam): boolean {
-    return !param.DeletedAt;
+  public isFormulaParamAvailable(param: FormControl): boolean {
+    return !param.value.DeletedAt;
   }
 }
