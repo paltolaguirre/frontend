@@ -98,18 +98,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public buildPreLoadedForm() {
     this.form = this.formBuilder.group({
       ...this.currentFormula,
-      // CreatedAt: [this.currentFormula.CreatedAt],
-      // UpdatedAt: [this.currentFormula.UpdatedAt],
-      // DeletedAt: [this.currentFormula.DeletedAt],
-      // origin: [this.currentFormula.origin],
-      // type: [this.currentFormula.type],
-      // scope: [this.currentFormula.scope],
-      // value: [this.currentFormula.value],
-      // valueid: [this.currentFormula.valueid],
-      // name: [this.currentFormula.name, [Validators.required]],
-      // description: [this.currentFormula.description, [Validators.required]],
-      params: this.formBuilder.array([]),
-      // result: [this.currentFormula.result, Validators.required]
+      params: this.formBuilder.array([])
     });
 
     this.updateFormulaParams();
@@ -125,9 +114,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
     }
 
     return this.formBuilder.group({
-      name: formulaParam.name,
-      type: formulaParam.type,
-      functionname: formulaParam.functionname
+      ...formulaParam
     });
   }
 
