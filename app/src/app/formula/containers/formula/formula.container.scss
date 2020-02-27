@@ -38,6 +38,12 @@ div.formula-create-container {
   -webkit-box-shadow: -2px 2px 5px 2px rgba(0,0,0,0.5);
   -moz-box-shadow: -2px 2px 5px 2px rgba(0,0,0,0.5);
   box-shadow: -2px 2px 5px 2px rgba(0,0,0,0.5);
+
+  div.formula-param-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
 }
 
 .children-container table tr {

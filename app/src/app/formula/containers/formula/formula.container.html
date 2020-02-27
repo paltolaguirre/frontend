@@ -69,21 +69,23 @@
               <div class="children-container">
                 <table style="width:100%">
                   <tr formArrayName="params" *ngFor="let param of formParams.controls; let i = index">
-                    <button mat-icon-button class="actions-icon" color="warn" (click)="onDeleteInputParam(i)">
-                      <mat-icon>delete_forever</mat-icon>
-                    </button>
-                    <mat-form-field>
-                      <mat-label>Tipo Dato</mat-label>
-                      <mat-select [formControl]="form.get('result')" name="result" required>
-                        <mat-option [value]="form.get('result').value">
-                          Numérico
-                        </mat-option>
-                      </mat-select> 
-                    </mat-form-field>
-                    <div [formGroupName]="i">
+                    <div class="formula-param-container" *ngIf="isFormulaParamAvailable(param)">
+                      <button mat-icon-button class="actions-icon" color="warn" (click)="onDeleteInputParam(i)">
+                        <mat-icon>delete_forever</mat-icon>
+                      </button>
                       <mat-form-field>
-                        <input matInput type="text" formControlName="name" placeholder="Nombre Parámetro" autocomplete="off">
+                        <mat-label>Tipo Dato</mat-label>
+                        <mat-select [formControl]="form.get('result')" name="result" required>
+                          <mat-option [value]="form.get('result').value">
+                            Numérico
+                          </mat-option>
+                        </mat-select> 
                       </mat-form-field>
+                      <div [formGroupName]="i">
+                        <mat-form-field>
+                          <input matInput type="text" formControlName="name" placeholder="Nombre Parámetro" autocomplete="off">
+                        </mat-form-field>
+                      </div>
                     </div>
                   </tr>
                 </table>
