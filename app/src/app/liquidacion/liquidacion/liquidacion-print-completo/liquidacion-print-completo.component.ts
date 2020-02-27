@@ -6,7 +6,6 @@ import { Empresa } from 'src/app/empresa/empresa.model';
 import { Observable } from 'rxjs';
 import { SelectorService } from 'src/app/shared/selector-default/selector-default.service';
 import { TIPO_CONCEPTO_CODIGO } from 'src/app/concepto/concepto.model';
-
 export interface LiquidacionItem {
   haber: {
     codigo: string;
@@ -24,12 +23,12 @@ export interface LiquidacionItem {
 }
 
 @Component({
-  selector: 'app-liquidacion-print',
-  templateUrl: './liquidacion-print.component.html',
-  styleUrls: ['./liquidacion-print.component.css']
+  selector: 'app-liquidacion-print-completo',
+  templateUrl: './liquidacion-print-completo.component.html',
+  styleUrls: ['./liquidacion-print-completo.component.css']
 })
+export class LiquidacionPrintCompletoComponent implements OnInit {
 
-export class LiquidacionPrintComponent implements OnInit {
   @Input() liquidacion: Liquidacion;
   empresa: Empresa;
   items: Array<LiquidacionItem>;
@@ -85,7 +84,7 @@ export class LiquidacionPrintComponent implements OnInit {
     this.totalDeducciones = 0;
     this.totalNeto = 0;
     
-    for (let index = 0; index < 10; index++) {
+    for (let index = 0; index < 20; index++) {
       let posicionImpNoRemunerativos = index - this.liquidacion.importesremunerativos.length;
       let posicionRetenciones = index - this.liquidacion.descuentos.length;
 
@@ -145,4 +144,5 @@ export class LiquidacionPrintComponent implements OnInit {
     this.liquidacion.retenciones = this.liquidacion.liquidacionitems.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.RETENCION);
     this.liquidacion.aportespatronales = this.liquidacion.liquidacionitems.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.APORTE_PATRONAL);
   }
+
 }
