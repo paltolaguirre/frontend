@@ -145,6 +145,8 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public async createFormula() {
     try {
       await this.formulaService.create(this.form.value);
+
+      return this.goToFormulasList();
     } catch (e) {
       console.log(e);
     }
@@ -153,12 +155,18 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public async updateFormula() {
     try {
       await this.formulaService.update(this.form.value.name, this.form.value);
+
+      return this.goToFormulasList();
     } catch (e) {
       console.log(e);
     }
   }
 
-  public async abort() {
+  public onCancelClick() {
+    this.goToFormulasList();
+  }
+
+  public async goToFormulasList() {
     await this.router.navigate(['/formulas']);
   }
 
