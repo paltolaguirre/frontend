@@ -58,4 +58,34 @@ describe('FormulaService', () => {
       expect(getSpy).toHaveBeenCalledWith(`${service.BASE_URL}/formulas/${fakeFormula.name}`);
     });
   });
+
+  describe('create', () => {
+    it('should call post method from api service', async () => {
+      const getSpy = spyOn(api, 'post').and.returnValue(of(null));
+
+      await service.create(fakeFormula);
+
+      expect(getSpy).toHaveBeenCalledWith(`${service.BASE_URL}/formulas`, fakeFormula);
+    });
+  });
+
+  describe('find', () => {
+    it('should call get method from api service', async () => {
+      const getSpy = spyOn(api, 'get').and.returnValue(of(null));
+
+      await service.find(fakeFormula.name);
+
+      expect(getSpy).toHaveBeenCalledWith(`${service.BASE_URL}/formulas/${fakeFormula.name}`);
+    });
+  });
+
+  describe('update', () => {
+    it('should call put method from api service', async () => {
+      const getSpy = spyOn(api, 'put').and.returnValue(of(null));
+
+      await service.update(fakeFormula.name, fakeFormula);
+
+      expect(getSpy).toHaveBeenCalledWith(`${service.BASE_URL}/formulas/${fakeFormula.name}`, fakeFormula);
+    });
+  });
 });
