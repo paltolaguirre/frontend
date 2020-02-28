@@ -97,7 +97,7 @@ describe('FormulaListContainer', () => {
 
       await component.onDelete(fakeFormulaItem);
 
-      expect(deleteSpy).toHaveBeenCalledWith(fakeFormulaItem);
+      expect(deleteSpy).toHaveBeenCalledWith(fakeFormulaItem.name);
     });
 
     it('should call removeItemFromTable', async () => {

@@ -29,7 +29,8 @@ describe('FormulaItemPickerComponent', () => {
       id: 1,
       img: 'assets/img/descarga.jpg',
       title: 'Variables',
-      categoryId: 1
+      categoryId: 1,
+      slug: 'variables'
     };
   }));
 

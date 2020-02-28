@@ -153,13 +153,13 @@ export class FormulaContainer implements OnInit, OnDestroy {
   }
 
   public async updateFormula() {
-    try {
+    // try {
       await this.formulaService.update(this.form.value.name, this.form.value);
 
       return this.goToFormulasList();
-    } catch (e) {
-      console.log(e);
-    }
+    // } catch (e) {
+    //   console.log(e);
+    // }
   }
 
   public onCancelClick() {

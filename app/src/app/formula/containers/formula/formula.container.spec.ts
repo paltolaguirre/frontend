@@ -1,3 +1,4 @@
+import { FormulaDraggableSpaceComponent } from './../../components/formula-draggable-space/formula-draggable-space.component';
 import { OperatorsToolbarComponent } from './../../components/operators-toolbar/operators-toolbar.component';
 import { FormulaServiceMock } from './../../../core/mocks/formula.service.mock';
 import { FormulaItemPickerComponent } from './../../components/formula-item-picker/formula-item-picker.component';
@@ -36,7 +37,7 @@ describe('FormulaContainer', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FormulaContainer, FormulaItemPickerComponent, OperatorsToolbarComponent ],
+      declarations: [ FormulaContainer, FormulaItemPickerComponent, OperatorsToolbarComponent, FormulaDraggableSpaceComponent ],
       imports: [
         MaterialModule,
         ReactiveFormsModule,
