@@ -8,7 +8,7 @@ import { Formula } from '../../models/formula.model';
 })
 export class FormulaService {
 
-  private readonly BASE_URL = '/api/formula';
+  public readonly BASE_URL = '/api/formula';
   public formulas: Formula[];
 
   constructor(private api: ApiHttpService) {

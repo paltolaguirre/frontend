@@ -91,48 +91,6 @@
                 </table>
               </div>
               <button class="table-row-manipulator" mat-raised-button (click)="onAddInputParamClick($event)">Agregar Item</button>
-
-              <!--  Old columns code -->
-          
-              <!--<div class="columns">
-                <div class="column">
-                  <h2 class="subtitle">
-                    Parámetro de Salida
-                  </h2>
-                    <mat-form-field class="selector">
-                      <mat-label>Tipo Dato</mat-label>
-                      <mat-select [formControl]="form.get('result')" name="result" required>
-                        <mat-option [value]="form.get('result').value">
-                          Numérico
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class="column">
-                  <h2 class="subtitle">
-                    Parámetros de Entrada
-                  </h2>
-                  <div *ngIf="currentFormula">
-                    <div class="columns" formArrayName="params" *ngFor="let param of formParams.controls; let i = index">
-                      <div class="column">
-                        <mat-form-field>
-                          <mat-label>Tipo Dato</mat-label>
-                          <mat-select [formControl]="form.get('result')" name="result" required>
-                            <mat-option [value]="form.get('result').value">
-                              Numérico
-                            </mat-option>
-                          </mat-select> 
-                        </mat-form-field>
-                      </div>
-                      <div class="column" [formGroupName]="i">
-                        <mat-form-field>
-                          <input matInput type="text" formControlName="name" placeholder="Nombre Parámetro" autocomplete="off">
-                        </mat-form-field>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>-->
             </mat-expansion-panel>
           
         </mat-expansion-panel>
