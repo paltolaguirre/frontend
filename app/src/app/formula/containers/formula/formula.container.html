@@ -126,6 +126,7 @@
 
   <app-bottom-table-actions
    [isNew]="!currentFormula"
+   [isSaveAllowed]="isEditable"
    (saveEmitter)="save()"
    (abortEmitter)="onCancelClick()">
   </app-bottom-table-actions>
