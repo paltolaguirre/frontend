@@ -26,14 +26,14 @@
             <div class="columns">
               <div class="column is-5">
                 <mat-form-field class="width-100">
-                  <input matInput type="text" formControlName="name" placeholder="Nombre" cdkFocusInitial autocomplete="off">
+                  <input [appDisableControl]="!isEditable" matInput type="text" formControlName="name" placeholder="Nombre" cdkFocusInitial autocomplete="off">
                 </mat-form-field>
               </div>
             </div>
             <div class="columns">
               <div class="column is-9">
                 <mat-form-field class="width-100">
-                  <input matInput type="text" formControlName="description" placeholder="Descripción" autocomplete="off">
+                  <input [appDisableControl]="!isEditable" matInput type="text" formControlName="description" placeholder="Descripción" autocomplete="off">
                 </mat-form-field>
               </div>
             </div>
@@ -53,7 +53,7 @@
                   <tr>
                     <mat-form-field class="selector">
                       <mat-label>Tipo Dato</mat-label>
-                      <mat-select [formControl]="form.get('result')" name="result" required>
+                      <mat-select [appDisableControl]="!isEditable" [formControl]="form.get('result')" name="result" required>
                         <mat-option [value]="form.get('result').value">
                           Numérico
                         </mat-option>
@@ -70,12 +70,12 @@
                 <table style="width:100%">
                   <tr formArrayName="params" *ngFor="let param of formParams.controls; let i = index">
                     <div class="formula-param-container" *ngIf="isFormulaParamAvailable(param)">
-                      <button mat-icon-button class="actions-icon" color="warn" (click)="onDeleteInputParam($event, i)">
+                      <button [disabled]="!isEditable" mat-icon-button class="actions-icon" color="warn" (click)="onDeleteInputParam($event, i)">
                         <mat-icon>delete_forever</mat-icon>
                       </button>
                       <mat-form-field>
                         <mat-label>Tipo Dato</mat-label>
-                        <mat-select [formControl]="form.get('result')" name="result" required>
+                        <mat-select [appDisableControl]="!isEditable" [formControl]="form.get('result')" name="result" required>
                           <mat-option [value]="form.get('result').value">
                             Numérico
                           </mat-option>
@@ -83,14 +83,14 @@
                       </mat-form-field>
                       <div [formGroupName]="i">
                         <mat-form-field>
-                          <input matInput type="text" formControlName="name" placeholder="Nombre Parámetro" autocomplete="off">
+                          <input [appDisableControl]="!isEditable" matInput type="text" formControlName="name" placeholder="Nombre Parámetro" autocomplete="off">
                         </mat-form-field>
                       </div>
                     </div>
                   </tr>
                 </table>
               </div>
-              <button class="table-row-manipulator" mat-raised-button (click)="onAddInputParamClick($event)">Agregar Item</button>
+              <button [disabled]="!isEditable" class="table-row-manipulator" mat-raised-button (click)="onAddInputParamClick($event)">Agregar Item</button>
             </mat-expansion-panel>
           
         </mat-expansion-panel>

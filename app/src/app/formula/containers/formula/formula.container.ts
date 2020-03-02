@@ -5,8 +5,8 @@ import { Formula } from '../../../core/models/formula.model';
 import { FormulaService } from '../../../core/services/formula/formula.service';
 import { pluck, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
+import { Component, OnInit, OnDestroy, Directive, Input } from '@angular/core';
+import { FormBuilder, Validators, FormGroup, FormArray, FormControl, NgControl } from '@angular/forms';
 import {componentDestroyed} from '@w11k/ngx-componentdestroyed';
 import { Location } from '@angular/common';
 
@@ -22,6 +22,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public isItemPickerExpanded: boolean = true;
   public params: FormArray;
   public isNew: boolean = false;
+  public isEditable: boolean = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -53,19 +54,16 @@ export class FormulaContainer implements OnInit, OnDestroy {
   }
 
   public async setCurrentFormula(name: string) {
-    try {
-      this.currentFormula = await this.formulaService.find(name);
-      console.log('current formula', this.currentFormula);
+    this.currentFormula = await this.formulaService.find(name);
+    console.log('current formula', this.currentFormula);
 
-      if (!this.currentFormula) {
-        return this.showNoDataDialog();
-      }
-
-      this.buildPreLoadedForm();
-    } catch (e) {
-      console.log(e);
-      // TODO: Show an error message and log error. (Maybe go back to FormulaList).
+    if (!this.currentFormula) {
+      return this.showNoDataDialog();
     }
+
+    this.isEditable = this.formulaService.isEditable(this.currentFormula);
+
+    this.buildPreLoadedForm();
   }
 
   // TODO: Build with all required params. Create dates on iso string format.
