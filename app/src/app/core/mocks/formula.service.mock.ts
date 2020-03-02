@@ -93,4 +93,8 @@ export class FormulaServiceMock {
   public async find(name: string): Promise<Formula> {
     return Promise.resolve(this.fakeFormulaItem);
   }
+
+  public isEditable(formula: Formula): boolean {
+    return true;
+  }
 }
