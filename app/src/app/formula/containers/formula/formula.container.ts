@@ -71,8 +71,14 @@ export class FormulaContainer implements OnInit, OnDestroy {
     this.form = this.formBuilder.group({
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
+      origin: ['custom'],
+      type: ['generic'],
+      scope: ['private'],
       params: this.formBuilder.array([ this.createFormulaParam() ]),
-      result: ['number', Validators.required]
+      result: ['number', Validators.required],
+      value: {
+        valueinvoke: null
+      }
     });
   }
 
@@ -105,9 +111,8 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public createFormulaParam(formulaParam?: FormulaParam) {
     if (!formulaParam) {
       return this.formBuilder.group({
-        name: '',
-        type: 'number',
-        functionname: ''
+        name: 'val1',
+        type: 'number'
       });
     }
 
