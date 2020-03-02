@@ -93,5 +93,11 @@ describe('FormulaService', () => {
     it('should return false if the origin is primitive', () => {
       expect(service.isEditable(fakeFormula)).toBeFalsy();
     });
+
+    it('should return true in any case where the origin is not primitive', () => {
+      fakeFormula.origin = 'any';
+
+      expect(service.isEditable(fakeFormula)).toBeTruthy();
+    });
   });
 });
