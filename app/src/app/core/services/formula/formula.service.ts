@@ -98,4 +98,8 @@ export class FormulaService {
       }
     ];
   }
+
+  public isEditable(formula: Formula): boolean {
+    return formula.origin !== 'primitive';
+  }
 }

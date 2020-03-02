@@ -16,7 +16,7 @@ describe('FormulaService', () => {
     DeletedAt: '',
     params: [],
     description: 'Esta es una formula',
-    origin: '',
+    origin: 'primitive',
     type: '',
     scope: '',
     result: '',
@@ -86,6 +86,12 @@ describe('FormulaService', () => {
       await service.update(fakeFormula.name, fakeFormula);
 
       expect(getSpy).toHaveBeenCalledWith(`${service.BASE_URL}/formulas/${fakeFormula.name}`, fakeFormula);
+    });
+  });
+
+  describe('isEditable', () => {
+    it('should return false if the origin is primitive', () => {
+      expect(service.isEditable(fakeFormula)).toBeFalsy();
     });
   });
 });
