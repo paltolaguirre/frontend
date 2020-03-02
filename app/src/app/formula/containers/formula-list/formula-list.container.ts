@@ -68,28 +68,10 @@ export class FormulaListContainer implements OnInit, AfterViewInit {
     this.router.navigate(['/formulas/edit', item.name]);
   }
 
-  // TODO: Remove if it is not being used.
-  // public onUpdate(event, item: Formula) {
-  //   const data = [...this.dataSource.data];
-
-  //   const index = data.findIndex((element) => {
-  //     return element.id === item.id;
-  //   });
-
-  //   data.splice(index, 1, item);
-
-  //   this.dataSource = new MatTableDataSource<Formula>(data);
-  // }
-
   public async onDelete(item: Formula) {
-    try {
-      await this.formulaService.delete(item.name);
+    await this.formulaService.delete(item.name);
 
-      this.removeItemFromTable(item);
-    } catch (e) {
-      console.log(e);
-      // TODO: Use error logging tool.
-    }
+    this.removeItemFromTable(item);
   }
 
   public removeItemFromTable(item: Formula) {
@@ -98,5 +80,9 @@ export class FormulaListContainer implements OnInit, AfterViewInit {
     });
 
     this.dataSource = new MatTableDataSource<Formula>(data);
+  }
+
+  public isFormulaEditable(formula: Formula): boolean {
+    return this.formulaService.isEditable(formula);
   }
 }

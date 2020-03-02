@@ -18,10 +18,10 @@
       <th mat-header-cell *matHeaderCellDef>Acciones</th>
       <td mat-cell *matCellDef="let row">        
         <app-table-row-actions
-          [editIconEnabled]="true"
-          [deleteIconEnabled]="true"
+          [isEditable]="isFormulaEditable(row)"
           (editEmitter)="editFormula(row)"
-          (deleteEmitter)="onDelete(row)">
+          (deleteEmitter)="onDelete(row)"
+          (viewEmitter)="editFormula(row)">
         </app-table-row-actions>
       </td>
     </ng-container>
