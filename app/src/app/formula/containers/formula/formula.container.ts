@@ -9,7 +9,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
 import {componentDestroyed} from '@w11k/ngx-componentdestroyed';
 import { Location } from '@angular/common';
-import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-formula',
@@ -109,7 +108,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
     if (!formulaParam) {
       return this.formBuilder.group({
         name: '',
-        type: '',
+        type: 'number',
         functionname: ''
       });
     }
@@ -133,8 +132,6 @@ export class FormulaContainer implements OnInit, OnDestroy {
 
   public async save() {
     console.log('Formula that will be saved: ', this.form.value);
-    console.log('is new: ', this.isNew);
-
     if (this.isNew) {
       return this.createFormula();
     }
@@ -143,23 +140,15 @@ export class FormulaContainer implements OnInit, OnDestroy {
   }
 
   public async createFormula() {
-    try {
-      await this.formulaService.create(this.form.value);
+    await this.formulaService.create(this.form.value);
 
-      return this.goToFormulasList();
-    } catch (e) {
-      console.log(e);
-    }
+    return this.goToFormulasList();
   }
 
   public async updateFormula() {
-    // try {
-      await this.formulaService.update(this.form.value.name, this.form.value);
+    await this.formulaService.update(this.form.value.name, this.form.value);
 
-      return this.goToFormulasList();
-    // } catch (e) {
-    //   console.log(e);
-    // }
+    return this.goToFormulasList();
   }
 
   public onCancelClick() {
