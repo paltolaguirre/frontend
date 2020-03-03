@@ -1,0 +1,10 @@
+<div class="topmenu-container" >
+  <div>
+    <button mat-raised-button color="primary" class="topmenu-button" mat-button (click)="onNewButtonClick()">Nuevo</button>
+    <button mat-raised-button color="secondary" class="topmenu-button" mat-button (click)="onPrintButtonClick()">Imprimir</button>
+
+    <mat-form-field class="topmenu-search">
+      <input matInput type="text" (keyup)="doFilter($event)" placeholder="Buscar">
+    </mat-form-field>
+  </div>
+</div>
