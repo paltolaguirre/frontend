@@ -1,7 +1,12 @@
+import { BehaviorSubject } from 'rxjs';
 import { FormulaCategory } from './../models/formula-category.model';
 import { Formula } from '../models/formula.model';
 
 export class FormulaServiceMock {
+
+  private formulas = new BehaviorSubject<Formula[]>([]);
+  public formulasStore$ = this.formulas.asObservable();
+
   fakeFormulaItem: Formula = {
     name: 'Formula 1',
     CreatedAt: '',
