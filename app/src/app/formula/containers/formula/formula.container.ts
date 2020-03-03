@@ -9,6 +9,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
 import {componentDestroyed} from '@w11k/ngx-componentdestroyed';
 import { Location } from '@angular/common';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-formula',
@@ -23,6 +24,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public params: FormArray;
   public isNew: boolean = false;
   public isEditable: boolean = true;
+  public availableFormulas$: Observable<Formula[]>;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -48,6 +50,17 @@ export class FormulaContainer implements OnInit, OnDestroy {
 
         this.setCurrentFormula(name);
     });
+
+    this.availableFormulas$ = new Observable((observer) => {
+      this.formulaService.getAll().then((formulas) => {
+        observer.next(formulas);
+        observer.complete();
+      });
+    });
+
+    this.availableFormulas$.subscribe((formulas) => {
+      console.log('Formulas from observer: ', formulas);
+    })
   }
 
   ngOnDestroy() {

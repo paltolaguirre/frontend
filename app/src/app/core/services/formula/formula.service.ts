@@ -1,3 +1,4 @@
+import { BehaviorSubject } from 'rxjs';
 import { ApiHttpService } from './../api-http/api-http.service';
 import { FormulaCategory } from './../../models/formula-category.model';
 import { Injectable } from '@angular/core';
@@ -9,9 +10,15 @@ import { Formula } from '../../models/formula.model';
 export class FormulaService {
 
   public readonly BASE_URL = '/api/formula';
-  public formulas: Formula[];
+  private formulas = new BehaviorSubject<Formula[]>([]);
+  public formulasStore$ = this.formulas.asObservable();
 
   constructor(private api: ApiHttpService) {
+    this.initFormulasStore();
+  }
+
+  public async initFormulasStore() {
+    this.formulas.next(await this.getAll());
   }
 
   public async getAll(): Promise<Formula[]> {
