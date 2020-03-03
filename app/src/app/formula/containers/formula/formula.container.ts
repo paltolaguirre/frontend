@@ -5,8 +5,8 @@ import { Formula } from '../../../core/models/formula.model';
 import { FormulaService } from '../../../core/services/formula/formula.service';
 import { pluck, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit, OnDestroy, Directive, Input } from '@angular/core';
-import { FormBuilder, Validators, FormGroup, FormArray, FormControl, NgControl } from '@angular/forms';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
 import {componentDestroyed} from '@w11k/ngx-componentdestroyed';
 import { Location } from '@angular/common';
 
@@ -55,7 +55,6 @@ export class FormulaContainer implements OnInit, OnDestroy {
 
   public async setCurrentFormula(name: string) {
     this.currentFormula = await this.formulaService.find(name);
-    console.log('current formula', this.currentFormula);
 
     if (!this.currentFormula) {
       return this.showNoDataDialog();
@@ -66,7 +65,6 @@ export class FormulaContainer implements OnInit, OnDestroy {
     this.buildPreLoadedForm();
   }
 
-  // TODO: Build with all required params. Create dates on iso string format.
   private buildEmptyForm() {
     this.form = this.formBuilder.group({
       name: ['', [Validators.required]],
@@ -125,8 +123,6 @@ export class FormulaContainer implements OnInit, OnDestroy {
     for (const param of this.currentFormula.params) {
       this.formParams.push(this.createFormulaParam(param));
     }
-
-    console.log('Updated formula', this.form.value);
   }
 
   get formParams() {
@@ -134,7 +130,6 @@ export class FormulaContainer implements OnInit, OnDestroy {
   }
 
   public async save() {
-    console.log('Formula that will be saved: ', this.form.value);
     if (this.isNew) {
       return this.createFormula();
     }
