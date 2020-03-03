@@ -1,3 +1,6 @@
+import { AutomaticCalculationTypes } from './../../core/enums/automatic-calc-types.enum';
+import { FormulaService } from './../../core/services/formula/formula.service';
+import { Formula } from 'src/app/core/models/formula.model';
 import { ConceptoService } from '../concepto.service';
 import { Concepto } from '../concepto.model';
 import { Component, AfterViewInit, OnInit } from '@angular/core';
@@ -11,20 +14,26 @@ import { PrintService } from 'src/app/print/print.service';
 @Component({
   selector: 'app-concepto',
   templateUrl: './concepto.component.html',
-  styleUrls: ['./concepto.component.css']
+  styleUrls: ['./concepto.component.scss']
 })
 export class ConceptoComponent implements OnInit, AfterViewInit {
   public currentConcepto$: Observable<Concepto> = null;
   paises: any[];
   id: number;
-  
+  public selectedFormula: Formula;
+  public selectedGroupAutomaticCalculation: string;
+  public availableFormulas: Formula[];
+  public formulaFromDate: Date;
+  public formulaToDate: Date;
+
   constructor(
     private route: ActivatedRoute,
     private conceptoService: ConceptoService,
     public dialog: MatDialog,
     private notificationService: NotificationService,
     private router: Router,
-    public printService : PrintService
+    public printService : PrintService,
+    private formulaService: FormulaService
     ) { }
 
  async ngOnInit() {
@@ -40,10 +49,24 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
         return concepto;
       })
     );
+
+    this.fetchFormulas();
   }
 
   ngAfterViewInit() {
+    this.setDefaultSelectedCalculationType();
+  }
 
+  public setDefaultSelectedCalculationType() {
+    this.selectedGroupAutomaticCalculation = AutomaticCalculationTypes.PERCENTAGE;
+  }
+
+  public async fetchFormulas() {
+    try {
+      this.availableFormulas = await this.formulaService.getAll();
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   private gotoGrilla() {
@@ -128,5 +151,13 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
       }
     }
     return false;
+  }
+
+  public onAutomaticCalcGroupSelected() {
+    console.log(this.selectedGroupAutomaticCalculation);
+  }
+
+  public onFormulaSelected() {
+    console.log(this.selectedFormula);
   }
 }

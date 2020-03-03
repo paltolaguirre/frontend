@@ -1,0 +1,174 @@
+<div class="formula-create-container">
+  <h1 *ngIf="currentFormula; else newFormulaTitle" class="page-title">
+    Editar Fórmula
+  </h1>
+
+  <ng-template #newFormulaTitle>
+    <h1 class="page-title">
+      Nueva fórmula
+    </h1>
+  </ng-template>
+
+  <mat-divider></mat-divider>
+
+  <div mat-dialog-content class="content" id="contentTOPDF">
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit($event)">
+      <mat-accordion>
+        <mat-expansion-panel class="space-right" expanded>
+
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Datos Básicos
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+            <div class="columns">
+              <div class="column is-5">
+                <mat-form-field class="width-100">
+                  <input matInput type="text" formControlName="name" placeholder="Nombre" cdkFocusInitial autocomplete="off">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="columns">
+              <div class="column is-9">
+                <mat-form-field class="width-100">
+                  <input matInput type="text" formControlName="description" placeholder="Descripción" autocomplete="off">
+                </mat-form-field>
+              </div>
+            </div>
+
+            <mat-expansion-panel class="no-shadow" [togglePosition]="'before'">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Más Opciones
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <h2 class="subtitle">
+                Parámetro de Salida
+              </h2>
+              <div class="children-container">
+                <table style="width:100%">
+                  <tr>
+                    <mat-form-field class="selector">
+                      <mat-label>Tipo Dato</mat-label>
+                      <mat-select [formControl]="form.get('result')" name="result" required>
+                        <mat-option [value]="form.get('result').value">
+                          Numérico
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </tr>
+                </table>
+              </div>
+
+              <h2 class="subtitle">
+                Parámetros de Entrada
+              </h2>
+              <div class="children-container">
+                <table style="width:100%">
+                  <tr formArrayName="params" *ngFor="let param of formParams.controls; let i = index">
+                    <div class="formula-param-container" *ngIf="isFormulaParamAvailable(param)">
+                      <button mat-icon-button class="actions-icon" color="warn" (click)="onDeleteInputParam(i)">
+                        <mat-icon>delete_forever</mat-icon>
+                      </button>
+                      <mat-form-field>
+                        <mat-label>Tipo Dato</mat-label>
+                        <mat-select [formControl]="form.get('result')" name="result" required>
+                          <mat-option [value]="form.get('result').value">
+                            Numérico
+                          </mat-option>
+                        </mat-select> 
+                      </mat-form-field>
+                      <div [formGroupName]="i">
+                        <mat-form-field>
+                          <input matInput type="text" formControlName="name" placeholder="Nombre Parámetro" autocomplete="off">
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </tr>
+                </table>
+              </div>
+              <button class="table-row-manipulator" mat-raised-button (click)="onAddInputParamClick($event)">Agregar Item</button>
+
+              <!--  Old columns code -->
+          
+              <!--<div class="columns">
+                <div class="column">
+                  <h2 class="subtitle">
+                    Parámetro de Salida
+                  </h2>
+                    <mat-form-field class="selector">
+                      <mat-label>Tipo Dato</mat-label>
+                      <mat-select [formControl]="form.get('result')" name="result" required>
+                        <mat-option [value]="form.get('result').value">
+                          Numérico
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="column">
+                  <h2 class="subtitle">
+                    Parámetros de Entrada
+                  </h2>
+                  <div *ngIf="currentFormula">
+                    <div class="columns" formArrayName="params" *ngFor="let param of formParams.controls; let i = index">
+                      <div class="column">
+                        <mat-form-field>
+                          <mat-label>Tipo Dato</mat-label>
+                          <mat-select [formControl]="form.get('result')" name="result" required>
+                            <mat-option [value]="form.get('result').value">
+                              Numérico
+                            </mat-option>
+                          </mat-select> 
+                        </mat-form-field>
+                      </div>
+                      <div class="column" [formGroupName]="i">
+                        <mat-form-field>
+                          <input matInput type="text" formControlName="name" placeholder="Nombre Parámetro" autocomplete="off">
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>-->
+            </mat-expansion-panel>
+          
+        </mat-expansion-panel>
+
+        <mat-expansion-panel class="formula-calculation-content">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Fórmula
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="columns">
+            <div class="column" [ngClass]="{ 
+              'is-5': isItemPickerExpanded,
+              'is-3': !isItemPickerExpanded
+              }">
+              <app-formula-item-picker (expandedStateEmitter)="onItemPickerExpandedStateChanged($event)"></app-formula-item-picker>
+            </div>
+            <div class="column">
+              <div class="ide-container">
+                <app-operators-toolbar></app-operators-toolbar>
+
+                <app-formula-draggable-space></app-formula-draggable-space>
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+    </form>
+    
+  </div>
+
+  <app-bottom-table-actions
+   [isNew]="!currentFormula"
+   (saveEmitter)="save()"
+   (abortEmitter)="abort()">
+  </app-bottom-table-actions>
+</div>
