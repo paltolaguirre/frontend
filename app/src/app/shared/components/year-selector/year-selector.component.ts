@@ -16,7 +16,7 @@ export class YearSelectorComponent implements OnInit {
   public currentDate: Date;
   public selectedYear: number;
 
-  private readonly MIN_DEFAULT_YEAR: number = 1950;
+  public readonly MIN_DEFAULT_YEAR: number = 1950;
 
   constructor() {
     this.currentDate = new Date();
@@ -38,7 +38,7 @@ export class YearSelectorComponent implements OnInit {
     this.years = this.years.reverse();
   }
 
-  private getMinimumYear(): number {
+  public getMinimumYear(): number {
     if (!this.minDate) {
       return this.MIN_DEFAULT_YEAR;
     }
@@ -46,7 +46,7 @@ export class YearSelectorComponent implements OnInit {
     return this.minDate.getFullYear();
   }
 
-  private getMaximumYear(): number {
+  public getMaximumYear(): number {
     if (!this.maxDate) {
       return this.currentDate.getFullYear();
     }
