@@ -55,7 +55,6 @@ export class FormulaContainer implements OnInit, OnDestroy {
 
   public async setCurrentFormula(name: string) {
     this.currentFormula = await this.formulaService.find(name);
-    console.log('current formula', this.currentFormula);
 
     if (!this.currentFormula) {
       return this.showNoDataDialog();
@@ -125,8 +124,6 @@ export class FormulaContainer implements OnInit, OnDestroy {
     for (const param of this.currentFormula.params) {
       this.formParams.push(this.createFormulaParam(param));
     }
-
-    console.log('Updated formula', this.form.value);
   }
 
   get formParams() {
@@ -134,7 +131,6 @@ export class FormulaContainer implements OnInit, OnDestroy {
   }
 
   public async save() {
-    console.log('Formula that will be saved: ', this.form.value);
     if (this.isNew) {
       return this.createFormula();
     }
