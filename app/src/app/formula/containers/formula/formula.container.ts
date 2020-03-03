@@ -5,8 +5,8 @@ import { Formula } from '../../../core/models/formula.model';
 import { FormulaService } from '../../../core/services/formula/formula.service';
 import { pluck, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit, OnDestroy, Directive, Input } from '@angular/core';
-import { FormBuilder, Validators, FormGroup, FormArray, FormControl, NgControl } from '@angular/forms';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
 import {componentDestroyed} from '@w11k/ngx-componentdestroyed';
 import { Location } from '@angular/common';
 
@@ -65,7 +65,6 @@ export class FormulaContainer implements OnInit, OnDestroy {
     this.buildPreLoadedForm();
   }
 
-  // TODO: Build with all required params. Create dates on iso string format.
   private buildEmptyForm() {
     this.form = this.formBuilder.group({
       name: ['', [Validators.required]],
