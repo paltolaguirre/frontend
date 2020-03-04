@@ -140,4 +140,13 @@ export class FormulaService {
   public extractInputParams(formula: Formula): FormulaParam[] {
     return formula.params.map((param) => param);
   }
+
+  public extractStandardFormulas(formulas: Formula[]): Formula[] {
+    return formulas.filter((formula) => {
+      return (
+        formula.type === FormulaTypes.GENERIC &&
+        formula.scope === FormulaScopes.PUBLIC
+      );
+    });
+  }
 }

@@ -79,6 +79,14 @@
                 </p>
               </div>
 
+              <div *ngIf="selectedCategoryItem.slug === 'standard-formulas'">
+                <p 
+                  *ngFor="let formula of standardFormulas" 
+                  class="selectable-badge no-selectable">
+                    {{ formula.name }}
+                </p>
+              </div>
+
               <div *ngIf="selectedCategoryItem.slug === 'user-formulas'">
                 <p 
                   *ngFor="let formula of userFormulas" 
@@ -86,24 +94,7 @@
                     {{ formula.name }}
                 </p>
               </div>
-              <!-- <p class="selectable-badge no-selectable">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge no-selectable">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge no-selectable">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge no-selectable">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge no-selectable">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge no-selectable">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge no-selectable">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge no-selectable">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge no-selectable">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge no-selectable">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge no-selectable">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge no-selectable">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge no-selectable">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge no-selectable">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge no-selectable">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge no-selectable">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge no-selectable">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge no-selectable">{{ selectedCategoryItem.title }}</p> -->
+
             </div>
           </div>
     

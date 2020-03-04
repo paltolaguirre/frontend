@@ -31,6 +31,7 @@ export class FormulaItemPickerComponent implements OnInit {
   public concepts: Concepto[];
   public inputParams: FormulaParam[];
   public currentFormula: Formula;
+  public standardFormulas: Formula[];
 
   constructor(
     private conceptService: ConceptoService,
@@ -62,6 +63,7 @@ export class FormulaItemPickerComponent implements OnInit {
 
       this.userFormulas = this.formulaService.extractUserFormulas(this.formulas);
       this.variables = this.formulaService.extractVariables(this.formulas);
+      this.standardFormulas = this.formulaService.extractStandardFormulas(this.formulas);
     });
   }
 
@@ -80,7 +82,6 @@ export class FormulaItemPickerComponent implements OnInit {
   }
 
   public onCategoryItemClick(item: FormulaCategoryItem) {
-    console.log(item);
     this.selectedCategoryItem = item;
   }
 
