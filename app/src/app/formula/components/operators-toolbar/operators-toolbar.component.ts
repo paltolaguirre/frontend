@@ -11,6 +11,8 @@ import { Component, OnInit } from '@angular/core';
 export class OperatorsToolbarComponent implements OnInit {
 
   public formulas: Formula[];
+  public operators: Formula[];
+  public selectedOperator: Formula = null;
 
   constructor(private formulaService: FormulaService) { }
 
@@ -23,8 +25,13 @@ export class OperatorsToolbarComponent implements OnInit {
       this.formulas = formulas;
       console.log(this.formulas);
 
-      const operators: Formula[] = this.formulaService.extractFormulasByType(this.formulas, FormulaTypes.OPERATOR);
-      console.log(operators);
+      this.operators = this.formulaService.extractFormulasByType(this.formulas, FormulaTypes.OPERATOR);
+      console.log(this.operators);
     });
+  }
+
+  public onOperatorSelected() {
+    // TODO: Create the operator in the draggable space and reset the select.
+    setTimeout(() => { this.selectedOperator = null; });
   }
 }

@@ -63,9 +63,17 @@
 
     <div class="column">
       <div class="more-operators-general-container">
-        <span class="more-operators-badge no-selectable">
+        <!-- <span class="more-operators-badge no-selectable">
           Mas operadores +
-        </span>
+        </span> -->
+
+        <select  
+          [(ngModel)]="selectedOperator" (ngModelChange)="onOperatorSelected()" 
+          class="more-operators-badge no-selectable"
+          [value]="null">
+          <option [ngValue]="null" disabled>Mas operadores +</option>
+          <option *ngFor="let operator of operators" [ngValue]="operator">{{ operator.name }}</option>
+        </select>
       </div>
     </div>
   </div>
