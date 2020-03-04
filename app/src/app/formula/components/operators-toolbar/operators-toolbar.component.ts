@@ -23,10 +23,8 @@ export class OperatorsToolbarComponent implements OnInit {
   public fetchFormulas() {
     this.formulaService.formulasStore$.subscribe((formulas: Formula[]) => {
       this.formulas = formulas;
-      console.log(this.formulas);
 
       this.operators = this.formulaService.extractFormulasByType(this.formulas, FormulaTypes.OPERATOR);
-      console.log(this.operators);
     });
   }
 

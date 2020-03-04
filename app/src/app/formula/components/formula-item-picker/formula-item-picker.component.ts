@@ -1,3 +1,5 @@
+import { FormulaTypes } from './../../../core/constants/formula-types.constants';
+import { Formula } from './../../../core/models/formula.model';
 import { FormulaCategoryItemTypes } from './../../../core/enums/formula-category-item-types.enum';
 import { FormulaCategoryItem } from './../../../core/models/formula-category-item.model';
 import { FormulaService } from './../../../core/services/formula/formula.service';
@@ -15,12 +17,16 @@ export class FormulaItemPickerComponent implements OnInit {
   public isExpanded: boolean = true;
   public categories: FormulaCategory[];
   public selectedCategoryItem: FormulaCategoryItem;
+  public formulas: Formula[];
+  public userFormulas: Formula[];
+  public variables: Formula[];
 
   constructor(private formulaService: FormulaService) {}
 
   ngOnInit() {
     this.setFormulaCategories();
     this.setDefaultCategoryItem();
+    this.fetchFormulas();
   }
 
   public setFormulaCategories() {
@@ -33,6 +39,15 @@ export class FormulaItemPickerComponent implements OnInit {
     }
 
     this.selectedCategoryItem = this.categories[0].items[0];
+  }
+
+  public fetchFormulas() {
+    this.formulaService.formulasStore$.subscribe((formulas: Formula[]) => {
+      this.formulas = formulas;
+
+      this.userFormulas = this.formulaService.extractUserFormulas(this.formulas);
+      this.variables = this.formulaService.extractVariables(this.formulas);
+    });
   }
 
   public onExpandClick() {

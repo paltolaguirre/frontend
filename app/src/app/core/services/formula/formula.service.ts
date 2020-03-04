@@ -1,3 +1,5 @@
+import { FormulaScopes } from './../../constants/formula-scopes.constants';
+import { FormulaTypes } from './../../constants/formula-types.constants';
 import { BehaviorSubject } from 'rxjs';
 import { ApiHttpService } from './../api-http/api-http.service';
 import { FormulaCategory } from './../../models/formula-category.model';
@@ -99,7 +101,7 @@ export class FormulaService {
             img: 'assets/img/descarga.jpg',
             title: 'Mis fórmulas',
             categoryId: 3,
-            slug: 'my-formulas'
+            slug: 'user-formulas'
           }
         ]
       }
@@ -113,6 +115,24 @@ export class FormulaService {
   public extractFormulasByType(formulas: Formula[], type: string): Formula[] {
     return formulas.filter((formula) => {
       return formula.type === type;
+    });
+  }
+
+  public extractUserFormulas(formulas: Formula[]): Formula[] {
+    return formulas.filter((formula) => {
+      return (
+        formula.type === FormulaTypes.GENERIC &&
+        formula.scope === FormulaScopes.PRIVATE
+      );
+    });
+  }
+
+  public extractVariables(formulas: Formula[]): Formula[] {
+    return formulas.filter((formula) => {
+      return (
+        formula.type === FormulaTypes.HELPER &&
+        formula.scope === FormulaScopes.PUBLIC
+      );
     });
   }
 }

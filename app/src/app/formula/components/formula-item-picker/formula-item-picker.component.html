@@ -54,6 +54,23 @@
 
           <div class="toolbox custom-vertical-scroll">
             <div *ngIf="selectedCategoryItem" class="selectable-badges-container">
+
+              <div *ngIf="selectedCategoryItem.slug === 'variables'">
+                <p 
+                  *ngFor="let formula of variables" 
+                  class="selectable-badge no-selectable">
+                    {{ formula.name }}
+                </p>
+              </div>
+
+              <div *ngIf="selectedCategoryItem.slug === 'user-formulas'">
+                <p 
+                  *ngFor="let formula of userFormulas" 
+                  class="selectable-badge no-selectable">
+                    {{ formula.name }}
+                </p>
+              </div>
+              <!-- <p class="selectable-badge no-selectable">{{ selectedCategoryItem.title }}</p>
               <p class="selectable-badge no-selectable">{{ selectedCategoryItem.title }}</p>
               <p class="selectable-badge no-selectable">{{ selectedCategoryItem.title }}</p>
               <p class="selectable-badge no-selectable">{{ selectedCategoryItem.title }}</p>
@@ -70,8 +87,7 @@
               <p class="selectable-badge no-selectable">{{ selectedCategoryItem.title }}</p>
               <p class="selectable-badge no-selectable">{{ selectedCategoryItem.title }}</p>
               <p class="selectable-badge no-selectable">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge no-selectable">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge no-selectable">{{ selectedCategoryItem.title }}</p>
+              <p class="selectable-badge no-selectable">{{ selectedCategoryItem.title }}</p> -->
             </div>
           </div>
     
