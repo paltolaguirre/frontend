@@ -16,6 +16,10 @@ export class ConceptoService {
   
   constructor(private http: HttpClient) { }
 
+  public async getAll(): Promise<Concepto[]> {
+    return await this.http.get<Concepto[]>(this.href).toPromise();
+  }
+
   public async getConceptos(sort: string, order: string, page: number): Promise<ListaItems> {
     const requestUrl =
       `${this.href}`;

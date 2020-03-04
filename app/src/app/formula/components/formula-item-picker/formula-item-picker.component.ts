@@ -1,4 +1,5 @@
-import { FormulaTypes } from './../../../core/constants/formula-types.constants';
+import { Concepto } from './../../../concepto/concepto.model';
+import { ConceptoService } from './../../../concepto/concepto.service';
 import { Formula } from './../../../core/models/formula.model';
 import { FormulaCategoryItemTypes } from './../../../core/enums/formula-category-item-types.enum';
 import { FormulaCategoryItem } from './../../../core/models/formula-category-item.model';
@@ -20,13 +21,18 @@ export class FormulaItemPickerComponent implements OnInit {
   public formulas: Formula[];
   public userFormulas: Formula[];
   public variables: Formula[];
+  public concepts: Concepto[];
 
-  constructor(private formulaService: FormulaService) {}
+  constructor(
+    private conceptService: ConceptoService,
+    private formulaService: FormulaService
+  ) {}
 
   ngOnInit() {
     this.setFormulaCategories();
     this.setDefaultCategoryItem();
     this.fetchFormulas();
+    this.fetchConcepts();
   }
 
   public setFormulaCategories() {
@@ -48,6 +54,10 @@ export class FormulaItemPickerComponent implements OnInit {
       this.userFormulas = this.formulaService.extractUserFormulas(this.formulas);
       this.variables = this.formulaService.extractVariables(this.formulas);
     });
+  }
+
+  public async fetchConcepts() {
+    this.concepts = await this.conceptService.getAll();
   }
 
   public onExpandClick() {

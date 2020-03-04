@@ -63,6 +63,14 @@
                 </p>
               </div>
 
+              <div *ngIf="selectedCategoryItem.slug === 'concept'">
+                <p 
+                  *ngFor="let concept of concepts" 
+                  class="selectable-badge no-selectable">
+                    {{ concept.nombre }}
+                </p>
+              </div>
+
               <div *ngIf="selectedCategoryItem.slug === 'user-formulas'">
                 <p 
                   *ngFor="let formula of userFormulas" 

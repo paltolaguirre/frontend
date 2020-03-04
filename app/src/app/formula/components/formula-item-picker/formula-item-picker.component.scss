@@ -62,10 +62,10 @@ div.formula-item-picker-container {
                 content: '';
                 position: absolute;
                 top: 0;
-                right: -2px;
+                right: -3px;
                 color: #fff;
                 height: 100%;
-                width: 2px;
+                width: 4px;
                 background: #fff;
                 border-right: 1px white;
               }
@@ -144,6 +144,7 @@ div.formula-item-picker-container {
             max-width: fit-content;
             padding: 0 9px;
             cursor: pointer;
+            white-space: nowrap;
           }
         }
       }
