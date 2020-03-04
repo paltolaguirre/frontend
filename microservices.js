@@ -40,7 +40,7 @@ for (let index = 0; index < myArgs.length; index++) {
 	    runService(serviceName, path);
 	    break;
 	case 'formulas':
-            path = "~/go/src/git-codecommit.us-east-1.amazonaws.com/v1/repos/sueldos-liquidacion";
+            path = "~/go/src/git-codecommit.us-east-1.amazonaws.com/v1/repos/sueldos-formula";
             runService(serviceName, path);
             break;
         default:
