@@ -1,3 +1,4 @@
+import { FormulaParam } from './../../models/formula-param.model';
 import { FormulaScopes } from './../../constants/formula-scopes.constants';
 import { FormulaTypes } from './../../constants/formula-types.constants';
 import { BehaviorSubject } from 'rxjs';
@@ -134,5 +135,9 @@ export class FormulaService {
         formula.scope === FormulaScopes.PUBLIC
       );
     });
+  }
+
+  public extractInputParams(formula: Formula): FormulaParam[] {
+    return formula.params.map((param) => param);
   }
 }

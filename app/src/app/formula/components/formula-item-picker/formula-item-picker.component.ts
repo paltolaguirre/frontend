@@ -1,3 +1,4 @@
+import { FormulaParam } from './../../../core/models/formula-param.model';
 import { Concepto } from './../../../concepto/concepto.model';
 import { ConceptoService } from './../../../concepto/concepto.service';
 import { Formula } from './../../../core/models/formula.model';
@@ -5,7 +6,7 @@ import { FormulaCategoryItemTypes } from './../../../core/enums/formula-category
 import { FormulaCategoryItem } from './../../../core/models/formula-category-item.model';
 import { FormulaService } from './../../../core/services/formula/formula.service';
 import { FormulaCategory } from './../../../core/models/formula-category.model';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'app-formula-item-picker',
@@ -13,6 +14,12 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./formula-item-picker.component.scss']
 })
 export class FormulaItemPickerComponent implements OnInit {
+  @Input()
+  set currentFormulaInput(value) {
+    if (value) {
+      this.setInputParams(value);
+    }
+  }
   @Output() expandedStateEmitter: EventEmitter<boolean> = new EventEmitter();
 
   public isExpanded: boolean = true;
@@ -22,6 +29,8 @@ export class FormulaItemPickerComponent implements OnInit {
   public userFormulas: Formula[];
   public variables: Formula[];
   public concepts: Concepto[];
+  public inputParams: FormulaParam[];
+  public currentFormula: Formula;
 
   constructor(
     private conceptService: ConceptoService,
@@ -54,6 +63,10 @@ export class FormulaItemPickerComponent implements OnInit {
       this.userFormulas = this.formulaService.extractUserFormulas(this.formulas);
       this.variables = this.formulaService.extractVariables(this.formulas);
     });
+  }
+
+  public setInputParams(formula: Formula) {
+    this.inputParams = this.formulaService.extractInputParams(formula);
   }
 
   public async fetchConcepts() {
