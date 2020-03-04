@@ -48,6 +48,10 @@
           <mat-panel-title>Cálculo Automático</mat-panel-title>
         </mat-expansion-panel-header>
         
+        <app-selector-default nombre="tipocalculoautomatico" [disabled]="isDefault(data)" [(matSelect)]="data.tipodecalculoautomaticoid"
+                (optionSelected)="data.tipocalculoautomaticoid=$event.ID; data.tipocalculoautomatico.codigo=$event.codigo">
+        </app-selector-default> 
+
         <mat-radio-group [color]="'primary'" [(ngModel)]="selectedGroupAutomaticCalculation" (ngModelChange)="onAutomaticCalcGroupSelected()">
           
           <div class="columns">
@@ -78,7 +82,7 @@
             <div class="column">
               <mat-form-field class="selector">
                 <mat-label>Seleccionar Fórmula</mat-label>
-                <mat-select [(ngModel)]="selectedFormula" (ngModelChange)="onFormulaSelected()" name="formula" [disabled]="selectedGroupAutomaticCalculation !== 'formulas'">
+                <mat-select [(ngModel)]="selectedFormula" (ngModelChange)="onFormulaSelected(data)" name="formula" [disabled]="selectedGroupAutomaticCalculation !== 'formulas'">
                   <mat-option *ngFor="let formula of availableFormulas" [value]="formula">
                     {{ formula.name }}
                   </mat-option>

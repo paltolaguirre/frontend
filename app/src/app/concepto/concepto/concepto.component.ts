@@ -85,6 +85,7 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
   public async fetchFormulas() {
     try {
       this.availableFormulas = await this.formulaService.getAll();
+      console.log(this.availableFormulas)
     } catch (e) {
       console.log(e);
     }
@@ -193,11 +194,14 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
     return false;
   }
 
-  public onAutomaticCalcGroupSelected() {
+  public onAutomaticCalcGroupSelected(concepto: Concepto) {
+    concepto.tipoconcepto
     console.log(this.selectedGroupAutomaticCalculation);
   }
 
-  public onFormulaSelected() {
+  public onFormulaSelected(concepto: Concepto) {
+    concepto.formula = this.selectedFormula
+    concepto.formulaid = this.selectedFormula.ID
     console.log(this.selectedFormula);
   }
 }
