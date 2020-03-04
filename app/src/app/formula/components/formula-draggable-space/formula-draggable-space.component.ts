@@ -11,5 +11,4 @@ export class FormulaDraggableSpaceComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

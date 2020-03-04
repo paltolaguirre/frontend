@@ -109,4 +109,10 @@ export class FormulaService {
   public isEditable(formula: Formula): boolean {
     return formula.origin !== 'primitive';
   }
+
+  public extractFormulasByType(formulas: Formula[], type: string): Formula[] {
+    return formulas.filter((formula) => {
+      return formula.type === type;
+    });
+  }
 }

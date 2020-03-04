@@ -24,7 +24,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public params: FormArray;
   public isNew: boolean = false;
   public isEditable: boolean = true;
-  public availableFormulas$: Observable<Formula[]>;
+  public formulas: Formula[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -49,18 +49,8 @@ export class FormulaContainer implements OnInit, OnDestroy {
         }
 
         this.setCurrentFormula(name);
+        this.fetchFormulas();
     });
-
-    this.availableFormulas$ = new Observable((observer) => {
-      this.formulaService.getAll().then((formulas) => {
-        observer.next(formulas);
-        observer.complete();
-      });
-    });
-
-    this.availableFormulas$.subscribe((formulas) => {
-      console.log('Formulas from observer: ', formulas);
-    })
   }
 
   ngOnDestroy() {
@@ -90,6 +80,12 @@ export class FormulaContainer implements OnInit, OnDestroy {
       value: {
         valueinvoke: null
       }
+    });
+  }
+
+  public fetchFormulas() {
+    this.formulaService.formulasStore$.subscribe((formulas: Formula[]) => {
+      this.formulas = formulas;
     });
   }
 
