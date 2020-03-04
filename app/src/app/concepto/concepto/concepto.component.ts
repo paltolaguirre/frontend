@@ -49,8 +49,29 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
         return concepto;
       })
     );
-
     this.fetchFormulas();
+
+    this.currentConcepto$.subscribe(concepto => {
+      this.selectedGroupAutomaticCalculation = this.getTipoCalculo(concepto)
+    })
+  }
+  
+  getTipoCalculo(concepto: Concepto){
+    if (this.tieneCalculoPorcentaje(concepto)){
+      return AutomaticCalculationTypes.PERCENTAGE;
+    } else if (this.tieneCalculoFormula(concepto)){
+      return AutomaticCalculationTypes.FORMULA
+    } else {
+      return AutomaticCalculationTypes.NOAPLICA
+    }
+  }
+
+  tieneCalculoFormula(concepto: Concepto){
+    return false
+  }
+
+  tieneCalculoPorcentaje(concepto: Concepto){
+      return concepto.porcentaje && concepto.tipodecalculoid 
   }
 
   ngAfterViewInit() {
@@ -58,7 +79,7 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
   }
 
   public setDefaultSelectedCalculationType() {
-    this.selectedGroupAutomaticCalculation = AutomaticCalculationTypes.PERCENTAGE;
+    this.selectedGroupAutomaticCalculation = AutomaticCalculationTypes.NOAPLICA;
   }
 
   public async fetchFormulas() {
@@ -84,6 +105,8 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
 
     //if(data.cuenta)data.cuentacontableid = data.cuenta.ID;
 
+    this.clearCalculoAutomatico(data)
+
     if (this.id) {
       console.log("Updated Concepto");
       conceptosItem = await this.conceptoService.putConcepto(data);
@@ -99,6 +122,23 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
     console.log(data);
     //this.create.emit(conceptosItem)
     return conceptosItem;
+  }
+
+  clearCalculoAutomatico(concepto: Concepto) {
+    if (this.selectedGroupAutomaticCalculation != AutomaticCalculationTypes.FORMULA){
+      this.clearFormula(concepto);
+    }
+    if (this.selectedGroupAutomaticCalculation != AutomaticCalculationTypes.PERCENTAGE){
+      this.clearPercentaje(concepto)
+    }
+  }
+  clearPercentaje(concepto: Concepto) {
+    concepto.porcentaje = null
+    concepto.tipodecalculo = null
+    concepto.tipodecalculoid = null
+  }
+  clearFormula(concepto: Concepto) {
+    //A implementar
   }
 
   isNew(data) : Boolean {

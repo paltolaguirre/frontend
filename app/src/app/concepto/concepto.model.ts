@@ -1,3 +1,5 @@
+import { Formula } from '../core/models/formula.model';
+
 export interface Concepto {  
     ID?: number;
     CreatedAt?: string;
@@ -15,12 +17,16 @@ export interface Concepto {
     tipoconceptoid?: number;
     tipoconcepto?:  Tipoconcepto;
     porcentaje?: number;
-    tipodecalculo: object;
-    tipodecalculoid: number;
+    tipodecalculo?: object;
+    tipodecalculoid?: number;
     prorrateo: boolean;
     basesac: boolean;
     tipoimpuestoganancias: object;
     tipoimpuestogananciasid: number;
+    tipocalculoautomatico: TipoCalculoAutomatico;
+    tipocalculoautomaticoid: number;
+    formula?:Formula;
+    formulaid?:number;
     eseditable?: boolean;
 }
 
@@ -52,6 +58,17 @@ export enum TIPO_CONCEPTO {
     DESCUENTO = -3,
     RETENCION = -4,
     APORTE_PATRONAL = 5,
+}
+
+export interface TipoCalculoAutomatico {
+    ID: any;
+    nombre: string;
+    codigo?: string;
+    descripcion?: string;
+    CreatedAt?: string;
+    UpdatedAt?: string;
+    DeletedAt?: string;
+    activo?: Number
 }
 
 export enum TIPO_CONCEPTO_CODIGO {

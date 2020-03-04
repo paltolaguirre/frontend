@@ -1,4 +1,5 @@
 export enum AutomaticCalculationTypes {
   PERCENTAGE = 'percentage',
-  FORMULA = 'formulas'
+  FORMULA = 'formulas',
+  NOAPLICA = 'noaplica'
 }
