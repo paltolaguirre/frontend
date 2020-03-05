@@ -1,3 +1,31 @@
+mat-form-field.custom-white-field {
+  .mat-form-field-wrapper {
+    .mat-form-field-underline {
+      height: 0 !important;
+    }
+  }
+  .mat-form-field-infix {
+    mat-select {
+      width: 55% !important;
+      
+      .mat-select-arrow {
+        display: none !important;
+      }
+    }
+    .mat-form-field-label-wrapper {
+      top: 1px !important;
+      font-size: 9px !important;
+      left: 10px !important;
+    }
+  }
+}
+
+mat-option.font-medium {
+  .mat-option-text {
+    font-size: 0.9rem !important;
+  }
+}
+
 @include tablet {
   mat-expansion-panel.space-right {
     .mat-expansion-panel-body {

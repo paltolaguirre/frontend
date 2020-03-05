@@ -30,6 +30,7 @@ export class OperatorsToolbarComponent implements OnInit {
 
   public onOperatorSelected() {
     // TODO: Create the operator in the draggable space and reset the select.
+    console.log(this.selectedOperator);
     setTimeout(() => { this.selectedOperator = null; });
   }
 }
