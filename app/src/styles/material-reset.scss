@@ -1,12 +1,16 @@
 mat-form-field.custom-white-field {
   .mat-form-field-wrapper {
     .mat-form-field-underline {
-      height: 0 !important;
+      display: none !important;
     }
+
+    height: 0 !important;
+    position: absolute !important;
+    top: -1.8rem !important;
   }
   .mat-form-field-infix {
     mat-select {
-      width: 55% !important;
+      width: 42% !important;
       
       .mat-select-arrow {
         display: none !important;
