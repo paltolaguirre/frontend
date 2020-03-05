@@ -23,10 +23,10 @@ export interface Concepto {
     basesac: boolean;
     tipoimpuestoganancias: object;
     tipoimpuestogananciasid: number;
-    tipocalculoautomatico: TipoCalculoAutomatico;
-    tipocalculoautomaticoid: number;
+    tipocalculoautomatico?: TipoCalculoAutomatico;
+    tipocalculoautomaticoid?: number;
     formula?:Formula;
-    formulaid?:number;
+    formulanombre?:string;
     eseditable?: boolean;
 }
 

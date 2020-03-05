@@ -1,5 +1,4 @@
 export class Formula {
-  ID: any;
   name: string;
   CreatedAt: string;
   UpdatedAt?: string;

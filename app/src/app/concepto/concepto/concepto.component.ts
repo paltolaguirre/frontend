@@ -201,7 +201,7 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
 
   public onFormulaSelected(concepto: Concepto) {
     concepto.formula = this.selectedFormula
-    concepto.formulaid = this.selectedFormula.ID
+    concepto.formulanombre = this.selectedFormula.name
     console.log(this.selectedFormula);
   }
 }
