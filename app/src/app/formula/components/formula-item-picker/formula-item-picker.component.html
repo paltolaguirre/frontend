@@ -58,7 +58,7 @@
               <div *ngIf="selectedCategoryItem.slug === 'variables'">
                 <p 
                   *ngFor="let formula of variables; index as index" 
-                  class="selectable-badge no-selectable"
+                  class="selectable-badge no-selectable param numeric-param"
                   [id]="'variable-' + index + 1"
                   [attr.data-payload]="formula"
                   draggable="true"
@@ -70,7 +70,7 @@
               <div *ngIf="selectedCategoryItem.slug === 'concept'">
                 <p 
                   *ngFor="let concept of concepts; index as index" 
-                  class="selectable-badge no-selectable"
+                  class="selectable-badge no-selectable param numeric-param"
                   [id]="'concept-' + index + 1"
                   [attr.data-payload]="concept"
                   draggable="true"
@@ -82,7 +82,7 @@
               <div *ngIf="selectedCategoryItem.slug === 'input-params'">
                 <p 
                   *ngFor="let param of inputParams; index as index" 
-                  class="selectable-badge no-selectable"
+                  class="selectable-badge no-selectable param numeric-param"
                   [id]="'param-' + index + 1"
                   [attr.data-payload]="param"
                   draggable="true"
@@ -94,7 +94,7 @@
               <div *ngIf="selectedCategoryItem.slug === 'standard-formulas'">
                 <p 
                   *ngFor="let formula of standardFormulas; index as index" 
-                  class="selectable-badge no-selectable"
+                  class="selectable-badge no-selectable param numeric-param"
                   [id]="'standard-formula-' + index + 1"
                   [attr.data-payload]="formula"
                   draggable="true"
@@ -106,7 +106,7 @@
               <div *ngIf="selectedCategoryItem.slug === 'user-formulas'">
                 <p 
                   *ngFor="let formula of userFormulas; index as index" 
-                  class="selectable-badge no-selectable"
+                  class="selectable-badge no-selectable param numeric-param"
                   [id]="'user-formula-' + index + 1"
                   [attr.data-payload]="formula"
                   draggable="true"

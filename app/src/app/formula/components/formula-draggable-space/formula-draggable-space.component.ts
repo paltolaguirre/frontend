@@ -27,78 +27,76 @@ export class FormulaDraggableSpaceComponent implements OnInit {
 
     this.ponerInter(document.getElementById(data), event.target);
 
-    this.paramOnmouseout(event);
+    this.onParamMouseOut(event);
 
     event.cancelBubble = true;
 
   }
 
-  public ponerInter(origin, destino) {
+  public ponerInter(origin: HTMLElement, to: HTMLElement) {
     origin.classList.remove('marcado');
 
-    const clonado = origin.cloneNode(true);
+    const clonedNode = origin.cloneNode(true);
 
-    this.addEventToElementParam(clonado);
-    // console.log(destino)
-    // console.log(destino.parentNode)
+    this.addEventToElementParam(clonedNode);
 
-    destino.appendChild(clonado);
+    to.appendChild(clonedNode);
 
-    this.do_invisiblesparentesis_recursivo(clonado);
+    this.do_invisiblesparentesis_recursivo(clonedNode);
 
     this.quitarOrigen(origin);
   }
 
   public addEventToElementParam(element) {
-    element.onmouseover = this.paramOnmouseover;
-    element.onmouseout = this.paramOnmouseout;
+    element.onmouseover = this.onParamMouseOver;
+    element.onmouseout = this.onParamMouseOut;
     element.onclick = this.paramOnclickCortarPegar;
     element.ondragover = this.onDragOver;
     element.ondragstart = this.dragstart;
     element.ondrop = this.drop;
-    element.ondragleave = this.paramOnmouseout;
+    element.ondragleave = this.onParamMouseOut;
   }
 
   onDragOver(event) { // allowDrop
     event.preventDefault();
 
-    this.paramOnmouseover(event);
+    this.onParamMouseOver(event);
 
     event.cancelBubble = true;
   }
 
-  paramOnmouseover(e) {
-    e.target.classList.remove('paramiluminarno');
-    e.target.classList.add('paramiluminar');
+  onParamMouseOver(e) {
+    e.target.classList.remove('no-highlight');
+    e.target.classList.add('highligthed');
 
-    e.target.parentNode.classList.remove('paramiluminar');
-    e.target.parentNode.classList.add('paramiluminarno');
+    e.target.parentNode.classList.remove('highligthed');
+    e.target.parentNode.classList.add('no-highlight');
 
     e.cancelBubble = true;
   }
 
-  paramOnmouseout(e) {
-    e.target.classList.remove('paramiluminar');
-    e.target.classList.add('paramiluminarno');
+  onParamMouseOut(e) {
+    e.target.classList.remove('highligthed');
+    e.target.classList.add('no-highlight');
 
     e.cancelBubble = true;
   }
 
   dragstart(ev) {
-
     ev.dataTransfer.setData('text', ev.target.id); // jsfiddle.net/rodrigomartinvg/vy5928jt/276/#run
     ev.cancelBubble = true;
   }
 
   drop(ev) {
     ev.preventDefault();
-    let data = ev.dataTransfer.getData('text');
+    const data = ev.dataTransfer.getData('text');
 
     // console.log(document.getElementById(data))
-    if (ev.target.parentNode == null) { return }
+    if (ev.target.parentNode == null) {;
+      return null;
+    }
 
     this.paramDragDropCortarPegar(document.getElementById(data), ev.target);
-    // ponerYQuitar(document.getElementById(data), ev.target)
 
     ev.cancelBubble = true;
   }
@@ -152,7 +150,7 @@ export class FormulaDraggableSpaceComponent implements OnInit {
 
     const input = document.createElement('input') as any;
 
-    if (target.classList.contains('tiponumeric')) {
+    if (target.classList.contains('numeric-param')) {
       input.type = 'text';
     } else {
       input.type = 'text';
@@ -281,7 +279,7 @@ export class FormulaDraggableSpaceComponent implements OnInit {
 
     } else {
 
-      if (origen.classList.contains('tiponumeric')) {
+      if (origen.classList.contains('numeric-param')) {
         origen.innerHTML = '0.00';
       } else if (origen.classList.contains('tipobool')) {
         origen.innerHTML = 'false';
@@ -289,7 +287,7 @@ export class FormulaDraggableSpaceComponent implements OnInit {
         origen.innerHTML = '';
       }
 
-      origen.classList.remove('marcado', 'paramiluminar', 'invisiblesparentesis', 'asociativo');
+      origen.classList.remove('marcado', 'highligthed', 'invisiblesparentesis', 'asociativo');
       this.do_invisiblesparentesis_recursivo(origen);
     }
   }
