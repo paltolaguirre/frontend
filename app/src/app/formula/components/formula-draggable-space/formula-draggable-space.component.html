@@ -1,3 +1,6 @@
-<div class="draggable-space-container bg-gray" draggable="true">
+<div
+  id="droppable-space"
+  class="draggable-space-container bg-gray"
+  (dragover)='onDragOver($event)' (drop)="onDrop($event)">
 
 </div>

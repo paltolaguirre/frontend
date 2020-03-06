@@ -88,4 +88,8 @@ export class FormulaItemPickerComponent implements OnInit {
   public isSearchItemSelected(item: FormulaCategoryItem): boolean {
     return item.slug === FormulaCategoryItemTypes.Search;
   }
+
+  public onDragStart(event) {
+    event.dataTransfer.setData('text/plain', event.target.id);
+  }
 }
