@@ -60,7 +60,7 @@
                   *ngFor="let formula of variables" 
                   class="selectable-badge no-selectable"
                   [attr.data-payload]="formula"
-                  draggable>
+                  draggable="true">
                     {{ formula.name }}
                 </p>
               </div>
@@ -70,7 +70,7 @@
                   *ngFor="let concept of concepts" 
                   class="selectable-badge no-selectable"
                   [attr.data-payload]="concept"
-                  draggable>
+                  draggable="true">
                     {{ concept.nombre }}
                 </p>
               </div>
@@ -80,7 +80,7 @@
                   *ngFor="let param of inputParams" 
                   class="selectable-badge no-selectable"
                   [attr.data-payload]="param"
-                  draggable>
+                  draggable="true">
                     {{ param.name }}
                 </p>
               </div>
@@ -90,7 +90,7 @@
                   *ngFor="let formula of standardFormulas" 
                   class="selectable-badge no-selectable"
                   [attr.data-payload]="formula"
-                  draggable>
+                  draggable="true">
                     {{ formula.name }}
                 </p>
               </div>
@@ -100,7 +100,7 @@
                   *ngFor="let formula of userFormulas" 
                   class="selectable-badge no-selectable"
                   [attr.data-payload]="formula"
-                  draggable>
+                  draggable="true">
                     {{ formula.name }}
                 </p>
               </div>
