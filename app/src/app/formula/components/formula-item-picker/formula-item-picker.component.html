@@ -58,7 +58,9 @@
               <div *ngIf="selectedCategoryItem.slug === 'variables'">
                 <p 
                   *ngFor="let formula of variables" 
-                  class="selectable-badge no-selectable">
+                  class="selectable-badge no-selectable"
+                  [attr.data-payload]="formula"
+                  draggable>
                     {{ formula.name }}
                 </p>
               </div>
@@ -66,7 +68,9 @@
               <div *ngIf="selectedCategoryItem.slug === 'concept'">
                 <p 
                   *ngFor="let concept of concepts" 
-                  class="selectable-badge no-selectable">
+                  class="selectable-badge no-selectable"
+                  [attr.data-payload]="concept"
+                  draggable>
                     {{ concept.nombre }}
                 </p>
               </div>
@@ -74,7 +78,9 @@
               <div *ngIf="selectedCategoryItem.slug === 'input-params'">
                 <p 
                   *ngFor="let param of inputParams" 
-                  class="selectable-badge no-selectable">
+                  class="selectable-badge no-selectable"
+                  [attr.data-payload]="param"
+                  draggable>
                     {{ param.name }}
                 </p>
               </div>
@@ -82,7 +88,9 @@
               <div *ngIf="selectedCategoryItem.slug === 'standard-formulas'">
                 <p 
                   *ngFor="let formula of standardFormulas" 
-                  class="selectable-badge no-selectable">
+                  class="selectable-badge no-selectable"
+                  [attr.data-payload]="formula"
+                  draggable>
                     {{ formula.name }}
                 </p>
               </div>
@@ -90,7 +98,9 @@
               <div *ngIf="selectedCategoryItem.slug === 'user-formulas'">
                 <p 
                   *ngFor="let formula of userFormulas" 
-                  class="selectable-badge no-selectable">
+                  class="selectable-badge no-selectable"
+                  [attr.data-payload]="formula"
+                  draggable>
                     {{ formula.name }}
                 </p>
               </div>
