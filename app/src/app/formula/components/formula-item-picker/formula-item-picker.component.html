@@ -63,7 +63,8 @@
                   [attr.data-payload]="formula | json"
                   [attr.data-type]="'numeric'"
                   draggable="true"
-                  (dragstart)="onDragStart($event)">
+                  (dragstart)="onDragStart($event)"
+                  (click)="onFormulaItemClick($event)">
                     {{ formula.name }}
                 </div>
               </div>
@@ -76,7 +77,8 @@
                   [attr.data-payload]="concept | json"
                   [attr.data-type]="'numeric'"
                   draggable="true"
-                  (dragstart)="onDragStart($event)">
+                  (dragstart)="onDragStart($event)"
+                  (click)="onFormulaItemClick($event)">
                     {{ concept.nombre }}
                 </div>
               </div>
@@ -89,7 +91,8 @@
                   [attr.data-payload]="param | json"
                   [attr.data-type]="'numeric'"
                   draggable="true"
-                  (dragstart)="onDragStart($event)">
+                  (dragstart)="onDragStart($event)"
+                  (click)="onFormulaItemClick($event)">
                     {{ param.name }}
                 </div>
               </div>
@@ -102,7 +105,8 @@
                   [attr.data-payload]="formula | json"
                   [attr.data-type]="'numeric'"
                   draggable="true"
-                  (dragstart)="onDragStart($event)">
+                  (dragstart)="onDragStart($event)"
+                  (click)="onFormulaItemClick($event)">
                     {{ formula.name }}
                 </div>
               </div>
@@ -115,7 +119,8 @@
                   [attr.data-payload]="formula | json"
                   [attr.data-type]="'numeric'"
                   draggable="true"
-                  (dragstart)="onDragStart($event)">
+                  (dragstart)="onDragStart($event)"
+                  (click)="onFormulaItemClick($event)">
                     {{ formula.name }}
                 </div>
               </div>

@@ -92,4 +92,8 @@ export class FormulaItemPickerComponent implements OnInit {
   public onDragStart(event) {
     event.dataTransfer.setData('text/plain', event.target.id);
   }
+
+  public onFormulaItemClick(event) {
+    this.formulaService.emitFormulaItemClick(event.target.getAttribute('id'));
+  }
 }

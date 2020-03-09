@@ -4,7 +4,7 @@ import { FormulaTypes } from './../../constants/formula-types.constants';
 import { BehaviorSubject } from 'rxjs';
 import { ApiHttpService } from './../api-http/api-http.service';
 import { FormulaCategory } from './../../models/formula-category.model';
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Formula } from '../../models/formula.model';
 
 @Injectable({
@@ -15,6 +15,7 @@ export class FormulaService {
   public readonly BASE_URL = '/api/formula';
   private formulas = new BehaviorSubject<Formula[]>([]);
   public formulasStore$ = this.formulas.asObservable();
+  public formulaPickerItemEmitter$: EventEmitter<any> = new EventEmitter();
 
   constructor(private api: ApiHttpService) {
     this.initFormulasStore();
@@ -148,5 +149,9 @@ export class FormulaService {
         formula.scope === FormulaScopes.PUBLIC
       );
     });
+  }
+
+  public emitFormulaItemClick(item: any) {
+    this.formulaPickerItemEmitter$.emit(item);
   }
 }

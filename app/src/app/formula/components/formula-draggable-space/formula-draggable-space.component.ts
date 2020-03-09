@@ -1,16 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { componentDestroyed } from '@w11k/ngx-componentdestroyed';
+import { takeUntil } from 'rxjs/operators';
+import { FormulaService } from './../../../core/services/formula/formula.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-formula-draggable-space',
   templateUrl: './formula-draggable-space.component.html',
   styleUrls: ['./formula-draggable-space.component.scss']
 })
-export class FormulaDraggableSpaceComponent implements OnInit {
+export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
 
-  constructor() { }
+  constructor(private formulaService: FormulaService) { }
 
   ngOnInit() {
+    this.formulaService.formulaPickerItemEmitter$
+    .pipe(
+      takeUntil(componentDestroyed(this))
+    ).subscribe(id => {
+      console.log('Emitter payload: ', id);
+      this.createChildElement(id);
+    });
   }
+
+  ngOnDestroy() {}
 
   getID() {
     const main = document.getElementById('main') as any;
@@ -23,23 +35,27 @@ export class FormulaDraggableSpaceComponent implements OnInit {
 
     const data = event.dataTransfer.getData('text');
 
-    console.log(data);
-    const domElement = document.getElementById(data);
-    console.log(domElement);
-    // console.log(domElement.getAttribute('data-payload'));
-    const attachedData = JSON.parse(domElement.getAttribute('data-payload'));
-    console.log(attachedData);
-
-    this.ponerInter(domElement, event.target);
+    this.createChildElement(data);
 
     this.onParamMouseOut(event);
 
     event.cancelBubble = true;
+  }
 
+  public createChildElement(id: string) {
+    const domElement = document.getElementById(id);
+
+    const attachedData = JSON.parse(domElement.getAttribute('data-payload'));
+    const droppeableSpace = document.getElementById('main');
+    console.log(attachedData);
+
+    this.ponerInter(domElement, droppeableSpace);
   }
 
   public ponerInter(origin: HTMLElement, to: HTMLElement) {
-    origin.classList.remove('pronounced');
+    if (origin && origin.classList) {
+      origin.classList.remove('pronounced');
+    }
 
     const clonedNode = origin.cloneNode(true);
 
