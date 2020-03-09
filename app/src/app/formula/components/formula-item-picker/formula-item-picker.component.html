@@ -60,7 +60,7 @@
                   *ngFor="let formula of variables; index as index" 
                   class="selectable-badge no-selectable param numeric-param"
                   [id]="'variable-' + index + 1"
-                  [attr.data-payload]="formula"
+                  [attr.data-payload]="formula | json"
                   draggable="true"
                   (dragstart)="onDragStart($event)">
                     {{ formula.name }}
@@ -72,7 +72,7 @@
                   *ngFor="let concept of concepts; index as index" 
                   class="selectable-badge no-selectable param numeric-param"
                   [id]="'concept-' + index + 1"
-                  [attr.data-payload]="concept"
+                  [attr.data-payload]="concept | json"
                   draggable="true"
                   (dragstart)="onDragStart($event)">
                     {{ concept.nombre }}
@@ -84,7 +84,7 @@
                   *ngFor="let param of inputParams; index as index" 
                   class="selectable-badge no-selectable param numeric-param"
                   [id]="'param-' + index + 1"
-                  [attr.data-payload]="param"
+                  [attr.data-payload]="param | json"
                   draggable="true"
                   (dragstart)="onDragStart($event)">
                     {{ param.name }}
@@ -96,7 +96,7 @@
                   *ngFor="let formula of standardFormulas; index as index" 
                   class="selectable-badge no-selectable param numeric-param"
                   [id]="'standard-formula-' + index + 1"
-                  [attr.data-payload]="formula"
+                  [attr.data-payload]="formula | json"
                   draggable="true"
                   (dragstart)="onDragStart($event)">
                     {{ formula.name }}
@@ -108,7 +108,7 @@
                   *ngFor="let formula of userFormulas; index as index" 
                   class="selectable-badge no-selectable param numeric-param"
                   [id]="'user-formula-' + index + 1"
-                  [attr.data-payload]="formula"
+                  [attr.data-payload]="formula | json"
                   draggable="true"
                   (dragstart)="onDragStart($event)">
                     {{ formula.name }}

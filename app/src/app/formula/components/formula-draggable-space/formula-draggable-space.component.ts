@@ -24,8 +24,13 @@ export class FormulaDraggableSpaceComponent implements OnInit {
     const data = event.dataTransfer.getData('text');
 
     console.log(data);
+    const domElement = document.getElementById(data);
+    console.log(domElement);
+    // console.log(domElement.getAttribute('data-payload'));
+    const attachedData = JSON.parse(domElement.getAttribute('data-payload'));
+    console.log(attachedData);
 
-    this.ponerInter(document.getElementById(data), event.target);
+    this.ponerInter(domElement, event.target);
 
     this.onParamMouseOut(event);
 
@@ -34,7 +39,7 @@ export class FormulaDraggableSpaceComponent implements OnInit {
   }
 
   public ponerInter(origin: HTMLElement, to: HTMLElement) {
-    origin.classList.remove('marcado');
+    origin.classList.remove('pronounced');
 
     const clonedNode = origin.cloneNode(true);
 
@@ -121,10 +126,10 @@ export class FormulaDraggableSpaceComponent implements OnInit {
 
     if (e.target == main.context.origen) {
 
-      main.context.origen.classList.remove('marcado');
-      main.context.origen = 'nada';
+      main.context.origen.classList.remove('pronounced');
+      main.context.origen = null;
 
-    } else if (main.context.origen == 'nada') {
+    } else if (main.context.origen == null) {
 
       if (e.target.children.length == 0 && e.target.getAttribute('name') == '') {
 
@@ -133,14 +138,14 @@ export class FormulaDraggableSpaceComponent implements OnInit {
       } else {
         main.context.origen = e.target;
 
-        e.target.classList.add('marcado');
+        e.target.classList.add('pronounced');
       }
 
     } else {
 
       this.ponerYQuitar(main.context.origen, e.target);
 
-      main.context.origen = 'nada';
+      main.context.origen = null;
     }
 
     e.cancelBubble = true;
@@ -156,11 +161,8 @@ export class FormulaDraggableSpaceComponent implements OnInit {
       input.type = 'text';
     }
 
-    input.onexit = function (ei) {
-
+    input.onexit = (ei) =>{
       ei.target.parentNode.innerHTML = ei.target.value;
-
-
     };
 
     input.onblur = input.onexit;
@@ -210,7 +212,7 @@ export class FormulaDraggableSpaceComponent implements OnInit {
       return;
     }
 
-    origen.classList.remove('marcado');
+    origen.classList.remove('pronounced');
 
     const clonado = origen.cloneNode(true);
     clonado.id = this.getID();
@@ -287,7 +289,7 @@ export class FormulaDraggableSpaceComponent implements OnInit {
         origen.innerHTML = '';
       }
 
-      origen.classList.remove('marcado', 'highligthed', 'invisiblesparentesis', 'asociativo');
+      origen.classList.remove('pronounced', 'highligthed', 'invisiblesparentesis', 'asociativo');
       this.do_invisiblesparentesis_recursivo(origen);
     }
   }
