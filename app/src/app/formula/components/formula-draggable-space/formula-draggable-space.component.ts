@@ -13,9 +13,9 @@ export class FormulaDraggableSpaceComponent implements OnInit {
   }
 
   getID() {
-    const main = document.getElementById("main") as any;
+    const main = document.getElementById('main') as any;
 
-    return (main.context.id++).toString()
+    return (main.context.id++).toString();
   }
 
   public onDrop(event) {
@@ -97,7 +97,7 @@ export class FormulaDraggableSpaceComponent implements OnInit {
     const data = ev.dataTransfer.getData('text');
 
     // console.log(document.getElementById(data))
-    if (ev.target.parentNode == null) {;
+    if (ev.target.parentNode == null) {
       return null;
     }
 
@@ -161,28 +161,28 @@ export class FormulaDraggableSpaceComponent implements OnInit {
       input.type = 'text';
     }
 
-    input.onexit = (ei) =>{
+    input.onexit = (ei) => {
       ei.target.parentNode.innerHTML = ei.target.value;
     };
 
     input.onblur = input.onexit;
 
-    input.onclick = function (ei) {
+    input.onclick = function(ei) {
 
       ei.cancelBubble = true;
     };
 
-    input.onmouseover = function (ei) {
+    input.onmouseover = function(ei) {
 
       ei.cancelBubble = true;
     };
 
-    input.onmouseout = function (ei) {
+    input.onmouseout = function(ei) {
 
       ei.cancelBubble = true;
     };
 
-    input.onkeypress = function (ei) {
+    input.onkeypress = function(ei) {
 
       // e.target.style.width = e.target.value.lenght + "em"
       // console.log(ei.target)
@@ -207,7 +207,7 @@ export class FormulaDraggableSpaceComponent implements OnInit {
   public ponerYQuitar(origen, destino) {
 
 
-    if (origen.getAttribute('tipodato') != destino.getAttribute('tipodato')) {
+    if (origen.getAttribute('data-type') !== destino.getAttribute('data-type')) {
       alert('tipos de de tados distintos');
       return;
     }
