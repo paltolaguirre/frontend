@@ -44,9 +44,9 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
 
   public createChildElement(id: string) {
     const domElement = document.getElementById(id);
+    const droppeableSpace = document.getElementById('main');
 
     const attachedData = JSON.parse(domElement.getAttribute('data-payload'));
-    const droppeableSpace = document.getElementById('main');
     console.log(attachedData);
 
     this.appendContent(domElement, droppeableSpace);
