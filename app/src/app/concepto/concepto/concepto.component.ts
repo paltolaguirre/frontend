@@ -21,9 +21,6 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
   paises: any[];
   id: number;
   public selectedFormula: Formula;
-  public availableFormulas: Formula[];
-  public formulaFromDate: Date;
-  public formulaToDate: Date;
 
   constructor(
     private route: ActivatedRoute,
@@ -52,8 +49,10 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
         return concepto;
       })
     );
-    
-    this.fetchFormulas();
+
+    this.currentConcepto$.subscribe(concepto => {
+      this.selectedFormula = concepto.formula
+    })
   }
   
 
@@ -63,15 +62,6 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
 
   tieneCalculoPorcentaje(concepto: Concepto){
       return concepto.porcentaje && concepto.tipodecalculoid 
-  }
-
-  public async fetchFormulas() {
-    try {
-      this.availableFormulas = await this.formulaService.getAll();
-      console.log(this.availableFormulas)
-    } catch (e) {
-      console.log(e);
-    }
   }
 
   private gotoGrilla() {

@@ -50,6 +50,18 @@
 
         <mat-radio-group [color]="'primary'" [(ngModel)]="data.tipocalculoautomatico.codigo" (ngModelChange)="onAutomaticCalcGroupSelected(data)">
           
+          <mat-divider></mat-divider>
+
+          <div class="columns">
+            <div class="column is-2">
+              <mat-radio-button class="example-radio-button" [value]="'NO_APLICA'">
+                No Aplica
+              </mat-radio-button>
+            </div>
+          </div>
+
+          <mat-divider></mat-divider>
+
           <div class="columns">
             <div class="column is-2">
               <mat-radio-button class="example-radio-button" [value]="'PORCENTAJE'" >
@@ -76,50 +88,12 @@
               </mat-radio-button>
             </div>
             <div class="column">
-              <mat-form-field class="selector">
-                <mat-label>Seleccionar Fórmula</mat-label>
-                <mat-select [(ngModel)]="selectedFormula" (ngModelChange)="onFormulaSelected(data)" name="formula" [disabled]="data.tipocalculoautomatico.codigo !== 'FORMULA'">
-                  <mat-option *ngFor="let formula of availableFormulas" [value]="formula">
-                    {{ formula.name }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-              
-<!--               
-              <div class="columns" *ngIf="selectedFormula">
-                <div class="column is-3">
-                  <mat-form-field>
-                    <mat-label>Período desde</mat-label>
-                    <input matInput [matDatepicker]="fromDatePicker" [value]="formulaFromDate" readonly required>
-                    <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
-                    <mat-datepicker #fromDatePicker></mat-datepicker>
-                  </mat-form-field>
-                </div>
-                <div class="column is-3">
-                  <mat-form-field>
-                    <mat-label>Período hasta</mat-label>
-                    <input matInput [matDatepicker]="toDatePicker" [value]="toDatePicker" readonly required>
-                    <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
-                    <mat-datepicker #toDatePicker></mat-datepicker>
-                  </mat-form-field>
-                </div>
-              </div>
-               -->
+                <app-selector-default nombre="function" [disabled]="isDefault(data) || data.tipocalculoautomatico.codigo !== 'FORMULA'" required=false [(matSelect)]="data.formulanombre"
+                (optionSelected)="data.formulanombre=$event.ID; data.formula.name=$event.codigo">
+              </app-selector-default> 
             </div>
 
-            <mat-divider></mat-divider>
-
-          </div>
-          
-          <mat-divider></mat-divider>
-
-          <div class="columns">
-            <div class="column is-2">
-              <mat-radio-button class="example-radio-button" [value]="'NO_APLICA'">
-                No Aplica
-              </mat-radio-button>
-            </div>
-          </div>
+          </div>       
 
           </mat-radio-group>         
        
