@@ -40,4 +40,13 @@ export class OperatorsToolbarComponent implements OnInit {
     console.log(this.selectedOperator);
     setTimeout(() => { this.selectedOperator = null; });
   }
+
+  public onDragStart(event) {
+    event.dataTransfer.setData('text/plain', event.target.id);
+  }
+
+  public onOperatorItemClick(event) {
+    // this.formulaService.emitFormulaItemClick(event.target.getAttribute('id'));
+    console.log(event.target.getAttribute('id'));
+  }
 }
