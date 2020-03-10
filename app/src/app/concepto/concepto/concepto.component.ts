@@ -2,7 +2,7 @@ import { AutomaticCalculationTypes } from './../../core/enums/automatic-calc-typ
 import { FormulaService } from './../../core/services/formula/formula.service';
 import { Formula } from 'src/app/core/models/formula.model';
 import { ConceptoService } from '../concepto.service';
-import { Concepto } from '../concepto.model';
+import { Concepto, TIPO_CALCULO_AUTOMATICO } from '../concepto.model';
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
@@ -21,7 +21,6 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
   paises: any[];
   id: number;
   public selectedFormula: Formula;
-  public selectedGroupAutomaticCalculation: string;
   public availableFormulas: Formula[];
   public formulaFromDate: Date;
   public formulaToDate: Date;
@@ -36,6 +35,10 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
     private formulaService: FormulaService
     ) { }
 
+  
+  ngAfterViewInit(): void {
+  }
+
  async ngOnInit() {
     this.currentConcepto$ = await this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
@@ -49,22 +52,10 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
         return concepto;
       })
     );
+    
     this.fetchFormulas();
-
-    this.currentConcepto$.subscribe(concepto => {
-      this.selectedGroupAutomaticCalculation = this.getTipoCalculo(concepto)
-    })
   }
   
-  getTipoCalculo(concepto: Concepto){
-    if (this.tieneCalculoPorcentaje(concepto)){
-      return AutomaticCalculationTypes.PERCENTAGE;
-    } else if (this.tieneCalculoFormula(concepto)){
-      return AutomaticCalculationTypes.FORMULA
-    } else {
-      return AutomaticCalculationTypes.NOAPLICA
-    }
-  }
 
   tieneCalculoFormula(concepto: Concepto){
     return false
@@ -72,14 +63,6 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
 
   tieneCalculoPorcentaje(concepto: Concepto){
       return concepto.porcentaje && concepto.tipodecalculoid 
-  }
-
-  ngAfterViewInit() {
-    this.setDefaultSelectedCalculationType();
-  }
-
-  public setDefaultSelectedCalculationType() {
-    this.selectedGroupAutomaticCalculation = AutomaticCalculationTypes.NOAPLICA;
   }
 
   public async fetchFormulas() {
@@ -106,8 +89,6 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
 
     //if(data.cuenta)data.cuentacontableid = data.cuenta.ID;
 
-    this.clearCalculoAutomatico(data)
-
     if (this.id) {
       console.log("Updated Concepto");
       conceptosItem = await this.conceptoService.putConcepto(data);
@@ -123,23 +104,6 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
     console.log(data);
     //this.create.emit(conceptosItem)
     return conceptosItem;
-  }
-
-  clearCalculoAutomatico(concepto: Concepto) {
-    if (this.selectedGroupAutomaticCalculation != AutomaticCalculationTypes.FORMULA){
-      this.clearFormula(concepto);
-    }
-    if (this.selectedGroupAutomaticCalculation != AutomaticCalculationTypes.PERCENTAGE){
-      this.clearPercentaje(concepto)
-    }
-  }
-  clearPercentaje(concepto: Concepto) {
-    concepto.porcentaje = null
-    concepto.tipodecalculo = null
-    concepto.tipodecalculoid = null
-  }
-  clearFormula(concepto: Concepto) {
-    //A implementar
   }
 
   isNew(data) : Boolean {
@@ -194,14 +158,31 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
     return false;
   }
 
-  public onAutomaticCalcGroupSelected(concepto: Concepto) {
-    concepto.tipoconcepto
-    console.log(this.selectedGroupAutomaticCalculation);
-  }
-
   public onFormulaSelected(concepto: Concepto) {
     concepto.formula = this.selectedFormula
     concepto.formulanombre = this.selectedFormula.name
     console.log(this.selectedFormula);
   }
+
+  public onAutomaticCalcGroupSelected(concepto: Concepto){
+    switch(concepto.tipocalculoautomatico.codigo){
+      case 'PORCENTAJE':
+        concepto.tipocalculoautomaticoid = TIPO_CALCULO_AUTOMATICO.PORCENTAJE;
+        concepto.tipocalculoautomatico.ID = TIPO_CALCULO_AUTOMATICO.PORCENTAJE;
+        break;
+      case 'FORMULA':
+        concepto.tipocalculoautomaticoid = TIPO_CALCULO_AUTOMATICO.FORMULA;
+        concepto.tipocalculoautomatico.ID = TIPO_CALCULO_AUTOMATICO.FORMULA;
+        break;
+      
+      default: 
+      
+      concepto.tipocalculoautomaticoid = TIPO_CALCULO_AUTOMATICO.NO_APLICA;
+      concepto.tipocalculoautomatico.ID = TIPO_CALCULO_AUTOMATICO.NO_APLICA;
+    }
+    
+
+  }
+
+
 }
