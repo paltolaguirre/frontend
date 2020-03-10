@@ -16,25 +16,29 @@ export class OperatorsService {
         id: 1,
         operationName: MathOperatorNames.Sum,
         type: MathOperatorTypes.Numeric,
-        symbol: '+'
+        symbol: '+',
+        mustRemoveFromSource: false
       },
       {
         id: 2,
         operationName: MathOperatorNames.Subtraction,
         type: MathOperatorTypes.Numeric,
-        symbol: '-'
+        symbol: '-',
+        mustRemoveFromSource: false
       },
       {
         id: 3,
         operationName: MathOperatorNames.Division,
         type: MathOperatorTypes.Numeric,
-        symbol: '/'
+        symbol: '/',
+        mustRemoveFromSource: false
       },
       {
         id: 4,
         operationName: MathOperatorNames.Multiplication,
         type: MathOperatorTypes.Numeric,
-        symbol: '*'
+        symbol: '*',
+        mustRemoveFromSource: false
       }
     ];
   }

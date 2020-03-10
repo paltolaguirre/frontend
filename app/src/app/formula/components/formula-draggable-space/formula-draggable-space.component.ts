@@ -57,7 +57,7 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
       origin.classList.remove('pronounced');
     }
 
-    const clonedNode = origin.cloneNode(true);
+    const clonedNode = origin.cloneNode(true) as HTMLElement;
 
     this.addEventToElementParam(clonedNode);
 
@@ -65,7 +65,15 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
 
     this.makeRecursiveWhiteParenthesis(clonedNode);
 
-    this.removeOrigin(origin);
+    this.handleOriginNodeDeletion(clonedNode);
+  }
+
+  public handleOriginNodeDeletion(node: HTMLElement) {
+    const nodePayload = JSON.parse(node.getAttribute('data-payload'));
+
+    if (nodePayload.mustRemoveFromSource) {
+      this.removeOrigin(origin);
+    }
   }
 
   public addEventToElementParam(element) {
