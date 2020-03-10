@@ -1,3 +1,5 @@
+import { OperatorsService } from './../../../core/services/operators/operators.service';
+import { Operator } from './../../../core/models/operator.model';
 import { FormulaTypes } from './../../../core/constants/formula-types.constants';
 import { FormulaService } from './../../../core/services/formula/formula.service';
 import { Formula } from 'src/app/core/models/formula.model';
@@ -13,11 +15,16 @@ export class OperatorsToolbarComponent implements OnInit {
   public formulas: Formula[];
   public operators: Formula[];
   public selectedOperator: Formula = null;
+  public basicMathOperators: Operator[];
 
-  constructor(private formulaService: FormulaService) { }
+  constructor(
+    private formulaService: FormulaService,
+    private operatorsService: OperatorsService
+  ) { }
 
   ngOnInit() {
     this.fetchFormulas();
+    this.basicMathOperators = this.operatorsService.getBasicMathOperators();
   }
 
   public fetchFormulas() {

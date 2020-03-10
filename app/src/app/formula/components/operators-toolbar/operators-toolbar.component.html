@@ -2,7 +2,14 @@
   <div class="columns is-gapless">
     <div class="column">
       <div class="operators-container">
-        <div class="math-operator-container" 
+        <div 
+          *ngFor="let operator of basicMathOperators"
+          class="math-operator-container"
+          draggable="true">
+          <span class="math-operator no-selectable">+</span>
+        </div>
+
+        <!-- <div class="math-operator-container" 
           [id]="'variable-' + index + 1"
           [attr.data-payload]="formula | json"
           [attr.data-type]="'numeric'"
@@ -23,7 +30,7 @@
 
         <div class="math-operator-container" draggable='true'>
           <span class="math-operator no-selectable">*</span>
-        </div>
+        </div> -->
       </div>
     </div>
     <mat-divider [vertical]="true"></mat-divider>
