@@ -4,7 +4,7 @@
       <div class="operators-container">
         <div 
           *ngFor="let operator of basicMathOperators; index as index"
-          class="math-operator-container"
+          class="math-operator-container no-selectable param numeric-param"
           [id]="'math-basic-operator-' + operator.id"
           [attr.data-payload]="operator | json"
           [attr.data-type]="operator.type"
@@ -13,17 +13,6 @@
           draggable="true">
           <span class="math-operator no-selectable">{{ operator.symbol }}</span>
         </div>
-
-        <!-- <div class="math-operator-container" 
-          [id]="'variable-' + index + 1"
-          [attr.data-payload]="formula | json"
-          [attr.data-type]="'numeric'"
-          draggable="true"
-          (dragstart)="onDragStart($event)"
-          (click)="onFormulaItemClick($event)"
-          draggable='true'>
-          <span class="math-operator no-selectable">+</span>
-        </div>-->
       </div>
     </div>
     <mat-divider [vertical]="true"></mat-divider>
