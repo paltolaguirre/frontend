@@ -3,10 +3,13 @@
     <div class="column">
       <div class="operators-container">
         <div 
-          *ngFor="let operator of basicMathOperators"
+          *ngFor="let operator of basicMathOperators; index as index"
           class="math-operator-container"
+          [id]="'math-basic-operator-' + operator.id"
+          [attr.data-payload]="operator | json"
+          [attr.data-type]="operator.type"
           draggable="true">
-          <span class="math-operator no-selectable">+</span>
+          <span class="math-operator no-selectable">{{ operator.symbol }}</span>
         </div>
 
         <!-- <div class="math-operator-container" 
@@ -18,19 +21,7 @@
           (click)="onFormulaItemClick($event)"
           draggable='true'>
           <span class="math-operator no-selectable">+</span>
-        </div>
-
-        <div class="math-operator-container" draggable='true'>
-          <span class="math-operator no-selectable">-</span>
-        </div>
-
-        <div class="math-operator-container" draggable='true'>
-          <span class="math-operator no-selectable">/</span>
-        </div>
-
-        <div class="math-operator-container" draggable='true'>
-          <span class="math-operator no-selectable">*</span>
-        </div> -->
+        </div>-->
       </div>
     </div>
     <mat-divider [vertical]="true"></mat-divider>

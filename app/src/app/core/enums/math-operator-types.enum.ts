@@ -1,6 +1,4 @@
 export enum MathOperatorTypes {
-  Sum,
-  Subtraction,
-  Multiplication,
-  Division
+  Numeric,
+  Boolean
 }

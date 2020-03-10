@@ -1,5 +1,7 @@
+import { MathOperatorNames } from './../../enums/math-operator-names.enum';
 import { Operator } from './../../models/operator.model';
 import { Injectable } from '@angular/core';
+import { MathOperatorTypes } from '../../enums/math-operator-types.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -12,27 +14,27 @@ export class OperatorsService {
     return [
       {
         id: 1,
-        operationName: '',
-        type: '',
-        symbol: ''
+        operationName: MathOperatorNames.Sum,
+        type: MathOperatorTypes.Numeric,
+        symbol: '+'
       },
       {
         id: 2,
-        operationName: '',
-        type: '',
-        symbol: ''
+        operationName: MathOperatorNames.Subtraction,
+        type: MathOperatorTypes.Numeric,
+        symbol: '-'
       },
       {
         id: 3,
-        operationName: '',
-        type: '',
-        symbol: ''
+        operationName: MathOperatorNames.Division,
+        type: MathOperatorTypes.Numeric,
+        symbol: '/'
       },
       {
         id: 4,
-        operationName: '',
-        type: '',
-        symbol: ''
+        operationName: MathOperatorNames.Multiplication,
+        type: MathOperatorTypes.Numeric,
+        symbol: '*'
       }
     ];
   }
