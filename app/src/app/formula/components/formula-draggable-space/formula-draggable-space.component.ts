@@ -49,10 +49,10 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
     const droppeableSpace = document.getElementById('main');
     console.log(attachedData);
 
-    this.ponerInter(domElement, droppeableSpace);
+    this.appendContent(domElement, droppeableSpace);
   }
 
-  public ponerInter(origin: HTMLElement, to: HTMLElement) {
+  public appendContent(origin: HTMLElement, to: HTMLElement) {
     if (origin && origin.classList) {
       origin.classList.remove('pronounced');
     }
@@ -63,15 +63,15 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
 
     to.appendChild(clonedNode);
 
-    this.do_invisiblesparentesis_recursivo(clonedNode);
+    this.makeRecursiveWhiteParenthesis(clonedNode);
 
-    this.quitarOrigen(origin);
+    this.removeOrigin(origin);
   }
 
   public addEventToElementParam(element) {
     element.onmouseover = this.onParamMouseOver;
     element.onmouseout = this.onParamMouseOut;
-    element.onclick = this.paramOnclickCortarPegar;
+    // element.onclick = this.paramOnclickCortarPegar;
     element.ondragover = this.onDragOver;
     element.ondragstart = this.dragstart;
     element.ondrop = this.drop;
@@ -136,39 +136,38 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
   }
 
 
-  paramOnclickCortarPegar(e) {
+  // paramOnclickCortarPegar(e) {
 
-    const main = document.getElementById('main') as any;
+  //   const main = document.getElementById('main') as any;
 
-    if (e.target == main.context.origen) {
+  //   if (e.target == main.context.origen) {
 
-      main.context.origen.classList.remove('pronounced');
-      main.context.origen = null;
+  //     main.context.origen.classList.remove('pronounced');
+  //     main.context.origen = null;
 
-    } else if (main.context.origen == null) {
+  //   } else if (main.context.origen == null) {
 
-      if (e.target.children.length == 0 && e.target.getAttribute('name') == '') {
+  //     if (e.target.children.length == 0 && e.target.getAttribute('name') == '') {
 
-        this.clickEditLiteral(e.target);
+  //       this.clickEditLiteral(e.target);
 
-      } else {
-        main.context.origen = e.target;
+  //     } else {
+  //       main.context.origen = e.target;
 
-        e.target.classList.add('pronounced');
-      }
+  //       e.target.classList.add('pronounced');
+  //     }
 
-    } else {
+  //   } else {
 
-      this.ponerYQuitar(main.context.origen, e.target);
+  //     this.ponerYQuitar(main.context.origen, e.target);
 
-      main.context.origen = null;
-    }
+  //     main.context.origen = null;
+  //   }
 
-    e.cancelBubble = true;
-  }
+  //   e.cancelBubble = true;
+  // }
 
   clickEditLiteral(target) {
-
     const input = document.createElement('input') as any;
 
     if (target.classList.contains('numeric-param')) {
@@ -183,25 +182,19 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
 
     input.onblur = input.onexit;
 
-    input.onclick = function(ei) {
-
+    input.onclick = (ei) => {
       ei.cancelBubble = true;
     };
 
-    input.onmouseover = function(ei) {
-
+    input.onmouseover = (ei) => {
       ei.cancelBubble = true;
     };
 
-    input.onmouseout = function(ei) {
-
+    input.onmouseout = (ei) => {
       ei.cancelBubble = true;
     };
 
-    input.onkeypress = function(ei) {
-
-      // e.target.style.width = e.target.value.lenght + "em"
-      // console.log(ei.target)
+    input.onkeypress = (ei) => {
     };
 
 
@@ -210,14 +203,10 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
     input.value = target.innerHTML;
 
     input.style.width = target.innerHTML.length + 'em';
-    // console.log(target.innerHTML.length + "em")
-
-    // e.target.innerHTML = ""
 
     target.appendChild(input);
 
     input.focus();
-
   }
 
   public ponerYQuitar(origen, destino) {
@@ -241,73 +230,60 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
 
     destino.parentNode.replaceChild(clonado, destino);
 
-    this.do_invisiblesparentesis_recursivo(clonado);
-    // do_invisiblesparentesis(clonado)
-
-    console.log(!origen.contains(clonado));
-
+    this.makeRecursiveWhiteParenthesis(clonado);
 
     if (!origen.contains(clonado)) {
-      this.quitarOrigen(origen);
+      this.removeOrigin(origen);
     }
-
   }
 
-  do_invisiblesparentesis_recursivo(param) {
-    if (param.parentNode.classList.contains('param')) {
-
-      if (param.parentNode.hasChildNodes()) {
-        const children = param.parentNode.childNodes;
-
-        for (let i = 0; i < children.length; i++) {
-          // console.log(children[i])
-          this.do_invisiblesparentesis(children[i]);
-        }
-        this.do_invisiblesparentesis(param);
-        // do_invisiblesparentesis(param.parentNode)
-      }
-
+  public makeRecursiveWhiteParenthesis(param) {
+    if (
+      !param.parentNode.classList.contains('param') ||
+      !param.parentNode.hasChildNodes()) {
+      return null;
     }
 
+    const children = param.parentNode.childNodes;
+
+    for (let i = 0; i < children.length; i++) {
+      this.makeWhiteParenthesis(children[i]);
+    }
+
+    this.makeWhiteParenthesis(param);
   }
 
-  do_invisiblesparentesis(param) {
-
-    if (param.nodeName != 'DIV') {
+  public makeWhiteParenthesis(param) {
+    if (param.nodeName !== 'DIV') {
       return;
     }
 
-
-    if (param.classList.contains('asociativo') && param.parentNode.hasChildNodes() && param.getAttribute('name') == param.parentNode.getAttribute('name')) {
-      param.classList.add('invisiblesparentesis');
+    if (
+      param.classList.contains('asociativo') &&
+      param.parentNode.hasChildNodes() &&
+      param.getAttribute('name') === param.parentNode.getAttribute('name')
+    ) {
+      param.classList.add('white-parenthesis');
     } else {
-      param.classList.remove('invisiblesparentesis');
+      param.classList.remove('white-parenthesis');
     }
-
-
   }
 
-  quitarOrigen(origen) {
-
-    console.log(!origen.parentNode.classList.contains('param'));
-
-    if (!origen.parentNode.classList.contains('param')) {
-
-      origen.remove();
-
-    } else {
-
-      if (origen.classList.contains('numeric-param')) {
-        origen.innerHTML = '0.00';
-      } else if (origen.classList.contains('tipobool')) {
-        origen.innerHTML = 'false';
-      } else {
-        origen.innerHTML = '';
-      }
-
-      origen.classList.remove('pronounced', 'highligthed', 'invisiblesparentesis', 'asociativo');
-      this.do_invisiblesparentesis_recursivo(origen);
+  removeOrigin(origin) {
+    if (!origin.parentNode.classList.contains('param')) {
+      return origin.remove();
     }
+
+    if (origin.classList.contains('numeric-param')) {
+      origin.innerHTML = '0.00';
+    } else if (origin.classList.contains('tipobool')) {
+      origin.innerHTML = 'false';
+    } else {
+      origin.innerHTML = '';
+    }
+
+    origin.classList.remove('pronounced', 'highligthed', 'white-parenthesis', 'asociativo');
+    this.makeRecursiveWhiteParenthesis(origin);
   }
 
 }
