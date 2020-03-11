@@ -313,18 +313,15 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
     input.focus();
   }
 
-  public ponerYQuitar(origen, destino) {
-    console.log('origin type', origen.getAttribute('data-type'));
-    console.log('target type:', destino.getAttribute('data-type'))
-
-    if (origen.getAttribute('data-type') !== destino.getAttribute('data-type')) {
+  public ponerYQuitar(origin: HTMLElement, target: HTMLElement) {
+    if (origin.getAttribute('data-type') !== target.getAttribute('data-type')) {
       alert('tipos de de tados distintos');
       return;
     }
 
-    origen.classList.remove('pronounced');
+    origin.classList.remove('pronounced');
 
-    const clonado = origen.cloneNode(true);
+    const clonado = origin.cloneNode(true) as HTMLElement;
     clonado.id = this.getStringID();
 
     this.addEventToElementParam(clonado);
@@ -333,12 +330,12 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
 
     aux.appendChild(clonado);
 
-    destino.parentNode.replaceChild(clonado, destino);
+    target.parentNode.replaceChild(clonado, target);
 
     this.makeRecursiveWhiteParenthesis(clonado);
 
-    if (!origen.contains(clonado)) {
-      this.removeOrigin(origen);
+    if (!origin.contains(clonado)) {
+      this.removeOrigin(origin);
     }
   }
 
