@@ -60,10 +60,9 @@
                   *ngFor="let formula of variables; index as index" 
                   class="pickable-badge no-selectable param numeric-param"
                   [id]="'variable-' + index + 1"
-                  [attr.data-payload]="formula | json"
                   [attr.data-type]="'numeric'"
                   draggable="true"
-                  (dragstart)="onDragStart($event)"
+                  (dragstart)="onDragStart($event, formula)"
                   (click)="onFormulaItemClick($event)">
                     {{ formula.name }}
                 </div>
@@ -74,10 +73,9 @@
                   *ngFor="let concept of concepts; index as index" 
                   class="pickable-badge no-selectable param numeric-param"
                   [id]="'concept-' + index + 1"
-                  [attr.data-payload]="concept | json"
                   [attr.data-type]="'numeric'"
                   draggable="true"
-                  (dragstart)="onDragStart($event)"
+                  (dragstart)="onDragStart($event, concept)"
                   (click)="onFormulaItemClick($event)">
                     {{ concept.nombre }}
                 </div>
@@ -88,10 +86,9 @@
                   *ngFor="let param of inputParams; index as index" 
                   class="pickable-badge no-selectable param numeric-param"
                   [id]="'param-' + index + 1"
-                  [attr.data-payload]="param | json"
                   [attr.data-type]="'numeric'"
                   draggable="true"
-                  (dragstart)="onDragStart($event)"
+                  (dragstart)="onDragStart($event, param)"
                   (click)="onFormulaItemClick($event)">
                     {{ param.name }}
                 </div>
@@ -102,10 +99,9 @@
                   *ngFor="let formula of standardFormulas; index as index" 
                   class="pickable-badge no-selectable param numeric-param"
                   [id]="'standard-formula-' + index + 1"
-                  [attr.data-payload]="formula | json"
                   [attr.data-type]="'numeric'"
                   draggable="true"
-                  (dragstart)="onDragStart($event)"
+                  (dragstart)="onDragStart($event, formula)"
                   (click)="onFormulaItemClick($event)">
                     {{ formula.name }}
                 </div>
@@ -116,10 +112,9 @@
                   *ngFor="let formula of userFormulas; index as index" 
                   class="pickable-badge no-selectable param numeric-param"
                   [id]="'user-formula-' + index + 1"
-                  [attr.data-payload]="formula | json"
                   [attr.data-type]="'numeric'"
                   draggable="true"
-                  (dragstart)="onDragStart($event)"
+                  (dragstart)="onDragStart($event, formula)"
                   (click)="onFormulaItemClick($event)">
                     {{ formula.name }}
                 </div>

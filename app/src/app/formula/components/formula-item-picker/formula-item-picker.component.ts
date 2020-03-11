@@ -89,8 +89,13 @@ export class FormulaItemPickerComponent implements OnInit {
     return item.slug === FormulaCategoryItemTypes.Search;
   }
 
-  public onDragStart(event) {
-    event.dataTransfer.setData('text/plain', event.target.id);
+  public onDragStart(event, formulaItem: any) {
+    const data = {
+      nodeId: event.target.id,
+      payload: formulaItem
+    };
+
+    event.dataTransfer.setData('text/plain', JSON.stringify(data));
   }
 
   public onFormulaItemClick(event) {
