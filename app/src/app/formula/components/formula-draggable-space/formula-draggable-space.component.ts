@@ -35,18 +35,18 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
         this.handleOperatorClicked(payload);
     });
 
-    const main = document.getElementById("main") as any;
+    const main = document.getElementById('main') as any;
 
-    main.context = new this.context()
-    main.context.origen = null
+    main.context = new this.context();
+    main.context.origin = null;
     main.context.id = 1;
   }
 
   ngOnDestroy() {}
 
   public context() {
-    var origen = null
-    var id = 1
+    const origin = null;
+    const id = 1;
   }
 
   getStringID() {
@@ -109,19 +109,23 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
     const formulaDiv = this.createFormula(payload.symbol, payload.type, [payload.type, payload.type], true, true);
 
     if (data) {
-      this.addFormulaToMain(formulaDiv);
+      this.renderFormulaInMainContainer(formulaDiv);
     }
-
-    // return formulaDiv;
   }
 
-  public addFormulaToMain(divFormula) {
+  public renderFormulaInMainContainer(divFormula) {
     const divmain = document.getElementById('main');
 
     divmain.appendChild(divFormula);
   }
 
-  public createFormula(textContent: string, type: MathOperatorTypes, arrayParams, isOperator, isAsoc) {
+  public createFormula(
+    textContent: string,
+    type: MathOperatorTypes,
+    arrayParams: MathOperatorTypes[],
+    isOperator: boolean,
+    isAsoc: boolean
+  ) {
     const divFormula = this.createParam(textContent, type, false, isAsoc);
 
     if (!isOperator) {
@@ -148,8 +152,6 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
     div.setAttribute('name', functionName);
     div.setAttribute('data-type', type);
     div.className = 'param ' + this.getClassNameFromOperatorType(type);
-
-    console.log(div);
 
     if (isAsociative) {
       div.className = div.className + ' asociative';
@@ -237,35 +239,35 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
       return null;
     }
 
-    this.ponerYQuitar(origin, target);
+    this.putChildAndRemoveFromOrigin(origin, target);
   }
 
 
   paramOnclickCortarPegar(e) {
     const main = document.getElementById('main') as any;
 
-    if (e.target === main.context.origen) {
+    if (e.target === main.context.origin) {
 
-      main.context.origen.classList.remove('pronounced');
-      main.context.origen = null;
+      main.context.origin.classList.remove('pronounced');
+      main.context.origin = null;
 
-    } else if (main.context.origen == null) {
+    } else if (main.context.origin == null) {
 
       if (e.target.children.length === 0 && e.target.getAttribute('name') === '') {
 
         this.clickEditLiteral(e.target);
 
       } else {
-        main.context.origen = e.target;
+        main.context.origin = e.target;
 
         e.target.classList.add('pronounced');
       }
 
     } else {
 
-      this.ponerYQuitar(main.context.origen, e.target);
+      this.putChildAndRemoveFromOrigin(main.context.origin, e.target);
 
-      main.context.origen = null;
+      main.context.origin = null;
     }
 
     e.cancelBubble = true;
@@ -313,7 +315,7 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
     input.focus();
   }
 
-  public ponerYQuitar(origin: HTMLElement, target: HTMLElement) {
+  public putChildAndRemoveFromOrigin(origin: HTMLElement, target: HTMLElement) {
     if (origin.getAttribute('data-type') !== target.getAttribute('data-type')) {
       alert('tipos de de tados distintos');
       return;
