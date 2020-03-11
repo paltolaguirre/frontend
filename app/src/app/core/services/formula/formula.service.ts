@@ -1,3 +1,4 @@
+import { FormulaTransferData } from './../../models/formula-transfer-data.model';
 import { FormulaParam } from './../../models/formula-param.model';
 import { FormulaScopes } from './../../constants/formula-scopes.constants';
 import { FormulaTypes } from './../../constants/formula-types.constants';
@@ -15,7 +16,7 @@ export class FormulaService {
   public readonly BASE_URL = '/api/formula';
   private formulas = new BehaviorSubject<Formula[]>([]);
   public formulasStore$ = this.formulas.asObservable();
-  public formulaPickerItemEmitter$: EventEmitter<any> = new EventEmitter();
+  public formulaPickerItemEmitter: EventEmitter<FormulaTransferData> = new EventEmitter();
 
   constructor(private api: ApiHttpService) {
     this.initFormulasStore();
@@ -151,7 +152,7 @@ export class FormulaService {
     });
   }
 
-  public emitFormulaItemClick(item: any) {
-    this.formulaPickerItemEmitter$.emit(item);
+  public emitFormulaItemClick(payload: FormulaTransferData) {
+    this.formulaPickerItemEmitter.emit(payload);
   }
 }

@@ -1,3 +1,4 @@
+import { FormulaTransferData } from './../../models/formula-transfer-data.model';
 import { MathOperatorNames } from './../../enums/math-operator-names.enum';
 import { Operator } from './../../models/operator.model';
 import { Injectable, EventEmitter } from '@angular/core';
@@ -8,7 +9,7 @@ import { MathOperatorTypes } from '../../enums/math-operator-types.enum';
 })
 export class OperatorsService {
 
-  public operatorEmitter: EventEmitter<any> = new EventEmitter();
+  public operatorEmitter: EventEmitter<FormulaTransferData> = new EventEmitter();
 
   constructor() { }
 
@@ -45,7 +46,7 @@ export class OperatorsService {
     ];
   }
 
-  public emitOperatorClicked(operator: any) {
-    this.operatorEmitter.emit(operator);
+  public emitOperatorClicked(data: FormulaTransferData) {
+    this.operatorEmitter.emit(data);
   }
 }

@@ -63,7 +63,7 @@
                   [attr.data-type]="'numeric'"
                   draggable="true"
                   (dragstart)="onDragStart($event, formula)"
-                  (click)="onFormulaItemClick($event)">
+                  (click)="onFormulaItemClick($event, formula)">
                     {{ formula.name }}
                 </div>
               </div>
@@ -76,7 +76,7 @@
                   [attr.data-type]="'numeric'"
                   draggable="true"
                   (dragstart)="onDragStart($event, concept)"
-                  (click)="onFormulaItemClick($event)">
+                  (click)="onFormulaItemClick($event, concept)">
                     {{ concept.nombre }}
                 </div>
               </div>
@@ -89,7 +89,7 @@
                   [attr.data-type]="'numeric'"
                   draggable="true"
                   (dragstart)="onDragStart($event, param)"
-                  (click)="onFormulaItemClick($event)">
+                  (click)="onFormulaItemClick($event, param)">
                     {{ param.name }}
                 </div>
               </div>
@@ -102,7 +102,7 @@
                   [attr.data-type]="'numeric'"
                   draggable="true"
                   (dragstart)="onDragStart($event, formula)"
-                  (click)="onFormulaItemClick($event)">
+                  (click)="onFormulaItemClick($event, formula)">
                     {{ formula.name }}
                 </div>
               </div>
@@ -115,7 +115,7 @@
                   [attr.data-type]="'numeric'"
                   draggable="true"
                   (dragstart)="onDragStart($event, formula)"
-                  (click)="onFormulaItemClick($event)">
+                  (click)="onFormulaItemClick($event, formula)">
                     {{ formula.name }}
                 </div>
               </div>

@@ -1,3 +1,4 @@
+import { FormulaTransferData } from './../../../core/models/formula-transfer-data.model';
 import { FormulaParam } from './../../../core/models/formula-param.model';
 import { Concepto } from './../../../concepto/concepto.model';
 import { ConceptoService } from './../../../concepto/concepto.service';
@@ -90,7 +91,7 @@ export class FormulaItemPickerComponent implements OnInit {
   }
 
   public onDragStart(event, formulaItem: any) {
-    const data = {
+    const data: FormulaTransferData = {
       nodeId: event.target.id,
       payload: formulaItem
     };
@@ -98,7 +99,12 @@ export class FormulaItemPickerComponent implements OnInit {
     event.dataTransfer.setData('text/plain', JSON.stringify(data));
   }
 
-  public onFormulaItemClick(event) {
-    this.formulaService.emitFormulaItemClick(event.target.getAttribute('id'));
+  public onFormulaItemClick(event, formulaItem: any) {
+    const data: FormulaTransferData = {
+      nodeId: event.target.id,
+      payload: formulaItem
+    };
+
+    this.formulaService.emitFormulaItemClick(data);
   }
 }

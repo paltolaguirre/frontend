@@ -1,3 +1,4 @@
+import { FormulaTransferData } from './../../../core/models/formula-transfer-data.model';
 import { OperatorsService } from './../../../core/services/operators/operators.service';
 import { Operator } from './../../../core/models/operator.model';
 import { FormulaTypes } from './../../../core/constants/formula-types.constants';
@@ -42,7 +43,7 @@ export class OperatorsToolbarComponent implements OnInit {
   }
 
   public onDragStart(event, operator: Operator) {
-    const data = {
+    const data: FormulaTransferData = {
       nodeId: event.target.id,
       payload: operator
     };
@@ -51,6 +52,11 @@ export class OperatorsToolbarComponent implements OnInit {
   }
 
   public onOperatorItemClick(event, operator) {
-    this.operatorsService.emitOperatorClicked({ node: event.target, operator });
+    const data: FormulaTransferData = {
+      nodeId: event.target.id,
+      payload: operator
+    };
+
+    this.operatorsService.emitOperatorClicked(data);
   }
 }

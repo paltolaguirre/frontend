@@ -18,18 +18,17 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.formulaService.formulaPickerItemEmitter$
+    this.formulaService.formulaPickerItemEmitter
     .pipe(
       takeUntil(componentDestroyed(this))
-    ).subscribe(id => {
-      console.log('Emitter payload: ', id);
-      this.createChildElement(id);
+    ).subscribe((payload: FormulaTransferData) => {
+      this.handleFormulaItemClicked(payload);
     });
 
     this.operatorsService.operatorEmitter
       .pipe(
         takeUntil(componentDestroyed(this))
-      ).subscribe(payload => {
+      ).subscribe((payload: FormulaTransferData) => {
         this.handleOperatorClicked(payload);
     });
   }
@@ -85,11 +84,15 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
     }
   }
 
-  public handleOperatorClicked(payload: any) {
-    const { node, operator } = payload;
+  public handleFormulaItemClicked(data: FormulaTransferData) {
+    this.createChildElement(data);
+  }
 
-    console.log(node);
-    console.log(operator);
+  public handleOperatorClicked(data: FormulaTransferData) {
+    const { nodeId, payload } = data;
+
+    console.log(nodeId);
+    console.log(payload);
   }
 
   public createFormula(nameFunction, tipoReturn, arrayParams, isOperator, isAsoc) {
