@@ -60,7 +60,7 @@
                   *ngFor="let formula of variables; index as index" 
                   class="pickable-badge no-selectable param numeric-param"
                   [id]="'variable-' + index + 1"
-                  [attr.data-type]="'numeric'"
+                  [attr.data-type]="getOperatorDefaultType()"
                   draggable="true"
                   (dragstart)="onDragStart($event, formula)"
                   (click)="onFormulaItemClick($event, formula)">
@@ -73,7 +73,7 @@
                   *ngFor="let concept of concepts; index as index" 
                   class="pickable-badge no-selectable param numeric-param"
                   [id]="'concept-' + index + 1"
-                  [attr.data-type]="'numeric'"
+                  [attr.data-type]="getOperatorDefaultType()"
                   draggable="true"
                   (dragstart)="onDragStart($event, concept)"
                   (click)="onFormulaItemClick($event, concept)">
@@ -86,7 +86,7 @@
                   *ngFor="let param of inputParams; index as index" 
                   class="pickable-badge no-selectable param numeric-param"
                   [id]="'param-' + index + 1"
-                  [attr.data-type]="'numeric'"
+                  [attr.data-type]="getOperatorDefaultType()"
                   draggable="true"
                   (dragstart)="onDragStart($event, param)"
                   (click)="onFormulaItemClick($event, param)">
@@ -99,7 +99,7 @@
                   *ngFor="let formula of standardFormulas; index as index" 
                   class="pickable-badge no-selectable param numeric-param"
                   [id]="'standard-formula-' + index + 1"
-                  [attr.data-type]="'numeric'"
+                  [attr.data-type]="getOperatorDefaultType()"
                   draggable="true"
                   (dragstart)="onDragStart($event, formula)"
                   (click)="onFormulaItemClick($event, formula)">
@@ -112,7 +112,7 @@
                   *ngFor="let formula of userFormulas; index as index" 
                   class="pickable-badge no-selectable param numeric-param"
                   [id]="'user-formula-' + index + 1"
-                  [attr.data-type]="'numeric'"
+                  [attr.data-type]="getOperatorDefaultType()"
                   draggable="true"
                   (dragstart)="onDragStart($event, formula)"
                   (click)="onFormulaItemClick($event, formula)">

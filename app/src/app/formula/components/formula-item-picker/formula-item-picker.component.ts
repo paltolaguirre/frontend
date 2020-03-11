@@ -1,3 +1,4 @@
+import { MathOperatorTypes } from './../../../core/enums/math-operator-types.enum';
 import { FormulaTransferData } from './../../../core/models/formula-transfer-data.model';
 import { FormulaParam } from './../../../core/models/formula-param.model';
 import { Concepto } from './../../../concepto/concepto.model';
@@ -106,5 +107,9 @@ export class FormulaItemPickerComponent implements OnInit {
     };
 
     this.formulaService.emitFormulaItemClick(data);
+  }
+
+  public getOperatorDefaultType() {
+    return MathOperatorTypes.Numeric;
   }
 }

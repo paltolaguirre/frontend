@@ -34,11 +34,22 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
       ).subscribe((payload: FormulaTransferData) => {
         this.handleOperatorClicked(payload);
     });
+
+    const main = document.getElementById("main") as any;
+
+    main.context = new this.context()
+    main.context.origen = null
+    main.context.id = 1;
   }
 
   ngOnDestroy() {}
 
-  getISOStringID() {
+  public context() {
+    var origen = null
+    var id = 1
+  }
+
+  getStringID() {
     this.idCount ++;
 
     return String(this.idCount);
@@ -55,7 +66,6 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
 
     event.cancelBubble = true;
   }
-
   public createChildElement(data: FormulaTransferData) {
     const domElement = document.getElementById(data.nodeId);
     const droppeableSpace = document.getElementById('main');
@@ -96,7 +106,7 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
 
     console.log(nodeId);
     console.log(payload);
-    const formulaDiv = this.createFormula(payload.symbol, payload.type, ['numeric', 'numeric'], true, false);
+    const formulaDiv = this.createFormula(payload.symbol, payload.type, [payload.type, payload.type], true, true);
 
     if (data) {
       this.addFormulaToMain(formulaDiv);
@@ -133,7 +143,7 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
 
   public createParam(functionName, type, isDefault, isAsociative) {
     const div = document.createElement('div');
-    div.id = this.getISOStringID();
+    div.id = this.getStringID();
 
     div.setAttribute('name', functionName);
     div.setAttribute('data-type', type);
@@ -169,19 +179,20 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
   }
 
   public addEventToElementParam(element) {
-    element.onmouseover = this.onParamMouseOver;
-    element.onmouseout = this.onParamMouseOut;
-    // element.onclick = this.paramOnclickCortarPegar;
-    element.ondragover = this.onDragOver;
-    element.ondragstart = this.dragstart;
-    element.ondrop = this.drop;
-    element.ondragleave = this.onParamMouseOut;
+    element.onmouseover = this.onParamMouseOver.bind(this);
+    element.onmouseout = this.onParamMouseOut.bind(this);
+    element.onclick = this.paramOnclickCortarPegar.bind(this);
+    element.ondragover = this.onDragOver.bind(this);
+    element.ondragstart = this.dragstart.bind(this);
+    element.ondrop = this.onChildDrop.bind(this);
+    element.ondragleave = this.onParamMouseOut.bind(this);
   }
 
   onDragOver(event) { // allowDrop
     event.preventDefault();
 
     this.onParamMouseOver(event);
+    // this.onParamMouseOver.call(this, event);
 
     event.cancelBubble = true;
   }
@@ -208,66 +219,59 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
     ev.cancelBubble = true;
   }
 
-  drop(ev) {
+  public onChildDrop(ev) {
     ev.preventDefault();
     const data = ev.dataTransfer.getData('text');
 
-    // console.log(document.getElementById(data))
     if (ev.target.parentNode == null) {
       return null;
     }
 
-    this.paramDragDropCortarPegar(document.getElementById(data), ev.target);
+    this.cutAndPasteDroppedParam(document.getElementById(data), ev.target);
 
     ev.cancelBubble = true;
   }
 
-  paramDragDropCortarPegar(origen, target) {
-
-    if (target == origen) {
-
-      return;
-
-    } else {
-
-      this.ponerYQuitar(origen, target);
-
+  public cutAndPasteDroppedParam(origin, target) {
+    if (target === origin) {
+      return null;
     }
+
+    this.ponerYQuitar(origin, target);
   }
 
 
-  // paramOnclickCortarPegar(e) {
+  paramOnclickCortarPegar(e) {
+    const main = document.getElementById('main') as any;
 
-  //   const main = document.getElementById('main') as any;
+    if (e.target === main.context.origen) {
 
-  //   if (e.target == main.context.origen) {
+      main.context.origen.classList.remove('pronounced');
+      main.context.origen = null;
 
-  //     main.context.origen.classList.remove('pronounced');
-  //     main.context.origen = null;
+    } else if (main.context.origen == null) {
 
-  //   } else if (main.context.origen == null) {
+      if (e.target.children.length === 0 && e.target.getAttribute('name') === '') {
 
-  //     if (e.target.children.length == 0 && e.target.getAttribute('name') == '') {
+        this.clickEditLiteral(e.target);
 
-  //       this.clickEditLiteral(e.target);
+      } else {
+        main.context.origen = e.target;
 
-  //     } else {
-  //       main.context.origen = e.target;
+        e.target.classList.add('pronounced');
+      }
 
-  //       e.target.classList.add('pronounced');
-  //     }
+    } else {
 
-  //   } else {
+      this.ponerYQuitar(main.context.origen, e.target);
 
-  //     this.ponerYQuitar(main.context.origen, e.target);
+      main.context.origen = null;
+    }
 
-  //     main.context.origen = null;
-  //   }
+    e.cancelBubble = true;
+  }
 
-  //   e.cancelBubble = true;
-  // }
-
-  clickEditLiteral(target) {
+  public clickEditLiteral(target) {
     const input = document.createElement('input') as any;
 
     if (target.classList.contains('numeric-param')) {
@@ -310,6 +314,9 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
   }
 
   public ponerYQuitar(origen, destino) {
+    console.log('origin type', origen.getAttribute('data-type'));
+    console.log('target type:', destino.getAttribute('data-type'))
+
     if (origen.getAttribute('data-type') !== destino.getAttribute('data-type')) {
       alert('tipos de de tados distintos');
       return;
@@ -318,7 +325,7 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
     origen.classList.remove('pronounced');
 
     const clonado = origen.cloneNode(true);
-    clonado.id = this.getID();
+    clonado.id = this.getStringID();
 
     this.addEventToElementParam(clonado);
 
@@ -374,7 +381,7 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
 
     if (origin.classList.contains('numeric-param')) {
       origin.innerHTML = '0.00';
-    } else if (origin.classList.contains('tipobool')) {
+    } else if (origin.classList.contains('boolean')) {
       origin.innerHTML = 'false';
     } else {
       origin.innerHTML = '';
