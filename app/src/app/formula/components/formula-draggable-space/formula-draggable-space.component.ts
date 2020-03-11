@@ -1,3 +1,4 @@
+import { MathOperatorTypes } from './../../../core/enums/math-operator-types.enum';
 import { FormulaTransferData } from './../../../core/models/formula-transfer-data.model';
 import { OperatorsService } from './../../../core/services/operators/operators.service';
 import { componentDestroyed } from '@w11k/ngx-componentdestroyed';
@@ -11,6 +12,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
   styleUrls: ['./formula-draggable-space.component.scss']
 })
 export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
+
+  public idCount: number = 0;
 
   constructor(
     private formulaService: FormulaService,
@@ -35,10 +38,10 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {}
 
-  getID() {
-    const main = document.getElementById('main') as any;
+  getISOStringID() {
+    this.idCount ++;
 
-    return (main.context.id++).toString();
+    return String(this.idCount);
   }
 
   public onDrop(event) {
@@ -93,18 +96,31 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
 
     console.log(nodeId);
     console.log(payload);
+    const formulaDiv = this.createFormula(payload.symbol, payload.type, ['numeric', 'numeric'], true, false);
+
+    if (data) {
+      this.addFormulaToMain(formulaDiv);
+    }
+
+    // return formulaDiv;
   }
 
-  public createFormula(nameFunction, tipoReturn, arrayParams, isOperator, isAsoc) {
-    const divFormula = this.createParam(nameFunction, tipoReturn, false, isAsoc);
+  public addFormulaToMain(divFormula) {
+    const divmain = document.getElementById('main');
+
+    divmain.appendChild(divFormula);
+  }
+
+  public createFormula(textContent: string, type: MathOperatorTypes, arrayParams, isOperator, isAsoc) {
+    const divFormula = this.createParam(textContent, type, false, isAsoc);
 
     if (!isOperator) {
-      divFormula.innerHTML = nameFunction;
+      divFormula.innerHTML = textContent;
     }
 
     for (let index = 0; index < arrayParams.length; index++) {
       if (isOperator && index === 1) {
-        divFormula.innerHTML = divFormula.innerHTML + ' ' + nameFunction + ' ';
+        divFormula.innerHTML = divFormula.innerHTML + ' ' + textContent + ' ';
       }
 
       const divParam = this.createParam('', arrayParams[index], true, false);
@@ -117,14 +133,16 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
 
   public createParam(functionName, type, isDefault, isAsociative) {
     const div = document.createElement('div');
-    div.id = this.getID();
+    div.id = this.getISOStringID();
 
     div.setAttribute('name', functionName);
-    div.setAttribute('tipodato', type);
-    div.className = 'param ' + type;
+    div.setAttribute('data-type', type);
+    div.className = 'param ' + this.getClassNameFromOperatorType(type);
+
+    console.log(div);
 
     if (isAsociative) {
-      div.className = div.className + ' asociativo';
+      div.className = div.className + ' asociative';
     }
 
     div.draggable = true;
@@ -132,14 +150,22 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
     this.addEventToElementParam(div);
 
     if (isDefault) {
-      if (type === 'numeric') {
+      if (type === MathOperatorTypes.Numeric) {
         div.innerHTML = '0.00';
-      } else if (type === 'bool') {
+      } else if (type === MathOperatorTypes.Boolean) {
         div.innerHTML = 'false';
       }
     }
 
     return div;
+  }
+
+  private getClassNameFromOperatorType(type: MathOperatorTypes) {
+    if (type === MathOperatorTypes.Boolean) {
+      return 'boolean';
+    }
+
+    return 'numeric-param';
   }
 
   public addEventToElementParam(element) {
@@ -284,8 +310,6 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
   }
 
   public ponerYQuitar(origen, destino) {
-
-
     if (origen.getAttribute('data-type') !== destino.getAttribute('data-type')) {
       alert('tipos de de tados distintos');
       return;
@@ -333,7 +357,7 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
     }
 
     if (
-      param.classList.contains('asociativo') &&
+      param.classList.contains('asociative') &&
       param.parentNode.hasChildNodes() &&
       param.getAttribute('name') === param.parentNode.getAttribute('name')
     ) {
@@ -356,7 +380,7 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
       origin.innerHTML = '';
     }
 
-    origin.classList.remove('pronounced', 'highligthed', 'white-parenthesis', 'asociativo');
+    origin.classList.remove('pronounced', 'highligthed', 'white-parenthesis', 'asociative');
     this.makeRecursiveWhiteParenthesis(origin);
   }
 
