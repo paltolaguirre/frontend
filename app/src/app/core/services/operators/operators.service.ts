@@ -1,12 +1,14 @@
 import { MathOperatorNames } from './../../enums/math-operator-names.enum';
 import { Operator } from './../../models/operator.model';
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { MathOperatorTypes } from '../../enums/math-operator-types.enum';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OperatorsService {
+
+  public operatorEmitter: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
@@ -41,5 +43,9 @@ export class OperatorsService {
         mustRemoveFromSource: false
       }
     ];
+  }
+
+  public emitOperatorClicked(operator: any) {
+    this.operatorEmitter.emit(operator);
   }
 }

@@ -1,3 +1,4 @@
+import { OperatorsService } from './../../../core/services/operators/operators.service';
 import { componentDestroyed } from '@w11k/ngx-componentdestroyed';
 import { takeUntil } from 'rxjs/operators';
 import { FormulaService } from './../../../core/services/formula/formula.service';
@@ -10,7 +11,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 })
 export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
 
-  constructor(private formulaService: FormulaService) { }
+  constructor(
+    private formulaService: FormulaService,
+    private operatorsService: OperatorsService
+  ) { }
 
   ngOnInit() {
     this.formulaService.formulaPickerItemEmitter$
@@ -19,6 +23,13 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
     ).subscribe(id => {
       console.log('Emitter payload: ', id);
       this.createChildElement(id);
+    });
+
+    this.operatorsService.operatorEmitter
+      .pipe(
+        takeUntil(componentDestroyed(this))
+      ).subscribe(payload => {
+        this.handleOperatorClicked(payload);
     });
   }
 
@@ -74,6 +85,60 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
     if (nodePayload.mustRemoveFromSource) {
       this.removeOrigin(origin);
     }
+  }
+
+  public handleOperatorClicked(payload: any) {
+    const { node, operator } = payload;
+
+    console.log(node);
+    console.log(operator);
+  }
+
+  public createFormula(nameFunction, tipoReturn, arrayParams, isOperator, isAsoc) {
+    const divFormula = this.createParam(nameFunction, tipoReturn, false, isAsoc);
+
+    if (!isOperator) {
+      divFormula.innerHTML = nameFunction;
+    }
+
+    for (let index = 0; index < arrayParams.length; index++) {
+      if (isOperator && index === 1) {
+        divFormula.innerHTML = divFormula.innerHTML + ' ' + nameFunction + ' ';
+      }
+
+      const divParam = this.createParam('', arrayParams[index], true, false);
+
+      divFormula.appendChild(divParam);
+    }
+
+    return divFormula;
+  }
+
+  public createParam(functionName, type, isDefault, isAsociative) {
+    const div = document.createElement('div');
+    div.id = this.getID();
+
+    div.setAttribute('name', functionName);
+    div.setAttribute('tipodato', type);
+    div.className = 'param ' + type;
+
+    if (isAsociative) {
+      div.className = div.className + ' asociativo';
+    }
+
+    div.draggable = true;
+
+    this.addEventToElementParam(div);
+
+    if (isDefault) {
+      if (type === 'numeric') {
+        div.innerHTML = '0.00';
+      } else if (type === 'bool') {
+        div.innerHTML = 'false';
+      }
+    }
+
+    return div;
   }
 
   public addEventToElementParam(element) {

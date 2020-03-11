@@ -45,8 +45,9 @@ export class OperatorsToolbarComponent implements OnInit {
     event.dataTransfer.setData('text/plain', event.target.id);
   }
 
-  public onOperatorItemClick(event) {
+  public onOperatorItemClick(event, operator) {
     // this.formulaService.emitFormulaItemClick(event.target.getAttribute('id'));
-    console.log(event.target.getAttribute('id'));
+    // console.log(event.target.getAttribute('id'));
+    this.operatorsService.emitOperatorClicked({ node: event.target, operator });
   }
 }
