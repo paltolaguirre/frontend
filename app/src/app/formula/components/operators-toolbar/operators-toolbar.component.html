@@ -6,9 +6,8 @@
           *ngFor="let operator of basicMathOperators; index as index"
           class="math-operator-container no-selectable param numeric-param"
           [id]="'math-basic-operator-' + operator.id"
-          [attr.data-payload]="operator | json"
           [attr.data-type]="operator.type"
-          (dragstart)="onDragStart($event)"
+          (dragstart)="onDragStart($event, operator)"
           (click)="onOperatorItemClick($event, operator)"
           draggable="true">
           <span class="math-operator no-selectable">{{ operator.symbol }}</span>

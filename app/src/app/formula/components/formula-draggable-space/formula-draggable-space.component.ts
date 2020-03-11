@@ -1,3 +1,4 @@
+import { FormulaTransferData } from './../../../core/models/formula-transfer-data.model';
 import { OperatorsService } from './../../../core/services/operators/operators.service';
 import { componentDestroyed } from '@w11k/ngx-componentdestroyed';
 import { takeUntil } from 'rxjs/operators';
@@ -44,7 +45,7 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
   public onDrop(event) {
     event.preventDefault();
 
-    const data = event.dataTransfer.getData('text');
+    const data: FormulaTransferData = JSON.parse(event.dataTransfer.getData('text'));
 
     this.createChildElement(data);
 
@@ -53,17 +54,16 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
     event.cancelBubble = true;
   }
 
-  public createChildElement(id: string) {
-    const domElement = document.getElementById(id);
+  public createChildElement(data: FormulaTransferData) {
+    const domElement = document.getElementById(data.nodeId);
     const droppeableSpace = document.getElementById('main');
 
-    const attachedData = JSON.parse(domElement.getAttribute('data-payload'));
-    console.log(attachedData);
+    console.log('payload:', data.payload);
 
-    this.appendContent(domElement, droppeableSpace);
+    this.appendContent(domElement, droppeableSpace, data);
   }
 
-  public appendContent(origin: HTMLElement, to: HTMLElement) {
+  public appendContent(origin: HTMLElement, to: HTMLElement, data: FormulaTransferData) {
     if (origin && origin.classList) {
       origin.classList.remove('pronounced');
     }
@@ -76,13 +76,11 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
 
     this.makeRecursiveWhiteParenthesis(clonedNode);
 
-    this.handleOriginNodeDeletion(clonedNode);
+    this.handleOriginNodeDeletion(data);
   }
 
-  public handleOriginNodeDeletion(node: HTMLElement) {
-    const nodePayload = JSON.parse(node.getAttribute('data-payload'));
-
-    if (nodePayload.mustRemoveFromSource) {
+  public handleOriginNodeDeletion(data: FormulaTransferData) {
+    if (data.payload.mustRemoveFromSource) {
       this.removeOrigin(origin);
     }
   }
