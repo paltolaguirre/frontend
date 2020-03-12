@@ -135,8 +135,6 @@ export class OperatorsService {
       };
     });
 
-    console.log('Operators: ', operators);
-
     return operators;
   }
 
