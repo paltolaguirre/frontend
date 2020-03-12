@@ -23,6 +23,8 @@
           [id]="'logical-operator-' + operator.id"
           [attr.data-type]="operator.type"
           [matTooltip]="operator.tooltip"
+          (dragstart)="onDragStart($event, operator)"
+          (click)="onOperatorItemClick($event, operator)"
           draggable="true">
           <span class="logical-operator no-selectable">{{ operator.symbol }}</span>
         </div>

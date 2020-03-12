@@ -4,6 +4,7 @@ import { MathOperatorNames } from './../../enums/math-operator-names.enum';
 import { Operator } from './../../models/operator.model';
 import { Injectable, EventEmitter } from '@angular/core';
 import { MathOperatorTypes } from '../../enums/math-operator-types.enum';
+import { OperatorCategory } from '../../enums/operator-category.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -21,28 +22,32 @@ export class OperatorsService {
         operationName: MathOperatorNames.Sum,
         type: MathOperatorTypes.Numeric,
         symbol: '+',
-        mustRemoveFromSource: false
+        mustRemoveFromSource: false,
+        category: OperatorCategory.Math
       },
       {
         id: 2,
         operationName: MathOperatorNames.Subtraction,
         type: MathOperatorTypes.Numeric,
         symbol: '-',
-        mustRemoveFromSource: false
+        mustRemoveFromSource: false,
+        category: OperatorCategory.Math
       },
       {
         id: 3,
         operationName: MathOperatorNames.Division,
         type: MathOperatorTypes.Numeric,
         symbol: '/',
-        mustRemoveFromSource: false
+        mustRemoveFromSource: false,
+        category: OperatorCategory.Math
       },
       {
         id: 4,
         operationName: MathOperatorNames.Multiplication,
         type: MathOperatorTypes.Numeric,
         symbol: '*',
-        mustRemoveFromSource: false
+        mustRemoveFromSource: false,
+        category: OperatorCategory.Math
       }
     ];
   }
@@ -55,7 +60,8 @@ export class OperatorsService {
         type: MathOperatorTypes.Numeric,
         symbol: 'SI',
         mustRemoveFromSource: false,
-        tooltip: 'Para fórmulas Condicionales. El cálculo depende del cumplimineto de una determinada condición.'
+        tooltip: 'Para fórmulas Condicionales. El cálculo depende del cumplimineto de una determinada condición.',
+        category: OperatorCategory.Logical
       },
       {
         id: 2,
@@ -63,7 +69,8 @@ export class OperatorsService {
         type: MathOperatorTypes.Boolean,
         symbol: '>',
         mustRemoveFromSource: false,
-        tooltip: 'Condición: “Mayor que”'
+        tooltip: 'Condición: “Mayor que”',
+        category: OperatorCategory.Logical
       },
       {
         id: 3,
@@ -71,7 +78,8 @@ export class OperatorsService {
         type: MathOperatorTypes.Boolean,
         symbol: '<',
         mustRemoveFromSource: false,
-        tooltip: 'Condición: “Menor que”'
+        tooltip: 'Condición: “Menor que”',
+        category: OperatorCategory.Logical
       },
       {
         id: 4,
@@ -79,7 +87,8 @@ export class OperatorsService {
         type: MathOperatorTypes.Boolean,
         symbol: '=',
         mustRemoveFromSource: false,
-        tooltip: 'Condición: “Igual que”'
+        tooltip: 'Condición: “Igual que”',
+        category: OperatorCategory.Logical
       },
       {
         id: 5,
@@ -87,7 +96,8 @@ export class OperatorsService {
         type: MathOperatorTypes.Boolean,
         symbol: '<>',
         mustRemoveFromSource: false,
-        tooltip: 'Condición: “Diferente que”'
+        tooltip: 'Condición: “Diferente que”',
+        category: OperatorCategory.Logical
       },
       {
         id: 6,
@@ -95,7 +105,8 @@ export class OperatorsService {
         type: MathOperatorTypes.Boolean,
         symbol: 'Y',
         mustRemoveFromSource: false,
-        tooltip: 'Conjunción de más de una condición  “AND”'
+        tooltip: 'Conjunción de más de una condición  “AND”',
+        category: OperatorCategory.Logical
       },
       {
         id: 7,
@@ -103,7 +114,8 @@ export class OperatorsService {
         type: MathOperatorTypes.Boolean,
         symbol: 'ó',
         mustRemoveFromSource: false,
-        tooltip: 'Disyunción de más de una condición “OR”'
+        tooltip: 'Disyunción de más de una condición “OR”',
+        category: OperatorCategory.Logical
       }
     ];
   }
