@@ -1,3 +1,5 @@
+import { LogicalOperatorNames } from './../../../core/enums/logical-operator-names.enum';
+import { OperatorCategory } from './../../../core/enums/operator-category.enum';
 import { MathOperatorTypes } from './../../../core/enums/math-operator-types.enum';
 import { FormulaTransferData } from './../../../core/models/formula-transfer-data.model';
 import { OperatorsService } from './../../../core/services/operators/operators.service';
@@ -31,8 +33,14 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
     this.operatorsService.operatorEmitter
       .pipe(
         takeUntil(componentDestroyed(this))
-      ).subscribe((payload: FormulaTransferData) => {
-        this.handleOperatorClicked(payload);
+      ).subscribe((data: FormulaTransferData) => {
+        if (data.payload.category === OperatorCategory.Logical) {
+          return this.handleLogicalOperatorClick(data);
+        }
+
+        console.log('is math operator');
+
+        return this.handleOperatorClicked(data);
     });
 
     const main = document.getElementById('main') as any;
@@ -102,11 +110,41 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
   }
 
   public handleOperatorClicked(data: FormulaTransferData) {
-    const { nodeId, payload } = data;
+    const { payload } = data;
 
-    console.log(nodeId);
-    console.log(payload);
     const formulaDiv = this.createFormula(payload.symbol, payload.type, [payload.type, payload.type], true, true);
+
+    if (data) {
+      this.renderFormulaInMainContainer(formulaDiv);
+    }
+  }
+
+  public handleLogicalOperatorClick(data: FormulaTransferData) {
+    const { payload } = data;
+
+    if (data.payload.operationName !== LogicalOperatorNames.If) {
+      return this.handleOperatorClicked(data);
+    }
+
+    const formulaDiv = this.createFormula(
+      payload.symbol,
+      payload.type,
+      [MathOperatorTypes.Boolean , payload.type, payload.type],
+      false,
+      false
+    );
+
+    const children = formulaDiv.children;
+    const aux = document.createElement('div');
+    const br1 = document.createElement('br');
+    const br2 = document.createElement('br');
+
+    aux.appendChild(formulaDiv);
+    br1.innerHTML = br1.innerHTML + 'then';
+    br2.innerHTML = br1.innerHTML + 'else ';
+
+    formulaDiv.insertBefore(br1, children[1]);
+    formulaDiv.insertBefore(br2, children[3]);
 
     if (data) {
       this.renderFormulaInMainContainer(formulaDiv);
