@@ -17,26 +17,11 @@
     <mat-divider [vertical]="true"></mat-divider>
     <div class="column">
       <div class="logical-operators-general-container">
-        <div class="logical-operator-container" matTooltip="Para fórmulas Condicionales. El cálculo depende del cumplimineto de una determinada condición.">
-          <span class="logical-operator no-selectable">SI</span>
-        </div>
-        <div class="logical-operator-container" matTooltip="Condición: “Mayor que”">
-          <span class="logical-operator no-selectable">></span>
-        </div>
-        <div class="logical-operator-container" matTooltip="Condición: “Menor que”">
-          <span class="logical-operator no-selectable"><</span>
-        </div>
-        <div class="logical-operator-container" matTooltip="Condición: “Igual que”">
-          <span class="logical-operator no-selectable">=</span>
-        </div>
-        <div class="logical-operator-container" matTooltip="Condición: “Diferente que”">
-          <span class="logical-operator no-selectable"><></span>
-        </div>
-        <div class="logical-operator-container" matTooltip="Conjunción de más de una condición  “AND”">
-          <span class="logical-operator no-selectable">Y</span>
-        </div>
-        <div class="logical-operator-container" matTooltip="Disyunción de más de una condición “OR”">
-          <span class="logical-operator no-selectable">ó</span>
+        <div 
+          *ngFor="let operator of logicalOperators" 
+          class="logical-operator-container"
+          [matTooltip]="operator.tooltip">
+          <span class="logical-operator no-selectable">{{ operator.symbol }}</span>
         </div>
       </div>
     </div>

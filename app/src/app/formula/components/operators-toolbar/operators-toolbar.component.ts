@@ -17,6 +17,7 @@ export class OperatorsToolbarComponent implements OnInit {
   public operators: Formula[];
   public selectedOperator: Formula = null;
   public basicMathOperators: Operator[];
+  public logicalOperators: Operator[];
 
   constructor(
     private formulaService: FormulaService,
@@ -26,6 +27,7 @@ export class OperatorsToolbarComponent implements OnInit {
   ngOnInit() {
     this.fetchFormulas();
     this.basicMathOperators = this.operatorsService.getBasicMathOperators();
+    this.logicalOperators = this.operatorsService.getLogicalOperators();
   }
 
   public fetchFormulas() {
