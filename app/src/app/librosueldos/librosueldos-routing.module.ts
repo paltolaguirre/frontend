@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from 'src/app/auth/auth.guard';
 import { LibrosueldosListComponent } from './librosueldos-list/librosueldos-list.component';
 import { LibrosueldosListPrintComponent } from './librosueldos-list/librosueldos-list-print/librosueldos-list-print.component';
+import { LibrosueldosEncabezadoPrintComponent } from './librosueldos-list/librosueldos-encabezado-print/librosueldos-encabezado-print.component';
 
 const routes: Routes = [
   {
@@ -13,6 +14,10 @@ const routes: Routes = [
   {
     path: 'imprimir',
     component: LibrosueldosListPrintComponent
+  },
+  {
+    path: 'imprimir/encabezado',
+    component: LibrosueldosEncabezadoPrintComponent
   },
 ];
 

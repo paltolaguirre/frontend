@@ -9,6 +9,7 @@ import { NotificationService } from 'src/app/handler-error/notification.service'
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { formatDate } from "@angular/common";
 import { PrintService } from 'src/app/print/print.service';
+import { DialogEncabezado } from './encabezado-dialog/encabezado-dialog.component';
 
 @Component({
   selector: 'app-librosueldos-list',
@@ -100,5 +101,15 @@ export class LibrosueldosListComponent implements OnInit, AfterViewInit {
 
   onClickPreview(): void {
     this.gotoPreview();
+  }
+
+  onClickEncabezado(): void {
+    const dialogRef = this.dialog.open(DialogEncabezado, {
+       
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+   
+    });
   }
 }

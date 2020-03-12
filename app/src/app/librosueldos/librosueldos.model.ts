@@ -5,3 +5,11 @@ export interface Librosueldos {
     Importe: number;
     activo: number;
 }
+
+export interface LibrosueldosEncabezado {
+    actividadempresa: string;
+    cuitempresa: string;
+    descripcion: string;
+    domicilioempresa: string;
+    nombreempresa: string;
+}

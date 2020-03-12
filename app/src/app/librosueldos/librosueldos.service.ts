@@ -27,4 +27,12 @@ export class LibrosueldosService {
     return listaItems;
   }
  
+  public async getLibrosueldosEncabezado(): Promise<any> {
+    const requestUrl =
+      `${this.href}/impresion-encabezado`;
+
+    const encabezado = await this.http.get<any>(requestUrl).toPromise();
+
+    return encabezado;
+  }
 }
