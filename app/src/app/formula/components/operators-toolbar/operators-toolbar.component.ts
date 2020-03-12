@@ -14,7 +14,7 @@ import { Component, OnInit } from '@angular/core';
 export class OperatorsToolbarComponent implements OnInit {
 
   public formulas: Formula[];
-  public operators: Formula[];
+  public moreOperators: Operator[];
   public selectedOperator: Formula = null;
   public basicMathOperators: Operator[];
   public logicalOperators: Operator[];
@@ -34,7 +34,15 @@ export class OperatorsToolbarComponent implements OnInit {
     this.formulaService.formulasStore$.subscribe((formulas: Formula[]) => {
       this.formulas = formulas;
 
-      this.operators = this.formulaService.extractFormulasByType(this.formulas, FormulaTypes.OPERATOR);
+      const formulaOperators: Formula[] = this.formulaService.extractFormulasByType(
+        this.formulas,
+        FormulaTypes.OPERATOR
+      );
+
+      this.moreOperators = [
+        ...this.operatorsService.getMoreStaticOperators(),
+        ...this.operatorsService.createMathOperatorsFromFormulas(formulaOperators)
+      ];
     });
   }
 

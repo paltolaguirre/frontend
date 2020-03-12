@@ -50,14 +50,16 @@
       <div class="more-operators-general-container">
         <mat-form-field class="more-operators-field custom-white-field">
           <mat-label>Mas operadores +</mat-label>
-          <mat-select [(ngModel)]="selectedOperator" (ngModelChange)="onOperatorSelected()"
+          <mat-select 
+            [(ngModel)]="selectedOperator" 
+            (ngModelChange)="onOperatorSelected()"
             class="more-operators-badge no-selectable">
-            <mat-option class="font-medium" value="'<='" matTooltip="Condición: “Menor Igual que”"><=</mat-option>
-            <mat-option class="font-medium" value="'>='" matTooltip="Condición: “Mayor Igual que”">>=</mat-option>
-            <mat-option class="font-medium" value="'%'" matTooltip="Porcentaje">%</mat-option>
-            <mat-option class="font-medium" value="'^'" matTooltip="Potencia">^</mat-option>
-            <mat-option class="font-medium" *ngFor="let operator of operators" [value]="operator">
-              {{ operator.name }}
+            <mat-option 
+              class="font-medium" 
+              *ngFor="let operator of moreOperators" 
+              [value]="operator"
+              [matTooltip]="operator.tooltip">
+              {{ operator.symbol }}
             </mat-option>
           </mat-select>
         </mat-form-field>
