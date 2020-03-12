@@ -20,7 +20,10 @@
         <div 
           *ngFor="let operator of logicalOperators" 
           class="logical-operator-container"
-          [matTooltip]="operator.tooltip">
+          [id]="'logical-operator-' + operator.id"
+          [attr.data-type]="operator.type"
+          [matTooltip]="operator.tooltip"
+          draggable="true">
           <span class="logical-operator no-selectable">{{ operator.symbol }}</span>
         </div>
       </div>
