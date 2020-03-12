@@ -2,5 +2,8 @@ export enum MathOperatorNames {
   Sum,
   Subtraction,
   Multiplication,
-  Division
+  Division,
+  Percentage,
+  Pow,
+  Custom
 }

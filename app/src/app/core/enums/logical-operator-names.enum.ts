@@ -1,10 +1,12 @@
 export enum LogicalOperatorNames {
   If,
   GreaterThan,
-  SmallerThan,
+  LessThan,
   Equal,
   Diferent,
   And,
-  Or
+  Or,
+  LessOrEqualThan,
+  GreaterOrEqualThan
 }
 
