@@ -1,3 +1,4 @@
+import { Formula } from './../../models/formula.model';
 import { LogicalOperatorNames } from './../../enums/logical-operator-names.enum';
 import { FormulaTransferData } from './../../models/formula-transfer-data.model';
 import { MathOperatorNames } from './../../enums/math-operator-names.enum';
@@ -74,7 +75,7 @@ export class OperatorsService {
       },
       {
         id: 3,
-        operationName: LogicalOperatorNames.SmallerThan,
+        operationName: LogicalOperatorNames.LessThan,
         type: MathOperatorTypes.Boolean,
         symbol: '<',
         mustRemoveFromSource: false,
@@ -116,6 +117,66 @@ export class OperatorsService {
         mustRemoveFromSource: false,
         tooltip: 'Disyunción de más de una condición “OR”',
         category: OperatorCategory.Logical
+      }
+    ];
+  }
+
+  public createMathOperatorsFromFormulas(formulas: Formula[]): Operator[] {
+    let idCount: number = 0;
+
+    const operators: Operator[] = formulas.map((formula) => {
+      return {
+        id: ++idCount,
+        operationName: MathOperatorNames.Custom,
+        type: MathOperatorTypes.Numeric,
+        symbol: formula.name,
+        mustRemoveFromSource: false,
+        category: OperatorCategory.Math
+      };
+    });
+
+    console.log('Operators: ', operators);
+
+    return operators;
+  }
+
+  public getMoreStaticOperators(): Operator[] {
+    return [
+      {
+        id: 1,
+        operationName: LogicalOperatorNames.LessOrEqualThan,
+        type: MathOperatorTypes.Boolean,
+        symbol: '<=',
+        mustRemoveFromSource: false,
+        tooltip: 'Condición: “Menor Igual que”',
+        category: OperatorCategory.Logical
+      },
+      {
+        id: 2,
+        operationName: LogicalOperatorNames.GreaterOrEqualThan,
+        type: MathOperatorTypes.Boolean,
+        symbol: '>=',
+        mustRemoveFromSource: false,
+        tooltip: 'Condición: “Mayor Igual que”',
+        category: OperatorCategory.Logical
+      },
+      {
+        id: 3,
+        operationName: MathOperatorNames.Percentage,
+        type: MathOperatorTypes.Boolean,
+        symbol: '%',
+        mustRemoveFromSource: false,
+        tooltip: 'Porcentaje”',
+        category: OperatorCategory.Math
+      },
+      {
+        id: 4,
+        operationName: MathOperatorNames.Pow,
+        type: MathOperatorTypes.Numeric,
+        symbol: '^',
+        mustRemoveFromSource: false,
+        tooltip: 'Potencia',
+        category: OperatorCategory.Math
       }
     ];
   }
