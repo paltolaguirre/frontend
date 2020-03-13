@@ -14,7 +14,7 @@ import { Component, OnInit } from '@angular/core';
 export class OperatorsToolbarComponent implements OnInit {
 
   public formulas: Formula[];
-  public moreOperators: Operator[];
+  public moreOperators: any;
   public selectedOperator: Formula = null;
   public basicMathOperators: Operator[];
   public logicalOperators: Operator[];
@@ -41,20 +41,28 @@ export class OperatorsToolbarComponent implements OnInit {
 
       this.moreOperators = [
         ...this.operatorsService.getMoreStaticOperators(),
-        ...this.operatorsService.createMathOperatorsFromFormulas(formulaOperators)
+        ...formulaOperators
       ];
     });
   }
 
   public onOperatorSelected(event) {
     const data: FormulaTransferData = {
-      nodeId: `more-operators-${event.id}`,
+      nodeId: `more-operators-${event.id || event.valueid}`,
       payload: event
     };
 
-    this.operatorsService.emitOperatorClicked(data);
+    if (this.isFormulaOperator(event)) {
+      this.formulaService.emitFormulaItemClick(data);
+    } else {
+      this.operatorsService.emitOperatorClicked(data);
+    }
 
     setTimeout(() => { this.selectedOperator = null; });
+  }
+
+  public isFormulaOperator(operator: Operator | Formula): boolean {
+    return operator.hasOwnProperty('valueid');
   }
 
   public onDragStart(event, operator: Operator) {

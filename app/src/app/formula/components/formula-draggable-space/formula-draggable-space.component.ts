@@ -38,8 +38,6 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
           return this.handleLogicalOperatorClick(data);
         }
 
-        console.log('is math operator');
-
         return this.handleOperatorClicked(data);
     });
 
@@ -77,8 +75,6 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
   public createChildElement(data: FormulaTransferData) {
     const domElement = document.getElementById(data.nodeId);
     const droppeableSpace = document.getElementById('main');
-
-    console.log('payload:', data.payload);
 
     this.appendContent(domElement, droppeableSpace, data);
   }

@@ -56,12 +56,16 @@
             class="more-operators-badge no-selectable">
             <mat-option
               *ngFor="let operator of moreOperators"
-              class="font-medium" 
-              [id]="'more-operators-' + operator.id"
+              class="font-medium"
+              [ngClass]="{
+                'param numeric-param': isFormulaOperator(operator)
+              }"
+              [id]="'more-operators-' + (operator.id ? operator.id : operator.valueid)"
               [attr.data-type]="operator.type"
               [value]="operator"
-              [matTooltip]="operator.tooltip">
-              {{ operator.symbol }}
+              [matTooltip]="operator.tooltip"
+              draggable="true">
+              {{ operator.symbol || operator.name }}
             </mat-option>
           </mat-select>
         </mat-form-field>
