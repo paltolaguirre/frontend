@@ -61,7 +61,7 @@
                 'param numeric-param': isFormulaOperator(operator)
               }"
               [id]="'more-operators-' + (operator.id ? operator.id : operator.valueid)"
-              [attr.data-type]="operator.type"
+              [attr.data-type]="(!isFormulaOperator(operator) ? operator.type : getOperatorDefaultType())"
               [value]="operator"
               [matTooltip]="operator.tooltip"
               draggable="true">

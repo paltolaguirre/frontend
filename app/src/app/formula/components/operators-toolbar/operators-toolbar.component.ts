@@ -1,3 +1,4 @@
+import { MathOperatorTypes } from './../../../core/enums/math-operator-types.enum';
 import { FormulaTransferData } from './../../../core/models/formula-transfer-data.model';
 import { OperatorsService } from './../../../core/services/operators/operators.service';
 import { Operator } from './../../../core/models/operator.model';
@@ -81,5 +82,9 @@ export class OperatorsToolbarComponent implements OnInit {
     };
 
     this.operatorsService.emitOperatorClicked(data);
+  }
+
+  public getOperatorDefaultType() {
+    return MathOperatorTypes.Numeric;
   }
 }
