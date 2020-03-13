@@ -1,5 +1,5 @@
 .draggable-space-container {
-  div.param {
+  .param {
     margin: 5px;
     padding: 10px;
     width: fit-content;
@@ -50,7 +50,7 @@
     cursor: pointer;
   }
   .no-highlight{
-    background-color:none;
+    background-color: transparent !important;
     cursor: auto;
   }
   
