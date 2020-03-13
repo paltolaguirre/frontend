@@ -52,11 +52,13 @@
           <mat-label>Mas operadores +</mat-label>
           <mat-select 
             [(ngModel)]="selectedOperator" 
-            (ngModelChange)="onOperatorSelected()"
+            (ngModelChange)="onOperatorSelected($event)"
             class="more-operators-badge no-selectable">
-            <mat-option 
+            <mat-option
+              *ngFor="let operator of moreOperators"
               class="font-medium" 
-              *ngFor="let operator of moreOperators" 
+              [id]="'more-operators-' + operator.id"
+              [attr.data-type]="operator.type"
               [value]="operator"
               [matTooltip]="operator.tooltip">
               {{ operator.symbol }}

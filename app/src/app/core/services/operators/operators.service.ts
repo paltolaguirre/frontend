@@ -161,7 +161,7 @@ export class OperatorsService {
       {
         id: 3,
         operationName: MathOperatorNames.Percentage,
-        type: MathOperatorTypes.Boolean,
+        type: MathOperatorTypes.Numeric,
         symbol: '%',
         mustRemoveFromSource: false,
         tooltip: 'Porcentaje”',

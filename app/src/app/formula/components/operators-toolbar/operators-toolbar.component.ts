@@ -46,9 +46,14 @@ export class OperatorsToolbarComponent implements OnInit {
     });
   }
 
-  public onOperatorSelected() {
-    // TODO: Create the operator in the draggable space and reset the select.
-    console.log(this.selectedOperator);
+  public onOperatorSelected(event) {
+    const data: FormulaTransferData = {
+      nodeId: `more-operators-${event.id}`,
+      payload: event
+    };
+
+    this.operatorsService.emitOperatorClicked(data);
+
     setTimeout(() => { this.selectedOperator = null; });
   }
 
