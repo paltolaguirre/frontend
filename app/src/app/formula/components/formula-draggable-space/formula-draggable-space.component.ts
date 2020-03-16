@@ -108,7 +108,7 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
   public handleOperatorClicked(data: FormulaTransferData) {
     const { payload } = data;
 
-    const formulaDiv = this.createFormula(payload.symbol, payload.type, [payload.type, payload.type], true, true);
+    const formulaDiv = this.createFormula(payload.symbol, payload.type, [0, 0], true, true);
 
     if (data) {
       this.renderFormulaInMainContainer(formulaDiv);
@@ -171,6 +171,8 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
         divFormula.innerHTML = divFormula.innerHTML + ' ' + textContent + ' ';
       }
 
+      console.log('arrayParams', arrayParams);
+      console.log('arrayParams[index]', arrayParams[index]);
       const divParam = this.createParam('', arrayParams[index], true, false);
 
       divFormula.appendChild(divParam);
@@ -351,7 +353,7 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
 
   public putChildAndRemoveFromOrigin(origin: HTMLElement, target: HTMLElement) {
     if (origin.getAttribute('data-type') !== target.getAttribute('data-type')) {
-      alert('tipos de de tados distintos');
+      alert('tipos de datos distintos');
       return;
     }
 
