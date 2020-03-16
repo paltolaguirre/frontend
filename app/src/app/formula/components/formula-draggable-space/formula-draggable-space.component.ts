@@ -108,7 +108,13 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
   public handleOperatorClicked(data: FormulaTransferData) {
     const { payload } = data;
 
-    const formulaDiv = this.createFormula(payload.symbol, payload.type, [0, 0], true, true);
+    const formulaDiv = this.createFormula(
+      payload.symbol,
+      payload.type,
+      [MathOperatorTypes.Numeric, MathOperatorTypes.Numeric],
+      true,
+      true
+    );
 
     if (data) {
       this.renderFormulaInMainContainer(formulaDiv);
@@ -117,6 +123,13 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
 
   public handleLogicalOperatorClick(data: FormulaTransferData) {
     const { payload } = data;
+
+    if (
+      data.payload.operationName === LogicalOperatorNames.And ||
+      data.payload.operationName === LogicalOperatorNames.Or
+    ) {
+      return this.createFormulaWithChildren(data, MathOperatorTypes.Boolean, MathOperatorTypes.Boolean);
+    }
 
     if (data.payload.operationName !== LogicalOperatorNames.If) {
       return this.handleOperatorClicked(data);
@@ -145,6 +158,24 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
     if (data) {
       this.renderFormulaInMainContainer(formulaDiv);
     }
+  }
+
+  public createFormulaWithChildren(
+    data: FormulaTransferData,
+    parentType: MathOperatorTypes,
+    childrenTypes: MathOperatorTypes
+  ) {
+    const { payload } = data;
+
+    const formulaDiv = this.createFormula(
+      payload.symbol,
+      parentType,
+      [childrenTypes, childrenTypes],
+      true,
+      true
+    );
+
+    this.renderFormulaInMainContainer(formulaDiv);
   }
 
   public renderFormulaInMainContainer(divFormula) {
