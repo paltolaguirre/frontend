@@ -66,12 +66,21 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
 
     const data: FormulaTransferData = JSON.parse(event.dataTransfer.getData('text'));
 
+    if (data.payload.category === OperatorCategory.Logical) {
+      return this.handleLogicalOperatorClick(data);
+    }
+
+    if (data.payload.category === OperatorCategory.Math) {
+      return this.handleOperatorClicked(data);
+    }
+
     this.createChildElement(data);
 
     this.onParamMouseOut(event);
 
     event.cancelBubble = true;
   }
+
   public createChildElement(data: FormulaTransferData) {
     const domElement = document.getElementById(data.nodeId);
     const droppeableSpace = document.getElementById('main');
@@ -202,8 +211,6 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
         divFormula.innerHTML = divFormula.innerHTML + ' ' + textContent + ' ';
       }
 
-      console.log('arrayParams', arrayParams);
-      console.log('arrayParams[index]', arrayParams[index]);
       const divParam = this.createParam('', arrayParams[index], true, false);
 
       divFormula.appendChild(divParam);
