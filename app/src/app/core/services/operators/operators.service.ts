@@ -179,6 +179,18 @@ export class OperatorsService {
     ];
   }
 
+  public getXOROperator(): Operator {
+    return {
+      id: 1,
+      operationName: LogicalOperatorNames.Xor,
+      type: MathOperatorTypes.Boolean,
+      symbol: 'Ó exclusivo',
+      mustRemoveFromSource: false,
+      tooltip: 'Disyunción exclusiva de más de una condición “XOR”',
+      category: OperatorCategory.Logical
+    };
+  }
+
   public emitOperatorClicked(data: FormulaTransferData) {
     this.operatorEmitter.emit(data);
   }

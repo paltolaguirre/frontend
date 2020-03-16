@@ -35,8 +35,14 @@
 
     <div class="column">
       <div class="other-badges-general-container">
-        <div class="other-badge-container" matTooltip="Disyunción exclusiva de más de una condición “XOR”">
-          <span class="badge no-selectable">Ó exclusivo</span>
+        <div class="other-badge-container" 
+          id="xor-operator"
+          [attr.data-type]="xorOperator.type"
+          [matTooltip]="xorOperator.tooltip"
+          (dragstart)="onDragStart($event, xorOperator)"
+          (click)="onOperatorItemClick($event, xorOperator)"
+          draggable="true">
+          <span class="badge no-selectable">{{ xorOperator.symbol }}</span>
         </div>
         <div class="other-badge-container active" matTooltip="Permite ingresar un Número directo en la fórmula">
           <span class="badge no-selectable">Número</span>

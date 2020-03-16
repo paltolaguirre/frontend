@@ -135,7 +135,8 @@ export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
 
     if (
       data.payload.operationName === LogicalOperatorNames.And ||
-      data.payload.operationName === LogicalOperatorNames.Or
+      data.payload.operationName === LogicalOperatorNames.Or ||
+      data.payload.operationName === LogicalOperatorNames.Xor
     ) {
       return this.createFormulaWithChildren(data, MathOperatorTypes.Boolean, MathOperatorTypes.Boolean);
     }

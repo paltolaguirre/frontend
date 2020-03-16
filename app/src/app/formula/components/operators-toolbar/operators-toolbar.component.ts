@@ -19,6 +19,8 @@ export class OperatorsToolbarComponent implements OnInit {
   public selectedOperator: Formula = null;
   public basicMathOperators: Operator[];
   public logicalOperators: Operator[];
+  public xorOperator: Operator;
+  public numberOperator: Operator;
 
   constructor(
     private formulaService: FormulaService,
@@ -29,6 +31,7 @@ export class OperatorsToolbarComponent implements OnInit {
     this.fetchFormulas();
     this.basicMathOperators = this.operatorsService.getBasicMathOperators();
     this.logicalOperators = this.operatorsService.getLogicalOperators();
+    this.xorOperator = this.operatorsService.getXOROperator();
   }
 
   public fetchFormulas() {

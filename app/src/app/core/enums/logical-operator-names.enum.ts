@@ -6,6 +6,7 @@ export enum LogicalOperatorNames {
   Diferent,
   And,
   Or,
+  Xor,
   LessOrEqualThan,
   GreaterOrEqualThan
 }
