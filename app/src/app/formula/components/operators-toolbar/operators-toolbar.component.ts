@@ -32,6 +32,7 @@ export class OperatorsToolbarComponent implements OnInit {
     this.basicMathOperators = this.operatorsService.getBasicMathOperators();
     this.logicalOperators = this.operatorsService.getLogicalOperators();
     this.xorOperator = this.operatorsService.getXOROperator();
+    this.numberOperator = this.operatorsService.getNumberOperator();
   }
 
   public fetchFormulas() {

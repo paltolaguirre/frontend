@@ -191,6 +191,18 @@ export class OperatorsService {
     };
   }
 
+  public getNumberOperator(): Operator {
+    return {
+      id: 1,
+      operationName: MathOperatorNames.Custom,
+      type: MathOperatorTypes.Numeric,
+      symbol: 'Número',
+      mustRemoveFromSource: false,
+      tooltip: 'Permite ingresar un Número directo en la fórmula',
+      category: OperatorCategory.Math
+    };
+  }
+
   public emitOperatorClicked(data: FormulaTransferData) {
     this.operatorEmitter.emit(data);
   }
