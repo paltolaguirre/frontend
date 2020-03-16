@@ -1,19 +1,19 @@
-import { LogicalOperatorNames } from './../../../core/enums/logical-operator-names.enum';
-import { OperatorCategory } from './../../../core/enums/operator-category.enum';
-import { MathOperatorTypes } from './../../../core/enums/math-operator-types.enum';
-import { FormulaTransferData } from './../../../core/models/formula-transfer-data.model';
-import { OperatorsService } from './../../../core/services/operators/operators.service';
+import { LogicalOperatorNames } from '../../../core/enums/logical-operator-names.enum';
+import { OperatorCategory } from '../../../core/enums/operator-category.enum';
+import { MathOperatorTypes } from '../../../core/enums/math-operator-types.enum';
+import { FormulaTransferData } from '../../../core/models/formula-transfer-data.model';
+import { OperatorsService } from '../../../core/services/operators/operators.service';
 import { componentDestroyed } from '@w11k/ngx-componentdestroyed';
 import { takeUntil } from 'rxjs/operators';
-import { FormulaService } from './../../../core/services/formula/formula.service';
+import { FormulaService } from '../../../core/services/formula/formula.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
-  selector: 'app-formula-draggable-space',
-  templateUrl: './formula-draggable-space.component.html',
-  styleUrls: ['./formula-draggable-space.component.scss']
+  selector: 'app-formula-drop-space',
+  templateUrl: './formula-drop-space.component.html',
+  styleUrls: ['./formula-drop-space.component.scss']
 })
-export class FormulaDraggableSpaceComponent implements OnInit, OnDestroy {
+export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
   public idCount: number = 0;
 
