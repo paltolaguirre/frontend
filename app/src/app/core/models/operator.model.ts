@@ -12,4 +12,5 @@ export class Operator implements Draggable {
   mustRemoveFromSource: boolean;
   tooltip?: string;
   category: OperatorCategory;
+  hasChildren: boolean;
 }
