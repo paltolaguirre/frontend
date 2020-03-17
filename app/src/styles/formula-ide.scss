@@ -21,6 +21,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+
+    .remove-icon {
+      background: transparent !important;
+    }
   }
   
   .numeric-param {
@@ -62,7 +67,7 @@
     cursor: pointer;
   }
   .no-highlight{
-    background-color: transparent !important;
+    background-color: transparent;
     cursor: auto;
   }
   
