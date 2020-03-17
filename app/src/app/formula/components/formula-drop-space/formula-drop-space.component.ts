@@ -130,9 +130,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       true
     );
 
-    if (data) {
-      this.renderFormulaInMainContainer(formulaDiv);
-    }
+    this.renderFormulaInMainContainer(formulaDiv);
   }
 
   public handleLogicalOperatorClick(data: FormulaTransferData) {
@@ -170,9 +168,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     formulaDiv.insertBefore(br1, children[1]);
     formulaDiv.insertBefore(br2, children[3]);
 
-    if (data) {
-      this.renderFormulaInMainContainer(formulaDiv);
-    }
+    this.renderFormulaInMainContainer(formulaDiv);
   }
 
   public createFormulaWithChildren(
