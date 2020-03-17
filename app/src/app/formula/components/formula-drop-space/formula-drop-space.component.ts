@@ -75,26 +75,31 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       return this.handleOperatorClicked(data);
     }
 
-    this.createElementWithoutChildren(data);
+    this.createElementWithoutChildren(data, false);
 
     this.onParamMouseOut(event);
 
     event.cancelBubble = true;
   }
 
-  public createElementWithoutChildren(data: FormulaTransferData) {
+  public createElementWithoutChildren(data: FormulaTransferData, isInput: boolean) {
     const domElement = document.getElementById(data.nodeId);
     const droppeableSpace = document.getElementById('main');
 
-    this.appendContent(domElement, droppeableSpace, data);
+    this.appendContent(domElement, droppeableSpace, data, isInput);
   }
 
-  public appendContent(origin: HTMLElement, to: HTMLElement, data: FormulaTransferData) {
+  public appendContent(origin: HTMLElement, to: HTMLElement, data: FormulaTransferData, isInput: boolean) {
     if (origin && origin.classList) {
       origin.classList.remove('pronounced');
     }
 
     const clonedNode = origin.cloneNode(true) as HTMLElement;
+
+    if (isInput) {
+      clonedNode.innerHTML = '0.00';
+      this.clickEditLiteral(clonedNode);
+    }
 
     this.addEventToElementParam(clonedNode);
 
@@ -112,14 +117,14 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   }
 
   public handleFormulaItemClicked(data: FormulaTransferData) {
-    this.createElementWithoutChildren(data);
+    this.createElementWithoutChildren(data, false);
   }
 
   public handleOperatorClicked(data: FormulaTransferData) {
     const { payload } = data;
 
     if (!payload.hasChildren) {
-      return this.createElementWithoutChildren(data);
+      return this.createElementWithoutChildren(data, true);
     }
 
     const formulaDiv = this.createFormula(
@@ -377,6 +382,9 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     };
 
     input.onkeypress = (ei) => {
+      if (ei.keyCode === 13) {
+        input.blur();
+      }
     };
 
 
