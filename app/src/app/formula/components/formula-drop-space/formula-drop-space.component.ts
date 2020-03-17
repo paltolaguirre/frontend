@@ -112,6 +112,20 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     this.handleOriginNodeDeletion(data);
   }
 
+  private createRemoveIcon(): HTMLElement {
+    const badge = document.createElement('div');
+    badge.classList.add('remove-badge-container');
+
+    const removeIcon = document.createElement('span');
+    removeIcon.classList.add('remove-icon');
+    removeIcon.innerHTML = 'x';
+
+    badge.append(removeIcon);
+
+    console.log(badge);
+    return badge;
+  }
+
   public handleOriginNodeDeletion(data: FormulaTransferData) {
     if (data.payload.mustRemoveFromSource) {
       this.removeOrigin(origin);
@@ -193,6 +207,9 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       true
     );
 
+    const removeIcon = this.createRemoveIcon();
+    formulaDiv.appendChild(removeIcon);
+
     this.renderFormulaInMainContainer(formulaDiv);
   }
 
@@ -224,6 +241,9 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
       divFormula.appendChild(divParam);
     }
+
+    const removeIcon = this.createRemoveIcon();
+    divFormula.appendChild(removeIcon);
 
     return divFormula;
   }

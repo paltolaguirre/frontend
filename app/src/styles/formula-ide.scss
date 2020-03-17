@@ -10,6 +10,18 @@
     align-items: center;
     justify-content: center;
   }
+
+  .remove-badge-container {
+    position: absolute;
+    top: -4px;
+    right: 9px;
+    background: gray !important;
+    padding: 0px 6px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   
   .numeric-param {
     border-left: 2px solid blue;
