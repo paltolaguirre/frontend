@@ -75,14 +75,14 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       return this.handleOperatorClicked(data);
     }
 
-    this.createChildElement(data);
+    this.createElementWithoutChildren(data);
 
     this.onParamMouseOut(event);
 
     event.cancelBubble = true;
   }
 
-  public createChildElement(data: FormulaTransferData) {
+  public createElementWithoutChildren(data: FormulaTransferData) {
     const domElement = document.getElementById(data.nodeId);
     const droppeableSpace = document.getElementById('main');
 
@@ -112,14 +112,14 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   }
 
   public handleFormulaItemClicked(data: FormulaTransferData) {
-    this.createChildElement(data);
+    this.createElementWithoutChildren(data);
   }
 
   public handleOperatorClicked(data: FormulaTransferData) {
     const { payload } = data;
 
     if (!payload.hasChildren) {
-      return this.createChildElement(data);
+      return this.createElementWithoutChildren(data);
     }
 
     const formulaDiv = this.createFormula(
