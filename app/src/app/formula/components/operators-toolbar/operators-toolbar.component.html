@@ -36,23 +36,31 @@
     <div class="column">
       <div class="other-badges-general-container">
         <div class="other-badge-container" 
-          [id]="'xor-operator-' + ++xorOperator"
+          [id]="'xor-operator-' + xorOperator.id"
           [attr.data-type]="xorOperator.type"
           [matTooltip]="xorOperator.tooltip"
           (dragstart)="onDragStart($event, xorOperator)"
           (click)="onOperatorItemClick($event, xorOperator)"
           draggable="true">
-          <span class="badge no-selectable">{{ xorOperator.symbol }}</span>
+          <span 
+            class="badge no-selectable" 
+            [id]="'xor-operator-' + xorOperator.id">
+            {{ xorOperator.symbol }}
+          </span>
         </div>
         <div 
-          class="other-badge-container active" 
-          [id]="'number-operator-' + ++numberOperator"
+          class="other-badge-container active param numeric-param" 
+          [id]="'number-operator-' + numberOperator.id"
           [attr.data-type]="numberOperator.type"
           [matTooltip]="numberOperator.tooltip"
           (dragstart)="onDragStart($event, numberOperator)"
           (click)="onOperatorItemClick($event, numberOperator)"
           draggable="true">
-          <span class="badge no-selectable">{{ numberOperator.symbol }}</span>
+          <span 
+            class="badge no-selectable"
+            [id]="'number-operator-' + numberOperator.id">
+            {{ numberOperator.symbol }}
+          </span>
         </div>
       </div>
     </div>
