@@ -47,21 +47,31 @@
         <mat-expansion-panel-header>
           <mat-panel-title>Cálculo Automático</mat-panel-title>
         </mat-expansion-panel-header>
-        
-        <mat-radio-group [color]="'primary'" [(ngModel)]="selectedGroupAutomaticCalculation" (ngModelChange)="onAutomaticCalcGroupSelected()">
-          
+
+        <mat-radio-group [color]="'primary'" [(ngModel)]="data.tipocalculoautomatico.codigo" (ngModelChange)="onAutomaticCalcGroupSelected(data)">
+
           <div class="columns">
             <div class="column is-2">
-              <mat-radio-button class="example-radio-button" [value]="'percentage'">
+              <mat-radio-button class="example-radio-button" [value]="'NO_APLICA'">
+                No Aplica
+              </mat-radio-button>
+            </div>
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <div class="columns">
+            <div class="column is-2">
+              <mat-radio-button class="example-radio-button" [value]="'PORCENTAJE'" >
                 Porcentajes
               </mat-radio-button>
             </div>
             <div class="column">
               <mat-form-field class="standard-input" style="width: 100px;">
-                <input [disabled]="isDefault(data) || selectedGroupAutomaticCalculation !== 'percentage'" matInput [(ngModel)]="data.porcentaje" placeholder="Porcentaje" type="number" autocomplete="off">
+                <input [disabled]="isDefault(data) || data.tipocalculoautomatico.codigo !== 'PORCENTAJE'" matInput [(ngModel)]="data.porcentaje" placeholder="Porcentaje" type="number" autocomplete="off">
               </mat-form-field>
               <span style="margin: 0px 10px; color: #808080;">Aplicable sobre </span>
-              <app-selector-default nombre="tipodecalculo" [disabled]="isDefault(data) || selectedGroupAutomaticCalculation !== 'percentage'" required=false [(matSelect)]="data.tipodecalculoid"
+              <app-selector-default nombre="tipodecalculo" [disabled]="isDefault(data) || data.tipocalculoautomatico.codigo !== 'PORCENTAJE'" required=false [(matSelect)]="data.tipodecalculoid"
                 (optionSelected)="data.tipodecalculoid=$event.ID; data.tipoconcepto.codigo=$event.codigo">
               </app-selector-default> 
             </div>
@@ -71,42 +81,22 @@
 
           <div class="columns">
             <div class="column is-2">
-              <mat-radio-button class="example-radio-button" [value]="'formulas'">
+              <mat-radio-button class="example-radio-button" [value]="'FORMULA'">
                 Fórmulas
               </mat-radio-button>
             </div>
             <div class="column">
-              <mat-form-field class="selector">
-                <mat-label>Seleccionar Fórmula</mat-label>
-                <mat-select [(ngModel)]="selectedFormula" (ngModelChange)="onFormulaSelected()" name="formula" [disabled]="selectedGroupAutomaticCalculation !== 'formulas'">
-                  <mat-option *ngFor="let formula of availableFormulas" [value]="formula">
-                    {{ formula.name }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-
-              <div class="columns" *ngIf="selectedFormula">
-                <div class="column is-3">
-                  <mat-form-field>
-                    <mat-label>Período desde</mat-label>
-                    <input matInput [matDatepicker]="fromDatePicker" [value]="formulaFromDate" readonly required>
-                    <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
-                    <mat-datepicker #fromDatePicker></mat-datepicker>
-                  </mat-form-field>
-                </div>
-                <div class="column is-3">
-                  <mat-form-field>
-                    <mat-label>Período hasta</mat-label>
-                    <input matInput [matDatepicker]="toDatePicker" [value]="toDatePicker" readonly required>
-                    <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
-                    <mat-datepicker #toDatePicker></mat-datepicker>
-                  </mat-form-field>
-                </div>
-              </div>
-              
+                <app-selector-default *ngIf="isDefault(data)" filter="tipoformulas=sistema" nombre="function" [disabled]="isDefault(data) || data.tipocalculoautomatico.codigo !== 'FORMULA'" required=false [(matSelect)]="data.formulanombre"
+                (optionSelected)="data.formulanombre=$event.ID; data.formula.name=$event.codigo">
+              </app-selector-default> 
+              <app-selector-default *ngIf="!isDefault(data)" filter="tipoformulas=usuario" nombre="function" [disabled]="isDefault(data) || data.tipocalculoautomatico.codigo !== 'FORMULA'" required=false [(matSelect)]="data.formulanombre"
+                (optionSelected)="data.formulanombre=$event.ID; data.formula.name=$event.codigo">
+              </app-selector-default>
             </div>
-          </div>
-        </mat-radio-group>
+
+          </div>       
+
+          </mat-radio-group>         
        
       </mat-expansion-panel>
 
