@@ -1,3 +1,4 @@
+import { MathOperatorNames } from './../../../core/enums/math-operator-names.enum';
 import { LogicalOperatorNames } from '../../../core/enums/logical-operator-names.enum';
 import { OperatorCategory } from '../../../core/enums/operator-category.enum';
 import { MathOperatorTypes } from '../../../core/enums/math-operator-types.enum';
@@ -116,6 +117,10 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
   public handleOperatorClicked(data: FormulaTransferData) {
     const { payload } = data;
+
+    if (!payload.hasChildren) {
+      return this.createChildElement(data);
+    }
 
     const formulaDiv = this.createFormula(
       payload.symbol,
