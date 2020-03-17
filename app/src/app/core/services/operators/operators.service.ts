@@ -24,7 +24,8 @@ export class OperatorsService {
         type: MathOperatorTypes.Numeric,
         symbol: '+',
         mustRemoveFromSource: false,
-        category: OperatorCategory.Math
+        category: OperatorCategory.Math,
+        hasChildren: true
       },
       {
         id: 2,
@@ -32,7 +33,8 @@ export class OperatorsService {
         type: MathOperatorTypes.Numeric,
         symbol: '-',
         mustRemoveFromSource: false,
-        category: OperatorCategory.Math
+        category: OperatorCategory.Math,
+        hasChildren: true
       },
       {
         id: 3,
@@ -40,7 +42,8 @@ export class OperatorsService {
         type: MathOperatorTypes.Numeric,
         symbol: '/',
         mustRemoveFromSource: false,
-        category: OperatorCategory.Math
+        category: OperatorCategory.Math,
+        hasChildren: true
       },
       {
         id: 4,
@@ -48,7 +51,8 @@ export class OperatorsService {
         type: MathOperatorTypes.Numeric,
         symbol: '*',
         mustRemoveFromSource: false,
-        category: OperatorCategory.Math
+        category: OperatorCategory.Math,
+        hasChildren: true
       }
     ];
   }
@@ -62,7 +66,8 @@ export class OperatorsService {
         symbol: 'SI',
         mustRemoveFromSource: false,
         tooltip: 'Para fórmulas Condicionales. El cálculo depende del cumplimineto de una determinada condición.',
-        category: OperatorCategory.Logical
+        category: OperatorCategory.Logical,
+        hasChildren: true
       },
       {
         id: 2,
@@ -71,7 +76,8 @@ export class OperatorsService {
         symbol: '>',
         mustRemoveFromSource: false,
         tooltip: 'Condición: “Mayor que”',
-        category: OperatorCategory.Logical
+        category: OperatorCategory.Logical,
+        hasChildren: true
       },
       {
         id: 3,
@@ -80,7 +86,8 @@ export class OperatorsService {
         symbol: '<',
         mustRemoveFromSource: false,
         tooltip: 'Condición: “Menor que”',
-        category: OperatorCategory.Logical
+        category: OperatorCategory.Logical,
+        hasChildren: true
       },
       {
         id: 4,
@@ -89,7 +96,8 @@ export class OperatorsService {
         symbol: '=',
         mustRemoveFromSource: false,
         tooltip: 'Condición: “Igual que”',
-        category: OperatorCategory.Logical
+        category: OperatorCategory.Logical,
+        hasChildren: true
       },
       {
         id: 5,
@@ -98,7 +106,8 @@ export class OperatorsService {
         symbol: '<>',
         mustRemoveFromSource: false,
         tooltip: 'Condición: “Diferente que”',
-        category: OperatorCategory.Logical
+        category: OperatorCategory.Logical,
+        hasChildren: true
       },
       {
         id: 6,
@@ -107,7 +116,8 @@ export class OperatorsService {
         symbol: 'Y',
         mustRemoveFromSource: false,
         tooltip: 'Conjunción de más de una condición  “AND”',
-        category: OperatorCategory.Logical
+        category: OperatorCategory.Logical,
+        hasChildren: true
       },
       {
         id: 7,
@@ -116,7 +126,8 @@ export class OperatorsService {
         symbol: 'ó',
         mustRemoveFromSource: false,
         tooltip: 'Disyunción de más de una condición “OR”',
-        category: OperatorCategory.Logical
+        category: OperatorCategory.Logical,
+        hasChildren: true
       }
     ];
   }
@@ -131,7 +142,8 @@ export class OperatorsService {
         type: MathOperatorTypes.Numeric,
         symbol: formula.name,
         mustRemoveFromSource: false,
-        category: OperatorCategory.Math
+        category: OperatorCategory.Math,
+        hasChildren: false
       };
     });
 
@@ -147,7 +159,8 @@ export class OperatorsService {
         symbol: '<=',
         mustRemoveFromSource: false,
         tooltip: 'Condición: “Menor Igual que”',
-        category: OperatorCategory.Logical
+        category: OperatorCategory.Logical,
+        hasChildren: true
       },
       {
         id: 2,
@@ -156,7 +169,8 @@ export class OperatorsService {
         symbol: '>=',
         mustRemoveFromSource: false,
         tooltip: 'Condición: “Mayor Igual que”',
-        category: OperatorCategory.Logical
+        category: OperatorCategory.Logical,
+        hasChildren: true
       },
       {
         id: 3,
@@ -165,7 +179,8 @@ export class OperatorsService {
         symbol: '%',
         mustRemoveFromSource: false,
         tooltip: 'Porcentaje”',
-        category: OperatorCategory.Math
+        category: OperatorCategory.Math,
+        hasChildren: true
       },
       {
         id: 4,
@@ -174,7 +189,8 @@ export class OperatorsService {
         symbol: '^',
         mustRemoveFromSource: false,
         tooltip: 'Potencia',
-        category: OperatorCategory.Math
+        category: OperatorCategory.Math,
+        hasChildren: true
       }
     ];
   }
@@ -187,7 +203,8 @@ export class OperatorsService {
       symbol: 'Ó exclusivo',
       mustRemoveFromSource: false,
       tooltip: 'Disyunción exclusiva de más de una condición “XOR”',
-      category: OperatorCategory.Logical
+      category: OperatorCategory.Logical,
+      hasChildren: true
     };
   }
 
@@ -199,7 +216,8 @@ export class OperatorsService {
       symbol: 'Número',
       mustRemoveFromSource: false,
       tooltip: 'Permite ingresar un Número directo en la fórmula',
-      category: OperatorCategory.Math
+      category: OperatorCategory.Math,
+      hasChildren: false
     };
   }
 
