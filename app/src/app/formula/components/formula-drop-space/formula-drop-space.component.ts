@@ -77,7 +77,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
     this.createElementWithoutChildren(data, false);
 
-    this.onParamMouseOut(event);
+    this.onDragLeave(event);
 
     event.cancelBubble = true;
   }
@@ -95,10 +95,12 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     }
 
     const clonedNode = origin.cloneNode(true) as HTMLElement;
+    // Generates random ID to avoid deleting the original operator from the toolbar.
+    clonedNode.id = this.getStringID();
 
     if (isInput) {
       clonedNode.innerHTML = '0.00';
-      this.clickEditLiteral(clonedNode);
+      this.onEditClick(clonedNode);
     }
 
     this.addEventToElementParam(clonedNode);
@@ -263,12 +265,12 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
   public addEventToElementParam(element) {
     element.onmouseover = this.onParamMouseOver.bind(this);
-    element.onmouseout = this.onParamMouseOut.bind(this);
+    element.onmouseout = this.onDragLeave.bind(this);
     element.onclick = this.paramOnclickCortarPegar.bind(this);
     element.ondragover = this.onDragOver.bind(this);
     element.ondragstart = this.dragstart.bind(this);
     element.ondrop = this.onChildDrop.bind(this);
-    element.ondragleave = this.onParamMouseOut.bind(this);
+    element.ondragleave = this.onDragLeave.bind(this);
   }
 
   onDragOver(event) { // allowDrop
@@ -290,7 +292,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     e.cancelBubble = true;
   }
 
-  onParamMouseOut(e) {
+  onDragLeave(e) {
     e.target.classList.remove('highligthed');
     e.target.classList.add('no-highlight');
 
@@ -298,7 +300,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   }
 
   dragstart(ev) {
-    ev.dataTransfer.setData('text', ev.target.id); // jsfiddle.net/rodrigomartinvg/vy5928jt/276/#run
+    ev.dataTransfer.setData('text', ev.target.id);
     ev.cancelBubble = true;
   }
 
@@ -336,7 +338,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
       if (e.target.children.length === 0 && e.target.getAttribute('name') === '') {
 
-        this.clickEditLiteral(e.target);
+        this.onEditClick(e.target);
 
       } else {
         main.context.origin = e.target;
@@ -354,7 +356,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     e.cancelBubble = true;
   }
 
-  public clickEditLiteral(target) {
+  public onEditClick(target) {
     const input = document.createElement('input') as any;
 
     if (target.classList.contains('numeric-param')) {
@@ -382,7 +384,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     };
 
     input.onkeypress = (ei) => {
-      if (ei.keyCode === 13) {
+      if (ei.keyCode === 13) { // Enter
         input.blur();
       }
     };
@@ -400,6 +402,10 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   }
 
   public putChildAndRemoveFromOrigin(origin: HTMLElement, target: HTMLElement) {
+    console.log('se ejecuta put child and remove from origin');
+    console.log('origin:', origin);
+    console.log('target:', target);
+
     if (origin.getAttribute('data-type') !== target.getAttribute('data-type')) {
       alert('tipos de datos distintos');
       return;
@@ -409,6 +415,8 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
     const clonado = origin.cloneNode(true) as HTMLElement;
     clonado.id = this.getStringID();
+
+    console.log('clonado: ', clonado);
 
     this.addEventToElementParam(clonado);
 
