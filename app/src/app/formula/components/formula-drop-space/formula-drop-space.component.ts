@@ -7,7 +7,7 @@ import { OperatorsService } from '../../../core/services/operators/operators.ser
 import { componentDestroyed } from '@w11k/ngx-componentdestroyed';
 import { takeUntil } from 'rxjs/operators';
 import { FormulaService } from '../../../core/services/formula/formula.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 
 @Component({
   selector: 'app-formula-drop-space',
@@ -15,6 +15,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
   styleUrls: ['./formula-drop-space.component.scss']
 })
 export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
+  @Input() isItemPickerExpanded: boolean;
 
   public idCount: number = 0;
 

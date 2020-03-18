@@ -4,10 +4,19 @@ div.draggable-space-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: 43vw;
   overflow-x: auto;
+  max-width: 44vw;
+  white-space: nowrap;
+
+  &.expanded {
+    max-width: 56vw;
+  }
 
   @media (min-width: 1920px) {
     max-width: 47vw;
+
+    &.expanded {
+      max-width: 62vw;
+    }
   }
 }
