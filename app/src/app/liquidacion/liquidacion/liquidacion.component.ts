@@ -294,7 +294,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
 
   calcularTotal(items: ImporteUnitario[], tipoconcepto: string): number {
     let array;
-    if(items) array = items.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == tipoconcepto);
+    if(items) array = items.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == tipoconcepto && item.DeletedAt == null);
 
 
     let total: number= 0;
