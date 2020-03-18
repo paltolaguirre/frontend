@@ -1,6 +1,11 @@
+import { FormulaTransferData } from './../../models/formula-transfer-data.model';
+import { FormulaParam } from './../../models/formula-param.model';
+import { FormulaScopes } from './../../constants/formula-scopes.constants';
+import { FormulaTypes } from './../../constants/formula-types.constants';
+import { BehaviorSubject } from 'rxjs';
 import { ApiHttpService } from './../api-http/api-http.service';
 import { FormulaCategory } from './../../models/formula-category.model';
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Formula } from '../../models/formula.model';
 
 @Injectable({
@@ -9,9 +14,16 @@ import { Formula } from '../../models/formula.model';
 export class FormulaService {
 
   public readonly BASE_URL = '/api/formula';
-  public formulas: Formula[];
+  private formulas = new BehaviorSubject<Formula[]>([]);
+  public formulasStore$ = this.formulas.asObservable();
+  public formulaPickerItemEmitter: EventEmitter<FormulaTransferData> = new EventEmitter();
 
   constructor(private api: ApiHttpService) {
+    this.initFormulasStore();
+  }
+
+  public async initFormulasStore() {
+    this.formulas.next(await this.getAll());
   }
 
   public async getAll(): Promise<Formula[]> {
@@ -92,7 +104,7 @@ export class FormulaService {
             img: 'assets/img/descarga.jpg',
             title: 'Mis fórmulas',
             categoryId: 3,
-            slug: 'my-formulas'
+            slug: 'user-formulas'
           }
         ]
       }
@@ -101,5 +113,46 @@ export class FormulaService {
 
   public isEditable(formula: Formula): boolean {
     return formula.origin !== 'primitive';
+  }
+
+  public extractFormulasByType(formulas: Formula[], type: string): Formula[] {
+    return formulas.filter((formula) => {
+      return formula.type === type;
+    });
+  }
+
+  public extractUserFormulas(formulas: Formula[]): Formula[] {
+    return formulas.filter((formula) => {
+      return (
+        formula.type === FormulaTypes.GENERIC &&
+        formula.scope === FormulaScopes.PRIVATE
+      );
+    });
+  }
+
+  public extractVariables(formulas: Formula[]): Formula[] {
+    return formulas.filter((formula) => {
+      return (
+        formula.type === FormulaTypes.HELPER &&
+        formula.scope === FormulaScopes.PUBLIC
+      );
+    });
+  }
+
+  public extractInputParams(formula: Formula): FormulaParam[] {
+    return formula.params.map((param) => param);
+  }
+
+  public extractStandardFormulas(formulas: Formula[]): Formula[] {
+    return formulas.filter((formula) => {
+      return (
+        formula.type === FormulaTypes.GENERIC &&
+        formula.scope === FormulaScopes.PUBLIC
+      );
+    });
+  }
+
+  public emitFormulaItemClick(payload: FormulaTransferData) {
+    this.formulaPickerItemEmitter.emit(payload);
   }
 }

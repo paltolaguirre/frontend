@@ -9,6 +9,15 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+// Removes default highlight from browsers.
+// input:focus,
+select:focus
+// textarea:focus,
+// button:focus 
+{
+  outline: none;
+}
+
 .mat-button.mat-primary {
   color: #fff !important;
   background: linear-gradient(to bottom, #00abeb 0%, #027cd8 100%);
@@ -35,3 +44,4 @@ body {
 @import "./styles/bulma-setup.scss";
 @import "./styles/material-reset.scss";
 @import "./styles/classes.scss";
+@import "./styles/formula-ide.scss";
