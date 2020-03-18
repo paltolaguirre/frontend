@@ -42,7 +42,7 @@
           <div *ngIf="isSearchItemSelected(selectedCategoryItem)" class="search-bar-container">
             <div class="columns is-gapless search-content border-regular">
               <div class="column is-10">
-                <input type="text" (keyup)="doFilter($event)" placeholder="Buscar...">
+                <input type="text" [(ngModel)]="searchInput" (ngModelChange)="doFilter()" placeholder="Buscar...">
               </div>
               <div class="column">
                 <div class="search-icon bg-gray no-selectable">

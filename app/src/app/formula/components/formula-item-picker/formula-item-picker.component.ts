@@ -34,6 +34,8 @@ export class FormulaItemPickerComponent implements OnInit {
   public inputParams: FormulaParam[];
   public currentFormula: Formula;
   public standardFormulas: Formula[];
+  public searchInput: any;
+  public pickableItems: any[] = [];
 
   constructor(
     private conceptService: ConceptoService,
@@ -66,6 +68,10 @@ export class FormulaItemPickerComponent implements OnInit {
       this.userFormulas = this.formulaService.extractUserFormulas(this.formulas);
       this.variables = this.formulaService.extractVariables(this.formulas);
       this.standardFormulas = this.formulaService.extractStandardFormulas(this.formulas);
+
+      if (formulas) {
+        this.addToPickableItems([...formulas, ...this.userFormulas, ...this.variables, this.standardFormulas]);
+      }
     });
   }
 
@@ -75,6 +81,8 @@ export class FormulaItemPickerComponent implements OnInit {
 
   public async fetchConcepts() {
     this.concepts = await this.conceptService.getAll();
+
+    this.addToPickableItems(this.concepts);
   }
 
   public onExpandClick() {
@@ -111,5 +119,27 @@ export class FormulaItemPickerComponent implements OnInit {
 
   public getOperatorDefaultType() {
     return MathOperatorTypes.Numeric;
+  }
+
+  private addToPickableItems(items: any[]) {
+    this.pickableItems = [...this.pickableItems, ...items];
+
+    // Filter valid items.
+    this.pickableItems = this.pickableItems.filter((item) => {
+      return !!item && !Array.isArray(item);
+    });
+  }
+
+  public doFilter() {
+    // console.log(this.searchInput);
+    if (!this.formulas) {
+      return null;
+    }
+
+    const result = this.formulas.filter(formula => {
+      return formula.name.includes(this.searchInput);
+    });
+
+    console.log('result:', result);
   }
 }
