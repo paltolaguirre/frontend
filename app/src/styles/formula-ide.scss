@@ -1,3 +1,5 @@
+@import "./variables.scss";
+
 .draggable-space-container {
   .param {
     margin: 5px;
@@ -15,7 +17,7 @@
     position: absolute;
     top: -4px;
     right: 9px;
-    background: gray !important;
+    background-color: $GRAY_REGULAR !important;
     padding: 0px 6px;
     border-radius: 50%;
     display: flex;
