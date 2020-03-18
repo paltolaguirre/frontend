@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SelectorElement } from '../shared/selector-default/selector-default.component';
-import { Concepto } from './concepto.model';
+import { Concepto, TipoCalculoAutomatico, TIPO_CALCULO_AUTOMATICO, TIPO_CALCULO_AUTOMATICO_CODIGO } from './concepto.model';
 
 export interface ListaItems {
   items: any[];
@@ -33,6 +33,10 @@ export class ConceptoService {
 
   public async getConcepto(conceptoId: number): Promise<Concepto> {
     let concepto = <Concepto>{};
+    let tipoCalculoAutomatico = <TipoCalculoAutomatico>{};
+    concepto.tipocalculoautomatico = tipoCalculoAutomatico;
+    concepto.tipocalculoautomatico.ID = TIPO_CALCULO_AUTOMATICO.NO_APLICA;
+    concepto.tipocalculoautomatico.codigo = TIPO_CALCULO_AUTOMATICO_CODIGO.NO_APLICA;
     if (conceptoId) {
     const requestUrl =
       `${this.href}/${conceptoId}`;
