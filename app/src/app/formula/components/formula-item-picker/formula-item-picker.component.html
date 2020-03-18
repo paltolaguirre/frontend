@@ -55,6 +55,21 @@
           <div class="toolbox custom-vertical-scroll">
             <div *ngIf="selectedCategoryItem" class="selectable-badges-container">
 
+              <div class="search-results-container">
+                <div *ngIf="selectedCategoryItem.slug === 'search'">
+                  <div
+                    *ngFor="let item of searchResult; index as index" 
+                    class="pickable-badge no-selectable param numeric-param"
+                    [id]="'pickable-item-' + index + 1"
+                    [attr.data-type]="getOperatorDefaultType()"
+                    draggable="true"
+                    (dragstart)="onDragStart($event, item)"
+                    (click)="onFormulaItemClick($event, item)">
+                      {{ item.name || item.nombre }}
+                  </div>
+                </div>
+              </div>
+
               <div *ngIf="selectedCategoryItem.slug === 'variables'">
                 <div
                   *ngFor="let formula of variables; index as index" 

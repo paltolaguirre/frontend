@@ -35,7 +35,8 @@ export class FormulaItemPickerComponent implements OnInit {
   public currentFormula: Formula;
   public standardFormulas: Formula[];
   public searchInput: any;
-  public pickableItems: any[] = [];
+  private pickableItems: any[] = [];
+  public searchResult: any[] = [];
 
   constructor(
     private conceptService: ConceptoService,
@@ -77,6 +78,8 @@ export class FormulaItemPickerComponent implements OnInit {
 
   public setInputParams(formula: Formula) {
     this.inputParams = this.formulaService.extractInputParams(formula);
+
+    this.addToPickableItems(this.inputParams);
   }
 
   public async fetchConcepts() {
@@ -135,13 +138,12 @@ export class FormulaItemPickerComponent implements OnInit {
       return null;
     }
 
-    const result = this.pickableItems.filter(item => {
-      return (
-        (item.name && item.name.includes(this.searchInput)) ||
-        (item.nombre && item.nombre.includes(this.searchInput))
-      );
-    });
+    const sanitizedSearchInput = this.searchInput.toLowerCase();
 
-    console.log('result:', result);
+    this.searchResult = this.pickableItems.filter(item => {
+      const sanitizedItemName = item.name ? item.name.toLowerCase() : item.nombre.toLowerCase();
+
+      return sanitizedItemName.includes(sanitizedSearchInput);
+    });
   }
 }
