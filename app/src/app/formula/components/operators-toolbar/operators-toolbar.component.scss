@@ -100,13 +100,19 @@ div.operators-general-container {
     align-items: center;
     justify-content: flex-start;
 
-    span.more-operators-badge {
+    .more-operators-badge {
       font-size: 0.6rem;
       background-color: #fff;
       border-radius: 14px;
-      padding: 1px 8px;
+      border: none;
+      padding: 6px 8px;
       white-space: nowrap;
       cursor: pointer;
+
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      text-indent: 1px;
+      text-overflow: '';
     }
   }
 }

@@ -42,7 +42,7 @@
           <div *ngIf="isSearchItemSelected(selectedCategoryItem)" class="search-bar-container">
             <div class="columns is-gapless search-content border-regular">
               <div class="column is-10">
-                <input type="text" (keyup)="doFilter($event)" placeholder="Buscar...">
+                <input type="text" [(ngModel)]="searchInput" (ngModelChange)="doFilter()" placeholder="Buscar...">
               </div>
               <div class="column">
                 <div class="search-icon bg-gray no-selectable">
@@ -54,30 +54,87 @@
 
           <div class="toolbox custom-vertical-scroll">
             <div *ngIf="selectedCategoryItem" class="selectable-badges-container">
-              <p class="selectable-badge">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge">{{ selectedCategoryItem.title }}</p>
-              <p class="selectable-badge">{{ selectedCategoryItem.title }}</p>
+
+              <div class="search-results-container">
+                <div *ngIf="selectedCategoryItem.slug === 'search'">
+                  <div
+                    *ngFor="let item of searchResult; index as index" 
+                    class="pickable-badge no-selectable param numeric-param"
+                    [id]="'pickable-item-' + index + 1"
+                    [attr.data-type]="getOperatorDefaultType()"
+                    draggable="true"
+                    (dragstart)="onDragStart($event, item)"
+                    (click)="onFormulaItemClick($event, item)">
+                      {{ item.name || item.nombre }}
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="selectedCategoryItem.slug === 'variables'">
+                <div
+                  *ngFor="let formula of variables; index as index" 
+                  class="pickable-badge no-selectable param numeric-param"
+                  [id]="'variable-' + index + 1"
+                  [attr.data-type]="getOperatorDefaultType()"
+                  draggable="true"
+                  (dragstart)="onDragStart($event, formula)"
+                  (click)="onFormulaItemClick($event, formula)">
+                    {{ formula.name }}
+                </div>
+              </div>
+
+              <div *ngIf="selectedCategoryItem.slug === 'concept'">
+                <div 
+                  *ngFor="let concept of concepts; index as index" 
+                  class="pickable-badge no-selectable param numeric-param"
+                  [id]="'concept-' + index + 1"
+                  [attr.data-type]="getOperatorDefaultType()"
+                  draggable="true"
+                  (dragstart)="onDragStart($event, concept)"
+                  (click)="onFormulaItemClick($event, concept)">
+                    {{ concept.nombre }}
+                </div>
+              </div>
+
+              <div *ngIf="selectedCategoryItem.slug === 'input-params'">
+                <div 
+                  *ngFor="let param of inputParams; index as index" 
+                  class="pickable-badge no-selectable param numeric-param"
+                  [id]="'param-' + index + 1"
+                  [attr.data-type]="getOperatorDefaultType()"
+                  draggable="true"
+                  (dragstart)="onDragStart($event, param)"
+                  (click)="onFormulaItemClick($event, param)">
+                    {{ param.name }}
+                </div>
+              </div>
+
+              <div *ngIf="selectedCategoryItem.slug === 'standard-formulas'">
+                <div 
+                  *ngFor="let formula of standardFormulas; index as index" 
+                  class="pickable-badge no-selectable param numeric-param"
+                  [id]="'standard-formula-' + index + 1"
+                  [attr.data-type]="getOperatorDefaultType()"
+                  draggable="true"
+                  (dragstart)="onDragStart($event, formula)"
+                  (click)="onFormulaItemClick($event, formula)">
+                    {{ formula.name }}
+                </div>
+              </div>
+
+              <div *ngIf="selectedCategoryItem.slug === 'user-formulas'">
+                <div 
+                  *ngFor="let formula of userFormulas; index as index" 
+                  class="pickable-badge no-selectable param numeric-param"
+                  [id]="'user-formula-' + index + 1"
+                  [attr.data-type]="getOperatorDefaultType()"
+                  draggable="true"
+                  (dragstart)="onDragStart($event, formula)"
+                  (click)="onFormulaItemClick($event, formula)">
+                    {{ formula.name }}
+                </div>
+              </div>
+
             </div>
           </div>
     
