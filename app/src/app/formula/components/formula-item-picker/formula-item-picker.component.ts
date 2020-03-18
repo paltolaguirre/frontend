@@ -131,13 +131,15 @@ export class FormulaItemPickerComponent implements OnInit {
   }
 
   public doFilter() {
-    // console.log(this.searchInput);
-    if (!this.formulas) {
+    if (!this.pickableItems) {
       return null;
     }
 
-    const result = this.formulas.filter(formula => {
-      return formula.name.includes(this.searchInput);
+    const result = this.pickableItems.filter(item => {
+      return (
+        (item.name && item.name.includes(this.searchInput)) ||
+        (item.nombre && item.nombre.includes(this.searchInput))
+      );
     });
 
     console.log('result:', result);
