@@ -552,7 +552,7 @@ export class SiradigShowComponent implements OnInit {
   private async siradigValidator(data: Siradig) {
     if(data && data.legajoid && data.periodosiradig) {
       const itemsApi: ListaItems = await this.siradigService.getSiradigs(data.legajoid, data.periodosiradig.split("-")[0]);
-      if(itemsApi.total_count > 0) {
+      if(itemsApi.total_count > 0 && !this.isMyself(itemsApi)) {
         const notificacion = {
           codigo: 400,
           mensaje: `Ya existe un SiRADIG para el legajo "${data.legajo.nombre}" correspondiente al periodo "${data.periodosiradig.split("-")[0]}"`
@@ -560,5 +560,9 @@ export class SiradigShowComponent implements OnInit {
         const ret = this.notificationService.notify(notificacion);
       }
     }
+  }
+
+  private isMyself(itemsApi) {
+    return itemsApi.total_count == 1 && itemsApi.items[0].ID == this.id;
   }
 }
