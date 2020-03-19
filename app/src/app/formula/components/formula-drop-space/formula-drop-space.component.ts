@@ -1,4 +1,3 @@
-import { MathOperatorNames } from './../../../core/enums/math-operator-names.enum';
 import { LogicalOperatorNames } from '../../../core/enums/logical-operator-names.enum';
 import { OperatorCategory } from '../../../core/enums/operator-category.enum';
 import { MathOperatorTypes } from '../../../core/enums/math-operator-types.enum';
@@ -101,7 +100,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
     if (isInput) {
       clonedNode.innerHTML = '0.00';
-      this.createInputElement(clonedNode);
+      this.editCurrentElement(clonedNode);
     }
 
     this.addEventToElementParam(clonedNode);
@@ -358,9 +357,12 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     this.putChildAndRemoveFromOrigin(origin, target);
   }
 
-
   paramOnclickCortarPegar(e) {
     const main = document.getElementById('main') as any;
+
+    if (e.target.classList.contains('editable-input')) {
+      return this.editCurrentElement(e.target);
+    }
 
     if (e.target === main.context.origin) {
 
@@ -371,7 +373,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
       if (e.target.children.length === 0 && e.target.getAttribute('name') === '') {
 
-        this.createInputElement(e.target);
+        this.editCurrentElement(e.target);
 
       } else {
         main.context.origin = e.target;
@@ -389,7 +391,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     e.cancelBubble = true;
   }
 
-  public createInputElement(target) {
+  public editCurrentElement(target) {
     const input = document.createElement('input') as any;
 
     if (target.classList.contains('numeric-param')) {
@@ -435,10 +437,6 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   }
 
   public putChildAndRemoveFromOrigin(origin: HTMLElement, target: HTMLElement) {
-    console.log('se ejecuta put child and remove from origin');
-    console.log('origin:', origin);
-    console.log('target:', target);
-
     if (origin.getAttribute('data-type') !== target.getAttribute('data-type')) {
       alert('tipos de datos distintos');
       return;
@@ -448,8 +446,6 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
     const clonado = origin.cloneNode(true) as HTMLElement;
     clonado.id = this.getNewID();
-
-    console.log('clonado: ', clonado);
 
     this.addEventToElementParam(clonado);
 
