@@ -393,7 +393,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     const input = document.createElement('input') as any;
 
     if (target.classList.contains('numeric-param')) {
-      input.type = 'text';
+      input.type = 'number';
     } else {
       input.type = 'text';
     }
