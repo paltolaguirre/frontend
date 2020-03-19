@@ -17,7 +17,7 @@
 
         <div>
           <mat-form-field class="standard-input"><input [disabled]=isDefault(data)
-            matInput required [(ngModel)]="data.nombre" placeholder="Nombre" type="text" autocomplete="off">
+            matInput required [(ngModel)]="data.nombre" placeholder="Nombre" type="text" autocomplete="off" maxlength="50">
           </mat-form-field>
           <mat-form-field class="standard-input"><input [disabled]=isDefault(data) 
             matInput [(ngModel)]="data.codigo" placeholder="Código" type="text" autocomplete="off">
