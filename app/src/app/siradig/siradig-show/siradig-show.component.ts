@@ -565,4 +565,9 @@ export class SiradigShowComponent implements OnInit {
   private isMyself(itemsApi) {
     return itemsApi.total_count == 1 && itemsApi.items[0].ID == this.id;
   }
+
+  public getFullDate(year) {
+    const date = new Date(year, 0, 1).toISOString();
+    return date;
+  }
 }
