@@ -40,7 +40,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
           return this.handleLogicalOperatorClick(data);
         }
 
-        return this.handleOperatorClicked(data);
+        return this.handleMathOperatorClicked(data);
     });
 
     const main = document.getElementById('main') as any;
@@ -57,7 +57,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     const id = 1;
   }
 
-  getStringID() {
+  public getNewID() {
     this.idCount ++;
 
     return String(this.idCount);
@@ -73,17 +73,17 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     }
 
     if (data.payload.category === OperatorCategory.Math) {
-      return this.handleOperatorClicked(data);
+      return this.handleMathOperatorClicked(data);
     }
 
-    this.createElementWithoutChildren(data, false);
+    this.createDomElementWithoutChildren(data, false);
 
     this.onDragLeave(event);
 
     event.cancelBubble = true;
   }
 
-  public createElementWithoutChildren(data: FormulaTransferData, isInput: boolean) {
+  public createDomElementWithoutChildren(data: FormulaTransferData, isInput: boolean) {
     const domElement = document.getElementById(data.nodeId);
     const droppeableSpace = document.getElementById('main');
 
@@ -96,12 +96,12 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     }
 
     const clonedNode = origin.cloneNode(true) as HTMLElement;
-    // Generates random ID to avoid deleting the original operator from the toolbar.
-    clonedNode.id = this.getStringID();
+    // Generates a new ID to avoid deleting the original operator from the toolbar.
+    clonedNode.id = this.getNewID();
 
     if (isInput) {
       clonedNode.innerHTML = '0.00';
-      this.onEditClick(clonedNode);
+      this.createInputElement(clonedNode);
     }
 
     this.addEventToElementParam(clonedNode);
@@ -145,14 +145,14 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   }
 
   public handleFormulaItemClicked(data: FormulaTransferData) {
-    this.createElementWithoutChildren(data, false);
+    this.createDomElementWithoutChildren(data, false);
   }
 
-  public handleOperatorClicked(data: FormulaTransferData) {
+  public handleMathOperatorClicked(data: FormulaTransferData) {
     const { payload } = data;
 
     if (!payload.hasChildren) {
-      return this.createElementWithoutChildren(data, true);
+      return this.createDomElementWithoutChildren(data, true);
     }
 
     const formulaDiv = this.createFormula(
@@ -178,7 +178,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     }
 
     if (data.payload.operationName !== LogicalOperatorNames.If) {
-      return this.handleOperatorClicked(data);
+      return this.handleMathOperatorClicked(data);
     }
 
     const formulaDiv = this.createFormula(
@@ -262,7 +262,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
   public createParam(functionName, type, isDefault, isAsociative) {
     const div = document.createElement('div');
-    div.id = this.getStringID();
+    div.id = this.getNewID();
 
     div.setAttribute('name', functionName);
     div.setAttribute('data-type', type);
@@ -371,7 +371,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
       if (e.target.children.length === 0 && e.target.getAttribute('name') === '') {
 
-        this.onEditClick(e.target);
+        this.createInputElement(e.target);
 
       } else {
         main.context.origin = e.target;
@@ -389,7 +389,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     e.cancelBubble = true;
   }
 
-  public onEditClick(target) {
+  public createInputElement(target) {
     const input = document.createElement('input') as any;
 
     if (target.classList.contains('numeric-param')) {
@@ -431,7 +431,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
     target.appendChild(input);
 
-    input.focus();
+    setTimeout(() => input.focus());
   }
 
   public putChildAndRemoveFromOrigin(origin: HTMLElement, target: HTMLElement) {
@@ -447,7 +447,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     origin.classList.remove('pronounced');
 
     const clonado = origin.cloneNode(true) as HTMLElement;
-    clonado.id = this.getStringID();
+    clonado.id = this.getNewID();
 
     console.log('clonado: ', clonado);
 
