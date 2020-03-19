@@ -1,5 +1,8 @@
+import { AutomaticCalculationTypes } from './../../core/enums/automatic-calc-types.enum';
+import { FormulaService } from './../../core/services/formula/formula.service';
+import { Formula } from 'src/app/core/models/formula.model';
 import { ConceptoService } from '../concepto.service';
-import { Concepto } from '../concepto.model';
+import { Concepto, TIPO_CALCULO_AUTOMATICO } from '../concepto.model';
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
@@ -11,21 +14,27 @@ import { PrintService } from 'src/app/print/print.service';
 @Component({
   selector: 'app-concepto',
   templateUrl: './concepto.component.html',
-  styleUrls: ['./concepto.component.css']
+  styleUrls: ['./concepto.component.scss']
 })
 export class ConceptoComponent implements OnInit, AfterViewInit {
   public currentConcepto$: Observable<Concepto> = null;
   paises: any[];
   id: number;
-  
+  public selectedFormula: Formula;
+
   constructor(
     private route: ActivatedRoute,
     private conceptoService: ConceptoService,
     public dialog: MatDialog,
     private notificationService: NotificationService,
     private router: Router,
-    public printService : PrintService
+    public printService : PrintService,
+    private formulaService: FormulaService
     ) { }
+
+  
+  ngAfterViewInit(): void {
+  }
 
  async ngOnInit() {
     this.currentConcepto$ = await this.route.paramMap.pipe(
@@ -40,10 +49,19 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
         return concepto;
       })
     );
+
+    this.currentConcepto$.subscribe(concepto => {
+      this.selectedFormula = concepto.formula
+    })
+  }
+  
+
+  tieneCalculoFormula(concepto: Concepto){
+    return false
   }
 
-  ngAfterViewInit() {
-
+  tieneCalculoPorcentaje(concepto: Concepto){
+      return concepto.porcentaje && concepto.tipodecalculoid 
   }
 
   private gotoGrilla() {
@@ -129,4 +147,32 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
     }
     return false;
   }
+
+  public onFormulaSelected(concepto: Concepto) {
+    concepto.formula = this.selectedFormula
+    concepto.formulanombre = this.selectedFormula.name
+    console.log(this.selectedFormula);
+  }
+
+  public onAutomaticCalcGroupSelected(concepto: Concepto){
+    switch(concepto.tipocalculoautomatico.codigo){
+      case 'PORCENTAJE':
+        concepto.tipocalculoautomaticoid = TIPO_CALCULO_AUTOMATICO.PORCENTAJE;
+        concepto.tipocalculoautomatico.ID = TIPO_CALCULO_AUTOMATICO.PORCENTAJE;
+        break;
+      case 'FORMULA':
+        concepto.tipocalculoautomaticoid = TIPO_CALCULO_AUTOMATICO.FORMULA;
+        concepto.tipocalculoautomatico.ID = TIPO_CALCULO_AUTOMATICO.FORMULA;
+        break;
+      
+      default: 
+      
+      concepto.tipocalculoautomaticoid = TIPO_CALCULO_AUTOMATICO.NO_APLICA;
+      concepto.tipocalculoautomatico.ID = TIPO_CALCULO_AUTOMATICO.NO_APLICA;
+    }
+    
+
+  }
+
+
 }

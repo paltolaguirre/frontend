@@ -17,7 +17,7 @@
 
         <div>
           <mat-form-field class="standard-input"><input [disabled]=isDefault(data)
-            matInput required [(ngModel)]="data.nombre" placeholder="Nombre" type="text" autocomplete="off">
+            matInput required [(ngModel)]="data.nombre" placeholder="Nombre" type="text" autocomplete="off" maxlength="50">
           </mat-form-field>
           <mat-form-field class="standard-input"><input [disabled]=isDefault(data) 
             matInput [(ngModel)]="data.codigo" placeholder="Código" type="text" autocomplete="off">
@@ -42,19 +42,64 @@
         </div>
 
       </mat-expansion-panel>
+
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>Cálculo Automático</mat-panel-title>
         </mat-expansion-panel-header>
-        <div>
-          <mat-form-field class="standard-input" style="width: 100px;">
-            <input [disabled]=isDefault(data) matInput [(ngModel)]="data.porcentaje" placeholder="Porcentaje" type="number" autocomplete="off">
-          </mat-form-field>
-          <span style="margin: 0px 10px; color: #808080;">Aplicable sobre </span>
-          <app-selector-default nombre="tipodecalculo" [disabled]=isDefault(data) required=false [(matSelect)]="data.tipodecalculoid"
-          (optionSelected)="data.tipodecalculoid=$event.ID; data.tipoconcepto.codigo=$event.codigo"></app-selector-default> 
-        </div>
+
+        <mat-radio-group [color]="'primary'" [(ngModel)]="data.tipocalculoautomatico.codigo" (ngModelChange)="onAutomaticCalcGroupSelected(data)">
+
+          <div class="columns">
+            <div class="column is-2">
+              <mat-radio-button class="example-radio-button" [value]="'NO_APLICA'">
+                No Aplica
+              </mat-radio-button>
+            </div>
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <div class="columns">
+            <div class="column is-2">
+              <mat-radio-button class="example-radio-button" [value]="'PORCENTAJE'" >
+                Porcentajes
+              </mat-radio-button>
+            </div>
+            <div class="column">
+              <mat-form-field class="standard-input" style="width: 100px;">
+                <input [disabled]="isDefault(data) || data.tipocalculoautomatico.codigo !== 'PORCENTAJE'" matInput [(ngModel)]="data.porcentaje" placeholder="Porcentaje" type="number" autocomplete="off">
+              </mat-form-field>
+              <span style="margin: 0px 10px; color: #808080;">Aplicable sobre </span>
+              <app-selector-default nombre="tipodecalculo" [disabled]="isDefault(data) || data.tipocalculoautomatico.codigo !== 'PORCENTAJE'" required=false [(matSelect)]="data.tipodecalculoid"
+                (optionSelected)="data.tipodecalculoid=$event.ID; data.tipoconcepto.codigo=$event.codigo">
+              </app-selector-default> 
+            </div>
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <div class="columns">
+            <div class="column is-2">
+              <mat-radio-button class="example-radio-button" [value]="'FORMULA'">
+                Fórmulas
+              </mat-radio-button>
+            </div>
+            <div class="column">
+                <app-selector-default *ngIf="isDefault(data)" filter="tipoformulas=sistema" nombre="function" [disabled]="isDefault(data) || data.tipocalculoautomatico.codigo !== 'FORMULA'" required=false [(matSelect)]="data.formulanombre"
+                (optionSelected)="data.formulanombre=$event.ID; data.formula.name=$event.codigo">
+              </app-selector-default> 
+              <app-selector-default *ngIf="!isDefault(data)" filter="tipoformulas=usuario" nombre="function" [disabled]="isDefault(data) || data.tipocalculoautomatico.codigo !== 'FORMULA'" required=false [(matSelect)]="data.formulanombre"
+                (optionSelected)="data.formulanombre=$event.ID; data.formula.name=$event.codigo">
+              </app-selector-default>
+            </div>
+
+          </div>       
+
+          </mat-radio-group>         
+       
       </mat-expansion-panel>
+
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>Impuesto a las Ganancias</mat-panel-title>

@@ -35,9 +35,11 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   paises: any[];
   id: number;
   data: any;
-  public print$: Observable<boolean> = null;
+  public print$: Observable<string> = null;
   fechaperiododepositado: any;
   fechaperiodoliquidacion: any;
+  public liquidacionItemHojaCalculo$: Observable<Liquidacionitem> = null;
+  public mostrarLiquidacion$: Observable<boolean> = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -64,13 +66,13 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
       })
     );
 
+    this.mostrarLiquidacion$ = of(true)
+
     this.print$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
-        const print = (params.get('action') == "imprimir");
-        if (print) {
-          console.log("Action Imprimir");
-        }
-
+        let print = params.get('action');
+        if(!print) print = 'default';
+        
         return of(print);
       })
     );
@@ -99,8 +101,32 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
     this.router.navigate([`/liquidaciones/${this.id}/imprimir`]);
   }
 
+  private gotoPreview2Hojas() {
+    this.router.navigate([`/liquidaciones/${this.id}/imprimircompleto`]);
+  }
+
   private gotoGrilla() {
     this.router.navigate(['/liquidaciones']);
+  }
+
+  private onClickVerHojaDeCalculo(item: Liquidacionitem) {
+    this.liquidacionItemHojaCalculo$ = this.route.paramMap.pipe(
+      switchMap(async (params: ParamMap) => {        
+        return item;
+      })
+    );
+   
+    this.mostrarLiquidacion$ = of(false)
+  }
+
+
+  private onClickCloseVerHojaDeCalculo() {
+    this.liquidacionItemHojaCalculo$ = this.route.paramMap.pipe(
+      switchMap(async (params: ParamMap) => {        
+        return null;
+      })
+    );
+    this.mostrarLiquidacion$ = of(true);
   }
   
   onClickId(): void {
@@ -109,6 +135,14 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
 
   onClickPreview(): void {
     this.gotoPreview();
+  }
+
+  onClickPreview2Hojas(): void {
+    this.gotoPreview2Hojas();
+  }
+
+  tieneCalculoAutomatico(item: Liquidacionitem): boolean {
+    return item.acumuladores && item.acumuladores.length > 0 
   }
   
   onClickAbort(): void {
@@ -260,7 +294,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
 
   calcularTotal(items: ImporteUnitario[], tipoconcepto: string): number {
     let array;
-    if(items) array = items.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == tipoconcepto);
+    if(items) array = items.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == tipoconcepto && item.DeletedAt == null);
 
 
     let total: number= 0;
@@ -373,6 +407,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
     this.formatData(currentLiquidacion);
     const data = await this.liquidacionService.calculoAutomaticoLiquidacionByConcepto(currentLiquidacion, item.concepto.ID);
     if(data.importeunitario != null) item.importeunitario = data.importeunitario;
+    item.acumuladores = data.acumuladores;
   }
 
   async onClickCalculoAutomatico(currentLiquidacion: Liquidacion) {
@@ -382,9 +417,14 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
       data.liquidacionitems.forEach((element, index) => {
         if(currentLiquidacion.liquidacionitems[index].conceptoid == element.conceptoid) {
           currentLiquidacion.liquidacionitems[index].importeunitario = element.importeunitario;
+          currentLiquidacion.liquidacionitems[index].acumuladores = element.acumuladores;
         }
       });
     }
+  }
+
+  public esNoEditable(item:Liquidacionitem){
+    return item.concepto.eseditable === false
   }
 
   setCurrentLiquidacion(liquidacion: Liquidacion) {

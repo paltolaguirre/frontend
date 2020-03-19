@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LibrosueldosEncabezadoPrintComponent } from './librosueldos-encabezado-print.component';
 
-describe('LibrosueldosEncabezadoPrintComponent', () => {
+xdescribe('LibrosueldosEncabezadoPrintComponent', () => {
   let component: LibrosueldosEncabezadoPrintComponent;
   let fixture: ComponentFixture<LibrosueldosEncabezadoPrintComponent>;
 

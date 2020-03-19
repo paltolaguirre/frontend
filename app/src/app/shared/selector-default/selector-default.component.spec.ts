@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SelectorDefaultComponent } from './selector-default.component';
 
-describe('SelectorDefaultComponent', () => {
+xdescribe('SelectorDefaultComponent', () => {
   let component: SelectorDefaultComponent;
   let fixture: ComponentFixture<SelectorDefaultComponent>;
 

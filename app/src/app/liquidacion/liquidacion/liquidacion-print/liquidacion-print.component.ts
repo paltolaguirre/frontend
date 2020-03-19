@@ -84,7 +84,7 @@ export class LiquidacionPrintComponent implements OnInit {
     this.totalImpNoRemunerativo = 0;
     this.totalDeducciones = 0;
     this.totalNeto = 0;
-
+    
     for (let index = 0; index < 10; index++) {
       let posicionImpNoRemunerativos = index - this.liquidacion.importesremunerativos.length;
       let posicionRetenciones = index - this.liquidacion.descuentos.length;

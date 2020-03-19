@@ -1,0 +1,309 @@
+<div mat-dialog-content class="content" style="padding: 5em 0.5em 5em 0.5em; overflow: auto;">
+    <div id="contentTOPDF">
+        <div class="hojaPDF">
+            <!-- Original -->
+            <table class="tg">
+                <colgroup>
+                    <col style="width: 95px">
+                    <col style="width: 90px">
+                    <col style="width: 90px">
+                    <col style="width: 90px">
+                    <col style="width: 90px">
+                    <col style="width: 90px;border-right:1px solid black;">
+                    <col style="width: 95px">
+                    <col style="width: 180px">
+                    <col style="width: 90px">
+                    <col style="width: 90px">
+                </colgroup>
+                <tr style="min-height: 100px;">
+                    <th class="tg-0pky hidden-right" colspan="4">
+                        <div *ngIf="empresa" class="logo-empresa"><img *ngIf="empresa.logo"
+                                src="{{'data:image/png;base64,'+empresa.logo}}" /></div>
+                    </th>
+                    <th class="tg-0lax hidden-left hidden-right" colspan="5">
+                        <div class="empresa">
+                            <ul *ngIf="empresa">
+                                <li>EMPLEADOR: {{empresa.nombre}}</li>
+                                <li>DOMICILIO: {{empresa.domicilio}}</li>
+                                <li>LOCALIDAD: {{empresa.localidad}}</li>
+                                <li>CUIT EMPLEADOR: {{empresa.cuit}}</li>
+                            </ul>
+                        </div>
+                    </th>
+                    <th class="tg-0lax hidden-left" style="vertical-align: top;">Nº {{liquidacion.ID}}</th>
+                </tr>
+                <tr>
+                    <td class="tg-0lax">legajo<div class="dato">{{liquidacion.legajo.legajo}}</div>
+                    </td>
+                    <td class="tg-0lax" colspan="3">apellido y nombre <div class="dato">{{liquidacion.legajo.apellido}},
+                            {{liquidacion.legajo.nombre}}</div>
+                    </td>
+                    <td class="tg-0lax">cuil<div class="dato">{{liquidacion.legajo.cuil}}</div>
+                    </td>
+                    <td class="tg-0lax">n documento<div class="dato">{{obtenerDni()}}</div>
+                    </td>
+                    <td class="tg-0lax">fecha ingreso<div class="dato">
+                            {{liquidacion.legajo.fechaalta | date: 'dd-MM-yyyy'}}</div>
+                    </td>
+                    <td class="tg-0lax">fecha de pago<div class="dato">{{liquidacion.fecha | date: 'dd-MM-yyyy'}}</div>
+                    </td>
+                    <td class="tg-0lax">remuneracion<div class="dato">
+                            {{liquidacion.legajo.remuneracion | number:'1.2-2':'en'}}</div>
+                    </td>
+                    <td class="tg-0lax">tipo<div class="dato">{{liquidacion.tipo.nombre}}</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tg-0lax" colspan="2" rowspan="2">categoria<div class="dato">
+                            {{liquidacion.legajo.categoria}}</div>
+                    </td>
+                    <td class="tg-0lax" rowspan="2">sector<div class="dato">-</div>
+                    </td>
+                    <td class="tg-0lax" rowspan="2">periodo liquidacion<div class="dato">
+                            {{liquidacion.fechaperiodoliquidacion | date: 'MM-yyyy'}}</div>
+                    </td>
+                    <td class="tg-0lax" colspan="2" rowspan="2">tarea<div class="dato">{{liquidacion.legajo.tarea}}
+                        </div>
+                    </td>
+                    <td class="tg-0lax" colspan="4" class="text-center">Depósito aporte jubilatorio Art. 12 Ley
+                        17.250/67</td>
+                </tr>
+                <tr>
+                    <td class="tg-0lax">periodo<div class="dato">
+                            {{liquidacion.fechaperiododepositado | date: 'MM-yyyy'}}</div>
+                    </td>
+                    <td class="tg-0lax">fecha<div class="dato">
+                            {{liquidacion.fechaultimodepositoaportejubilatorio | date: 'dd-MM-yyyy'}}</div>
+                    </td>
+                    <td class="tg-0lax" colspan="2">banco<div class="dato">{{liquidacion.bancoaportejubilatorio.codigo}}
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tg-0lax" colspan="6" class="text-center">haberes</td>
+                    <td class="tg-0lax" colspan="4" class="text-center">deducciones</td>
+                </tr>
+                <tr>
+                    <td class="tg-0lax">cod</td>
+                    <td class="tg-0lax" colspan="2">detalle</td>
+                    <td class="tg-0lax">cantidad</td>
+                    <td class="tg-0lax">remunerativo total</td>
+                    <td class="tg-0lax">no remunerativo total</td>
+                    <td class="tg-0lax">cod</td>
+                    <td class="tg-0lax">detalle</td>
+                    <td class="tg-0lax">cantidad</td>
+                    <td class="tg-0lax">importe total</td>
+                </tr>
+
+                <tr *ngFor="let item of items; let i = index; let firstItem = first; let lastItem = last"
+                    [ngClass]="{'item hidden-top':!firstItem,'hidden-bottom':!lastItem}">
+                    <td class="tg-0lax">
+                        <div class="datoItem">{{item.haber.codigo}}</div>
+                    </td>
+                    <td class="tg-0lax" colspan="2">
+                        <div class="datoItemDetalle">{{item.haber.detalle}}</div>
+                    </td>
+                    <td class="tg-0lax">
+                        <div class="datoItem">{{item.haber.cantidad}}</div>
+                    </td>
+                    <td class="tg-0lax">
+                        <div class="datoItem">{{item.haber.remunerativo}}</div>
+                    </td>
+                    <td class="tg-0lax">
+                        <div class="datoItem">{{item.haber.noremunerativo}}</div>
+                    </td>
+                    <td class="tg-0lax">
+                        <div class="datoItem">{{item.deduccion.codigo}}</div>
+                    </td>
+                    <td class="tg-0lax">
+                        <div class="datoItemDetalle">{{item.deduccion.detalle}}</div>
+                    </td>
+                    <td class="tg-0lax">
+                        <div class="datoItem">{{item.deduccion.cantidad}}</div>
+                    </td>
+                    <td class="tg-0lax">
+                        <div class="datoItem">{{item.deduccion.importe}}</div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="tg-0lax" colspan="4">totales</td>
+                    <td class="tg-0lax">{{totalImpRemunerativo | number:'1.2-2':'en'}}</td>
+                    <td class="tg-0lax">{{totalImpNoRemunerativo | number:'1.2-2':'en'}}</td>
+                    <td class="tg-0lax" colspan="3">totales</td>
+                    <td class="tg-0lax">{{totalDeducciones | number:'1.2-2':'en'}}</td>
+                </tr>
+                <tr>
+                    <td class="tg-0lax" colspan="9">sueldo neto a cobrar</td>
+                    <td class="tg-0lax">
+                        <div class="dato total">{{totalNeto | number:'1.2-2':'en'}}</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tg-0lax" colspan="5">lugar de pago<div *ngIf="empresa" class="dato">{{empresa.localidad}}
+                        </div>
+                    </td>
+                    <td class="tg-0lax hidden-right" colspan="4" alt="Leyenda y Firma">
+                        <div class="leyenda">Recibi el importe neto de esta liquidacion en pago de mi remuneracion
+                            correspondiente al periodo indicado y duplicado de
+                            la misma, conforme a la ley vigente.</div>
+                        <div class="firma">Firma:</div>
+                    </td>
+                    <td class="tg-0lax hidden-left"></td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <div class="hojaPDF">
+            <!-- Duplicado -->
+            <table class="tg">
+                <colgroup>
+                    <col style="width: 95px">
+                    <col style="width: 90px">
+                    <col style="width: 90px">
+                    <col style="width: 90px">
+                    <col style="width: 90px">
+                    <col style="width: 90px;border-right:1px solid black;">
+                    <col style="width: 95px">
+                    <col style="width: 180px">
+                    <col style="width: 90px">
+                    <col style="width: 90px">
+                </colgroup>
+                <tr style="min-height: 100px;">
+                    <th class="tg-0pky hidden-right" colspan="4">
+                        <div *ngIf="empresa" class="logo-empresa"><img *ngIf="empresa.logo"
+                                src="{{'data:image/png;base64,'+empresa.logo}}" /></div>
+                    </th>
+                    <th class="tg-0lax hidden-left hidden-right" colspan="5">
+                        <div class="empresa">
+                            <ul *ngIf="empresa">
+                                <li>EMPLEADOR: {{empresa.nombre}}</li>
+                                <li>DOMICILIO: {{empresa.domicilio}}</li>
+                                <li>LOCALIDAD: {{empresa.localidad}}</li>
+                                <li>CUIT EMPLEADOR: {{empresa.cuit}}</li>
+                            </ul>
+                        </div>
+                    </th>
+                    <th class="tg-0lax hidden-left" style="vertical-align: top;">Nº {{liquidacion.ID}}</th>
+                </tr>
+                <tr>
+                    <td class="tg-0lax">legajo<div class="dato">{{liquidacion.legajo.legajo}}</div>
+                    </td>
+                    <td class="tg-0lax" colspan="3">apellido y nombre <div class="dato">{{liquidacion.legajo.apellido}},
+                            {{liquidacion.legajo.nombre}}</div>
+                    </td>
+                    <td class="tg-0lax">cuil<div class="dato">{{liquidacion.legajo.cuil}}</div>
+                    </td>
+                    <td class="tg-0lax">n documento<div class="dato">{{obtenerDni()}}</div>
+                    </td>
+                    <td class="tg-0lax">fecha ingreso<div class="dato">
+                            {{liquidacion.legajo.fechaalta | date: 'dd-MM-yyyy'}}</div>
+                    </td>
+                    <td class="tg-0lax">fecha de pago<div class="dato">{{liquidacion.fecha | date: 'dd-MM-yyyy'}}</div>
+                    </td>
+                    <td class="tg-0lax">remuneracion<div class="dato">
+                            {{liquidacion.legajo.remuneracion | number:'1.2-2':'en'}}</div>
+                    </td>
+                    <td class="tg-0lax">tipo<div class="dato">{{liquidacion.tipo.nombre}}</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tg-0lax" colspan="2" rowspan="2">categoria<div class="dato">
+                            {{liquidacion.legajo.categoria}}</div>
+                    </td>
+                    <td class="tg-0lax" rowspan="2">sector<div class="dato">-</div>
+                    </td>
+                    <td class="tg-0lax" rowspan="2">periodo liquidacion<div class="dato">
+                            {{liquidacion.fechaperiodoliquidacion | date: 'MM-yyyy'}}</div>
+                    </td>
+                    <td class="tg-0lax" colspan="2" rowspan="2">tarea<div class="dato">{{liquidacion.legajo.tarea}}
+                        </div>
+                    </td>
+                    <td class="tg-0lax" colspan="4" class="text-center">Depósito aporte jubilatorio Art. 12 Ley
+                        17.250/67</td>
+                </tr>
+                <tr>
+                    <td class="tg-0lax">periodo<div class="dato">
+                            {{liquidacion.fechaperiododepositado | date: 'MM-yyyy'}}</div>
+                    </td>
+                    <td class="tg-0lax">fecha<div class="dato">
+                            {{liquidacion.fechaultimodepositoaportejubilatorio | date: 'dd-MM-yyyy'}}
+                        </div>
+                    </td>
+                    <td class="tg-0lax" colspan="2">banco<div class="dato">{{liquidacion.bancoaportejubilatorio.codigo}}
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tg-0lax" colspan="6" class="text-center">haberes</td>
+                    <td class="tg-0lax" colspan="4" class="text-center">deducciones</td>
+                </tr>
+                <tr>
+                    <td class="tg-0lax">cod</td>
+                    <td class="tg-0lax" colspan="2">detalle</td>
+                    <td class="tg-0lax">cantidad</td>
+                    <td class="tg-0lax">remunerativo</td>
+                    <td class="tg-0lax">no remunerativo</td>
+                    <td class="tg-0lax">cod</td>
+                    <td class="tg-0lax">detalle</td>
+                    <td class="tg-0lax">cantidad</td>
+                    <td class="tg-0lax">importe</td>
+                </tr>
+
+                <tr *ngFor="let item of items; let i = index; let firstItem = first; let lastItem = last"
+                    [ngClass]="{'item hidden-top':!firstItem,'hidden-bottom':!lastItem}">
+                    <td class="tg-0lax">
+                        <div class="datoItem">{{item.haber.codigo}}</div>
+                    </td>
+                    <td class="tg-0lax" colspan="2">
+                        <div class="datoItemDetalle">{{item.haber.detalle}}</div>
+                    </td>
+                    <td class="tg-0lax">
+                        <div class="datoItem">{{item.haber.cantidad}}</div>
+                    </td>
+                    <td class="tg-0lax">
+                        <div class="datoItem">{{item.haber.remunerativo}}</div>
+                    </td>
+                    <td class="tg-0lax">
+                        <div class="datoItem">{{item.haber.noremunerativo}}</div>
+                    </td>
+                    <td class="tg-0lax">
+                        <div class="datoItem">{{item.deduccion.codigo}}</div>
+                    </td>
+                    <td class="tg-0lax">
+                        <div class="datoItemDetalle">{{item.deduccion.detalle}}</div>
+                    </td>
+                    <td class="tg-0lax">
+                        <div class="datoItem">{{item.deduccion.cantidad}}</div>
+                    </td>
+                    <td class="tg-0lax">
+                        <div class="datoItem">{{item.deduccion.importe}}</div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="tg-0lax" colspan="4">totales</td>
+                    <td class="tg-0lax">{{totalImpRemunerativo | number:'1.2-2':'en'}}</td>
+                    <td class="tg-0lax">{{totalImpNoRemunerativo | number:'1.2-2':'en'}}</td>
+                    <td class="tg-0lax" colspan="3">totales</td>
+                    <td class="tg-0lax">{{totalDeducciones | number:'1.2-2':'en'}}</td>
+                </tr>
+                <tr>
+                    <td class="tg-0lax" colspan="9">sueldo neto a cobrar</td>
+                    <td class="tg-0lax">
+                        <div class="dato total">{{totalNeto | number:'1.2-2':'en'}}</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tg-0lax" colspan="5">lugar de pago<div *ngIf="empresa" class="dato">{{empresa.localidad}}
+                        </div>
+                    </td>
+                    <td class="tg-0lax hidden-right" colspan="4" alt="Leyenda y Firma">
+                        <div class="firma" style="padding-bottom: 65px; margin-top: 10px;">Firma del empleador:</div>
+                    </td>
+                    <td class="tg-0lax hidden-left"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
