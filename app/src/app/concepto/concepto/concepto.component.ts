@@ -2,7 +2,7 @@ import { AutomaticCalculationTypes } from './../../core/enums/automatic-calc-typ
 import { FormulaService } from './../../core/services/formula/formula.service';
 import { Formula } from 'src/app/core/models/formula.model';
 import { ConceptoService } from '../concepto.service';
-import { Concepto } from '../concepto.model';
+import { Concepto, TIPO_CALCULO_AUTOMATICO } from '../concepto.model';
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
@@ -21,10 +21,6 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
   paises: any[];
   id: number;
   public selectedFormula: Formula;
-  public selectedGroupAutomaticCalculation: string;
-  public availableFormulas: Formula[];
-  public formulaFromDate: Date;
-  public formulaToDate: Date;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,6 +31,10 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
     public printService : PrintService,
     private formulaService: FormulaService
     ) { }
+
+  
+  ngAfterViewInit(): void {
+  }
 
  async ngOnInit() {
     this.currentConcepto$ = await this.route.paramMap.pipe(
@@ -50,23 +50,18 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
       })
     );
 
-    this.fetchFormulas();
+    this.currentConcepto$.subscribe(concepto => {
+      this.selectedFormula = concepto.formula
+    })
+  }
+  
+
+  tieneCalculoFormula(concepto: Concepto){
+    return false
   }
 
-  ngAfterViewInit() {
-    this.setDefaultSelectedCalculationType();
-  }
-
-  public setDefaultSelectedCalculationType() {
-    this.selectedGroupAutomaticCalculation = AutomaticCalculationTypes.PERCENTAGE;
-  }
-
-  public async fetchFormulas() {
-    try {
-      this.availableFormulas = await this.formulaService.getAll();
-    } catch (e) {
-      console.log(e);
-    }
+  tieneCalculoPorcentaje(concepto: Concepto){
+      return concepto.porcentaje && concepto.tipodecalculoid 
   }
 
   private gotoGrilla() {
@@ -152,4 +147,32 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
     }
     return false;
   }
+
+  public onFormulaSelected(concepto: Concepto) {
+    concepto.formula = this.selectedFormula
+    concepto.formulanombre = this.selectedFormula.name
+    console.log(this.selectedFormula);
+  }
+
+  public onAutomaticCalcGroupSelected(concepto: Concepto){
+    switch(concepto.tipocalculoautomatico.codigo){
+      case 'PORCENTAJE':
+        concepto.tipocalculoautomaticoid = TIPO_CALCULO_AUTOMATICO.PORCENTAJE;
+        concepto.tipocalculoautomatico.ID = TIPO_CALCULO_AUTOMATICO.PORCENTAJE;
+        break;
+      case 'FORMULA':
+        concepto.tipocalculoautomaticoid = TIPO_CALCULO_AUTOMATICO.FORMULA;
+        concepto.tipocalculoautomatico.ID = TIPO_CALCULO_AUTOMATICO.FORMULA;
+        break;
+      
+      default: 
+      
+      concepto.tipocalculoautomaticoid = TIPO_CALCULO_AUTOMATICO.NO_APLICA;
+      concepto.tipocalculoautomatico.ID = TIPO_CALCULO_AUTOMATICO.NO_APLICA;
+    }
+    
+
+  }
+
+
 }
