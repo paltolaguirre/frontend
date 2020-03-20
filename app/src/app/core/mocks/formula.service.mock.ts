@@ -105,4 +105,28 @@ export class FormulaServiceMock {
   public isEditable(formula: Formula): boolean {
     return true;
   }
+
+  public extractFormulasByType(formulas: Formula[], type: string): Formula[] {
+    return [];
+  }
+
+  public extractUserFormulas(formulas: Formula[]): Formula[] {
+    return [];
+  }
+
+  public extractVariables(formulas: Formula[]): Formula[] {
+    return [];
+  }
+
+  public extractInputParams(formula: Formula): any[] {
+    return [];
+  }
+
+  public extractStandardFormulas(formulas: Formula[]): Formula[] {
+    return [];
+  }
+
+  public emitFormulaItemClick(payload: FormulaTransferData) {
+    return null;
+  }
 }
