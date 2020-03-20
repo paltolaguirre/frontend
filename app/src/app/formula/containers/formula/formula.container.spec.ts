@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormulaDropSpaceComponent } from './../../components/formula-drop-space/formula-drop-space.component';
 import { OperatorsToolbarComponent } from './../../components/operators-toolbar/operators-toolbar.component';
 import { FormulaServiceMock } from './../../../core/mocks/formula.service.mock';
@@ -43,10 +44,12 @@ describe('FormulaContainer', () => {
         ReactiveFormsModule,
         RouterTestingModule,
         BrowserAnimationsModule,
-        SharedModule
+        SharedModule,
+        HttpClientTestingModule
       ],
       providers: [
-        { provide: FormulaService, useClass: FormulaServiceMock }
+        { provide: FormulaService, useClass: FormulaServiceMock },
+        MatDialog
       ]
     })
     .compileComponents();
