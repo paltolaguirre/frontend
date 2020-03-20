@@ -435,12 +435,9 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       }
     };
 
-
     input.className = 'inputedit';
-
-    input.value = target.innerHTML;
-
-    input.style.width = target.innerHTML.length + 'em';
+    input.placeholder = '0.00';
+    input.style.width = '3rem';
 
     target.appendChild(input);
 
