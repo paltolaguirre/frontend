@@ -1,3 +1,5 @@
+import { InfoDialogComponent } from './../../../shared/components/info-dialog/info-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 import { LogicalOperatorNames } from '../../../core/enums/logical-operator-names.enum';
 import { OperatorCategory } from '../../../core/enums/operator-category.enum';
 import { MathOperatorTypes } from '../../../core/enums/math-operator-types.enum';
@@ -20,7 +22,8 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
   constructor(
     private formulaService: FormulaService,
-    private operatorsService: OperatorsService
+    private operatorsService: OperatorsService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -437,8 +440,13 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
   public putChildAndRemoveFromOrigin(origin: HTMLElement, target: HTMLElement) {
     if (origin.getAttribute('data-type') !== target.getAttribute('data-type')) {
-      alert('tipos de datos distintos');
-      return;
+      return this.dialog.open(InfoDialogComponent, {
+        width: '250px',
+        data: {
+          title: 'Tipos de datos distintos',
+          text: 'Por favor, intente nuevamente con operadores del mismo tipo. Ejemplo: numérico con numérico.'
+        }
+      });
     }
 
     origin.classList.remove('pronounced');
