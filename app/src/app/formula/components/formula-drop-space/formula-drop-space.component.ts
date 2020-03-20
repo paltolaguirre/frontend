@@ -103,7 +103,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       this.editCurrentElement(clonedNode);
     }
 
-    this.addEventToElementParam(clonedNode);
+    this.addEventsToFormulaParam(clonedNode);
 
     to.appendChild(clonedNode);
 
@@ -127,6 +127,9 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     badge.append(removeIcon);
 
     badge.onclick = (e: any) => {
+      // e.stopPropagation();
+
+      console.log(e);
       const param = e.path.find((node) => node.classList.contains('param'));
 
       if (param) {
@@ -273,7 +276,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
     div.draggable = true;
 
-    this.addEventToElementParam(div);
+    this.addEventsToFormulaParam(div);
 
     if (isDefault) {
       if (type === MathOperatorTypes.Numeric) {
@@ -294,10 +297,10 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     return 'numeric-param';
   }
 
-  public addEventToElementParam(element) {
+  public addEventsToFormulaParam(element) {
     element.onmouseover = this.onParamMouseOver.bind(this);
     element.onmouseout = this.onDragLeave.bind(this);
-    element.onclick = this.paramOnclickCortarPegar.bind(this);
+    element.onclick = this.cutAndPasteOnClick.bind(this);
     element.ondragover = this.onDragOver.bind(this);
     element.ondragstart = this.dragstart.bind(this);
     element.ondrop = this.onChildDrop.bind(this);
@@ -357,7 +360,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     this.putChildAndRemoveFromOrigin(origin, target);
   }
 
-  paramOnclickCortarPegar(e) {
+  public cutAndPasteOnClick(e) {
     const main = document.getElementById('main') as any;
 
     if (e.target.classList.contains('editable-input')) {
@@ -365,14 +368,11 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     }
 
     if (e.target === main.context.origin) {
-
       main.context.origin.classList.remove('pronounced');
       main.context.origin = null;
 
     } else if (main.context.origin == null) {
-
       if (e.target.children.length === 0 && e.target.getAttribute('name') === '') {
-
         this.editCurrentElement(e.target);
 
       } else {
@@ -380,10 +380,9 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
         e.target.classList.add('pronounced');
       }
-
     } else {
-
-      this.putChildAndRemoveFromOrigin(main.context.origin, e.target);
+      // Feature to move items inside others only clicking on them
+      // this.putChildAndRemoveFromOrigin(main.context.origin, e.target);
 
       main.context.origin = null;
     }
@@ -444,20 +443,20 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
     origin.classList.remove('pronounced');
 
-    const clonado = origin.cloneNode(true) as HTMLElement;
-    clonado.id = this.getNewID();
+    const clonedNode = origin.cloneNode(true) as HTMLElement;
+    clonedNode.id = this.getNewID();
 
-    this.addEventToElementParam(clonado);
+    this.addEventsToFormulaParam(clonedNode);
 
     const aux = document.getElementById('auxiliar');
 
-    aux.appendChild(clonado);
+    aux.appendChild(clonedNode);
 
-    target.parentNode.replaceChild(clonado, target);
+    target.parentNode.replaceChild(clonedNode, target);
 
-    this.makeRecursiveWhiteParenthesis(clonado);
+    this.makeRecursiveWhiteParenthesis(clonedNode);
 
-    if (!origin.contains(clonado)) {
+    if (!origin.contains(clonedNode)) {
       this.removeOrigin(origin);
     }
   }
