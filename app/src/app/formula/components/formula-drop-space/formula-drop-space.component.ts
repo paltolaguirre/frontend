@@ -281,12 +281,14 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
     this.addEventsToFormulaParam(div);
 
-    if (isDefault) {
-      if (type === MathOperatorTypes.Numeric) {
-        div.innerHTML = '0.00';
-      } else if (type === MathOperatorTypes.Boolean) {
-        div.innerHTML = 'false';
-      }
+    if (!isDefault) {
+      return div;
+    }
+
+    if (type === MathOperatorTypes.Numeric) {
+      div.innerHTML = '0.00';
+    } else if (type === MathOperatorTypes.Boolean) {
+      div.innerHTML = 'false';
     }
 
     return div;
@@ -310,7 +312,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     element.ondragleave = this.onDragLeave.bind(this);
   }
 
-  onDragOver(event) { // allowDrop
+  public onDragOver(event) { // allowDrop
     event.preventDefault();
 
     this.onParamMouseOver(event);
@@ -318,23 +320,30 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     event.cancelBubble = true;
   }
 
-  onParamMouseOver(e) {
+  public onParamMouseOver(e) {
     e.stopPropagation();
 
-    e.target.classList.remove('no-highlight');
-    e.target.classList.add('highligthed');
+    this.highlightElement(e.target);
 
-    e.target.parentNode.classList.remove('highligthed');
-    e.target.parentNode.classList.add('no-highlight');
+    this.removeHighlightToElement(e.target.parentNode);
 
     e.cancelBubble = true;
   }
 
-  onDragLeave(e) {
-    e.target.classList.remove('highligthed');
-    e.target.classList.add('no-highlight');
+  public onDragLeave(e) {
+    this.removeHighlightToElement(e.target);
 
     e.cancelBubble = true;
+  }
+
+  public removeHighlightToElement(target: HTMLElement) {
+    target.classList.remove('highligthed');
+    target.classList.add('no-highlight');
+  }
+
+  public highlightElement(target: HTMLElement) {
+    target.classList.remove('no-highlight');
+    target.classList.add('highligthed');
   }
 
   dragstart(ev) {
@@ -478,8 +487,8 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
     const children = param.parentNode.childNodes;
 
-    for (let i = 0; i < children.length; i++) {
-      this.makeWhiteParenthesis(children[i]);
+    for (const child of children) {
+      this.makeWhiteParenthesis(child);
     }
 
     this.makeWhiteParenthesis(param);
