@@ -1,3 +1,4 @@
+import { MathOperatorTypes } from './../../../core/enums/math-operator-types.enum';
 import { InfoDialogComponent } from './../../../shared/components/info-dialog/info-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { LogicalOperatorNames } from '../../../core/enums/logical-operator-names.enum';
@@ -436,7 +437,9 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     };
 
     input.className = 'inputedit';
-    input.placeholder = '0.00';
+    input.placeholder = Number(target.getAttribute('data-type')) === MathOperatorTypes.Boolean ?
+      'false' :
+      '0.00';
     input.style.width = '3rem';
 
     target.appendChild(input);
