@@ -1,3 +1,6 @@
+import { ConceptServiceMock } from './../../../core/mocks/concept.service.mock';
+import { ConceptoService } from './../../../concepto/concepto.service';
+import { SharedModule } from './../../../shared/shared.module';
 import { FormulaServiceMock } from './../../../core/mocks/formula.service.mock';
 import { FormulaService } from './../../../core/services/formula/formula.service';
 import { FormulaCategoryItem } from './../../../core/models/formula-category-item.model';
@@ -17,10 +20,12 @@ describe('FormulaItemPickerComponent', () => {
       declarations: [ FormulaItemPickerComponent ],
       imports: [
         MaterialModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        SharedModule
       ],
       providers: [
-        { provide: FormulaService, useClass: FormulaServiceMock }
+        { provide: FormulaService, useClass: FormulaServiceMock },
+        { provide: ConceptoService, useClass: ConceptServiceMock }
       ]
     })
     .compileComponents();
