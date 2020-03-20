@@ -1,3 +1,7 @@
+import { FormulaServiceMock } from './../../../core/mocks/formula.service.mock';
+import { FormulaService } from './../../../core/services/formula/formula.service';
+import { OperatorsService } from './../../../core/services/operators/operators.service';
+import { SharedModule } from './../../../shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './../../../material.module';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
@@ -13,7 +17,12 @@ describe('OperatorsToolbarComponent', () => {
       declarations: [ OperatorsToolbarComponent ],
       imports: [
         MaterialModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        SharedModule
+      ],
+      providers: [
+        OperatorsService,
+        { provide: FormulaService, useClass: FormulaServiceMock }
       ]
     })
     .compileComponents();
