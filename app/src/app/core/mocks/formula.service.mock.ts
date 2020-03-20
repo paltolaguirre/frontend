@@ -1,3 +1,5 @@
+import { EventEmitter } from '@angular/core';
+import { FormulaTransferData } from './../models/formula-transfer-data.model';
 import { BehaviorSubject } from 'rxjs';
 import { FormulaCategory } from './../models/formula-category.model';
 import { Formula } from '../models/formula.model';
@@ -6,6 +8,7 @@ export class FormulaServiceMock {
 
   private formulas = new BehaviorSubject<Formula[]>([]);
   public formulasStore$ = this.formulas.asObservable();
+  public formulaPickerItemEmitter: EventEmitter<FormulaTransferData> = new EventEmitter();
 
   fakeFormulaItem: Formula = {
     name: 'Formula 1',

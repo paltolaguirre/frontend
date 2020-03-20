@@ -1,4 +1,3 @@
-import { MathOperatorTypes } from './../../../core/enums/math-operator-types.enum';
 import { InfoDialogComponent } from './../../../shared/components/info-dialog/info-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { LogicalOperatorNames } from '../../../core/enums/logical-operator-names.enum';

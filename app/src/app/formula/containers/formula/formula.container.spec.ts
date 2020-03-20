@@ -1,4 +1,4 @@
-import { FormulaDropSpaceComponent } from '../../components/formula-draggable-space/formula-drop-space.component';
+import { FormulaDropSpaceComponent } from './../../components/formula-drop-space/formula-drop-space.component';
 import { OperatorsToolbarComponent } from './../../components/operators-toolbar/operators-toolbar.component';
 import { FormulaServiceMock } from './../../../core/mocks/formula.service.mock';
 import { FormulaItemPickerComponent } from './../../components/formula-item-picker/formula-item-picker.component';
