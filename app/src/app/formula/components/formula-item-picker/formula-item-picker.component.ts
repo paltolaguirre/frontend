@@ -71,7 +71,7 @@ export class FormulaItemPickerComponent implements OnInit {
       this.standardFormulas = this.formulaService.extractStandardFormulas(this.formulas);
 
       if (formulas) {
-        this.addToPickableItems([...formulas, ...this.userFormulas, ...this.variables, this.standardFormulas]);
+        this.addToPickableItems([...formulas, ...this.userFormulas, ...this.variables, ...this.standardFormulas]);
       }
     });
   }
