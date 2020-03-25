@@ -8,6 +8,7 @@ import { SiradigService, ListaItems } from '../siradig.service';
 import { Siradig } from '../siradig.model';
 import { LegajoService } from 'src/app/legajo/legajo.service';
 import { NotificationService } from 'src/app/handler-error/notification.service';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-siradig-show',
@@ -121,6 +122,19 @@ export class SiradigShowComponent implements OnInit {
         // Se crea o actualiza
         if(hijo.aplica) {
           data.detallecargofamiliarsiradig.push(hijo);
+        }
+      });
+    }
+
+    if(data.deducciondesgravacionsiradig) {
+      data.deducciondesgravacionsiradig.forEach(function(element) {
+        if(element.mes &&
+          (element.siradigtipogrilla.codigo == 'DONACIONES' 
+          || element.siradigtipogrilla.codigo == 'GASTOS_DE_SEPELIO' 
+          || element.siradigtipogrilla.codigo == 'GASTOS_ADQUISICION_INDUMENTARIA_Y_EQUIPAMIENTO_PARA_USO_EXCLUSIVO_EN_EL_LUGAR_DE_TRABAJO' 
+          || element.siradigtipogrilla.codigo == 'APORTES_A_SOCIEDADES_DE_GARANTIA_RECIPROCA')
+        ) {
+          element.mes = formatDate(element.mes, "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
         }
       });
     }
