@@ -224,9 +224,6 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       true
     );
 
-    const removeIcon = this.createRemoveIcon();
-    formulaDiv.appendChild(removeIcon);
-
     this.renderFormulaInMainContainer(formulaDiv);
   }
 
@@ -258,9 +255,6 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
       divFormula.appendChild(divParam);
     }
-
-    const removeIcon = this.createRemoveIcon();
-    divFormula.appendChild(removeIcon);
 
     return divFormula;
   }
@@ -325,6 +319,8 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
     this.highlightElement(e.target);
 
+    this.addRemoveIcon(e.target);
+
     this.removeHighlightToElement(e.target.parentNode);
 
     e.cancelBubble = true;
@@ -333,7 +329,24 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   public onDragLeave(e) {
     this.removeHighlightToElement(e.target);
 
+    this.removeTrashIcon(e.target);
+
     e.cancelBubble = true;
+  }
+
+  public addRemoveIcon(target: HTMLElement) {
+    if (target.classList.contains('asociative')) {
+      const removeIcon = this.createRemoveIcon();
+      target.appendChild(removeIcon);
+    }
+  }
+
+  public removeTrashIcon(target: HTMLElement) {
+    const removeBadge = target.querySelector('.remove-badge-container');
+
+    if (removeBadge) {
+      removeBadge.remove();
+    }
   }
 
   public removeHighlightToElement(target: HTMLElement) {
