@@ -130,9 +130,6 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     badge.append(removeIcon);
 
     badge.onclick = (e: any) => {
-      // e.stopPropagation();
-
-      console.log(e);
       const param = e.path.find((node) => node.classList.contains('param'));
 
       if (param) {
@@ -355,10 +352,8 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   public removeTrashIcon(e) {
     e.stopPropagation();
 
-    // console.log(e.toElement);
-
+    // When the mouse enters into the trash icon, we don't remove it.
     if (e.toElement.classList.contains('remove-badge-container')) {
-      // console.log('estas sobre el icono, no lo borramos');
       return null;
     }
 
@@ -375,15 +370,12 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
     // If the hover is on the asociative param, we don't remove the trash icon.
     if (e.target.parentNode.classList.contains('asociative')) {
-      console.log('estas sobre el padre, no lo borramos');
       return null;
     }
 
     const removeBadge = e.target.querySelector('.remove-badge-container');
 
     if (removeBadge) {
-      // e.stopPropagation();
-
       removeBadge.remove();
     }
   }
