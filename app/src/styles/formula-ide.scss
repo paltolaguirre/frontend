@@ -18,7 +18,7 @@
     top: -4px;
     right: 9px;
     background-color: $GRAY_REGULAR !important;
-    padding: 0px 6px;
+    padding: 2px 3px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -27,6 +27,8 @@
 
     .remove-icon {
       background: transparent !important;
+      font-size: 10px;
+      color: red;
     }
   }
   
