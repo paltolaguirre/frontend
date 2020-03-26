@@ -319,7 +319,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
     this.highlightElement(e.target);
 
-    this.addRemoveIcon(e.target);
+    this.addRemoveIcon(e);
 
     this.removeHighlightToElement(e.target.parentNode);
 
@@ -329,22 +329,61 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   public onDragLeave(e) {
     this.removeHighlightToElement(e.target);
 
-    this.removeTrashIcon(e.target);
+    this.removeTrashIcon(e);
 
     e.cancelBubble = true;
   }
 
-  public addRemoveIcon(target: HTMLElement) {
-    if (target.classList.contains('asociative')) {
-      const removeIcon = this.createRemoveIcon();
-      target.appendChild(removeIcon);
+  public addRemoveIcon(e) {
+    // e.stopPropagation();
+    if (e.toElement.classList.contains('remove-badge-container')) {
+      return null;
     }
+
+    if (e.target.classList.contains('asociative')) {
+      if (e.target.querySelector('.remove-badge-container') || e.toElement.querySelector('.remove-badge-container')) {
+        return null;
+      }
+
+      const removeIcon = this.createRemoveIcon();
+      e.target.appendChild(removeIcon);
+    }
+
+    e.cancelBubble = true;
   }
 
-  public removeTrashIcon(target: HTMLElement) {
-    const removeBadge = target.querySelector('.remove-badge-container');
+  public removeTrashIcon(e) {
+    e.stopPropagation();
+
+    // console.log(e.toElement);
+
+    if (e.toElement.classList.contains('remove-badge-container')) {
+      // console.log('estas sobre el icono, no lo borramos');
+      return null;
+    }
+
+    // TODO: fix that
+    // if (!e.toElement.classList.contains('asociative')) {
+      // console.log('saliste afuera del operador');
+      // console.log('el target es: ', e.target);
+      // if (e.target.querySelector('.remove-badge-container')) {
+      //   e.target.querySelector('.remove-badge-container').remove();
+      // }
+
+      // return null;
+    // }
+
+    // If the hover is on the asociative param, we don't remove the trash icon.
+    if (e.target.parentNode.classList.contains('asociative')) {
+      console.log('estas sobre el padre, no lo borramos');
+      return null;
+    }
+
+    const removeBadge = e.target.querySelector('.remove-badge-container');
 
     if (removeBadge) {
+      // e.stopPropagation();
+
       removeBadge.remove();
     }
   }
