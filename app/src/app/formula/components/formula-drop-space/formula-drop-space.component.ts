@@ -121,11 +121,11 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     badge.classList.add('no-selectable');
     badge.setAttribute('draggable', 'false');
 
-    const removeIcon = document.createElement('span');
+    const removeIcon = document.createElement('i');
     removeIcon.classList.add('remove-icon');
     removeIcon.classList.add('no-selectable');
-    removeIcon.setAttribute('draggable', 'false');
-    removeIcon.innerHTML = 'x';
+    removeIcon.classList.add('fas');
+    removeIcon.classList.add('fa-trash-alt');
 
     badge.append(removeIcon);
 
