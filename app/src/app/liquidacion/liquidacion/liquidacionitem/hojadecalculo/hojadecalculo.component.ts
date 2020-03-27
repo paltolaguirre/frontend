@@ -24,7 +24,7 @@ export class HojadecalculoComponent implements OnInit {
     if (this.liquidacionItem.concepto.codigo == 'IMPUESTO_GANANCIAS' || this.liquidacionItem.concepto.codigo == 'IMPUESTO_GANANCIAS_DEVOLUCION'){
       
       //AGREGO SUBTOTALES
-      const subtotalesOrden = [15, 35, 38, 43, 44, 51, 53]
+      const subtotalesOrden = [15, 22, 36, 39, 44, 45, 52, 54]
       
       this.items = this.items.map(function (a){
         a.importe = Math.round(a.importe * 100) / 100
@@ -35,7 +35,7 @@ export class HojadecalculoComponent implements OnInit {
 
       //AGREGO SUBTITULOS
       var subtitles = [{
-        orden:38.5,
+        orden:39.5,
         nombre:'Deducciones Personales',
         codigo:'DEDUCCIONES_PERSONALES_TITLE',
         importe: null,
@@ -53,7 +53,7 @@ export class HojadecalculoComponent implements OnInit {
         importe: null,
         esSubtitulo: true
       },{
-        orden:48.5,
+        orden:49.5,
         nombre:'Determinacion de Impuesto',
         codigo:'DETERMINACION_IMPUESTO_TITLE',
         importe: null,
