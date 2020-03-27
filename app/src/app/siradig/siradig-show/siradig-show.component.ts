@@ -8,6 +8,7 @@ import { SiradigService, ListaItems } from '../siradig.service';
 import { Siradig } from '../siradig.model';
 import { LegajoService } from 'src/app/legajo/legajo.service';
 import { NotificationService } from 'src/app/handler-error/notification.service';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-siradig-show',
@@ -121,6 +122,19 @@ export class SiradigShowComponent implements OnInit {
         // Se crea o actualiza
         if(hijo.aplica) {
           data.detallecargofamiliarsiradig.push(hijo);
+        }
+      });
+    }
+
+    if(data.deducciondesgravacionsiradig) {
+      data.deducciondesgravacionsiradig.forEach(function(element) {
+        if(element.mes &&
+          (element.siradigtipogrilla.codigo == 'DONACIONES' 
+          || element.siradigtipogrilla.codigo == 'GASTOS_DE_SEPELIO' 
+          || element.siradigtipogrilla.codigo == 'GASTOS_ADQUISICION_INDUMENTARIA_Y_EQUIPAMIENTO_PARA_USO_EXCLUSIVO_EN_EL_LUGAR_DE_TRABAJO' 
+          || element.siradigtipogrilla.codigo == 'APORTES_A_SOCIEDADES_DE_GARANTIA_RECIPROCA')
+        ) {
+          element.mes = formatDate(element.mes, "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
         }
       });
     }
@@ -552,7 +566,7 @@ export class SiradigShowComponent implements OnInit {
   private async siradigValidator(data: Siradig) {
     if(data && data.legajoid && data.periodosiradig) {
       const itemsApi: ListaItems = await this.siradigService.getSiradigs(data.legajoid, data.periodosiradig.split("-")[0]);
-      if(itemsApi.total_count > 0) {
+      if(itemsApi.total_count > 0 && !this.isMyself(itemsApi)) {
         const notificacion = {
           codigo: 400,
           mensaje: `Ya existe un SiRADIG para el legajo "${data.legajo.nombre}" correspondiente al periodo "${data.periodosiradig.split("-")[0]}"`
@@ -560,5 +574,14 @@ export class SiradigShowComponent implements OnInit {
         const ret = this.notificationService.notify(notificacion);
       }
     }
+  }
+
+  private isMyself(itemsApi) {
+    return itemsApi.total_count == 1 && itemsApi.items[0].ID == this.id;
+  }
+
+  public getFullDate(year) {
+    const date = new Date(year, 0, 1).toISOString();
+    return date;
   }
 }

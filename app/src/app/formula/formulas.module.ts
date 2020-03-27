@@ -7,7 +7,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { FormulaContainer } from './containers/formula/formula.container';
 import { OperatorsToolbarComponent } from './components/operators-toolbar/operators-toolbar.component';
-import { FormulaDraggableSpaceComponent } from './components/formula-draggable-space/formula-draggable-space.component';
+import { FormulaDropSpaceComponent } from './components/formula-drop-space/formula-drop-space.component';
 
 const routes: Routes = [
   {
@@ -30,7 +30,7 @@ const routes: Routes = [
     FormulaContainer,
     FormulaItemPickerComponent,
     OperatorsToolbarComponent,
-    FormulaDraggableSpaceComponent
+    FormulaDropSpaceComponent
   ],
   imports: [
     CommonModule,

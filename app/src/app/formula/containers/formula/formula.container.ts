@@ -23,6 +23,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public params: FormArray;
   public isNew: boolean = false;
   public isEditable: boolean = true;
+  public formulas: Formula[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -47,6 +48,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
         }
 
         this.setCurrentFormula(name);
+        this.fetchFormulas();
     });
   }
 
@@ -77,6 +79,12 @@ export class FormulaContainer implements OnInit, OnDestroy {
       value: {
         valueinvoke: null
       }
+    });
+  }
+
+  public fetchFormulas() {
+    this.formulaService.formulasStore$.subscribe((formulas: Formula[]) => {
+      this.formulas = formulas;
     });
   }
 

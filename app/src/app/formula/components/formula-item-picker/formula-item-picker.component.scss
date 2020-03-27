@@ -62,10 +62,10 @@ div.formula-item-picker-container {
                 content: '';
                 position: absolute;
                 top: 0;
-                right: -2px;
+                right: -3px;
                 color: #fff;
                 height: 100%;
-                width: 2px;
+                width: 4px;
                 background: #fff;
                 border-right: 1px white;
               }
@@ -79,6 +79,7 @@ div.formula-item-picker-container {
       background-color: #fff;
       border: 2px solid $ACTIVE;
       padding: 1rem;
+      max-width: 15rem;
 
       div.search-bar-container {
         width: 93%;
@@ -137,12 +138,15 @@ div.formula-item-picker-container {
         font-size: 0.7rem;
 
         div.selectable-badges-container {
-          .selectable-badge {
+          .pickable-badge {
             background: $ACTIVE;
             color: #fff;
             border-radius: 10px;
             max-width: fit-content;
             padding: 0 9px;
+            cursor: pointer;
+            white-space: nowrap;
+            margin: 0.7rem 0;
           }
         }
       }

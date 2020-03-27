@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { FormulaService } from '../../../core/services/formula/formula.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -43,11 +44,12 @@ export class FormulaListContainer implements OnInit, AfterViewInit {
   }
 
   async ngAfterViewInit() {
-    const formulas = await this.formulaService.getAll();
-    this.dataSource = new MatTableDataSource<Formula>(formulas);
-    this.dataSource.paginator = this.paginator;
-    this.paginator._intl.itemsPerPageLabel = 'Items por página';
-    this.isLoadingResults = false;
+    this.formulaService.formulasStore$.subscribe((formulas: Formula[]) => {
+      this.dataSource = new MatTableDataSource<Formula>(formulas);
+      this.dataSource.paginator = this.paginator;
+      this.paginator._intl.itemsPerPageLabel = 'Items por página';
+      this.isLoadingResults = false;
+    });
   }
 
   public getPageSizeOptions(): number[] {

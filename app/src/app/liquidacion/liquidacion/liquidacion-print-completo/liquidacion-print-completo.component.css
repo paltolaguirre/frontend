@@ -162,3 +162,7 @@
     max-width: 325px;
     max-height: 60px;
   }
+
+  .datoItemDetalle {
+    font-size: 9px !important;
+  }

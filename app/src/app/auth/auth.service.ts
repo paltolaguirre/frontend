@@ -39,7 +39,6 @@ export class AuthService {
       .set('Authorization', Authorization)
 
     let data = await this.httpClient.post<any>(`api/auth/login`, body.toString(), { headers }).toPromise();
-    console.log(data);
     
     if (data && data.token) {
       // store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -64,7 +63,6 @@ export class AuthService {
 
       try {
         let data = await this.httpClient.get<any>(`api/auth/check-token`, { headers }).toPromise();
-        console.log(data);
       } catch (error) {
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);

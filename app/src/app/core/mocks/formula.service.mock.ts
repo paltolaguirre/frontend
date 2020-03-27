@@ -1,7 +1,15 @@
+import { EventEmitter } from '@angular/core';
+import { FormulaTransferData } from './../models/formula-transfer-data.model';
+import { BehaviorSubject } from 'rxjs';
 import { FormulaCategory } from './../models/formula-category.model';
 import { Formula } from '../models/formula.model';
 
 export class FormulaServiceMock {
+
+  private formulas = new BehaviorSubject<Formula[]>([]);
+  public formulasStore$ = this.formulas.asObservable();
+  public formulaPickerItemEmitter: EventEmitter<FormulaTransferData> = new EventEmitter();
+
   fakeFormulaItem: Formula = {
     name: 'Formula 1',
     CreatedAt: '',
@@ -96,5 +104,29 @@ export class FormulaServiceMock {
 
   public isEditable(formula: Formula): boolean {
     return true;
+  }
+
+  public extractFormulasByType(formulas: Formula[], type: string): Formula[] {
+    return [];
+  }
+
+  public extractUserFormulas(formulas: Formula[]): Formula[] {
+    return [];
+  }
+
+  public extractVariables(formulas: Formula[]): Formula[] {
+    return [];
+  }
+
+  public extractInputParams(formula: Formula): any[] {
+    return [];
+  }
+
+  public extractStandardFormulas(formulas: Formula[]): Formula[] {
+    return [];
+  }
+
+  public emitFormulaItemClick(payload: FormulaTransferData) {
+    return null;
   }
 }

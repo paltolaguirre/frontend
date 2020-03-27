@@ -1,4 +1,5 @@
-import { FormulaDraggableSpaceComponent } from './../../components/formula-draggable-space/formula-draggable-space.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { FormulaDropSpaceComponent } from './../../components/formula-drop-space/formula-drop-space.component';
 import { OperatorsToolbarComponent } from './../../components/operators-toolbar/operators-toolbar.component';
 import { FormulaServiceMock } from './../../../core/mocks/formula.service.mock';
 import { FormulaItemPickerComponent } from './../../components/formula-item-picker/formula-item-picker.component';
@@ -37,16 +38,18 @@ describe('FormulaContainer', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FormulaContainer, FormulaItemPickerComponent, OperatorsToolbarComponent, FormulaDraggableSpaceComponent ],
+      declarations: [ FormulaContainer, FormulaItemPickerComponent, OperatorsToolbarComponent, FormulaDropSpaceComponent ],
       imports: [
         MaterialModule,
         ReactiveFormsModule,
         RouterTestingModule,
         BrowserAnimationsModule,
-        SharedModule
+        SharedModule,
+        HttpClientTestingModule
       ],
       providers: [
-        { provide: FormulaService, useClass: FormulaServiceMock }
+        { provide: FormulaService, useClass: FormulaServiceMock },
+        MatDialog
       ]
     })
     .compileComponents();
