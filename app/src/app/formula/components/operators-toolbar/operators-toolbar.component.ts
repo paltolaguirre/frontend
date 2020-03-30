@@ -79,9 +79,9 @@ export class OperatorsToolbarComponent implements OnInit {
     event.dataTransfer.setData('text/plain', JSON.stringify(data));
   }
 
-  public onOperatorItemClick(event, operator) {
+  public onOperatorItemClick(event, operator, prefix?: string) {
     const data: FormulaTransferData = {
-      nodeId: event.target.id,
+      nodeId: this.getDomIdByOperator(operator, prefix),
       payload: operator
     };
 
@@ -90,5 +90,9 @@ export class OperatorsToolbarComponent implements OnInit {
 
   public getOperatorDefaultType() {
     return MathOperatorTypes.Numeric;
+  }
+
+  public getDomIdByOperator(operator: Operator, prefix?: string) {
+    return this.operatorsService.getDomIdByOperator(operator, prefix);
   }
 }

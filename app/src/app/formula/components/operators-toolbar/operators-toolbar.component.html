@@ -5,7 +5,7 @@
         <div 
           *ngFor="let operator of basicMathOperators; index as index"
           class="math-operator-container no-selectable param numeric-param"
-          [id]="'math-basic-operator-' + operator.id"
+          [id]="getDomIdByOperator(operator)"
           [attr.data-type]="operator.type"
           (dragstart)="onDragStart($event, operator)"
           (click)="onOperatorItemClick($event, operator)"
@@ -20,7 +20,7 @@
         <div 
           *ngFor="let operator of logicalOperators" 
           class="logical-operator-container"
-          [id]="'logical-operator-' + operator.id"
+          [id]="getDomIdByOperator(operator)"
           [attr.data-type]="operator.type"
           [matTooltip]="operator.tooltip"
           (dragstart)="onDragStart($event, operator)"
@@ -36,11 +36,11 @@
     <div class="column">
       <div class="other-badges-general-container">
         <div class="other-badge-container" 
-          [id]="'xor-operator-' + xorOperator.id"
+          [id]="getDomIdByOperator(xorOperator, 'xor-operator')"
           [attr.data-type]="xorOperator.type"
           [matTooltip]="xorOperator.tooltip"
           (dragstart)="onDragStart($event, xorOperator)"
-          (click)="onOperatorItemClick($event, xorOperator)"
+          (click)="onOperatorItemClick($event, xorOperator, 'xor-operator')"
           draggable="true">
           <span 
             class="badge no-selectable" 
@@ -50,11 +50,11 @@
         </div>
         <div 
           class="other-badge-container active param numeric-param editable-input" 
-          [id]="'number-operator-' + numberOperator.id"
+          [id]="getDomIdByOperator(numberOperator, 'number-operator')"
           [attr.data-type]="numberOperator.type"
           [matTooltip]="numberOperator.tooltip"
           (dragstart)="onDragStart($event, numberOperator)"
-          (click)="onOperatorItemClick($event, numberOperator)"
+          (click)="onOperatorItemClick($event, numberOperator, 'number-operator')"
           draggable="true">
           <span 
             class="badge no-selectable"
