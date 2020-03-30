@@ -170,5 +170,9 @@ export class FormulaService {
     this.formulaTermsSubject.next([...this.formulaTermsSubject.getValue(), ...formulaTerm]);
 
     // console.log('Formula terms data: ', this.formulaTerms);
-  };
+  }
+
+  public clearFormulaTerms() {
+    this.formulaTermsSubject.next([]);
+  }
 }

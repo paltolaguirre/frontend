@@ -63,7 +63,9 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     main.context.id = 1;
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.formulaService.clearFormulaTerms();
+  }
 
   public context() {
     const origin = null;
