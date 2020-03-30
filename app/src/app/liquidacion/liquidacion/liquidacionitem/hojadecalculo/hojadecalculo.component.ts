@@ -20,6 +20,8 @@ export class HojadecalculoComponent implements OnInit {
     
     this.items = this.liquidacionItem.acumuladores;
 
+    this.items = this.items.filter(item => item.esmostrable)
+
     //SOLO QUIERO AGREGAR TITULOS LOCOS CUANDO ES GANANCIAS
     if (this.liquidacionItem.concepto.codigo == 'IMPUESTO_GANANCIAS' || this.liquidacionItem.concepto.codigo == 'IMPUESTO_GANANCIAS_DEVOLUCION'){
       
