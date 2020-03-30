@@ -39,7 +39,7 @@
           [id]="getDomIdByOperator(xorOperator, 'xor-operator')"
           [attr.data-type]="xorOperator.type"
           [matTooltip]="xorOperator.tooltip"
-          (dragstart)="onDragStart($event, xorOperator)"
+          (dragstart)="onDragStart($event, xorOperator, 'xor-operator')"
           (click)="onOperatorItemClick($event, xorOperator, 'xor-operator')"
           draggable="true">
           <span 
@@ -53,7 +53,7 @@
           [id]="getDomIdByOperator(numberOperator, 'number-operator')"
           [attr.data-type]="numberOperator.type"
           [matTooltip]="numberOperator.tooltip"
-          (dragstart)="onDragStart($event, numberOperator)"
+          (dragstart)="onDragStart($event, numberOperator, 'number-operator')"
           (click)="onOperatorItemClick($event, numberOperator, 'number-operator')"
           draggable="true">
           <span 

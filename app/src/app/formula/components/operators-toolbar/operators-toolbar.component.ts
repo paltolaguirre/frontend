@@ -70,9 +70,9 @@ export class OperatorsToolbarComponent implements OnInit {
     return operator.hasOwnProperty('valueid');
   }
 
-  public onDragStart(event, operator: Operator) {
+  public onDragStart(event, operator: Operator, prefix?: string) {
     const data: FormulaTransferData = {
-      nodeId: event.target.id,
+      nodeId: this.getDomIdByOperator(operator, prefix),
       payload: operator
     };
 
