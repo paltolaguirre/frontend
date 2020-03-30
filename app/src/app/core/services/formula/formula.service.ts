@@ -7,6 +7,7 @@ import { ApiHttpService } from './../api-http/api-http.service';
 import { FormulaCategory } from './../../models/formula-category.model';
 import { Injectable, EventEmitter } from '@angular/core';
 import { Formula } from '../../models/formula.model';
+import { FormulaTerm } from 'src/app/formula/components/formula-drop-space/formula-drop-space.component';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,9 @@ export class FormulaService {
   private formulas = new BehaviorSubject<Formula[]>([]);
   public formulasStore$ = this.formulas.asObservable();
   public formulaPickerItemEmitter: EventEmitter<FormulaTransferData> = new EventEmitter();
+
+  private formulaTermsSubject = new BehaviorSubject<FormulaTerm[]>([]);
+  public formulaTerms$ = this.formulaTermsSubject.asObservable();
 
   constructor(private api: ApiHttpService) {
     this.initFormulasStore();
@@ -155,4 +159,16 @@ export class FormulaService {
   public emitFormulaItemClick(payload: FormulaTransferData) {
     this.formulaPickerItemEmitter.emit(payload);
   }
+
+  public addFormulaTerm(data: FormulaTransferData, children?: FormulaTransferData[]) {
+    const formulaTerm: any = {
+      nodeId: data.nodeId,
+      payload: data.payload,
+      children
+    };
+
+    this.formulaTermsSubject.next([...this.formulaTermsSubject.getValue(), ...formulaTerm]);
+
+    // console.log('Formula terms data: ', this.formulaTerms);
+  };
 }

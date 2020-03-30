@@ -10,6 +10,12 @@ import { takeUntil } from 'rxjs/operators';
 import { FormulaService } from '../../../core/services/formula/formula.service';
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 
+export class FormulaTerm {
+  nodeId?: string;
+  payload: any;
+  children: any[];
+}
+
 @Component({
   selector: 'app-formula-drop-space',
   templateUrl: './formula-drop-space.component.html',
@@ -19,6 +25,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   @Input() isItemPickerExpanded: boolean;
 
   public idCount: number = 0;
+  public formulaTerms: FormulaTerm[] = [];
 
   constructor(
     private formulaService: FormulaService,
@@ -43,6 +50,10 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
         }
 
         return this.handleMathOperatorClicked(data);
+    });
+
+    this.formulaService.formulaTerms$.subscribe((terms) => {
+      console.log(terms);
     });
 
     const main = document.getElementById('main') as any;
@@ -158,6 +169,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     }
 
     const formulaDiv = this.createFormula(
+      data,
       payload.symbol,
       payload.type,
       [MathOperatorTypes.Numeric, MathOperatorTypes.Numeric],
@@ -184,6 +196,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     }
 
     const formulaDiv = this.createFormula(
+      data,
       payload.symbol,
       payload.type,
       [MathOperatorTypes.Boolean , payload.type, payload.type],
@@ -214,6 +227,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     const { payload } = data;
 
     const formulaDiv = this.createFormula(
+      data,
       payload.symbol,
       parentType,
       [childrenTypes, childrenTypes],
@@ -231,6 +245,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   }
 
   public createFormula(
+    data: FormulaTransferData,
     textContent: string,
     type: MathOperatorTypes,
     arrayParams: MathOperatorTypes[],
@@ -252,6 +267,10 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
       divFormula.appendChild(divParam);
     }
+
+
+    // TODO: Refactor - Create and Add children.
+    this.formulaService.addFormulaTerm(data);
 
     return divFormula;
   }
