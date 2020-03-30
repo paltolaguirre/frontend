@@ -224,4 +224,22 @@ export class OperatorsService {
   public emitOperatorClicked(data: FormulaTransferData) {
     this.operatorEmitter.emit(data);
   }
+
+  public getDomIdByOperator(operator: Operator, prefix?: string): string {
+    if (prefix) {
+      return `${prefix}-${String(operator.id)}`;
+    }
+
+    if (operator.type === MathOperatorTypes.Numeric && operator.category === OperatorCategory.Math) {
+      return `math-basic-operator-${String(operator.id)}`;
+    }
+
+    if (operator.type === MathOperatorTypes.Numeric && operator.category === OperatorCategory.Logical) {
+      return `logical-operator-${String(operator.id)}`;
+    }
+
+    if (operator.type === MathOperatorTypes.Boolean && operator.category === OperatorCategory.Logical) {
+      return `logical-operator-${String(operator.id)}`;
+    }
+  }
 }
