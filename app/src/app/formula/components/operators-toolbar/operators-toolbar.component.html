@@ -1,0 +1,96 @@
+<div class="operators-general-container bg-gray">
+  <div class="columns is-gapless">
+    <div class="column">
+      <div class="operators-container">
+        <div 
+          *ngFor="let operator of basicMathOperators; index as index"
+          class="math-operator-container no-selectable param numeric-param"
+          [id]="'math-basic-operator-' + operator.id"
+          [attr.data-type]="operator.type"
+          (dragstart)="onDragStart($event, operator)"
+          (click)="onOperatorItemClick($event, operator)"
+          draggable="true">
+          <span class="math-operator no-selectable">{{ operator.symbol }}</span>
+        </div>
+      </div>
+    </div>
+    <mat-divider [vertical]="true"></mat-divider>
+    <div class="column">
+      <div class="logical-operators-general-container">
+        <div 
+          *ngFor="let operator of logicalOperators" 
+          class="logical-operator-container"
+          [id]="'logical-operator-' + operator.id"
+          [attr.data-type]="operator.type"
+          [matTooltip]="operator.tooltip"
+          (dragstart)="onDragStart($event, operator)"
+          (click)="onOperatorItemClick($event, operator)"
+          draggable="true">
+          <span class="logical-operator no-selectable">{{ operator.symbol }}</span>
+        </div>
+      </div>
+    </div>
+
+    <mat-divider [vertical]="true"></mat-divider>
+
+    <div class="column">
+      <div class="other-badges-general-container">
+        <div class="other-badge-container" 
+          [id]="'xor-operator-' + xorOperator.id"
+          [attr.data-type]="xorOperator.type"
+          [matTooltip]="xorOperator.tooltip"
+          (dragstart)="onDragStart($event, xorOperator)"
+          (click)="onOperatorItemClick($event, xorOperator)"
+          draggable="true">
+          <span 
+            class="badge no-selectable" 
+            [id]="'xor-operator-' + xorOperator.id">
+            {{ xorOperator.symbol }}
+          </span>
+        </div>
+        <div 
+          class="other-badge-container active param numeric-param editable-input" 
+          [id]="'number-operator-' + numberOperator.id"
+          [attr.data-type]="numberOperator.type"
+          [matTooltip]="numberOperator.tooltip"
+          (dragstart)="onDragStart($event, numberOperator)"
+          (click)="onOperatorItemClick($event, numberOperator)"
+          draggable="true">
+          <span 
+            class="badge no-selectable"
+            [id]="'number-operator-' + numberOperator.id">
+            {{ numberOperator.symbol }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <mat-divider [vertical]="true"></mat-divider>
+
+    <div class="column">
+      <div class="more-operators-general-container">
+        <mat-form-field class="more-operators-field custom-white-field">
+          <mat-label>Mas operadores +</mat-label>
+          <mat-select 
+            [(ngModel)]="selectedOperator" 
+            (ngModelChange)="onOperatorSelected($event)"
+            class="more-operators-badge no-selectable">
+            <mat-option
+              *ngFor="let operator of moreOperators"
+              class="font-medium"
+              [ngClass]="{
+                'param numeric-param': isFormulaOperator(operator)
+              }"
+              [id]="'more-operators-' + (operator.id ? operator.id : operator.valueid)"
+              [attr.data-type]="(!isFormulaOperator(operator) ? operator.type : getOperatorDefaultType())"
+              [value]="operator"
+              [matTooltip]="operator.tooltip"
+              draggable="true">
+              {{ operator.symbol || operator.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</div>

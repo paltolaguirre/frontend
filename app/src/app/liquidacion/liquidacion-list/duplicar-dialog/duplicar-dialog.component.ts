@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogLiquidaciones } from '../../liquidacion/liquidacion-dialog/liquidacion-dialog.component';
 import { LiquidacionDefaultValues, DuplicarLiquidaciones } from '../../liquidacion.model';
 import { NotificationService } from 'src/app/handler-error/notification.service';

@@ -171,6 +171,23 @@ export interface Liquidacionitem {
     conceptoid: number;
     importeunitario: number;
     cantidad?: number;
+    acumuladores?: Acumulador[];
+}
+
+export interface Acumulador {
+    ID?: number;
+    CreatedAt?: string;
+    UpdatedAt?: string;
+    DeletedAt?: Date;
+    nombre: string;
+    codigo: string;
+    orden: number;
+    importe: number;
+    tope?: number;
+    liquidacionitemid?: number;
+    esSubtotal?: boolean;
+    esSubtitulo?: boolean;
+    esmostrable?: boolean;
 }
 
 export interface Fechaliquidaciones {
@@ -243,4 +260,5 @@ export interface Contabilizar {
 export interface CalculoAutomatico {
     conceptoid: number;
     importeunitario: number;
+    acumuladores?: Acumulador[];
 }

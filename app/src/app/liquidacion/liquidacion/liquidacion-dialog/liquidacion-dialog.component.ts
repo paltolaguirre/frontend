@@ -1,6 +1,8 @@
 import { Component, ViewChild, AfterViewInit, OnInit , Inject } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ListaItems , NovedadService } from 'src/app/novedad/novedad.service';
 import { Novedad } from '../../../novedad/novedad.model';
 import { TIPO_CONCEPTO } from 'src/app/concepto/concepto.model';
@@ -12,8 +14,8 @@ import { TIPO_CONCEPTO } from 'src/app/concepto/concepto.model';
 })
 export class DialogLiquidaciones {
  
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   displayedColumns: string[] = ['Seleccionar', 'Concepto', 'Cantidad', 'Importe'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   isLoadingResults = true;

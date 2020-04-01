@@ -1,0 +1,87 @@
+@import "./variables.scss";
+
+.draggable-space-container {
+  .param {
+    margin: 5px;
+    padding: 10px;
+    width: fit-content;
+    border-radius: 40px 40px 40px 40px;
+    position:relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .remove-badge-container {
+    position: absolute;
+    top: -4px;
+    right: 9px;
+    background-color: $GRAY_REGULAR !important;
+    padding: 0px 6px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    .remove-icon {
+      background: transparent !important;
+    }
+  }
+  
+  .numeric-param {
+    border-left: 2px solid blue;
+    border-right: 2px solid blue;
+  }
+
+  .inputedit {
+  
+    position: absolute;
+    top: 30px;
+    left: -20px;
+    
+    z-index: 100;
+  }
+  
+  .boolean {
+    border-left: 2px solid red;
+    border-right: 2px solid red;
+  }
+  
+  .white-parenthesis{
+    border-left: 0px none white;
+    border-right: 0px none white;
+    margin: 0px;
+    padding: 0px;
+  }
+  
+  
+  /*
+  .param:hover {
+      cursor: pointer;
+      background-color:lightblue;
+  }
+  */
+  
+  .highligthed {
+    background-color:lightsteelblue;
+    cursor: pointer;
+  }
+  .no-highlight{
+    background-color: transparent;
+    cursor: auto;
+  }
+  
+  
+  #main2{
+    border: 5px solid black;
+    width: 800px;
+    height: 120px;
+    
+  }
+  
+  .pronounced {
+    background-color:lightblue;
+  }
+}

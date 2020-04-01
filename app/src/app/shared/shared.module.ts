@@ -1,20 +1,50 @@
+import { TableRowActionsComponent } from './components/table-row-actions/table-row-actions.component';
+import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SelectorDefaultComponent } from './selector-default/selector-default.component';
-import { DemoMaterialModule } from '../material.module';
+import { MaterialModule } from '../material.module';
+import { YearSelectorComponent } from './components/year-selector/year-selector.component';
+import { TopMenuToolbarComponent } from './components/top-menu-toolbar/top-menu-toolbar.component';
+import { InfoDialogComponent } from './components/info-dialog/info-dialog.component';
+import { BottomTableActionsComponent } from './components/bottom-table-actions/bottom-table-actions.component';
+import { MonthSelectorComponent } from './components/month-selector/month-selector.component';
+import { DisableControlDirective } from './directives/disable-control/disable-control.directive';
 
 @NgModule({
   declarations: [
-    SelectorDefaultComponent
+    MonthSelectorComponent,
+    SelectorDefaultComponent,
+    TopMenuToolbarComponent,
+    TableRowActionsComponent,
+    InfoDialogComponent,
+    BottomTableActionsComponent,
+    YearSelectorComponent,
+    DisableControlDirective
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    DemoMaterialModule
+    MaterialModule,
+    RouterModule
   ],
-  entryComponents: [],
-  exports: [SelectorDefaultComponent]
+  entryComponents: [
+    InfoDialogComponent
+  ],
+  exports: [
+    BottomTableActionsComponent,
+    DisableControlDirective,
+    InfoDialogComponent,
+    MonthSelectorComponent,
+    SelectorDefaultComponent,
+    TableRowActionsComponent,
+    TopMenuToolbarComponent,
+    FormsModule,
+    MaterialModule,
+    ReactiveFormsModule,
+    YearSelectorComponent
+  ]
 })
 export class SharedModule { }

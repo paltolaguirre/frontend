@@ -1,0 +1,118 @@
+@import '../../../../styles/variables.scss';
+
+div.operators-general-container {
+  padding: 0.8rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  div.columns {
+    width: 100%;
+  }
+
+  mat-divider {
+    margin: 0 4px;
+  }
+
+  div.operators-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  
+    div.math-operator-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: $ACTIVE;
+      border-radius: 50%;
+      padding: 0px 8px;
+      margin: 0 0.2rem;
+      cursor: pointer;
+  
+      span.math-operator {  
+        font-weight: 600;
+        color: #fff;
+        font-size: 0.7rem;
+      }
+    }
+  }
+
+  div.logical-operators-general-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    div.logical-operator-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      border-radius: 50%;
+      padding: 0 8px;
+      margin: 0 0.15rem;
+      cursor: pointer;
+  
+      span.logical-operator {
+        color: #000;
+        font-size: 0.6rem;
+      }
+    }
+  }
+
+  div.other-badges-general-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    div.other-badge-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      border-radius: 10px;
+      padding: 0 8px;
+      margin: 0 0.2rem;
+      cursor: pointer;
+
+      span {
+        font-size: 0.6rem;
+        white-space: nowrap;
+      }
+
+      &.active {
+        background-color: $ACTIVE;
+
+        span {
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  div.more-operators-general-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    .more-operators-badge {
+      font-size: 0.6rem;
+      background-color: #fff;
+      border-radius: 14px;
+      border: none;
+      padding: 6px 8px;
+      white-space: nowrap;
+      cursor: pointer;
+
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      text-indent: 1px;
+      text-overflow: '';
+    }
+  }
+}

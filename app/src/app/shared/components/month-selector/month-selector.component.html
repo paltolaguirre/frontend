@@ -1,0 +1,8 @@
+<mat-form-field class="selector">
+  <mat-label>Mes</mat-label>
+  <mat-select [(ngModel)]="selectedMonth" (ngModelChange)="onSelectorChange()" name="month" required>
+    <mat-option *ngFor="let month of months" [value]="month" [disabled]="isDisabled(month)">
+      {{ month }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

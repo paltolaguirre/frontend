@@ -1,5 +1,5 @@
 import { Component, AfterViewInit, Inject, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ListaItems, ConceptoService } from '../../concepto.service';
 import { Concepto } from '../../concepto.model';
 import { Router } from '@angular/router';
@@ -49,7 +49,17 @@ export class ActionsComponent implements OnInit {
       tipo: null,
       cuentacontableid: null,
       cuenta: null,
-      esimprimible : null
+      esimprimible : null,
+      esnovedad: null,
+      tipoconceptoid: null,
+      tipoconcepto:  null,
+      porcentaje: null,
+      tipodecalculo: null,
+      tipodecalculoid: null,
+      prorrateo: null,
+      basesac: null,
+      tipoimpuestoganancias: null,
+      tipoimpuestogananciasid: null
     }
     
     await this.conceptoService.deleteConcepto(item);

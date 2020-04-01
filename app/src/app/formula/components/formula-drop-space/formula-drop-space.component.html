@@ -1,0 +1,9 @@
+<div
+  id="main"
+  class="draggable-space-container bg-gray"
+  [ngClass]="{ 'expanded': !isItemPickerExpanded }"
+  (dragover)='onDragOver($event)' (drop)="onDrop($event)">
+</div>
+<div id="auxiliar" style="display:none">
+
+</div>

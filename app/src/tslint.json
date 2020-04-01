@@ -12,6 +12,8 @@
             "element",
             "app",
             "kebab-case"
-        ]
+        ],
+        "component-class-suffix": false,
+        "no-inferrable-types": false
     }
 }

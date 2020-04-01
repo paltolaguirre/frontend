@@ -6,7 +6,7 @@ import { LiquidacionRoutingModule } from './liquidacion-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { LiquidacionComponent } from './liquidacion/liquidacion.component';
 import { DialogLiquidaciones } from './liquidacion/liquidacion-dialog/liquidacion-dialog.component';
-import { DemoMaterialModule } from '../material.module';
+import { MaterialModule } from '../material.module';
 import { LiquidacionListComponent } from './liquidacion-list/liquidacion-list.component';
 import { ActionsComponent } from './liquidacion-list/actions/actions.component';
 import { LiquidacionPrintComponent } from './liquidacion/liquidacion-print/liquidacion-print.component';
@@ -15,15 +15,16 @@ import { DuplicarDialogComponent } from './liquidacion-list/duplicar-dialog/dupl
 import { ContabilizarDialogComponent } from './liquidacion-list/contabilizar-dialog/contabilizar-dialog.component';
 import { MatNativeDateModule } from '@angular/material';
 import { LiquidacionPrintCompletoComponent } from './liquidacion/liquidacion-print-completo/liquidacion-print-completo.component';
+import { HojadecalculoComponent } from './liquidacion/liquidacionitem/hojadecalculo/hojadecalculo.component';
 
 @NgModule({
-  declarations: [LiquidacionComponent, LiquidacionListComponent, ActionsComponent ,DialogLiquidaciones, LiquidacionPrintComponent, CalcularLiquidacionesPipe, DuplicarDialogComponent, ContabilizarDialogComponent, LiquidacionPrintCompletoComponent],
+  declarations: [LiquidacionComponent, LiquidacionListComponent, ActionsComponent ,DialogLiquidaciones, LiquidacionPrintComponent, CalcularLiquidacionesPipe, DuplicarDialogComponent, ContabilizarDialogComponent, LiquidacionPrintCompletoComponent, HojadecalculoComponent],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     LiquidacionRoutingModule,
-    DemoMaterialModule,
+    MaterialModule,
     MatNativeDateModule,
     SharedModule
   ],

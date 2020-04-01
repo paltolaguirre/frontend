@@ -1,0 +1,643 @@
+<ng-container *ngIf="print$ | async as print; then imprimir; else default">
+</ng-container>
+
+<ng-template #default>
+<div *ngIf="currentItem$ | async as data" class="liquidacion-container">
+  <h1 *ngIf="data.ID">
+    Modificar SiRADIG
+  </h1>
+  <h1 *ngIf="!data.ID">
+    Nuevo SiRADIG
+  </h1>
+
+  <mat-divider></mat-divider>
+
+  <div mat-dialog-content class="content" id="contentTOPDF">
+    <div>
+      <app-selector-default nombre="legajo" [(matSelect)]="data.legajoid" (optionSelected)="legajoSelected($event, data)">
+      </app-selector-default>
+
+      <app-year-selector
+        [defaultDate]="defaultDate$"
+        (yearEmitter)="onYearSelectChange($event, data)">
+      </app-year-selector>
+    </div>
+
+    <div>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+              Detalles de las cargas de familia
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <h2>Conyuge</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngIf="conyugesiradig">
+              <mat-form-field class="children-input"><input matInput [(ngModel)]="conyugesiradig.nombre" placeholder="Nombre" type="text" autocomplete="off" disabled="true"></mat-form-field>
+              <app-selector-default type="hardcode" nombre="si/no" [(matSelect)]="conyugesiradig.aplica" (optionSelected)="conyugesiradig.aplica=getBoolean($event)" placeholder="Aplica" autocomplete="off"></app-selector-default>
+              <app-selector-default *ngIf="conyugesiradig.aplica" type="hardcode" nombre="si/no" [(matSelect)]="conyugesiradig.estaacargo" (optionSelected)="conyugesiradig.estaacargo=getBoolean($event)" placeholder="¿Está a Cargo?" autocomplete="off"></app-selector-default>
+              <app-selector-default *ngIf="conyugesiradig.aplica" type="hardcode" nombre="mes" [matSelect]="getMonth(conyugesiradig.mesdesde, data.periodosiradig)" (optionSelected)="conyugesiradig.mesdesde=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes desde" autocomplete="off"></app-selector-default>
+              <app-selector-default *ngIf="conyugesiradig.aplica" type="hardcode" nombre="mes" [matSelect]="getMonth(conyugesiradig.meshasta, data.periodosiradig)" (optionSelected)="conyugesiradig.meshasta=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes hasta" autocomplete="off"></app-selector-default>
+              <app-selector-default *ngIf="conyugesiradig.aplica" type="hardcode" nombre="si/no" [(matSelect)]="conyugesiradig.residenteenelpais" (optionSelected)="conyugesiradig.residenteenelpais=getBoolean($event)" placeholder="¿Residente en el País?" autocomplete="off"></app-selector-default>
+              <app-selector-default *ngIf="conyugesiradig.aplica" type="hardcode" nombre="si/no" [(matSelect)]="conyugesiradig.obtuvoingresos" (optionSelected)="conyugesiradig.obtuvoingresos=getBoolean($event)" placeholder="¿La persona declarada obtuvo ingresos?" autocomplete="off"></app-selector-default>
+              <mat-form-field *ngIf="conyugesiradig.aplica && conyugesiradig.obtuvoingresos" class="children-input"><input matInput [(ngModel)]="conyugesiradig.montoanual" placeholder="Monto anual de los ingresos" type="number" autocomplete="off" #conyugesiradigmontoanual [matTooltip]="conyugesiradigmontoanual.placeholder"></mat-form-field>
+            </tr>
+          </table>
+        </div>
+        <mat-divider></mat-divider>
+        <h2>Hijos</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let hijo of hijossiradig">
+              <mat-form-field class="children-input"><input matInput [(ngModel)]="hijo.nombre" placeholder="Nombre" type="text" autocomplete="off" disabled="true"></mat-form-field>
+              <app-selector-default type="hardcode" nombre="si/no" [(matSelect)]="hijo.aplica" (optionSelected)="hijo.aplica=getBoolean($event)" placeholder="Aplica" autocomplete="off"></app-selector-default>
+              <app-selector-default *ngIf="hijo.aplica" type="hardcode" nombre="si/no" [(matSelect)]="hijo.estaacargo" (optionSelected)="hijo.estaacargo=getBoolean($event)" placeholder="¿Está a Cargo?" autocomplete="off"></app-selector-default>
+              <app-selector-default *ngIf="hijo.aplica" type="hardcode" nombre="mes" [matSelect]="getMonth(hijo.mesdesde, data.periodosiradig)" (optionSelected)="hijo.mesdesde=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes desde" autocomplete="off"></app-selector-default>
+              <app-selector-default *ngIf="hijo.aplica" type="hardcode" nombre="mes" [matSelect]="getMonth(hijo.meshasta, data.periodosiradig)" (optionSelected)="hijo.meshasta=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes hasta" autocomplete="off"></app-selector-default>
+              <mat-form-field *ngIf="hijo.aplica && hijo.estaacargo" class="children-input"><input matInput [(ngModel)]="hijo.porcentaje" placeholder="Porcentaje (%)  que le Corresponde" type="number" autocomplete="off" #hijoporcentaje [matTooltip]="hijoporcentaje.placeholder"></mat-form-field>
+              <app-selector-default *ngIf="hijo.aplica" type="hardcode" nombre="si/no" [(matSelect)]="hijo.residenteenelpais" (optionSelected)="hijo.residenteenelpais=getBoolean($event)" placeholder="¿Residente en el País?" autocomplete="off"></app-selector-default>
+              <app-selector-default *ngIf="hijo.aplica" type="hardcode" nombre="si/no" [(matSelect)]="hijo.obtuvoingresos" (optionSelected)="hijo.obtuvoingresos=getBoolean($event)" placeholder="¿La persona declarada obtuvo ingresos?" autocomplete="off"></app-selector-default>
+              <mat-form-field *ngIf="hijo.aplica && hijo.obtuvoingresos" class="children-input"><input matInput [(ngModel)]="hijo.montoanual" placeholder="Monto anual de los ingresos" type="number" autocomplete="off" #hijomontoanual [matTooltip]="hijomontoanual.placeholder"></mat-form-field>
+            </tr>
+          </table>
+        </div>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Importe de las ganancias liquidadas en el transcurso del periodo fiscal por otros empleadores o entidades
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <h2>Detalle de importes mensuales</h2>
+        <div class="children-container">
+          <table style="width:100%">
+              <tr *ngFor="let item of data.importegananciasotroempleosiradig">
+                <div *ngIf="(item.DeletedAt == null)">
+                  <button mat-icon-button class="actions-icon" color="warn" (click)="onDeleteMonthlyReportItemClick(item)">
+                    <mat-icon>delete_forever</mat-icon>
+                  </button>
+                  <app-month-selector 
+                    [defaultDate]="getSiradigPeriodDate(item.mes)"
+                    [selectedMonths]="selectedMonthsFromMonthlyReports"
+                    (monthIndexEmitter)="updateMonthlyReportItem(data, item, $event)">
+                  </app-month-selector>
+                  <!--<app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes, data.periodosiradig)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes" autocomplete="off"></app-selector-default>-->
+                  <!--<mat-form-field class="children-input"><input matInput [(ngModel)]="item.mes" placeholder="Mes" type="text" autocomplete="off"></mat-form-field>-->
+                  <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importegananciasbrutas" placeholder="Importe ganancias brutas" type="number" autocomplete="off" #itemimportegananciasbrutas [matTooltip]="itemimportegananciasbrutas.placeholder"></mat-form-field>
+                  <mat-form-field class="children-input"><input matInput [(ngModel)]="item.aporteseguridadsocial" placeholder="Aporte seguridad social" type="number" autocomplete="off" #itemaporteseguridadsocial [matTooltip]="itemaporteseguridadsocial.placeholder"></mat-form-field>
+                  <mat-form-field class="children-input"><input matInput [(ngModel)]="item.aporteobrasocial" placeholder="Aporte obra social" type="number" autocomplete="off" #itemaporteobrasocial [matTooltip]="itemaporteobrasocial.placeholder"></mat-form-field>
+                  <mat-form-field class="children-input"><input matInput [(ngModel)]="item.aportesindical" placeholder="Aporte sindical" type="number" autocomplete="off" #itemaportesindical [matTooltip]="itemaportesindical.placeholder"></mat-form-field>
+                  <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importeretribucionesnohabituales" placeholder="Importe retribuciones no habituales" type="number" autocomplete="off" #itemimporteretribucionesnohabituales [matTooltip]="itemimporteretribucionesnohabituales.placeholder"></mat-form-field>
+                  <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importeretencionesgananciassufridas" placeholder="Importe retenciones ganancias sufridas" type="number" autocomplete="off" #itemimporteretencionesgananciassufridas [matTooltip]="itemimporteretencionesgananciassufridas.placeholder"></mat-form-field>
+                  <mat-form-field class="children-input"><input matInput [(ngModel)]="item.ajustes" placeholder="Ajustes" type="number" autocomplete="off" #itemajustes [matTooltip]="itemajustes.placeholder"></mat-form-field>
+                  <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importeconceptosexentos" placeholder="Importe conceptos exentos/ no alcanzados en ganancias" type="number" autocomplete="off" #itemimporteconceptosexentos [matTooltip]="itemimporteconceptosexentos.placeholder"></mat-form-field>
+                  <mat-form-field class="children-input"><input matInput [(ngModel)]="item.sac" placeholder="SAC" type="number" autocomplete="off" #itemsac [matTooltip]="itemsac.placeholder"></mat-form-field>                  
+                  <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importehorasextrasgravadas" placeholder="Importe horas extras gravadas" type="number" autocomplete="off" #itemimportehorasextrasgravadas [matTooltip]="itemimportehorasextrasgravadas.placeholder"></mat-form-field>
+                  <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importehorasextrasexentas" placeholder="Importe horas extras exentas" type="number" autocomplete="off" #itemimportehorasextrasexentas [matTooltip]="itemimportehorasextrasexentas.placeholder"></mat-form-field>
+                  <mat-form-field class="children-input"><input matInput [(ngModel)]="item.materialdidactico" placeholder="Material didactico" type="number" autocomplete="off" #itemmaterialdidactico [matTooltip]="itemmaterialdidactico.placeholder"></mat-form-field>
+                  <mat-form-field class="children-input"><input matInput [(ngModel)]="item.gastosmovilidad" placeholder="Gastos movilidad y viáticos" type="number" autocomplete="off" #itemgastosmovilidad [matTooltip]="itemgastosmovilidad.placeholder"></mat-form-field>
+                </div>
+              </tr>
+          </table>
+        </div>
+        <button  style="margin-left: 17px;" mat-raised-button (click)="onClickNewImportegananciasotroempleosiradig(data)">Agregar Item</button>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Deducciones y desgravaciones
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <h2>Cuota médica asistencial</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.deducciondesgravacionsiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'CUOTA_MEDICA_ASISTENCIAL' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes desde" autocomplete="off"></app-selector-default>
+                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.meshasta)" (optionSelected)="item.meshasta=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes hasta" autocomplete="off"></app-selector-default>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button *ngIf="!existe(data.deducciondesgravacionsiradig, 'CUOTA_MEDICA_ASISTENCIAL')" style="margin-left: 17px;" mat-raised-button (click)="onClickNewDeducciondesgravacionsiradig(data, 'CUOTA_MEDICA_ASISTENCIAL', -3)">Agregar Item</button>
+
+        <h2>Primas de seguro para el caso de muerte</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.deducciondesgravacionsiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'PRIMAS_DE_SEGURO_PARA_EL_CASO_DE_MUERTE' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes desde" autocomplete="off"></app-selector-default>
+                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.meshasta)" (optionSelected)="item.meshasta=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes hasta" autocomplete="off"></app-selector-default>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button *ngIf="!existe(data.deducciondesgravacionsiradig, 'PRIMAS_DE_SEGURO_PARA_EL_CASO_DE_MUERTE')" style="margin-left: 17px;" mat-raised-button (click)="onClickNewDeducciondesgravacionsiradig(data, 'PRIMAS_DE_SEGURO_PARA_EL_CASO_DE_MUERTE', -4)">Agregar Item</button>
+        
+        <h2>Primas de seguro de ahorro o mixto</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.deducciondesgravacionsiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'PRIMAS_DE_SEGURO_DE_AHORRO_O_MIXTO' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes desde" autocomplete="off"></app-selector-default>
+                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.meshasta)" (optionSelected)="item.meshasta=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes hasta" autocomplete="off"></app-selector-default>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button *ngIf="!existe(data.deducciondesgravacionsiradig, 'PRIMAS_DE_SEGURO_DE_AHORRO_O_MIXTO')" style="margin-left: 17px;" mat-raised-button (click)="onClickNewDeducciondesgravacionsiradig(data, 'PRIMAS_DE_SEGURO_DE_AHORRO_O_MIXTO', -5)">Agregar Item</button>
+        
+        <h2>Aportes a planes de seguro de retiro privado</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.deducciondesgravacionsiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'APORTES_A_PLANES_DE_SEGURO_DE_RETIRO_PRIVADO' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes desde" autocomplete="off"></app-selector-default>
+                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.meshasta)" (optionSelected)="item.meshasta=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes hasta" autocomplete="off"></app-selector-default>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button *ngIf="!existe(data.deducciondesgravacionsiradig, 'APORTES_A_PLANES_DE_SEGURO_DE_RETIRO_PRIVADO')" style="margin-left: 17px;" mat-raised-button (click)="onClickNewDeducciondesgravacionsiradig(data, 'APORTES_A_PLANES_DE_SEGURO_DE_RETIRO_PRIVADO', -6)">Agregar Item</button>
+        
+        <h2>Donaciones</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.deducciondesgravacionsiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'DONACIONES' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <mat-form-field class="standard-input"><input type="date" (ngModelChange)="item.mes=$event" matInput [ngModel]="item.mes | date: 'yyyy-MM-dd'" placeholder="Fecha"  autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button style="margin-left: 17px;" mat-raised-button (click)="onClickNewDeducciondesgravacionsiradig(data, 'DONACIONES', -7)">Agregar Item</button>
+        
+        <h2>Intereses préstamo hipotecario</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.deducciondesgravacionsiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'INTERESES_PRESTAMO_HIPOTECARIO' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes" autocomplete="off"></app-selector-default>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button style="margin-left: 17px;" mat-raised-button (click)="onClickNewDeducciondesgravacionsiradig(data, 'INTERESES_PRESTAMO_HIPOTECARIO', -8)">Agregar Item</button>
+        
+        <h2>Gastos de sepelio</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.deducciondesgravacionsiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'GASTOS_DE_SEPELIO' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <mat-form-field class="standard-input"><input type="date" (ngModelChange)="item.mes=$event" matInput [ngModel]="item.mes | date: 'yyyy-MM-dd'" placeholder="Fecha" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.comprobante" placeholder="Comprobante" type="text" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button style="margin-left: 17px;" mat-raised-button (click)="onClickNewDeducciondesgravacionsiradig(data, 'GASTOS_DE_SEPELIO', -9)">Agregar Item</button>
+        
+        <!-- Este campo esta duplicado. Segun obj: https://xubiosoftware.atlassian.net/browse/SVC-163
+        <h2>Gastos médicos y paramédicos</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.deducciondesgravacionsiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'GASTOS_MEDICOS_Y_PARAMEDICOS' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes" autocomplete="off"></app-selector-default>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.comprobante" placeholder="Comprobante" type="text" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button style="margin-left: 17px;" mat-raised-button (click)="onClickNewDeducciondesgravacionsiradig(data, 'GASTOS_MEDICOS_Y_PARAMEDICOS', -10)">Agregar Item</button>-->
+        
+        <h2>Gastos de adquisición de indumentaria y equipamiento para uso exclusivo en el lugar de trabajo</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.deducciondesgravacionsiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'GASTOS_ADQUISICION_INDUMENTARIA_Y_EQUIPAMIENTO_PARA_USO_EXCLUSIVO_EN_EL_LUGAR_DE_TRABAJO' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <mat-form-field class="standard-input"><input type="date" (ngModelChange)="item.mes=$event" matInput [ngModel]="item.mes | date: 'yyyy-MM-dd'" placeholder="Fecha" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.comprobante" placeholder="Comprobante" type="text" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button style="margin-left: 17px;" mat-raised-button (click)="onClickNewDeducciondesgravacionsiradig(data, 'GASTOS_ADQUISICION_INDUMENTARIA_Y_EQUIPAMIENTO_PARA_USO_EXCLUSIVO_EN_EL_LUGAR_DE_TRABAJO', -11)">Agregar Item</button>
+        
+        <h2>Alquiler de inmuebles destinados a casa habitación</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.deducciondesgravacionsiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'ALQUILER_INMUEBLES_DESTINADOS_A_CASA_HABITACION' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes" autocomplete="off"></app-selector-default>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.comprobante" placeholder="Comprobante" type="text" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button style="margin-left: 17px;" mat-raised-button (click)="onClickNewDeducciondesgravacionsiradig(data, 'ALQUILER_INMUEBLES_DESTINADOS_A_CASA_HABITACION', -12)">Agregar Item</button>
+        
+        <h2>Deducción del personal doméstico</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.deducciondesgravacionsiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'DEDUCCION_DEL_PERSONAL_DOMESTICO' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes" autocomplete="off"></app-selector-default>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.contribucion" placeholder="Contribución" type="number" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.retribucion" placeholder="Retribución" type="number" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button style="margin-left: 17px;" mat-raised-button (click)="onClickNewDeducciondesgravacionsiradig(data, 'DEDUCCION_DEL_PERSONAL_DOMESTICO', -13)">Agregar Item</button>
+        
+        <h2>Aportes a sociedades de garantía recíproca</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.deducciondesgravacionsiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'APORTES_A_SOCIEDADES_DE_GARANTIA_RECIPROCA' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.cuit" placeholder="CUIT" type="text" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.empresa" placeholder="Empresa" type="text" autocomplete="off"></mat-form-field>
+                <mat-form-field class="standard-input"><input type="date" (ngModelChange)="item.mes=$event" matInput [ngModel]="item.mes | date: 'yyyy-MM-dd'" placeholder="Fecha aporte" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.montocapitalaporte" placeholder="Monto capital aporte" type="number" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.montofondoriesgoaporte" placeholder="Monto fondo de riesgo aporte" type="number" autocomplete="off"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button *ngIf="!existe(data.deducciondesgravacionsiradig, 'APORTES_A_SOCIEDADES_DE_GARANTIA_RECIPROCA')" style="margin-left: 17px;" mat-raised-button (click)="onClickNewDeducciondesgravacionsiradig(data, 'APORTES_A_SOCIEDADES_DE_GARANTIA_RECIPROCA', -14)">Agregar Item</button>
+        
+        <h2>Vehículos de viajantes y corredores de comercio</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.deducciondesgravacionsiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'VEHICULOS_DE_VIAJANTES_Y_CORREDORES_DE_COMERCIOS' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.valor" placeholder="Valor" type="number" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.porcentajeafectacion" placeholder="Porcentaje de afectación" type="text" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.amortizacionperiodo" placeholder="Amortización del período" type="text" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button *ngIf="!existe(data.deducciondesgravacionsiradig, 'VEHICULOS_DE_VIAJANTES_Y_CORREDORES_DE_COMERCIOS')" style="margin-left: 17px;" mat-raised-button (click)="onClickNewDeducciondesgravacionsiradig(data, 'VEHICULOS_DE_VIAJANTES_Y_CORREDORES_DE_COMERCIOS', -15)">Agregar Item</button>
+        
+        <h2>Gastos de representación e intereses de corredores y viajantes de comercio</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.deducciondesgravacionsiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'GASTOS_DE_REPRESENTACION_E_INTERESES_DE_CORREDORES_Y_VIAJANTES_DE_COMERCIO' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes" autocomplete="off"></app-selector-default>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button style="margin-left: 17px;" mat-raised-button (click)="onClickNewDeducciondesgravacionsiradig(data, 'GASTOS_DE_REPRESENTACION_E_INTERESES_DE_CORREDORES_Y_VIAJANTES_DE_COMERCIO', -16)">Agregar Item</button>
+        
+        <h2>Otras</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.deducciondesgravacionsiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'OTRAS' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes" autocomplete="off"></app-selector-default>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button *ngIf="!existe(data.deducciondesgravacionsiradig, 'OTRAS')" style="margin-left: 17px;" mat-raised-button (click)="onClickNewDeducciondesgravacionsiradig(data, 'OTRAS', -17)">Agregar Item</button>
+        
+        <h2>Adquisición de cuotapartes de FCI con fines de retiro</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.deducciondesgravacionsiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'ADQUISICION_DE_CUOTAPARTES_DE_FCI_CON_FINES_DE_RETIRO' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes" autocomplete="off"></app-selector-default>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button style="margin-left: 17px;" mat-raised-button (click)="onClickNewDeducciondesgravacionsiradig(data, 'ADQUISICION_DE_CUOTAPARTES_DE_FCI_CON_FINES_DE_RETIRO', -18)">Agregar Item</button>
+        
+        <h2>Honorarios serv. Asistencia sanitaria, médica y paramédica</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.deducciondesgravacionsiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'HONORARIOS_SERV_ASISTENCIA_SANITARIA_MEDICA_Y_PARAMEDICA' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes" autocomplete="off"></app-selector-default>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button style="margin-left: 17px;" mat-raised-button (click)="onClickNewDeducciondesgravacionsiradig(data, 'HONORARIOS_SERV_ASISTENCIA_SANITARIA_MEDICA_Y_PARAMEDICA', -19)">Agregar Item</button>
+        
+        <h2>Aportes cajas complementarias / Fondos compensadores de prev. / Similares</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr style="display: block;" *ngFor="let item of data.deducciondesgravacionsiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'APORTES_CAJAS_COMPLEMENTARIAS_FONDOS_COMPENSADORES_DE_PREV_SIMILARES' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes" autocomplete="off"></app-selector-default>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button style="margin-left: 17px;" mat-raised-button (click)="onClickNewDeducciondesgravacionsiradig(data, 'APORTES_CAJAS_COMPLEMENTARIAS_FONDOS_COMPENSADORES_DE_PREV_SIMILARES', -20)">Agregar Item</button>
+      </mat-expansion-panel>
+    
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Otras retenciones, percepciones y pagos a cuenta
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <h2>Impuesto sobre créditos y débitos</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.retencionpercepcionsiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'IMPUESTOS_SOBRE_CREDITOS_Y_DEBITOS' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <app-selector-default nombre="siradigtipoimpuesto" [(matSelect)]="item.siradigtipoimpuestoid" (optionSelected)="item.siradigtipoimpuesto=$event"></app-selector-default>
+                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes" autocomplete="off"></app-selector-default>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button style="margin-left: 17px;" mat-raised-button (click)="onClickNewRetencionpercepcionsiradig(data, 'IMPUESTOS_SOBRE_CREDITOS_Y_DEBITOS', -21)">Agregar Item</button>
+        
+        <h2>Percepciones/Retenciones aduaneras</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.retencionpercepcionsiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'PERCEPCIONES_RETENCIONES_ADUANERAS' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes" autocomplete="off"></app-selector-default>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button style="margin-left: 17px;" mat-raised-button (click)="onClickNewRetencionpercepcionsiradig(data, 'PERCEPCIONES_RETENCIONES_ADUANERAS', -22)">Agregar Item</button>
+        
+        <h2>Pago a cuenta - Resolución general (AFIP) 3819/2015 - Cancelaciones en efectivo</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.retencionpercepcionsiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'PAGO_A_CUENTA_RESOLUCION_GENERAL_AFIP_3819_2015_CANCELACIONES_EN_EFECTIVO' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <app-selector-default nombre="siradigtipoimpuesto" [(matSelect)]="item.siradigtipoimpuestoid" (optionSelected)="item.siradigtipoimpuesto=$event"></app-selector-default>
+                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes" autocomplete="off"></app-selector-default>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button style="margin-left: 17px;" mat-raised-button (click)="onClickNewRetencionpercepcionsiradig(data, 'PAGO_A_CUENTA_RESOLUCION_GENERAL_AFIP_3819_2015_CANCELACIONES_EN_EFECTIVO', -23)">Agregar Item</button>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Beneficios - Trabajador zona patagónica y jubilados/pensionados
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <h2>Sr. TRABAJADOR: Indicar los Meses que corresponda si Usted trabaja en Región Patagónica
+          (art. 1ro Ley 23.272)
+        </h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.beneficiosiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'SR_TRABAJADOR_USTED_TRABAJA_EN_REGION_PATAGONICA_ART_1RO_LEY_23272' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mesdesde)" (optionSelected)="item.mesdesde=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes desde" autocomplete="off"></app-selector-default>
+                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.meshasta)" (optionSelected)="item.meshasta=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes hasta" autocomplete="off"></app-selector-default>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button *ngIf="!existe(data.beneficiosiradig, 'SR_TRABAJADOR_USTED_TRABAJA_EN_REGION_PATAGONICA_ART_1RO_LEY_23272')" style="margin-left: 17px;" mat-raised-button (click)="onClickNewBeneficiosiradig(data, 'SR_TRABAJADOR_USTED_TRABAJA_EN_REGION_PATAGONICA_ART_1RO_LEY_23272', -24)">Agregar Item</button>
+        
+        <h2>Sr. JUBILADO/PENSIONADO Y/O RETIRADO: Indicar los Meses que corresponda si Usted vive en Región Patagónica
+          (art. 1ro Ley 23.272)
+        </h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.beneficiosiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'SR_JUBULADO_PENSIONADO_RETIRADO_USTED_VIVE_EN_REGION_PATAGONICA_ART_1RO_LEY_23272' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mesdesde)" (optionSelected)="item.mesdesde=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes desde" autocomplete="off"></app-selector-default>
+                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.meshasta)" (optionSelected)="item.meshasta=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes hasta" autocomplete="off"></app-selector-default>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button *ngIf="!existe(data.beneficiosiradig, 'SR_JUBULADO_PENSIONADO_RETIRADO_USTED_VIVE_EN_REGION_PATAGONICA_ART_1RO_LEY_23272')" style="margin-left: 17px;" mat-raised-button (click)="onClickNewBeneficiosiradig(data, 'SR_JUBULADO_PENSIONADO_RETIRADO_USTED_VIVE_EN_REGION_PATAGONICA_ART_1RO_LEY_23272', -25)">Agregar Item</button>
+        
+        <h2>Sr. JUBILADO/PENSIONADO Y/O RETIRADO: Indicar los Meses que corresponda si Percibe otros ingresos por monotributo / relación de dependencia / participación en sociedades / actividad autónoma / intereses de plazos fijos / etc.</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.beneficiosiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'SR_JUBILADO_PENSIONADO_RETIRADO_PERCIBE_OTROS_INGRESOS_POR_MONOTRIBUTO_RELACION_DE_DEPENDENCIA_PARTICIPACION_EN_SOCIEDADES_ACTIVIDAD_AUTONOMA_INTERESES_DE_PLAZOS_FIJOS_ETC' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mesdesde)" (optionSelected)="item.mesdesde=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes desde" autocomplete="off"></app-selector-default>
+                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.meshasta)" (optionSelected)="item.meshasta=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes hasta" autocomplete="off"></app-selector-default>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button *ngIf="!existe(data.beneficiosiradig, 'SR_JUBILADO_PENSIONADO_RETIRADO_PERCIBE_OTROS_INGRESOS_POR_MONOTRIBUTO_RELACION_DE_DEPENDENCIA_PARTICIPACION_EN_SOCIEDADES_ACTIVIDAD_AUTONOMA_INTERESES_DE_PLAZOS_FIJOS_ETC')" style="margin-left: 17px;" mat-raised-button (click)="onClickNewBeneficiosiradig(data, 'SR_JUBILADO_PENSIONADO_RETIRADO_PERCIBE_OTROS_INGRESOS_POR_MONOTRIBUTO_RELACION_DE_DEPENDENCIA_PARTICIPACION_EN_SOCIEDADES_ACTIVIDAD_AUTONOMA_INTERESES_DE_PLAZOS_FIJOS_ETC', -26)">Agregar Item</button>
+        
+        <h2>Sr. JUBILADO/PENSIONADO Y/O RETIRADO: ¿Tributó Bienes Personales en el último período fiscal anterior al que está declarando?</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.beneficiosiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'SR_JUBILADO_PENSIONADO_RETIRADO_TRIBUTO_BIENES_PERSONALES_EN_EL_ULTIMO_PERIODO_FISCAL_ANTERIOR_AL_DECLARADO' && item.DeletedAt == null)">
+                <!--<button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>-->
+                <app-selector-default type="hardcode" nombre="si/no" [(matSelect)]="item.valor" (optionSelected)="item.valor=getBoolean($event)" placeholder="¿Tributó bienes?" autocomplete="off"></app-selector-default>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button *ngIf="!existe(data.beneficiosiradig, 'SR_JUBILADO_PENSIONADO_RETIRADO_TRIBUTO_BIENES_PERSONALES_EN_EL_ULTIMO_PERIODO_FISCAL_ANTERIOR_AL_DECLARADO')" style="margin-left: 17px;" mat-raised-button (click)="onClickNewBeneficiosiradig(data, 'SR_JUBILADO_PENSIONADO_RETIRADO_TRIBUTO_BIENES_PERSONALES_EN_EL_ULTIMO_PERIODO_FISCAL_ANTERIOR_AL_DECLARADO', -27)">Agregar Item</button>
+        
+        <h2>Sr. JUBILADO/PENSIONADO Y/O RETIRADO: ¿Tiene más bienes, por los que tributó Bienes Personales en el último período fiscal anterior al que está declarando, aparte de su casa-habitación?</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.beneficiosiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'SR_JUBILADO_PENSIONADO_RETIRADO_TIENE_MAS_BIENES_POR_LOS_QUE_TRIBUTO_BIENES_PERSONALES_EN_EL_ULTIMO_PERIODO_FISCAL_ANTERIOR_AL_QUE_ESTA_DECLARANDO_APARTE_DE_SU_CASA_HABITACION' && item.DeletedAt == null)">
+                <!--<button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>-->
+                <app-selector-default type="hardcode" nombre="si/no" [(matSelect)]="item.valor" (optionSelected)="item.valor=getBoolean($event)" placeholder="¿Tiene más bienes?" autocomplete="off"></app-selector-default>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button *ngIf="!existe(data.beneficiosiradig, 'SR_JUBILADO_PENSIONADO_RETIRADO_TIENE_MAS_BIENES_POR_LOS_QUE_TRIBUTO_BIENES_PERSONALES_EN_EL_ULTIMO_PERIODO_FISCAL_ANTERIOR_AL_QUE_ESTA_DECLARANDO_APARTE_DE_SU_CASA_HABITACION')" style="margin-left: 17px;" mat-raised-button (click)="onClickNewBeneficiosiradig(data, 'SR_JUBILADO_PENSIONADO_RETIRADO_TIENE_MAS_BIENES_POR_LOS_QUE_TRIBUTO_BIENES_PERSONALES_EN_EL_ULTIMO_PERIODO_FISCAL_ANTERIOR_AL_QUE_ESTA_DECLARANDO_APARTE_DE_SU_CASA_HABITACION', -28)">Agregar Item</button> 
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Ajustes
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <h2>Ajustes de haberes retroactivos de otros empleadores percibidos en el período declarado</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.ajustesiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'AJUSTES_DE_HABERES_RETROACTIVOS_DE_OTROS_EMPLEADORES_PERCIBIDOS_EN_EL_PERIODO_DECLARADO' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.cuit" placeholder="CUIT" type="text" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.razonsocial" placeholder="Razón social" type="text" autocomplete="off"></mat-form-field>
+                <div class="children-input" style="display: inline;"><app-year-selector [defaultDate]="defaultDate$" (yearEmitter)="item.anio=getFullDate($event)" placeholder="Año"></app-year-selector></div>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.montoretroactivocobrado" placeholder="Monto retroactivo cobrado" type="number" autocomplete="off" #itemmontoretroactivocobrado [matTooltip]="itemmontoretroactivocobrado.placeholder"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button *ngIf="!existe(data.ajustesiradig, 'AJUSTES_DE_HABERES_RETROACTIVOS_DE_OTROS_EMPLEADORES_PERCIBIDOS_EN_EL_PERIODO_DECLARADO')" style="margin-left: 17px;" mat-raised-button (click)="onClickNewAjustesiradig(data, 'AJUSTES_DE_HABERES_RETROACTIVOS_DE_OTROS_EMPLEADORES_PERCIBIDOS_EN_EL_PERIODO_DECLARADO', -29)">Agregar Item</button>
+        
+        <h2>Reintegro de aportes de socios protectores a sociedades de garantía recíproca</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr *ngFor="let item of data.ajustesiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'REINTEGRO_DE_APORTES_DE_SOCIOS_PROTECTORES_A_SOCIEDADES_DE_GARANTIA_RECIPROCA' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.cuit" placeholder="CUIT" type="text" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.razonsocial" placeholder="Razón social" type="text" autocomplete="off"></mat-form-field>
+                <app-selector-default type="hardcode" nombre="si/no" [(matSelect)]="item.cumplesegundoparrafoley24467" (optionSelected)="item.cumplesegundoparrafoley24467=getBoolean($event)" placeholder="¿Cumple con 2º párrafo del art. 79 de la Ley 24.467?" autocomplete="off"></app-selector-default>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.montoreintegrar" placeholder="Monto a reintegrar" type="number" autocomplete="off"></mat-form-field>
+                <app-selector-default type="hardcode" nombre="si/no" [(matSelect)]="item.cumpletercerparrafoley24467" (optionSelected)="item.cumpletercerparrafoley24467=getBoolean($event)" placeholder="¿Cumple con 3º párrafo del art. 79 de la Ley 24.467?" autocomplete="off"></app-selector-default>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.montoreintegrar3" placeholder="Monto a reintegrar" type="number" autocomplete="off"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button *ngIf="!existe(data.ajustesiradig, 'REINTEGRO_DE_APORTES_DE_SOCIOS_PROTECTORES_A_SOCIEDADES_DE_GARANTIA_RECIPROCA')" style="margin-left: 17px;" mat-raised-button (click)="onClickNewAjustesiradig(data, 'REINTEGRO_DE_APORTES_DE_SOCIOS_PROTECTORES_A_SOCIEDADES_DE_GARANTIA_RECIPROCA', -30)">Agregar Item</button>
+      </mat-expansion-panel>
+    </div>
+
+    <div mat-dialog-actions class="actions">
+      <button mat-raised-button color="primary" mat-button (click)="onClickSave(data)">Guardar</button>
+      <button mat-raised-button mat-button color="secondary" (click)="onClickAbort()">Cerrar</button>
+      <button mat-raised-button *ngIf=isNew(data) color="secondary" mat-button
+        (click)="onClickPreview()">Imprimir</button>
+    </div>
+  </div>
+</div>
+</ng-template>
+
+<ng-template #imprimir>
+  <div *ngIf="currentItem$ | async as data" class="liquidacion-container">
+    <!--<app-liquidacion-print [liquidacion]="data"></app-liquidacion-print>-->
+    <div mat-dialog-actions class="actions">
+      <button mat-raised-button mat-button (click)="onClickId()">Cerrar</button>
+      <button mat-raised-button color="primary" mat-button (click)="onClickPrint()">Descargar</button>
+    </div>
+  </div>
+</ng-template>

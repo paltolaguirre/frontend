@@ -1,0 +1,49 @@
+@import "./variables.scss";
+
+.bg-gray {
+  background-color: $GRAY_LIGHT;
+}
+
+.border-regular {
+  border: 1px solid #d3d3d3;
+}
+
+.border-light {
+  border: 1px solid rgba(#d3d3d3, 0.7);
+}
+
+.no-selectable {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+}
+
+.width-100 {
+  width: 100%;
+}
+
+.custom-vertical-scroll  {
+  &::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 8px;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+}
