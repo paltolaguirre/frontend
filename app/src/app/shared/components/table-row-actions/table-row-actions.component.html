@@ -1,6 +1,9 @@
-<button *ngIf="editIconEnabled" mat-icon-button color="accent" (click)="onEditClick()">
+<button *ngIf="isEditable" mat-icon-button color="accent" (click)="onEditClick()">
   <mat-icon>edit</mat-icon>
 </button>
-<button *ngIf="deleteIconEnabled" mat-icon-button class="actions-icon" color="warn" (click)="onDeleteClick()">
+<button *ngIf="isEditable" mat-icon-button class="actions-icon" color="warn" (click)="onDeleteClick()">
   <mat-icon>delete_forever</mat-icon>
+</button>
+<button *ngIf="!isEditable"  mat-icon-button class="actions-icon" color="black" (click)="onViewClick()">
+  <mat-icon>remove_red_eye</mat-icon>
 </button>

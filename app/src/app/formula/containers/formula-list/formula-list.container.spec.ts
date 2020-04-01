@@ -63,11 +63,11 @@ describe('FormulaListContainer', () => {
 
   describe('ngAfterViewInit', () => {
     it('should fetch formulas from FormulaService', async () => {
-      const getFormulasSpy = spyOn(formulaService, 'getAll');
+      const formulasStoreSpy = spyOn(formulaService.formulasStore$, 'subscribe');
 
       await component.ngAfterViewInit();
 
-      expect(getFormulasSpy).toHaveBeenCalledTimes(1);
+      expect(formulasStoreSpy).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -97,7 +97,7 @@ describe('FormulaListContainer', () => {
 
       await component.onDelete(fakeFormulaItem);
 
-      expect(deleteSpy).toHaveBeenCalledWith(fakeFormulaItem);
+      expect(deleteSpy).toHaveBeenCalledWith(fakeFormulaItem.name);
     });
 
     it('should call removeItemFromTable', async () => {

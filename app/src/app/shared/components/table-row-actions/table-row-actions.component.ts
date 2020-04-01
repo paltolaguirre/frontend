@@ -6,10 +6,10 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
   styleUrls: ['./table-row-actions.component.scss']
 })
 export class TableRowActionsComponent implements OnInit {
-  @Input() editIconEnabled: boolean;
-  @Input() deleteIconEnabled: boolean;
+  @Input() isEditable: boolean;
   @Output() editEmitter: EventEmitter<any> = new EventEmitter();
   @Output() deleteEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() viewEmitter: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
@@ -22,5 +22,9 @@ export class TableRowActionsComponent implements OnInit {
 
   public onDeleteClick() {
     this.deleteEmitter.emit();
+  }
+
+  public onViewClick() {
+    this.viewEmitter.emit();
   }
 }

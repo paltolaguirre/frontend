@@ -10,6 +10,7 @@ import { TopMenuToolbarComponent } from './components/top-menu-toolbar/top-menu-
 import { InfoDialogComponent } from './components/info-dialog/info-dialog.component';
 import { BottomTableActionsComponent } from './components/bottom-table-actions/bottom-table-actions.component';
 import { MonthSelectorComponent } from './components/month-selector/month-selector.component';
+import { DisableControlDirective } from './directives/disable-control/disable-control.directive';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { MonthSelectorComponent } from './components/month-selector/month-select
     TableRowActionsComponent,
     InfoDialogComponent,
     BottomTableActionsComponent,
-    YearSelectorComponent
+    YearSelectorComponent,
+    DisableControlDirective
   ],
   imports: [
     CommonModule,
@@ -33,6 +35,7 @@ import { MonthSelectorComponent } from './components/month-selector/month-select
   ],
   exports: [
     BottomTableActionsComponent,
+    DisableControlDirective,
     InfoDialogComponent,
     MonthSelectorComponent,
     SelectorDefaultComponent,

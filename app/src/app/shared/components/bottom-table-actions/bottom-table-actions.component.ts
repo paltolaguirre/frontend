@@ -8,6 +8,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 })
 export class BottomTableActionsComponent implements OnInit {
   @Input() isNew: boolean;
+  @Input() isSaveAllowed: boolean;
   @Output() saveEmitter: EventEmitter<any> = new EventEmitter();
   @Output() abortEmitter: EventEmitter<any> = new EventEmitter();
 
