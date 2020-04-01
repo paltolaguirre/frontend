@@ -260,6 +260,8 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       divFormula.innerHTML = textContent;
     }
 
+    const childParamsFormTerms: FormulaTerm[] = [];
+
     for (let index = 0; index < arrayParams.length; index++) {
       if (isOperator && index === 1) {
         divFormula.innerHTML = divFormula.innerHTML + ' ' + textContent + ' ';
@@ -267,12 +269,26 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
       const divParam = this.createParam('', arrayParams[index], true, false);
 
+      childParamsFormTerms.push({
+        nodeId: divParam.getAttribute('id'),
+        payload: {
+          id: divParam.getAttribute('id'),
+          operationName: null,
+          type: arrayParams[index],
+          symbol: divFormula.innerHTML,
+          mustRemoveFromSource: false,
+          category: 0,
+          hasChildren: true
+        },
+        children: null
+      });
+
       divFormula.appendChild(divParam);
     }
 
 
     // TODO: Refactor - Create and Add children.
-    this.formulaService.addFormulaTerm(data);
+    this.formulaService.addFormulaTerm(data, childParamsFormTerms);
 
     return divFormula;
   }
@@ -283,6 +299,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
     div.setAttribute('name', functionName);
     div.setAttribute('data-type', type);
+    div.setAttribute('id', `child-param-${this.getNewID()}`);
     div.className = 'param ' + this.getClassNameFromOperatorType(type);
 
     if (isAsociative) {
