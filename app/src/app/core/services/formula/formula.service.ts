@@ -160,7 +160,7 @@ export class FormulaService {
     this.formulaPickerItemEmitter.emit(payload);
   }
 
-  public addFormulaTerm(data: FormulaTransferData, children?: FormulaTransferData[]) {
+  public addFormulaTerm(data: FormulaTransferData, children?: FormulaTerm[]) {
     const formulaTerm: any = {
       nodeId: data.nodeId,
       payload: data.payload,
