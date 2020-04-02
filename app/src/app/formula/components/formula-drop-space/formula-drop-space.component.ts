@@ -286,8 +286,6 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       divFormula.appendChild(divParam);
     }
 
-
-    // TODO: Refactor - Create and Add children.
     this.formulaService.addFormulaTerm(data, childParamsFormTerms);
 
     return divFormula;
@@ -494,7 +492,14 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     }
 
     input.onexit = (ei) => {
-      ei.target.parentNode.innerHTML = ei.target.value;
+      const targetValue = ei.target.value;
+
+      ei.target.parentNode.innerHTML = targetValue;
+
+      // TODO: update form terms array.
+      // console.log('event: ', ei);
+      console.log('target: ', targetValue);
+      // console.log('parent node: ', ei.target.parentNode);
     };
 
     input.onblur = input.onexit;
