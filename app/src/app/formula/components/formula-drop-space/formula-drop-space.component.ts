@@ -491,14 +491,17 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       input.type = 'text';
     }
 
-    input.onexit = (ei) => {
-      const targetValue = ei.target.value;
+    input.setAttribute('id', `input-${this.getNewID()}`);
 
-      ei.target.parentNode.innerHTML = targetValue;
+    input.onexit = (event) => {
+      const targetValue = event.target.value;
+
+      event.target.parentNode.innerHTML = targetValue;
 
       // TODO: update form terms array.
       // console.log('event: ', ei);
-      console.log('target: ', targetValue);
+      console.log('target id: ', event.target);
+      console.log('event: ', event);
       // console.log('parent node: ', ei.target.parentNode);
     };
 
