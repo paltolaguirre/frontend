@@ -275,7 +275,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
           id: divParam.getAttribute('id'),
           operationName: null,
           type: arrayParams[index],
-          symbol: divFormula.innerHTML,
+          symbol: divParam.innerHTML,
           mustRemoveFromSource: false,
           category: 0,
           hasChildren: true
