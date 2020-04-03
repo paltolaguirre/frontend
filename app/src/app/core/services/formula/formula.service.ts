@@ -182,6 +182,10 @@ export class FormulaService {
       selectedTerm = this.findChildTermDeeply(term, inputParamId);
 
       console.log('encontrado: ', selectedTerm);
+
+      // Si el selectedTerm tiene children, tendriamos que tirar un find de este termino..
+      // una vez que tenemos el child, lo podemos actualizar directamente en el array de terms
+      // y hacer un next de este array.
     });
 
     const clonedTerm: any = { ...selectedTerm };
@@ -204,9 +208,7 @@ export class FormulaService {
       return selectedTerm;
     }
 
-    for (const child of parentTerm.children) {
-      const newParent = child;
-
+    for (const newParent of parentTerm.children) {
       const newSelectedTerm = this.findChildTermDeeply(newParent, inputParamId);
 
       if (newSelectedTerm) {
