@@ -179,16 +179,39 @@ export class FormulaService {
     let selectedTerm: FormulaTerm;
 
     terms.forEach((term) => {
-      if (term.children) {
-        selectedTerm = term.children.find((child) => child.nodeId === inputParamId);
+      selectedTerm = this.findChildTermDeeply(term, inputParamId);
 
-        console.log('encontrado: ', selectedTerm);
-      }
+      console.log('encontrado: ', selectedTerm);
     });
 
     const clonedTerm: any = { ...selectedTerm };
     clonedTerm.payload.symbol = value;
 
-    this.formulaTermsSubject.next([...this.formulaTermsSubject.getValue(), ...clonedTerm]);
+    // TODO: Revisar esto. El parametro modificado se actualiza bien pero luego en la siguiente linea
+    // estoy mergeando este parametro a nivel raiz del array y no va.
+    // Lo que tengo que hacer es buscar actualizar el array como estaba pero refrescando los cambios.
+    // this.formulaTermsSubject.next([...this.formulaTermsSubject.getValue(), ...clonedTerm]);
+  }
+
+  public findChildTermDeeply(parentTerm: FormulaTerm, inputParamId: string) {
+    if (!parentTerm.children) {
+      return null;
+    }
+
+    const selectedTerm: FormulaTerm = parentTerm.children.find((child) => child.nodeId === inputParamId);
+
+    if (selectedTerm) {
+      return selectedTerm;
+    }
+
+    for (const child of parentTerm.children) {
+      const newParent = child;
+
+      const newSelectedTerm = this.findChildTermDeeply(newParent, inputParamId);
+
+      if (newSelectedTerm) {
+        return newSelectedTerm;
+      }
+    }
   }
 }
