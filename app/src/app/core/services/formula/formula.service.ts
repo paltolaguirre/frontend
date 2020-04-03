@@ -173,4 +173,22 @@ export class FormulaService {
   public clearFormulaTerms() {
     this.formulaTermsSubject.next([]);
   }
+
+  public async updateFormulaChildTerm(inputParamId: string, value: any) {
+    const terms = this.formulaTermsSubject.getValue();
+    let selectedTerm: FormulaTerm;
+
+    terms.forEach((term) => {
+      if (term.children) {
+        selectedTerm = term.children.find((child) => child.nodeId === inputParamId);
+
+        console.log('encontrado: ', selectedTerm);
+      }
+    });
+
+    const clonedTerm: any = { ...selectedTerm };
+    clonedTerm.payload.symbol = value;
+
+    this.formulaTermsSubject.next([...this.formulaTermsSubject.getValue(), ...clonedTerm]);
+  }
 }

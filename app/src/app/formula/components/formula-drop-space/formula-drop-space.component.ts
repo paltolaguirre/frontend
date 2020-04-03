@@ -25,7 +25,6 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   @Input() isItemPickerExpanded: boolean;
 
   public idCount: number = 0;
-  public formulaTerms: FormulaTerm[] = [];
 
   constructor(
     private formulaService: FormulaService,
@@ -482,10 +481,10 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     e.cancelBubble = true;
   }
 
-  public editCurrentElement(target) {
+  public editCurrentElement(inputParamTarget) {
     const input = document.createElement('input') as any;
 
-    if (target.classList.contains('numeric-param')) {
+    if (inputParamTarget.classList.contains('numeric-param')) {
       input.type = 'number';
     } else {
       input.type = 'text';
@@ -499,10 +498,10 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       event.target.parentNode.innerHTML = targetValue;
 
       // TODO: update form terms array.
-      // console.log('event: ', ei);
       console.log('target id: ', event.target);
-      console.log('event: ', event);
-      // console.log('parent node: ', ei.target.parentNode);
+      console.log('input param target', inputParamTarget);
+
+      this.formulaService.updateFormulaChildTerm(inputParamTarget.getAttribute('id'), targetValue);
     };
 
     input.onblur = input.onexit;
@@ -526,12 +525,12 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     };
 
     input.className = 'inputedit';
-    input.placeholder = Number(target.getAttribute('data-type')) === MathOperatorTypes.Boolean ?
+    input.placeholder = Number(inputParamTarget.getAttribute('data-type')) === MathOperatorTypes.Boolean ?
       'false' :
       '0.00';
     input.style.width = '3rem';
 
-    target.appendChild(input);
+    inputParamTarget.appendChild(input);
 
     setTimeout(() => input.focus());
   }
