@@ -176,28 +176,15 @@ export class FormulaService {
 
   public async updateFormulaChildTerm(inputParamId: string, value: any) {
     const terms = this.formulaTermsSubject.getValue();
-    let selectedTerm: FormulaTerm;
 
     terms.forEach((term) => {
-      selectedTerm = this.findChildTermDeeply(term, inputParamId);
-
-      console.log('encontrado: ', selectedTerm);
-
-      // Si el selectedTerm tiene children, tendriamos que tirar un find de este termino..
-      // una vez que tenemos el child, lo podemos actualizar directamente en el array de terms
-      // y hacer un next de este array.
+      this.setNewChildTermValueDeeply(term, inputParamId, value);
     });
 
-    const clonedTerm: any = { ...selectedTerm };
-    clonedTerm.payload.symbol = value;
-
-    // TODO: Revisar esto. El parametro modificado se actualiza bien pero luego en la siguiente linea
-    // estoy mergeando este parametro a nivel raiz del array y no va.
-    // Lo que tengo que hacer es buscar actualizar el array como estaba pero refrescando los cambios.
-    // this.formulaTermsSubject.next([...this.formulaTermsSubject.getValue(), ...clonedTerm]);
+    this.formulaTermsSubject.next(terms);
   }
 
-  public findChildTermDeeply(parentTerm: FormulaTerm, inputParamId: string) {
+  public setNewChildTermValueDeeply(parentTerm: FormulaTerm, inputParamId: string, newValue: any) {
     if (!parentTerm.children) {
       return null;
     }
@@ -205,13 +192,17 @@ export class FormulaService {
     const selectedTerm: FormulaTerm = parentTerm.children.find((child) => child.nodeId === inputParamId);
 
     if (selectedTerm) {
+      selectedTerm.payload.symbol = newValue;
+
       return selectedTerm;
     }
 
     for (const newParent of parentTerm.children) {
-      const newSelectedTerm = this.findChildTermDeeply(newParent, inputParamId);
+      const newSelectedTerm = this.setNewChildTermValueDeeply(newParent, inputParamId, newValue);
 
       if (newSelectedTerm) {
+        newSelectedTerm.payload.symbol = newValue;
+
         return newSelectedTerm;
       }
     }
