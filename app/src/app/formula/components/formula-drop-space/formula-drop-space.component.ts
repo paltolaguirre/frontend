@@ -438,7 +438,17 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       return null;
     }
 
-    this.cutAndPasteDroppedParam(document.getElementById(data), ev.target);
+    const origin = document.getElementById(data);
+    const target = ev.target;
+
+    console.log('origin:', origin, 'target', target);
+
+    this.cutAndPasteDroppedParam(origin, target);
+
+    // TODO:
+    // Buscar en el raiz del array de formula terms y eliminar el que tenga el mismo nodeId del id del origen.
+    // Ver quien es el hijo que estamos modificando, crear un FormulaParam nuevo con los hijos correspondientes
+    // y reemplazar al anterior. NOTA: el formula param puede tener hijos o no.
 
     ev.cancelBubble = true;
   }
@@ -481,10 +491,10 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     e.cancelBubble = true;
   }
 
-  public editCurrentElement(inputParamTarget) {
+  public editCurrentElement(inputParamContainerTarget) {
     const input = document.createElement('input') as any;
 
-    if (inputParamTarget.classList.contains('numeric-param')) {
+    if (inputParamContainerTarget.classList.contains('numeric-param')) {
       input.type = 'number';
     } else {
       input.type = 'text';
@@ -497,11 +507,10 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
       event.target.parentNode.innerHTML = targetValue;
 
-      // TODO: update form terms array.
-      console.log('target id: ', event.target);
-      console.log('input param target', inputParamTarget);
+      // console.log('target id: ', event.target);
+      // console.log('input param target', inputParamTarget);
 
-      this.formulaService.updateFormulaChildTerm(inputParamTarget.getAttribute('id'), targetValue);
+      this.formulaService.updateFormulaChildTerm(inputParamContainerTarget.getAttribute('id'), targetValue);
     };
 
     input.onblur = input.onexit;
@@ -525,12 +534,12 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     };
 
     input.className = 'inputedit';
-    input.placeholder = Number(inputParamTarget.getAttribute('data-type')) === MathOperatorTypes.Boolean ?
+    input.placeholder = Number(inputParamContainerTarget.getAttribute('data-type')) === MathOperatorTypes.Boolean ?
       'false' :
       '0.00';
     input.style.width = '3rem';
 
-    inputParamTarget.appendChild(input);
+    inputParamContainerTarget.appendChild(input);
 
     setTimeout(() => input.focus());
   }

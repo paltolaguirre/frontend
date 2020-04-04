@@ -174,11 +174,11 @@ export class FormulaService {
     this.formulaTermsSubject.next([]);
   }
 
-  public async updateFormulaChildTerm(inputParamId: string, value: any) {
+  public async updateFormulaChildTerm(inputParamContainerId: string, newValue: any) {
     const terms = this.formulaTermsSubject.getValue();
 
     terms.forEach((term) => {
-      this.setNewChildTermValueDeeply(term, inputParamId, value);
+      this.setNewChildTermValueDeeply(term, inputParamContainerId, newValue);
     });
 
     this.formulaTermsSubject.next(terms);
