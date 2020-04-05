@@ -432,15 +432,17 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
   public onChildDrop(ev) {
     ev.preventDefault();
-    const data = ev.dataTransfer.getData('text');
+    const draggedNodeId = ev.dataTransfer.getData('text');
 
     if (ev.target.parentNode == null) {
       return null;
     }
 
-    const origin = document.getElementById(data);
+    const origin = document.getElementById(draggedNodeId);
     const target = ev.target;
 
+    console.log('ev', ev);
+    console.log('parent node', origin.parentElement);
     console.log('origin:', origin, 'target', target);
 
     this.cutAndPasteDroppedParam(origin, target);
@@ -449,6 +451,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     // Buscar en el raiz del array de formula terms y eliminar el que tenga el mismo nodeId del id del origen.
     // Ver quien es el hijo que estamos modificando, crear un FormulaParam nuevo con los hijos correspondientes
     // y reemplazar al anterior. NOTA: el formula param puede tener hijos o no.
+    this.formulaService.removeBaseFormulaTerm(draggedNodeId);
 
     ev.cancelBubble = true;
   }

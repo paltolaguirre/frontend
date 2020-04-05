@@ -71,19 +71,13 @@ export class OperatorsToolbarComponent implements OnInit {
   }
 
   public onDragStart(event, operator: Operator, prefix?: string) {
-    const data: FormulaTransferData = {
-      nodeId: this.getDomIdByOperator(operator, prefix),
-      payload: operator
-    };
+    const data: FormulaTransferData = this.getOperatorTransferData(operator, prefix);
 
     event.dataTransfer.setData('text/plain', JSON.stringify(data));
   }
 
   public onOperatorItemClick(event, operator, prefix?: string) {
-    const data: FormulaTransferData = {
-      nodeId: this.getDomIdByOperator(operator, prefix),
-      payload: operator
-    };
+    const data: FormulaTransferData = this.getOperatorTransferData(operator, prefix);
 
     this.operatorsService.emitOperatorClicked(data);
   }
@@ -94,5 +88,12 @@ export class OperatorsToolbarComponent implements OnInit {
 
   public getDomIdByOperator(operator: Operator, prefix?: string) {
     return this.operatorsService.getDomIdByOperator(operator, prefix);
+  }
+
+  public getOperatorTransferData(operator: Operator, prefix?: string): FormulaTransferData {
+    return {
+      nodeId: this.getDomIdByOperator(operator, prefix),
+      payload: operator
+    };
   }
 }

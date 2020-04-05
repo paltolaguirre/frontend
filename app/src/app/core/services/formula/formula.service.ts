@@ -207,4 +207,18 @@ export class FormulaService {
       }
     }
   }
+
+  public removeBaseFormulaTerm(nodeId: string) {
+    let terms = this.formulaTermsSubject.getValue();
+
+    console.log('Me llego este nodeId:', nodeId);
+
+    for (const term of terms) {
+      console.log('term id: ', term.nodeId);
+    }
+
+    // terms = terms.filter((term) => term.nodeId !== nodeId);
+
+    // this.formulaTermsSubject.next(terms);
+  }
 }

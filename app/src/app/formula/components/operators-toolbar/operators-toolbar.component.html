@@ -7,6 +7,7 @@
           class="math-operator-container no-selectable param numeric-param"
           [id]="getDomIdByOperator(operator)"
           [attr.data-type]="operator.type"
+          [attr.data-data]="operator | json"
           (dragstart)="onDragStart($event, operator)"
           (click)="onOperatorItemClick($event, operator)"
           draggable="true">
