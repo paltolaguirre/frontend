@@ -258,6 +258,8 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       divFormula.appendChild(divParam);
     }
 
+    divFormula.setAttribute('id', `formula-term-${data.nodeId}`);
+
     this.updateFormulaTerms();
 
     return divFormula;
@@ -586,10 +588,12 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   }
 
   public updateFormulaTerms() {
-    const mainDropSpace = document.querySelector('#main') as HTMLElement;
-    const childNodes = mainDropSpace.childNodes;
+    setTimeout(() => {
+      const mainDropSpace = document.querySelector('#main') as HTMLElement;
+      const childNodes = mainDropSpace.childNodes;
 
-    console.log('main:', mainDropSpace);
-    console.log('childNodes: ', childNodes);
+      console.log('main:', mainDropSpace);
+      console.log('childNodes: ', childNodes);
+    }, 1000);
   }
 }
