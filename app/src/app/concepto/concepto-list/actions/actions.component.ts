@@ -59,7 +59,8 @@ export class ActionsComponent implements OnInit {
       prorrateo: null,
       basesac: null,
       tipoimpuestoganancias: null,
-      tipoimpuestogananciasid: null
+      tipoimpuestogananciasid: null,
+      esremvariable: null
     }
     
     await this.conceptoService.deleteConcepto(item);
