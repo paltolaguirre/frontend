@@ -77,7 +77,7 @@
                   class="pickable-badge no-selectable param numeric-param"
                   [id]="'variable-' + index + 1"
                   [attr.data-type]="getOperatorDefaultType()"
-                  
+                  [attr.data-data]="getFormulaTransferData(formula, 'variable-' + index + 1) | json"
                   draggable="true"
                   (dragstart)="onDragStart($event, formula)"
                   (click)="onFormulaItemClick($event, formula)">
@@ -91,6 +91,7 @@
                   class="pickable-badge no-selectable param numeric-param"
                   [id]="'concept-' + index + 1"
                   [attr.data-type]="getOperatorDefaultType()"
+                  [attr.data-data]="getFormulaTransferData(concept, 'concept-' + index + 1) | json"
                   draggable="true"
                   (dragstart)="onDragStart($event, concept)"
                   (click)="onFormulaItemClick($event, concept)">
@@ -104,6 +105,7 @@
                   class="pickable-badge no-selectable param numeric-param"
                   [id]="'param-' + index + 1"
                   [attr.data-type]="getOperatorDefaultType()"
+                  [attr.data-data]="getFormulaTransferData(param, 'param-' + index + 1) | json"
                   draggable="true"
                   (dragstart)="onDragStart($event, param)"
                   (click)="onFormulaItemClick($event, param)">
@@ -117,6 +119,7 @@
                   class="pickable-badge no-selectable param numeric-param"
                   [id]="'standard-formula-' + index + 1"
                   [attr.data-type]="getOperatorDefaultType()"
+                  [attr.data-data]="getFormulaTransferData(formula, 'standard-formula-' + index + 1) | json"
                   draggable="true"
                   (dragstart)="onDragStart($event, formula)"
                   (click)="onFormulaItemClick($event, formula)">
@@ -130,6 +133,7 @@
                   class="pickable-badge no-selectable param numeric-param"
                   [id]="'user-formula-' + index + 1"
                   [attr.data-type]="getOperatorDefaultType()"
+                  [attr.data-data]="getFormulaTransferData(formula, 'user-formula-' + index + 1) | json"
                   draggable="true"
                   (dragstart)="onDragStart($event, formula)"
                   (click)="onFormulaItemClick($event, formula)">
