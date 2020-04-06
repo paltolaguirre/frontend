@@ -91,6 +91,8 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     const droppeableSpace = document.getElementById('main');
 
     this.appendContent(domElement, droppeableSpace, data, isInput);
+
+    this.updateFormulaTerms();
   }
 
   public appendContent(origin: HTMLElement, to: HTMLElement, data: FormulaTransferData, isInput: boolean) {
@@ -590,10 +592,14 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   public updateFormulaTerms() {
     setTimeout(() => {
       const mainDropSpace = document.querySelector('#main') as HTMLElement;
-      const childNodes = mainDropSpace.childNodes;
+      const mainChildrenNodes = Array.from(mainDropSpace.childNodes);
 
       console.log('main:', mainDropSpace);
-      console.log('childNodes: ', childNodes);
+      console.log('childNodes: ', mainChildrenNodes);
+
+      for (const mainChild of mainChildrenNodes) {
+        console.log('main child: ', mainChild);
+      }
     }, 1000);
   }
 }
