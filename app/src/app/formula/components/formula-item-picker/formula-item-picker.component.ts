@@ -120,6 +120,13 @@ export class FormulaItemPickerComponent implements OnInit {
     this.formulaService.emitFormulaItemClick(data);
   }
 
+  public getFormulaTransferData(formula: Formula, nodeId: string): FormulaTransferData {
+    return {
+      nodeId,
+      payload: formula
+    };
+  }
+
   public getOperatorDefaultType() {
     return MathOperatorTypes.Numeric;
   }

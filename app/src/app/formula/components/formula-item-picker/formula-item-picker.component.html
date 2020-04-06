@@ -62,6 +62,7 @@
                     class="pickable-badge no-selectable param numeric-param"
                     [id]="'pickable-item-' + index + 1"
                     [attr.data-type]="getOperatorDefaultType()"
+                    [attr.data-data]="getFormulaTransferData(item, 'pickable-item-' + index + 1) | json"
                     draggable="true"
                     (dragstart)="onDragStart($event, item)"
                     (click)="onFormulaItemClick($event, item)">
@@ -76,6 +77,7 @@
                   class="pickable-badge no-selectable param numeric-param"
                   [id]="'variable-' + index + 1"
                   [attr.data-type]="getOperatorDefaultType()"
+                  
                   draggable="true"
                   (dragstart)="onDragStart($event, formula)"
                   (click)="onFormulaItemClick($event, formula)">
