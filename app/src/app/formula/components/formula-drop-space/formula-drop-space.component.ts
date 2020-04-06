@@ -10,12 +10,6 @@ import { takeUntil } from 'rxjs/operators';
 import { FormulaService } from '../../../core/services/formula/formula.service';
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 
-export class FormulaTerm {
-  nodeId?: string;
-  payload: any;
-  children: any[];
-}
-
 @Component({
   selector: 'app-formula-drop-space',
   templateUrl: './formula-drop-space.component.html',
@@ -51,10 +45,6 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
         return this.handleMathOperatorClicked(data);
     });
 
-    this.formulaService.formulaTerms$.subscribe((terms) => {
-      console.log(terms);
-    });
-
     const main = document.getElementById('main') as any;
 
     main.context = new this.context();
@@ -63,7 +53,6 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.formulaService.clearFormulaTerms();
   }
 
   public context() {
@@ -259,8 +248,6 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       divFormula.innerHTML = textContent;
     }
 
-    const childParamsFormTerms: FormulaTerm[] = [];
-
     for (let index = 0; index < arrayParams.length; index++) {
       if (isOperator && index === 1) {
         divFormula.innerHTML = divFormula.innerHTML + ' ' + textContent + ' ';
@@ -268,24 +255,8 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
       const divParam = this.createParam('', arrayParams[index], true, false);
 
-      childParamsFormTerms.push({
-        nodeId: divParam.getAttribute('id'),
-        payload: {
-          id: divParam.getAttribute('id'),
-          operationName: null,
-          type: arrayParams[index],
-          symbol: divParam.innerHTML,
-          mustRemoveFromSource: false,
-          category: 0,
-          hasChildren: true
-        },
-        children: null
-      });
-
       divFormula.appendChild(divParam);
     }
-
-    this.formulaService.addFormulaTerm(data, childParamsFormTerms);
 
     return divFormula;
   }
@@ -441,17 +412,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     const origin = document.getElementById(draggedNodeId);
     const target = ev.target;
 
-    console.log('ev', ev);
-    console.log('parent node', origin.parentElement);
-    console.log('origin:', origin, 'target', target);
-
     this.cutAndPasteDroppedParam(origin, target);
-
-    // TODO:
-    // Buscar en el raiz del array de formula terms y eliminar el que tenga el mismo nodeId del id del origen.
-    // Ver quien es el hijo que estamos modificando, crear un FormulaParam nuevo con los hijos correspondientes
-    // y reemplazar al anterior. NOTA: el formula param puede tener hijos o no.
-    this.formulaService.removeBaseFormulaTerm(draggedNodeId);
 
     ev.cancelBubble = true;
   }
@@ -509,11 +470,6 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       const targetValue = event.target.value;
 
       event.target.parentNode.innerHTML = targetValue;
-
-      // console.log('target id: ', event.target);
-      // console.log('input param target', inputParamTarget);
-
-      this.formulaService.updateFormulaChildTerm(inputParamContainerTarget.getAttribute('id'), targetValue);
     };
 
     input.onblur = input.onexit;

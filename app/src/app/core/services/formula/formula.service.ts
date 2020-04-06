@@ -7,7 +7,6 @@ import { ApiHttpService } from './../api-http/api-http.service';
 import { FormulaCategory } from './../../models/formula-category.model';
 import { Injectable, EventEmitter } from '@angular/core';
 import { Formula } from '../../models/formula.model';
-import { FormulaTerm } from 'src/app/formula/components/formula-drop-space/formula-drop-space.component';
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +17,6 @@ export class FormulaService {
   private formulas = new BehaviorSubject<Formula[]>([]);
   public formulasStore$ = this.formulas.asObservable();
   public formulaPickerItemEmitter: EventEmitter<FormulaTransferData> = new EventEmitter();
-
-  private formulaTermsSubject = new BehaviorSubject<FormulaTerm[]>([]);
-  public formulaTerms$ = this.formulaTermsSubject.asObservable();
 
   constructor(private api: ApiHttpService) {
     this.initFormulasStore();
@@ -158,67 +154,5 @@ export class FormulaService {
 
   public emitFormulaItemClick(payload: FormulaTransferData) {
     this.formulaPickerItemEmitter.emit(payload);
-  }
-
-  public addFormulaTerm(data: FormulaTransferData, children?: FormulaTerm[]) {
-    const formulaTerm: any = {
-      nodeId: data.nodeId,
-      payload: data.payload,
-      children
-    };
-
-    this.formulaTermsSubject.next([...this.formulaTermsSubject.getValue(), ...formulaTerm]);
-  }
-
-  public clearFormulaTerms() {
-    this.formulaTermsSubject.next([]);
-  }
-
-  public async updateFormulaChildTerm(inputParamContainerId: string, newValue: any) {
-    const terms = this.formulaTermsSubject.getValue();
-
-    terms.forEach((term) => {
-      this.setNewChildTermValueDeeply(term, inputParamContainerId, newValue);
-    });
-
-    this.formulaTermsSubject.next(terms);
-  }
-
-  public setNewChildTermValueDeeply(parentTerm: FormulaTerm, inputParamId: string, newValue: any) {
-    if (!parentTerm.children) {
-      return null;
-    }
-
-    const selectedTerm: FormulaTerm = parentTerm.children.find((child) => child.nodeId === inputParamId);
-
-    if (selectedTerm) {
-      selectedTerm.payload.symbol = newValue;
-
-      return selectedTerm;
-    }
-
-    for (const newParent of parentTerm.children) {
-      const newSelectedTerm = this.setNewChildTermValueDeeply(newParent, inputParamId, newValue);
-
-      if (newSelectedTerm) {
-        newSelectedTerm.payload.symbol = newValue;
-
-        return newSelectedTerm;
-      }
-    }
-  }
-
-  public removeBaseFormulaTerm(nodeId: string) {
-    let terms = this.formulaTermsSubject.getValue();
-
-    console.log('Me llego este nodeId:', nodeId);
-
-    for (const term of terms) {
-      console.log('term id: ', term.nodeId);
-    }
-
-    // terms = terms.filter((term) => term.nodeId !== nodeId);
-
-    // this.formulaTermsSubject.next(terms);
   }
 }
