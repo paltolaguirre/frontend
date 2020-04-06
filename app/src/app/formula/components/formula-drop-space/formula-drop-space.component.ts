@@ -258,6 +258,8 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       divFormula.appendChild(divParam);
     }
 
+    this.updateFormulaTerms();
+
     return divFormula;
   }
 
@@ -583,4 +585,11 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     this.makeRecursiveWhiteParenthesis(origin);
   }
 
+  public updateFormulaTerms() {
+    const mainDropSpace = document.querySelector('#main') as HTMLElement;
+    const childNodes = mainDropSpace.childNodes;
+
+    console.log('main:', mainDropSpace);
+    console.log('childNodes: ', childNodes);
+  }
 }
