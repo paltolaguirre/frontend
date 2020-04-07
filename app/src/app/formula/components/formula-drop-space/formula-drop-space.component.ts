@@ -303,6 +303,14 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       div.innerHTML = 'false';
     }
 
+    const formulaTermData: FormulaTerm = {
+      nodeId: div.id,
+      payload: div.innerHTML,
+      children: null
+    };
+
+    div.setAttribute('data-data', JSON.stringify(formulaTermData));
+
     return div;
   }
 
@@ -624,6 +632,8 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     for (const child of childNodes) {
       if (child.classList && child.classList.contains('param')) {
         console.log('child: ', child);
+
+        // Obtener los datos de estos hijos y pushear un formula term en lugar del nodo.
         children.push(child);
       }
     }
