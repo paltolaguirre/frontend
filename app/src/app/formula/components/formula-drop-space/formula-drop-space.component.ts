@@ -12,8 +12,9 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 
 export class FormulaTerm {
   nodeId: string;
-  payload: any;
+  payload: any; // Puede ser un operador, una formula, una variable; puede tener diferentes datos.
   children: FormulaTerm[] | any[];
+  //type
 }
 
 @Component({
@@ -25,6 +26,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   @Input() isItemPickerExpanded: boolean;
 
   public idCount: number = 0;
+  public formulaResult: FormulaTerm;
 
   constructor(
     private formulaService: FormulaService,
@@ -605,8 +607,6 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       let formula: FormulaTerm;
 
       for (const mainChild of mainChildrenNodes) {
-        // console.log('main child: ', mainChild);
-        // console.log('algo: ', this.getFormulaTerm(mainChild));
         formula = this.getFormulaTerm(mainChild);
 
         console.log('formula: ', formula);
@@ -617,12 +617,23 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   public getFormulaTerm(domNode: any): FormulaTerm {
     const childNodes = Array.from(domNode.childNodes) as any;
     // const hasRelevantChildren = childNodes[0].classList.contains('param');
-    const hasRelevantChildren = childNodes.some((child) => child.classList.contains('param'));
+    // const hasRelevantChildren: boolean = childNodes.some((child) => child.classList.contains('param'));
+
+    const children = [];
+
+    for (const child of childNodes) {
+      if (child.classList && child.classList.contains('param')) {
+        console.log('child: ', child);
+        children.push(child);
+      }
+    }
+
+    console.log('children: ', children);
 
     return {
       nodeId: domNode.id,
       payload: JSON.parse((domNode.getAttribute('data-data'))),
-      children: hasRelevantChildren ? childNodes : null
-    };
+      children
+    }
   }
 }
