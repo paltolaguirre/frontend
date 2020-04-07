@@ -10,6 +10,12 @@ import { takeUntil } from 'rxjs/operators';
 import { FormulaService } from '../../../core/services/formula/formula.service';
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 
+export class FormulaTerm {
+  nodeId: string;
+  payload: any;
+  children: FormulaTerm[] | any[];
+}
+
 @Component({
   selector: 'app-formula-drop-space',
   templateUrl: './formula-drop-space.component.html',
@@ -261,6 +267,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     }
 
     divFormula.setAttribute('id', `formula-term-${data.nodeId}`);
+    divFormula.setAttribute('data-data', JSON.stringify(data));
 
     this.updateFormulaTerms();
 
@@ -599,7 +606,16 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
       for (const mainChild of mainChildrenNodes) {
         console.log('main child: ', mainChild);
+        console.log('algo: ', this.getFormulaTerm(mainChild));
       }
     }, 1000);
+  }
+
+  public getFormulaTerm(domNode: any): FormulaTerm {
+    return {
+      nodeId: domNode.id,
+      payload: JSON.parse((domNode.getAttribute('data-data'))),
+      children: Array.from(domNode.childNodes)
+    };
   }
 }
