@@ -601,21 +601,28 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       const mainDropSpace = document.querySelector('#main') as HTMLElement;
       const mainChildrenNodes = Array.from(mainDropSpace.childNodes);
 
-      console.log('main:', mainDropSpace);
-      console.log('childNodes: ', mainChildrenNodes);
+      console.log('main nodes: ', mainChildrenNodes);
+      let formula: FormulaTerm;
 
       for (const mainChild of mainChildrenNodes) {
-        console.log('main child: ', mainChild);
-        console.log('algo: ', this.getFormulaTerm(mainChild));
+        // console.log('main child: ', mainChild);
+        // console.log('algo: ', this.getFormulaTerm(mainChild));
+        formula = this.getFormulaTerm(mainChild);
+
+        console.log('formula: ', formula);
       }
     }, 1000);
   }
 
   public getFormulaTerm(domNode: any): FormulaTerm {
+    const childNodes = Array.from(domNode.childNodes) as any;
+    // const hasRelevantChildren = childNodes[0].classList.contains('param');
+    const hasRelevantChildren = childNodes.some((child) => child.classList.contains('param'));
+
     return {
       nodeId: domNode.id,
       payload: JSON.parse((domNode.getAttribute('data-data'))),
-      children: Array.from(domNode.childNodes)
+      children: hasRelevantChildren ? childNodes : null
     };
   }
 }
