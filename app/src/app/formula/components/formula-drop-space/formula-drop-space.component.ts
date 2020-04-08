@@ -13,7 +13,7 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 export class FormulaTerm {
   nodeId: string;
   payload: any; // Puede ser un operador, una formula, una variable; puede tener diferentes datos.
-  children: FormulaTerm[] | any[];
+  children?: FormulaTerm[] | any[];
   //type
 }
 
@@ -366,7 +366,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       return null;
     }
 
-    if (e.target.classList.contains('asociative')) {
+    if (e.target.classList && e.target.classList.contains('asociative')) {
       if (e.target.querySelector('.remove-badge-container') || e.toElement.querySelector('.remove-badge-container')) {
         return null;
       }
@@ -537,7 +537,9 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       });
     }
 
-    origin.classList.remove('pronounced');
+    if (origin.classList) {
+      origin.classList.remove('pronounced');
+    }
 
     const clonedNode = origin.cloneNode(true) as HTMLElement;
     clonedNode.id = this.getNewID();
@@ -559,6 +561,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
   public makeRecursiveWhiteParenthesis(param) {
     if (
+      !param.parentNode.classList ||
       !param.parentNode.classList.contains('param') ||
       !param.parentNode.hasChildNodes()) {
       return null;
@@ -579,6 +582,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     }
 
     if (
+      param.classList &&
       param.classList.contains('asociative') &&
       param.parentNode.hasChildNodes() &&
       param.getAttribute('name') === param.parentNode.getAttribute('name')
@@ -590,19 +594,22 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   }
 
   removeOrigin(origin) {
-    if (!origin.parentNode.classList.contains('param')) {
+    if (!origin.parentNode.classList || !origin.parentNode.classList.contains('param')) {
       return origin.remove();
     }
 
-    if (origin.classList.contains('numeric-param')) {
+    if (origin.classList && origin.classList.contains('numeric-param')) {
       origin.innerHTML = '0.00';
-    } else if (origin.classList.contains('boolean')) {
+    } else if (origin.classList && origin.classList.contains('boolean')) {
       origin.innerHTML = 'false';
     } else {
       origin.innerHTML = '';
     }
 
-    origin.classList.remove('pronounced', 'highligthed', 'white-parenthesis', 'asociative');
+    if (origin.classList) {
+      origin.classList.remove('pronounced', 'highligthed', 'white-parenthesis', 'asociative');
+    }
+
     this.makeRecursiveWhiteParenthesis(origin);
   }
 
@@ -611,39 +618,38 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       const mainDropSpace = document.querySelector('#main') as HTMLElement;
       const mainChildrenNodes = Array.from(mainDropSpace.childNodes);
 
-      console.log('main nodes: ', mainChildrenNodes);
-      let formula: FormulaTerm;
+      const formula: FormulaTerm = this.getFormulaTerm(mainChildrenNodes[0]);
 
-      for (const mainChild of mainChildrenNodes) {
-        formula = this.getFormulaTerm(mainChild);
-
-        console.log('formula: ', formula);
-      }
+      console.log('formula: ', formula);
     }, 1000);
   }
 
   public getFormulaTerm(domNode: any): FormulaTerm {
     const childNodes = Array.from(domNode.childNodes) as any;
-    // const hasRelevantChildren = childNodes[0].classList.contains('param');
-    // const hasRelevantChildren: boolean = childNodes.some((child) => child.classList.contains('param'));
-
-    const children = [];
+    const children: FormulaTerm[] = [];
 
     for (const child of childNodes) {
+      // Filter for children that are relevant for us.
       if (child.classList && child.classList.contains('param')) {
-        console.log('child: ', child);
+        // Get children data and create FormulaTerm for each one.
+        children.push({
+          nodeId: child.id,
+          payload: JSON.parse(child.getAttribute('data-data')),
+          children: Array.from(child.childNodes) as any
+        });
 
-        // Obtener los datos de estos hijos y pushear un formula term en lugar del nodo.
-        children.push(child);
+        // if (child.children) {
+        this.getFormulaTerm(child);
+        // }
       }
     }
 
-    console.log('children: ', children);
+    // console.log('children: ', children);
 
     return {
       nodeId: domNode.id,
       payload: JSON.parse((domNode.getAttribute('data-data'))),
       children
-    }
+    };
   }
 }
