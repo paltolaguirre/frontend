@@ -184,7 +184,20 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public onAddInputParamClick(event) {
     event.preventDefault();
 
-    this.formParams.push(this.createFormulaParam());
+    const num = this.currentFormula.params.length+1;
+    let param = {
+      ID: 0,
+      CreatedAt: null,
+      UpdatedAt: null,
+      DeletedAt: null,
+      name: 'val'+num,
+      type: 'number'
+    };
+
+    this.currentFormula.params.push(param);
+    this.currentFormula = Object.assign({}, this.currentFormula)
+    this.formParams.push(this.createFormulaParam(param));
+
   }
 
   public onDeleteInputParam(event, rowIndex: number) {
