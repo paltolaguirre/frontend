@@ -24,6 +24,16 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public isNew: boolean = false;
   public isEditable: boolean = true;
   public formulas: Formula[];
+  public typesOptions = [
+    {
+      name: "Numérico",
+      value: 'number'
+    },
+    {
+      name: "Booleano",
+      value: 'boolean'
+    }
+  ];
 
   constructor(
     private formBuilder: FormBuilder,

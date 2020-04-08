@@ -54,8 +54,8 @@
                     <mat-form-field class="selector">
                       <mat-label>Tipo Dato</mat-label>
                       <mat-select [appDisableControl]="!isEditable" [formControl]="form.get('result')" name="result" required>
-                        <mat-option [value]="form.get('result').value">
-                          Numérico
+                        <mat-option *ngFor="let option of typesOptions" [value]="option.value">
+                          {{option.name}}
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
@@ -73,15 +73,15 @@
                       <button [disabled]="!isEditable" mat-icon-button class="actions-icon" color="warn" (click)="onDeleteInputParam($event, i)">
                         <mat-icon>delete_forever</mat-icon>
                       </button>
-                      <mat-form-field>
-                        <mat-label>Tipo Dato</mat-label>
-                        <mat-select [appDisableControl]="!isEditable" [formControl]="form.get('result')" name="result" required>
-                          <mat-option [value]="form.get('result').value">
-                            Numérico
-                          </mat-option>
-                        </mat-select> 
-                      </mat-form-field>
                       <div [formGroupName]="i">
+                        <mat-form-field>
+                          <mat-label>Tipo Dato</mat-label>
+                          <mat-select [appDisableControl]="!isEditable" formControlName="type" required>
+                            <mat-option *ngFor="let option of typesOptions" [value]="option.value">
+                              {{option.name}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
                         <mat-form-field>
                           <input [appDisableControl]="!isEditable" matInput type="text" formControlName="name" placeholder="Nombre Parámetro" autocomplete="off">
                         </mat-form-field>
