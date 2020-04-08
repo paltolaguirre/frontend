@@ -618,10 +618,12 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       const mainDropSpace = document.querySelector('#main') as HTMLElement;
       const mainChildrenNodes = Array.from(mainDropSpace.childNodes);
 
-      const formula: FormulaTerm = this.getFormulaTerm(mainChildrenNodes[0]);
+      // const formula: FormulaTerm = this.getFormulaTerm(mainChildrenNodes[0]);
+      console.log('Primer hijo del drop zone: ', mainChildrenNodes[0]);
+      const formula: any = this.getChildrenFormulaTermsFromNode(mainChildrenNodes[0]);
 
       console.log('formula: ', formula);
-    }, 1000);
+    }, 500);
   }
 
   public getFormulaTerm(domNode: any): FormulaTerm {
@@ -632,10 +634,32 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       // Filter for children that are relevant for us.
       if (child.classList && child.classList.contains('param')) {
         // Get children data and create FormulaTerm for each one.
+        const deepChildrenNodes = Array.from(child.childNodes) as any;
+        const deepChildrenFilteredNodes = [];
+        const deepChildrenTerms: FormulaTerm[] = [];
+
+        for (const deepChild of deepChildrenNodes) {
+          if (deepChild.classList && deepChild.classList.contains('param')) {
+            deepChildrenFilteredNodes.push(deepChild);
+          }
+        }
+
+
+
+        // Llego a lo mismo. En algun momento deberia obtener primero los hijos, generar formula terms y 
+        // setearlos. Luego de ahi, por cada hijo deberia hacer lo mismo, llamar a la misma funcion.
+        // for (const filteredChild of deepChildrenFilteredNodes) {
+        //   deepChildrenTerms.push({
+        //     nodeId: filteredChild.id,
+        //     payload: JSON.parse(filteredChild.getAttribute('data-data')),
+        //     children: 
+        //   })
+        // }
+
         children.push({
           nodeId: child.id,
           payload: JSON.parse(child.getAttribute('data-data')),
-          children: Array.from(child.childNodes) as any
+          children: deepChildrenTerms
         });
 
         // if (child.children) {
@@ -650,6 +674,49 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       nodeId: domNode.id,
       payload: JSON.parse((domNode.getAttribute('data-data'))),
       children
+    };
+  }
+
+  public getChildrenFormulaTermsFromNode(node): FormulaTerm {
+    console.log('Node apenas entro a la funcion:', node);
+    // Get child nodes and filter them by formula params.
+    const childNodes = Array.from(node.childNodes) as any;
+    const filteredNodes = [];
+    const childTerms: FormulaTerm[] = [];
+
+    for (const child of childNodes) {
+      if (child.classList && child.classList.contains('param')) {
+        filteredNodes.push(child);
+      }
+    }
+
+    if (!filteredNodes) {
+      return null;
+    }
+
+    for (const filteredNode of filteredNodes) {
+      const childNodesArray = Array.from(filteredNode.childNodes);
+
+      // Ver si tengo que filtrar esto.
+
+      childTerms.push({
+        nodeId: filteredNode.id,
+        payload: filteredNode.getAttribute('data-data') ?
+          JSON.parse((filteredNode.getAttribute('data-data'))) :
+          null,
+        // Por cada hijo deberia generar un FormulaTerm recursivamente.
+        children: childNodesArray.map((childNode) => this.getChildrenFormulaTermsFromNode(childNode))
+      });
+    }
+
+    console.log('Node antes de retornar: ', node);
+
+    return {
+      nodeId: node.id,
+      payload: node.getAttribute && node.getAttribute('data-data') ?
+        JSON.parse((node.getAttribute('data-data'))) :
+        node, // Maybe return null?
+      children: childTerms
     };
   }
 }
