@@ -437,6 +437,8 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
     this.cutAndPasteDroppedParam(origin, target);
 
+    this.updateFormulaTerms();
+
     ev.cancelBubble = true;
   }
 
@@ -493,6 +495,8 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       const targetValue = event.target.value;
 
       event.target.parentNode.innerHTML = targetValue;
+
+      this.updateFormulaTerms();
     };
 
     input.onblur = input.onexit;
@@ -614,6 +618,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   }
 
   public updateFormulaTerms() {
+    console.log('SE EJECUTÓ updateFormulaTerms()');
     setTimeout(() => {
       const mainDropSpace = document.querySelector('#main') as HTMLElement;
       const mainChildrenNodes = Array.from(mainDropSpace.childNodes);
@@ -678,14 +683,14 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   }
 
   public getChildrenFormulaTermsFromNode(node): FormulaTerm {
-    console.log('Node apenas entro a la funcion:', node);
+    // console.log('Node apenas entro a la funcion:', node);
     // Get child nodes and filter them by formula params.
     const childNodes = Array.from(node.childNodes) as any;
     const filteredNodes = [];
     const childTerms: FormulaTerm[] = [];
 
     for (const child of childNodes) {
-      if (child.classList && child.classList.contains('param')) {
+      if (child.id && child.classList && child.classList.contains('param')) {
         filteredNodes.push(child);
       }
     }
@@ -695,27 +700,34 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     }
 
     for (const filteredNode of filteredNodes) {
-      const childNodesArray = Array.from(filteredNode.childNodes);
-
       // Ver si tengo que filtrar esto.
+      if (filteredNode.id && filteredNode.classList && filteredNode.classList.contains('param')) {
+        let childNodesArray = Array.from(filteredNode.childNodes);
 
-      childTerms.push({
-        nodeId: filteredNode.id,
-        payload: filteredNode.getAttribute('data-data') ?
-          JSON.parse((filteredNode.getAttribute('data-data'))) :
-          null,
-        // Por cada hijo deberia generar un FormulaTerm recursivamente.
-        children: childNodesArray.map((childNode) => this.getChildrenFormulaTermsFromNode(childNode))
-      });
+        childNodesArray = childNodesArray.filter((childNode: HTMLElement) => {
+          return childNode.id && childNode.classList && childNode.classList.contains('param');
+        });
+
+        childTerms.push({
+          nodeId: filteredNode.id,
+          payload: filteredNode.getAttribute('data-data') ?
+            JSON.parse((filteredNode.getAttribute('data-data'))) :
+            null,
+          // Por cada hijo deberia generar un FormulaTerm recursivamente.
+          children: childNodesArray.filter((childNode) => {
+            return !!this.getChildrenFormulaTermsFromNode(childNode).nodeId;
+          })
+        });
+      }
     }
 
-    console.log('Node antes de retornar: ', node);
+    // console.log('Node antes de retornar: ', node);
 
     return {
       nodeId: node.id,
       payload: node.getAttribute && node.getAttribute('data-data') ?
         JSON.parse((node.getAttribute('data-data'))) :
-        node, // Maybe return null?
+        node.innerHTML, // Maybe return null?
       children: childTerms
     };
   }
