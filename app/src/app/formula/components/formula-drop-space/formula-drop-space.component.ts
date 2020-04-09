@@ -36,11 +36,11 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.formulaService.formulaPickerItemEmitter
-    .pipe(
-      takeUntil(componentDestroyed(this))
-    ).subscribe((payload: FormulaTransferData) => {
-      this.handleFormulaItemClicked(payload);
-    });
+      .pipe(
+        takeUntil(componentDestroyed(this))
+      ).subscribe((payload: FormulaTransferData) => {
+        this.handleFormulaItemClicked(payload);
+      });
 
     this.operatorsService.operatorEmitter
       .pipe(
@@ -51,7 +51,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
         }
 
         return this.handleMathOperatorClicked(data);
-    });
+      });
 
     const main = document.getElementById('main') as any;
 
@@ -69,7 +69,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   }
 
   public getNewID() {
-    this.idCount ++;
+    this.idCount++;
 
     return String(this.idCount);
   }
@@ -201,7 +201,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       data,
       payload.symbol,
       payload.type,
-      [MathOperatorTypes.Boolean , payload.type, payload.type],
+      [MathOperatorTypes.Boolean, payload.type, payload.type],
       false,
       false
     );
@@ -390,13 +390,13 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
     // TODO: fix that
     // if (!e.toElement.classList.contains('asociative')) {
-      // console.log('saliste afuera del operador');
-      // console.log('el target es: ', e.target);
-      // if (e.target.querySelector('.remove-badge-container')) {
-      //   e.target.querySelector('.remove-badge-container').remove();
-      // }
+    // console.log('saliste afuera del operador');
+    // console.log('el target es: ', e.target);
+    // if (e.target.querySelector('.remove-badge-container')) {
+    //   e.target.querySelector('.remove-badge-container').remove();
+    // }
 
-      // return null;
+    // return null;
     // }
 
     // If the hover is on the asociative param, we don't remove the trash icon.
@@ -651,23 +651,19 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     }
 
     for (const filteredNode of filteredNodes) {
-      if (this.isParam(filteredNode)) {
-        let childNodesArray = Array.from(filteredNode.childNodes);
+      const childNodesArray = Array.from(filteredNode.childNodes).filter((childNode: HTMLElement) => {
+        return this.isParam(childNode);
+      });
 
-        childNodesArray = childNodesArray.filter((childNode: HTMLElement) => {
-          return this.isParam(childNode);
-        });
-
-        childTerms.push({
-          nodeId: filteredNode.id,
-          payload: filteredNode.getAttribute('data-data') ?
-            JSON.parse((filteredNode.getAttribute('data-data'))) :
-            null,
-          children: childNodesArray.filter((childNode: HTMLElement) => {
-            return !!this.getChildrenFormulaTermsFromNode(childNode).nodeId;
-          })
-        });
-      }
+      childTerms.push({
+        nodeId: filteredNode.id,
+        payload: filteredNode.getAttribute('data-data') ?
+          JSON.parse((filteredNode.getAttribute('data-data'))) :
+          null,
+        children: childNodesArray.map((childNode: HTMLElement) => {
+          return this.getChildrenFormulaTermsFromNode(childNode);
+        })
+      });
     }
 
     return {
