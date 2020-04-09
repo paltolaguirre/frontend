@@ -145,6 +145,8 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
       if (param) {
         param.remove();
+
+        this.updateFormulaTerms();
       }
     };
 
@@ -618,94 +620,42 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   }
 
   public updateFormulaTerms() {
-    console.log('SE EJECUTÓ updateFormulaTerms()');
     setTimeout(() => {
       const mainDropSpace = document.querySelector('#main') as HTMLElement;
-      const mainChildrenNodes = Array.from(mainDropSpace.childNodes);
 
-      // const formula: FormulaTerm = this.getFormulaTerm(mainChildrenNodes[0]);
-      console.log('Primer hijo del drop zone: ', mainChildrenNodes[0]);
+      if (!mainDropSpace.childNodes || mainDropSpace.childNodes.length <= 0) {
+        return null;
+      }
+
+      const mainChildrenNodes = Array.from(mainDropSpace.childNodes) as HTMLElement[];
+
       const formula: any = this.getChildrenFormulaTermsFromNode(mainChildrenNodes[0]);
 
       console.log('formula: ', formula);
     }, 500);
   }
 
-  public getFormulaTerm(domNode: any): FormulaTerm {
-    const childNodes = Array.from(domNode.childNodes) as any;
-    const children: FormulaTerm[] = [];
-
-    for (const child of childNodes) {
-      // Filter for children that are relevant for us.
-      if (child.classList && child.classList.contains('param')) {
-        // Get children data and create FormulaTerm for each one.
-        const deepChildrenNodes = Array.from(child.childNodes) as any;
-        const deepChildrenFilteredNodes = [];
-        const deepChildrenTerms: FormulaTerm[] = [];
-
-        for (const deepChild of deepChildrenNodes) {
-          if (deepChild.classList && deepChild.classList.contains('param')) {
-            deepChildrenFilteredNodes.push(deepChild);
-          }
-        }
-
-
-
-        // Llego a lo mismo. En algun momento deberia obtener primero los hijos, generar formula terms y 
-        // setearlos. Luego de ahi, por cada hijo deberia hacer lo mismo, llamar a la misma funcion.
-        // for (const filteredChild of deepChildrenFilteredNodes) {
-        //   deepChildrenTerms.push({
-        //     nodeId: filteredChild.id,
-        //     payload: JSON.parse(filteredChild.getAttribute('data-data')),
-        //     children: 
-        //   })
-        // }
-
-        children.push({
-          nodeId: child.id,
-          payload: JSON.parse(child.getAttribute('data-data')),
-          children: deepChildrenTerms
-        });
-
-        // if (child.children) {
-        this.getFormulaTerm(child);
-        // }
-      }
-    }
-
-    // console.log('children: ', children);
-
-    return {
-      nodeId: domNode.id,
-      payload: JSON.parse((domNode.getAttribute('data-data'))),
-      children
-    };
-  }
-
-  public getChildrenFormulaTermsFromNode(node): FormulaTerm {
-    // console.log('Node apenas entro a la funcion:', node);
+  public getChildrenFormulaTermsFromNode(node: HTMLElement): FormulaTerm {
     // Get child nodes and filter them by formula params.
-    const childNodes = Array.from(node.childNodes) as any;
-    const filteredNodes = [];
-    const childTerms: FormulaTerm[] = [];
+    const childNodes = Array.from(node.childNodes) as HTMLElement[];
 
-    for (const child of childNodes) {
-      if (child.id && child.classList && child.classList.contains('param')) {
-        filteredNodes.push(child);
-      }
-    }
+    // Filter nodes which are relevant for the formula terms array.
+    const filteredNodes = childNodes.filter((child) => {
+      return this.isParam(child);
+    });
+
+    const childTerms: FormulaTerm[] = [];
 
     if (!filteredNodes) {
       return null;
     }
 
     for (const filteredNode of filteredNodes) {
-      // Ver si tengo que filtrar esto.
-      if (filteredNode.id && filteredNode.classList && filteredNode.classList.contains('param')) {
+      if (this.isParam(filteredNode)) {
         let childNodesArray = Array.from(filteredNode.childNodes);
 
         childNodesArray = childNodesArray.filter((childNode: HTMLElement) => {
-          return childNode.id && childNode.classList && childNode.classList.contains('param');
+          return this.isParam(childNode);
         });
 
         childTerms.push({
@@ -713,22 +663,23 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
           payload: filteredNode.getAttribute('data-data') ?
             JSON.parse((filteredNode.getAttribute('data-data'))) :
             null,
-          // Por cada hijo deberia generar un FormulaTerm recursivamente.
-          children: childNodesArray.filter((childNode) => {
+          children: childNodesArray.filter((childNode: HTMLElement) => {
             return !!this.getChildrenFormulaTermsFromNode(childNode).nodeId;
           })
         });
       }
     }
 
-    // console.log('Node antes de retornar: ', node);
-
     return {
       nodeId: node.id,
       payload: node.getAttribute && node.getAttribute('data-data') ?
         JSON.parse((node.getAttribute('data-data'))) :
-        node.innerHTML, // Maybe return null?
+        node.innerHTML,
       children: childTerms
     };
+  }
+
+  public isParam(node: HTMLElement): boolean {
+    return node.id && node.classList && node.classList.contains('param');
   }
 }
