@@ -36,11 +36,11 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.formulaService.formulaPickerItemEmitter
-    .pipe(
-      takeUntil(componentDestroyed(this))
-    ).subscribe((payload: FormulaTransferData) => {
-      this.handleFormulaItemClicked(payload);
-    });
+      .pipe(
+        takeUntil(componentDestroyed(this))
+      ).subscribe((payload: FormulaTransferData) => {
+        this.handleFormulaItemClicked(payload);
+      });
 
     this.operatorsService.operatorEmitter
       .pipe(
@@ -51,7 +51,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
         }
 
         return this.handleMathOperatorClicked(data);
-    });
+      });
 
     const main = document.getElementById('main') as any;
 
@@ -69,7 +69,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   }
 
   public getNewID() {
-    this.idCount ++;
+    this.idCount++;
 
     return String(this.idCount);
   }
@@ -145,6 +145,8 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
       if (param) {
         param.remove();
+
+        this.updateFormulaTerms();
       }
     };
 
@@ -199,7 +201,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       data,
       payload.symbol,
       payload.type,
-      [MathOperatorTypes.Boolean , payload.type, payload.type],
+      [MathOperatorTypes.Boolean, payload.type, payload.type],
       false,
       false
     );
@@ -388,13 +390,13 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
     // TODO: fix that
     // if (!e.toElement.classList.contains('asociative')) {
-      // console.log('saliste afuera del operador');
-      // console.log('el target es: ', e.target);
-      // if (e.target.querySelector('.remove-badge-container')) {
-      //   e.target.querySelector('.remove-badge-container').remove();
-      // }
+    // console.log('saliste afuera del operador');
+    // console.log('el target es: ', e.target);
+    // if (e.target.querySelector('.remove-badge-container')) {
+    //   e.target.querySelector('.remove-badge-container').remove();
+    // }
 
-      // return null;
+    // return null;
     // }
 
     // If the hover is on the asociative param, we don't remove the trash icon.
@@ -436,6 +438,8 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     const target = ev.target;
 
     this.cutAndPasteDroppedParam(origin, target);
+
+    this.updateFormulaTerms();
 
     ev.cancelBubble = true;
   }
@@ -493,6 +497,8 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       const targetValue = event.target.value;
 
       event.target.parentNode.innerHTML = targetValue;
+
+      this.updateFormulaTerms();
     };
 
     input.onblur = input.onexit;
@@ -616,107 +622,60 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   public updateFormulaTerms() {
     setTimeout(() => {
       const mainDropSpace = document.querySelector('#main') as HTMLElement;
-      const mainChildrenNodes = Array.from(mainDropSpace.childNodes);
 
-      // const formula: FormulaTerm = this.getFormulaTerm(mainChildrenNodes[0]);
-      console.log('Primer hijo del drop zone: ', mainChildrenNodes[0]);
+      if (!mainDropSpace.childNodes || mainDropSpace.childNodes.length <= 0) {
+        return null;
+      }
+
+      const mainChildrenNodes = Array.from(mainDropSpace.childNodes) as HTMLElement[];
+
       const formula: any = this.getChildrenFormulaTermsFromNode(mainChildrenNodes[0]);
 
       console.log('formula: ', formula);
     }, 500);
   }
 
-  public getFormulaTerm(domNode: any): FormulaTerm {
-    const childNodes = Array.from(domNode.childNodes) as any;
-    const children: FormulaTerm[] = [];
-
-    for (const child of childNodes) {
-      // Filter for children that are relevant for us.
-      if (child.classList && child.classList.contains('param')) {
-        // Get children data and create FormulaTerm for each one.
-        const deepChildrenNodes = Array.from(child.childNodes) as any;
-        const deepChildrenFilteredNodes = [];
-        const deepChildrenTerms: FormulaTerm[] = [];
-
-        for (const deepChild of deepChildrenNodes) {
-          if (deepChild.classList && deepChild.classList.contains('param')) {
-            deepChildrenFilteredNodes.push(deepChild);
-          }
-        }
-
-
-
-        // Llego a lo mismo. En algun momento deberia obtener primero los hijos, generar formula terms y 
-        // setearlos. Luego de ahi, por cada hijo deberia hacer lo mismo, llamar a la misma funcion.
-        // for (const filteredChild of deepChildrenFilteredNodes) {
-        //   deepChildrenTerms.push({
-        //     nodeId: filteredChild.id,
-        //     payload: JSON.parse(filteredChild.getAttribute('data-data')),
-        //     children: 
-        //   })
-        // }
-
-        children.push({
-          nodeId: child.id,
-          payload: JSON.parse(child.getAttribute('data-data')),
-          children: deepChildrenTerms
-        });
-
-        // if (child.children) {
-        this.getFormulaTerm(child);
-        // }
-      }
-    }
-
-    // console.log('children: ', children);
-
-    return {
-      nodeId: domNode.id,
-      payload: JSON.parse((domNode.getAttribute('data-data'))),
-      children
-    };
-  }
-
-  public getChildrenFormulaTermsFromNode(node): FormulaTerm {
-    console.log('Node apenas entro a la funcion:', node);
+  public getChildrenFormulaTermsFromNode(node: HTMLElement): FormulaTerm {
     // Get child nodes and filter them by formula params.
-    const childNodes = Array.from(node.childNodes) as any;
-    const filteredNodes = [];
-    const childTerms: FormulaTerm[] = [];
+    const childNodes = Array.from(node.childNodes) as HTMLElement[];
 
-    for (const child of childNodes) {
-      if (child.classList && child.classList.contains('param')) {
-        filteredNodes.push(child);
-      }
-    }
+    // Filter nodes which are relevant for the formula terms array.
+    const filteredNodes = childNodes.filter((child) => {
+      return this.isParam(child);
+    });
+
+    const childTerms: FormulaTerm[] = [];
 
     if (!filteredNodes) {
       return null;
     }
 
     for (const filteredNode of filteredNodes) {
-      const childNodesArray = Array.from(filteredNode.childNodes);
-
-      // Ver si tengo que filtrar esto.
+      const childNodesArray = Array.from(filteredNode.childNodes).filter((childNode: HTMLElement) => {
+        return this.isParam(childNode);
+      });
 
       childTerms.push({
         nodeId: filteredNode.id,
         payload: filteredNode.getAttribute('data-data') ?
           JSON.parse((filteredNode.getAttribute('data-data'))) :
           null,
-        // Por cada hijo deberia generar un FormulaTerm recursivamente.
-        children: childNodesArray.map((childNode) => this.getChildrenFormulaTermsFromNode(childNode))
+        children: childNodesArray.map((childNode: HTMLElement) => {
+          return this.getChildrenFormulaTermsFromNode(childNode);
+        })
       });
     }
-
-    console.log('Node antes de retornar: ', node);
 
     return {
       nodeId: node.id,
       payload: node.getAttribute && node.getAttribute('data-data') ?
         JSON.parse((node.getAttribute('data-data'))) :
-        node, // Maybe return null?
+        node.innerHTML,
       children: childTerms
     };
+  }
+
+  public isParam(node: HTMLElement): boolean {
+    return node.id && node.classList && node.classList.contains('param');
   }
 }
