@@ -45,7 +45,7 @@ export class FormulaListContainer implements OnInit, AfterViewInit {
 
   async ngAfterViewInit() {
     this.formulaService.formulasStore$.subscribe((formulas: Formula[]) => {
-      this.dataSource = new MatTableDataSource<Formula>(formulas);
+      this.dataSource = new MatTableDataSource<Formula>(formulas.filter(formula => formula.type == 'generic'));
       this.dataSource.paginator = this.paginator;
       this.paginator._intl.itemsPerPageLabel = 'Items por página';
       this.isLoadingResults = false;
