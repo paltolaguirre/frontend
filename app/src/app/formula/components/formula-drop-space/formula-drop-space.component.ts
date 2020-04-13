@@ -24,6 +24,7 @@ export class FormulaTerm {
 })
 export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   @Input() isItemPickerExpanded: boolean;
+  @Input() formulaValue: any;
 
   public idCount: number = 0;
   public formulaResult: FormulaTerm;
