@@ -117,7 +117,10 @@
               <div class="ide-container">
                 <app-operators-toolbar></app-operators-toolbar>
 
-                <app-formula-drop-space [isItemPickerExpanded]="isItemPickerExpanded"></app-formula-drop-space>
+                <app-formula-drop-space 
+                  [isItemPickerExpanded]="isItemPickerExpanded"
+                  (formulaResultEmitter)="updateFormulaResult($event)">
+                </app-formula-drop-space>
               </div>
             </div>
           </div>

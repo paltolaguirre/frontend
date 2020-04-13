@@ -186,4 +186,8 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public isFormulaParamAvailable(param: FormControl): boolean {
     return !param.value.DeletedAt;
   }
+
+  public updateFormulaResult(formulaResult: FormulaParam) {
+    console.log(formulaResult);
+  }
 }

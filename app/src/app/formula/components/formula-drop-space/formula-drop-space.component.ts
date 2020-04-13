@@ -8,7 +8,7 @@ import { OperatorsService } from '../../../core/services/operators/operators.ser
 import { componentDestroyed } from '@w11k/ngx-componentdestroyed';
 import { takeUntil } from 'rxjs/operators';
 import { FormulaService } from '../../../core/services/formula/formula.service';
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 
 export class FormulaTerm {
   nodeId: string;
@@ -23,6 +23,7 @@ export class FormulaTerm {
   styleUrls: ['./formula-drop-space.component.scss']
 })
 export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
+  @Output() formulaResultEmitter: EventEmitter<FormulaTerm> = new EventEmitter();
   @Input() isItemPickerExpanded: boolean;
 
   public idCount: number = 0;
@@ -629,9 +630,10 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
       const mainChildrenNodes = Array.from(mainDropSpace.childNodes) as HTMLElement[];
 
-      const formula: any = this.getChildrenFormulaTermsFromNode(mainChildrenNodes[0]);
+      this.formulaResult = this.getChildrenFormulaTermsFromNode(mainChildrenNodes[0]);
 
-      console.log('formula: ', formula);
+      // console.log('formula: ', this.formulaResult);
+      this.formulaResultEmitter.emit(this.formulaResult);
     }, 500);
   }
 
