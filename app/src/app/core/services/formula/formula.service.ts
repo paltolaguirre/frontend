@@ -25,9 +25,13 @@ export class FormulaService {
   public async initFormulasStore() {
     this.formulas.next(await this.getAll());
   }
-
+ 
   public async getAll(): Promise<Formula[]> {
     return await this.api.get(`${this.BASE_URL}/formulas`).toPromise() as Formula[];
+  }
+
+  public async getByType(type: string): Promise<Formula[]> {
+    return await this.api.get(`${this.BASE_URL}/formulas?type=${type}`).toPromise() as Formula[];
   }
 
   public async delete(name: string): Promise<any> {
