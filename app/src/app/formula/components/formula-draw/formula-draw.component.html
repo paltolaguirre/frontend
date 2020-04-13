@@ -1,0 +1,15 @@
+<div *ngIf="formulaValue && formulaValue.valueinvoke">
+    <div [ngSwitch]="formulaValue.valueinvoke.function.type">
+        <div *ngSwitchCase="'operator'">
+            <div class="param numeric-param" draggable="true">
+                <span>{{toPrefixSymbol(formulaValue.valueinvoke.functionname)}}</span>
+                <app-formula-draw *ngIf="formulaValue.valueinvoke.args[0].valueinvoke" [formulaValue]="formulaValue.valueinvoke.args[0]"></app-formula-draw>
+                <div *ngIf="!formulaValue.valueinvoke.args[0].valueinvoke" class="param numeric-param" draggable="true">{{formulaValue.valueinvoke.args[0].valuenumber}}</div>
+                <span>{{toMiddleSymbol(formulaValue.valueinvoke.functionname)}}</span> 
+                <app-formula-draw *ngIf="formulaValue.valueinvoke.args[1].valueinvoke" [formulaValue]="formulaValue.valueinvoke.args[1]"></app-formula-draw>
+                <div *ngIf="!formulaValue.valueinvoke.args[1].valueinvoke" class="param numeric-param" draggable="true">{{formulaValue.valueinvoke.args[1].valuenumber}}</div>
+            </div>
+        </div>
+        <div *ngSwitchDefault>Formula {{formulaValue.value.valueinvoke.functionname}} no implementada</div>
+    </div>
+</div>
