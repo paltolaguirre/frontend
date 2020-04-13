@@ -499,6 +499,8 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
       event.target.parentNode.innerHTML = targetValue;
 
+      this.updateInputContainerData(inputParamContainerTarget, targetValue);
+
       this.updateFormulaTerms();
     };
 
@@ -531,6 +533,16 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     inputParamContainerTarget.appendChild(input);
 
     setTimeout(() => input.focus());
+  }
+
+  private updateInputContainerData(node: HTMLElement, newValue: any) {
+    const data: FormulaTerm = {
+      nodeId: node.getAttribute('id'),
+      payload: newValue,
+      children: null
+    };
+
+    node.setAttribute('data-data', JSON.stringify(data));
   }
 
   public putChildAndRemoveFromOrigin(origin: HTMLElement, target: HTMLElement) {
@@ -621,9 +633,9 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   }
 
   public updateFormulaTerms() {
-    setTimeout(() => {
-      const mainDropSpace = document.querySelector('#main') as HTMLElement;
+    const mainDropSpace = document.querySelector('#main') as HTMLElement;
 
+    setTimeout(() => {
       if (!mainDropSpace.childNodes || mainDropSpace.childNodes.length <= 0) {
         return null;
       }
@@ -661,7 +673,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
         nodeId: filteredNode.id,
         payload: filteredNode.getAttribute('data-data') ?
           JSON.parse((filteredNode.getAttribute('data-data'))) :
-          null,
+          node.innerText,
         children: childNodesArray.map((childNode: HTMLElement) => {
           return this.getChildrenFormulaTermsFromNode(childNode);
         })
@@ -672,7 +684,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       nodeId: node.id,
       payload: node.getAttribute && node.getAttribute('data-data') ?
         JSON.parse((node.getAttribute('data-data'))) :
-        node.innerHTML,
+        node.innerText,
       children: childTerms
     };
   }
