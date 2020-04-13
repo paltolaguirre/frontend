@@ -80,7 +80,8 @@ export class FormulaContainer implements OnInit, OnDestroy {
       result: ['number', Validators.required],
       value: {
         valueinvoke: null
-      }
+      },
+      formulaResult: []
     });
   }
 
@@ -110,7 +111,8 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public buildPreLoadedForm() {
     this.form = this.formBuilder.group({
       ...this.currentFormula,
-      params: this.formBuilder.array([])
+      params: this.formBuilder.array([]),
+      formulaResult: []
     });
 
     this.updateFormulaParams();
@@ -188,6 +190,6 @@ export class FormulaContainer implements OnInit, OnDestroy {
   }
 
   public updateFormulaResult(formulaResult: FormulaParam) {
-    console.log(formulaResult);
+    this.form.patchValue({ formulaResult });
   }
 }
