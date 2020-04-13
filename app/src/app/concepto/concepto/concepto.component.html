@@ -93,7 +93,7 @@
                 <app-selector-default *ngIf="isDefault(data)" filter="tipoformulas=sistema" nombre="function" [disabled]="isDefault(data) || data.tipocalculoautomatico.codigo !== 'FORMULA'" required=false [(matSelect)]="data.formulanombre"
                 (optionSelected)="data.formulanombre=$event.ID; data.formula.name=$event.codigo">
               </app-selector-default> 
-              <app-selector-default *ngIf="!isDefault(data)" filter="tipoformulas=usuario" nombre="function" [disabled]="isDefault(data) || data.tipocalculoautomatico.codigo !== 'FORMULA'" required=false [(matSelect)]="data.formulanombre"
+              <app-selector-default *ngIf="!isDefault(data)" filter="tipoformulas=usuario" nombre="function" [disabled]="true || isDefault(data) || data.tipocalculoautomatico.codigo !== 'FORMULA'" required=false [(matSelect)]="data.formulanombre"
                 (optionSelected)="data.formulanombre=$event.ID; data.formula.name=$event.codigo">
               </app-selector-default>
             </div>
