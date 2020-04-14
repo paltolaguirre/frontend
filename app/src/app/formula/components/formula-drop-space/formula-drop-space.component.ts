@@ -19,77 +19,16 @@ import { FormulaTerm } from 'src/app/core/models/formula-term.model';
 export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   @Output() formulaResultEmitter: EventEmitter<FormulaTerm> = new EventEmitter();
   @Input() isItemPickerExpanded: boolean;
+  @Input()
+  set currentFormulaResult(value: FormulaTerm) {
+    if (value) {
+      // TODO: render
+      console.log('FormulaResult example:', value);
+    }
+  }
 
   public idCount: number = 0;
   public formulaResult: FormulaTerm;
-
-  public formulaResultExample =
-    {
-      nodeId: 'formula-term-math-basic-operator-1',
-      payload: {
-        nodeId: 'math-basic-operator-1',
-        payload: { id: 1, operationName: 0, type: 0, symbol: '+', mustRemoveFromSource: false, category: 0, hasChildren: true }
-      },
-      children: [
-        {
-          nodeId: '23',
-          payload: {
-            nodeId: 'math-basic-operator-1',
-            payload: {
-              id: 1,
-              operationName: 0,
-              type: 0,
-              symbol: '+',
-              mustRemoveFromSource: false,
-              category: 0,
-              hasChildren: true
-            }
-          },
-          children: [
-            {
-              nodeId: 'child-param-4',
-              payload: {
-                nodeId: 'child-param-4',
-                payload: '11',
-                children: null
-              },
-              children: []
-            },
-            {
-              nodeId: 'child-param-6',
-              payload: {
-                nodeId: 'child-param-6',
-                payload: '12',
-                children: null
-              },
-              children: []
-            }
-          ]
-        },
-        {
-          nodeId: '24',
-          payload: {
-            nodeId: 'math-basic-operator-1',
-            payload: { id: 1, operationName: 0, type: 0, symbol: '+', mustRemoveFromSource: false, category: 0, hasChildren: true }
-          },
-          children: [
-            {
-              nodeId: 'child-param-12',
-              payload: {
-                nodeId: 'child-param-12',
-                payload: '21',
-                children: null
-              }, children: []
-            },
-            {
-              nodeId: 'child-param-14',
-              payload: { nodeId: 'child-param-14', payload: '22', children: null },
-              children: []
-            }
-          ]
-        }
-      ]
-    };
 
   constructor(
     private formulaService: FormulaService,
