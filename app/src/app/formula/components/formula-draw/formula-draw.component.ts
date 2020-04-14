@@ -42,4 +42,127 @@ export class FormulaDrawComponent implements OnInit {
       return "";
     }
   }
+
+  valueChanged() {
+    console.log("formulaValue: ", this.formulaValue); 
+  }
+
+  onClickNode(event) {
+    const input = event.target.children[0];
+    input.style.display = "block";
+    input.focus();
+  }
+
+  onBlurInput(event) {
+    const input = event.target;
+    input.style.display = "none";
+  }
+
+  onDrag(event, currentFormulaValue) {
+    event.dataTransfer.setData('text', JSON.stringify(currentFormulaValue.valueinvoke));
+
+    //currentFormulaValue.valueinvoke = null;
+    //currentFormulaValue.valuenumber = 0;
+    event.cancelBubble = true;
+  }
+
+  onDragEnd(event, currentFormulaValue) {
+    currentFormulaValue.valueinvokeid = null;
+    currentFormulaValue.valueinvoke = null;
+    currentFormulaValue.valuenumber = 0;
+    event.cancelBubble = true;
+  }
+
+  onDrop(event, currentFormulaValue) {
+    event.preventDefault();
+
+    const data = JSON.parse(event.dataTransfer.getData('text'));
+
+    console.log("onDrop: ", data);
+
+    if(data.payload === undefined) {
+      currentFormulaValue.valueinvoke = data;
+      currentFormulaValue.valuenumber = 0;
+      return;
+    }
+
+    let functionname;
+    switch (data.payload.symbol) {
+      case "+":
+        functionname = "Sum";
+        break;
+      case "-":
+        functionname = "Diff";
+        break;
+      case "/":
+        functionname = "Div";
+        break;
+      case "*":
+        functionname = "Multi";
+        break;
+      default:
+        return;
+        break;
+    }
+
+    currentFormulaValue.valueinvoke = {
+      ID: 0,
+      function: {
+        name: functionname,
+        type: "operator"
+      },
+      functionname: functionname,
+      args: [
+          {
+              ID: 0,
+              name: "val1",
+              valuenumber: 0,
+              valuestring: "",
+              Valueboolean: false,
+              valueinvoke: null
+          },
+          {
+              ID: 0,
+              name: "val2",
+              valuenumber: 0,
+              valuestring: "",
+              Valueboolean: false,
+              valueinvoke: null,
+          }
+      ]
+    };
+
+    event.cancelBubble = true;
+  }
+
+
+  public onDragOver(event) { // allowDrop
+    event.preventDefault();
+
+    this.onOverInput(event);
+
+    event.cancelBubble = true;
+  }
+
+  /*public onParamMouseOver(e) {
+    e.stopPropagation();
+
+    this.highlightElement(e.target);
+
+    this.addRemoveIcon(e);
+
+    this.removeHighlightToElement(e.target.parentNode);
+
+    e.cancelBubble = true;
+  }*/
+
+  onOverInput(event){
+    const input:HTMLElement = event.target;
+    input.classList.replace('no-highlight', 'highligthed');
+  }
+
+  onOutInput(event){
+    const input:HTMLElement = event.target;
+    input.classList.replace('highligthed', 'no-highlight');
+  }
 }

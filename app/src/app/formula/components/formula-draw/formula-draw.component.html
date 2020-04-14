@@ -1,13 +1,17 @@
 <div *ngIf="formulaValue && formulaValue.valueinvoke">
     <div [ngSwitch]="formulaValue.valueinvoke.function.type">
         <div *ngSwitchCase="'operator'">
-            <div class="param numeric-param" draggable="true">
+            <div class="param numeric-param" draggable="true" (dragstart)="onDrag($event, formulaValue)" (dragend)="onDragEnd($event, formulaValue)">
                 <span>{{toPrefixSymbol(formulaValue.valueinvoke.functionname)}}</span>
                 <app-formula-draw *ngIf="formulaValue.valueinvoke.args[0].valueinvoke" [formulaValue]="formulaValue.valueinvoke.args[0]"></app-formula-draw>
-                <div *ngIf="!formulaValue.valueinvoke.args[0].valueinvoke" class="param numeric-param" draggable="true">{{formulaValue.valueinvoke.args[0].valuenumber}}</div>
+                <div *ngIf="!formulaValue.valueinvoke.args[0].valueinvoke" class="param numeric-param no-highlight" draggable="true" (click)="onClickNode($event)" (drop)="onDrop($event, formulaValue.valueinvoke.args[0])" (dragover)="onDragOver($event)" (mouseover)="onOverInput($event)" (mouseout)="onOutInput($event)">{{formulaValue.valueinvoke.args[0].valuenumber}}
+                    <input type="number" step="1" placeholder="0.00" class="inputedit" style="display: none;" [(ngModel)]="formulaValue.valueinvoke.args[0].valuenumber" (change)="valueChanged()" (blur)="onBlurInput($event)">
+                </div>
                 <span>{{toMiddleSymbol(formulaValue.valueinvoke.functionname)}}</span> 
                 <app-formula-draw *ngIf="formulaValue.valueinvoke.args[1].valueinvoke" [formulaValue]="formulaValue.valueinvoke.args[1]"></app-formula-draw>
-                <div *ngIf="!formulaValue.valueinvoke.args[1].valueinvoke" class="param numeric-param" draggable="true">{{formulaValue.valueinvoke.args[1].valuenumber}}</div>
+                <div *ngIf="!formulaValue.valueinvoke.args[1].valueinvoke" class="param numeric-param no-highlight" draggable="true" (click)="onClickNode($event)" (drop)="onDrop($event, formulaValue.valueinvoke.args[1])" (dragover)="onDragOver($event)" (mouseover)="onOverInput($event)" (mouseout)="onOutInput($event)">{{formulaValue.valueinvoke.args[1].valuenumber}}
+                    <input type="number" step="1" placeholder="0.00" class="inputedit" style="display: none;" [(ngModel)]="formulaValue.valueinvoke.args[1].valuenumber" (change)="valueChanged()" (blur)="onBlurInput($event)">
+                </div>
             </div>
         </div>
         <div *ngSwitchDefault>Formula {{formulaValue.value.valueinvoke.functionname}} no implementada</div>

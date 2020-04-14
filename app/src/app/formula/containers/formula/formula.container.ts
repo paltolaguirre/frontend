@@ -150,6 +150,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
   }
 
   public async save() {
+    console.log("Current Formula: ", this.currentFormula)
     if (this.isNew) {
       return this.createFormula();
     }
