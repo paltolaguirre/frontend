@@ -9,13 +9,7 @@ import { componentDestroyed } from '@w11k/ngx-componentdestroyed';
 import { takeUntil } from 'rxjs/operators';
 import { FormulaService } from '../../../core/services/formula/formula.service';
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
-
-export class FormulaTerm {
-  nodeId: string;
-  payload: any; // Puede ser un operador, una formula, una variable; puede tener diferentes datos.
-  children?: FormulaTerm[] | any[];
-  //type
-}
+import { FormulaTerm } from 'src/app/core/models/formula-term.model';
 
 @Component({
   selector: 'app-formula-drop-space',

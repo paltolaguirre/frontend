@@ -9,6 +9,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
 import {componentDestroyed} from '@w11k/ngx-componentdestroyed';
 import { Location } from '@angular/common';
+import { FormulaTerm } from 'src/app/core/models/formula-term.model';
 
 @Component({
   selector: 'app-formula',
@@ -189,7 +190,10 @@ export class FormulaContainer implements OnInit, OnDestroy {
     return !param.value.DeletedAt;
   }
 
-  public updateFormulaResult(formulaResult: FormulaParam) {
+  public updateFormulaResult(formulaResult: FormulaTerm) {
     this.form.patchValue({ formulaResult });
+    console.log(this.form.value);
+    console.log(JSON.stringify(this.form.value)); //SUM(SUM(11,12),SUM(21,22))
+    console.log('formulaResult: ', JSON.stringify(this.form.value.formulaResult));
   }
 }
