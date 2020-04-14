@@ -21,7 +21,6 @@ export class NovedadComponent implements OnInit, AfterViewInit {
   public currentNovedad$: Observable<Novedad> = null;
   paises: any[];
   id: number;
-  public estaGuardandose = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -60,10 +59,7 @@ export class NovedadComponent implements OnInit, AfterViewInit {
   }
 
   async onClickSave(data: Novedad): Promise<Novedad> {
-    if (this.estaGuardandose) return null;
-    this.estaGuardandose = true;
     let novedadesItem: Novedad;
-    
 
     // se setea el paisID segun Option del selector de paises    
     /*
@@ -87,7 +83,6 @@ DeletedAt: n
 
     console.log(data);
     //this.create.emit(novedadesItem)
-    this.estaGuardandose = false;
     return novedadesItem;
   }
 

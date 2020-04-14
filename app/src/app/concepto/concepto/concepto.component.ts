@@ -21,7 +21,6 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
   paises: any[];
   id: number;
   public selectedFormula: Formula;
-  public estaGuardandose: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -74,11 +73,8 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
   }
 
   async onClickSave(data: Concepto): Promise<Concepto> {
-    
-    if(this.estaGuardandose || this.faltanRequeridos()) return null;
+    if(this.faltanRequeridos()) return null;
 
-    this.estaGuardandose = true;
-    
     let conceptosItem: Concepto;
 
     //if(data.cuenta)data.cuentacontableid = data.cuenta.ID;
@@ -97,7 +93,6 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
 
     console.log(data);
     //this.create.emit(conceptosItem)
-    this.estaGuardandose = false;
     return conceptosItem;
   }
 

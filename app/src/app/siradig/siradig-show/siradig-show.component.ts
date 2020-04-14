@@ -27,7 +27,6 @@ export class SiradigShowComponent implements OnInit {
   currentDate: Date;
   currentYear;
   minDate: Date;
-  public estaGuardandose = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -102,8 +101,6 @@ export class SiradigShowComponent implements OnInit {
 
   async onClickSave(data: Siradig): Promise<Siradig> {
     //if(this.faltanRequeridos()) return null;
-    if(this.estaGuardandose) return null;
-    this.estaGuardandose = true;
 
     // Se elimina
     if(this.conyugesiradig && this.conyugesiradig.ID && !this.conyugesiradig.aplica) {
@@ -156,7 +153,6 @@ export class SiradigShowComponent implements OnInit {
 
     console.log(data);
     //this.create.emit(legajosItem)
-    this.estaGuardandose = false;
     return item;
   }
 
