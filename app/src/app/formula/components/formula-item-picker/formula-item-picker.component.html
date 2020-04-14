@@ -25,7 +25,8 @@
                   [ngClass]="{
                     'active': selectedCategoryItem?.id === item.id
                   }"
-                  (click)="onCategoryItemClick(item)">
+                  (click)="onCategoryItemClick(item)"
+                  [matTooltip]="!isExpanded ? item.title : null">
                   <img [src]="item.img" alt="item-icon" class="item-icon">
                   <p *ngIf="isExpanded" class="item-name no-selectable">{{ item.title }}</p>
                 </div>
