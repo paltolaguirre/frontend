@@ -56,3 +56,21 @@
   border-radius: 4px;
   border: solid 1px #e6e6e6;
 }
+
+.custom-tooltip {
+  background: $ACTIVE;
+  overflow: visible !important;
+
+  &:after {
+    content: " ";
+    position:absolute;
+    bottom: -8px;
+    right: 30%;
+    z-index: 999;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 11px 9px 0 9px;
+    border-color: $ACTIVE transparent transparent transparent;
+  }
+}
