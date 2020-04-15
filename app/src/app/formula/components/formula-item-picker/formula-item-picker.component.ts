@@ -8,14 +8,15 @@ import { FormulaCategoryItemTypes } from './../../../core/enums/formula-category
 import { FormulaCategoryItem } from './../../../core/models/formula-category-item.model';
 import { FormulaService } from './../../../core/services/formula/formula.service';
 import { FormulaCategory } from './../../../core/models/formula-category.model';
-import { Component, OnInit, Output, EventEmitter, Input, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-formula-item-picker',
   templateUrl: './formula-item-picker.component.html',
-  styleUrls: ['./formula-item-picker.component.scss']
+  styleUrls: ['./formula-item-picker.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
-export class FormulaItemPickerComponent implements OnInit, OnChanges {
+export class FormulaItemPickerComponent implements OnInit {
   @Input()
   set currentFormulaInput(value) {
     if (value) {
@@ -48,10 +49,6 @@ export class FormulaItemPickerComponent implements OnInit, OnChanges {
     this.setDefaultCategoryItem();
     this.fetchFormulas();
     this.fetchConcepts();
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    console.log("changed app-formula: ", changes);
   }
   
   public setFormulaCategories() {

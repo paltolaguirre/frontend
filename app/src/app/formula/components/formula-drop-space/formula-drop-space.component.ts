@@ -8,14 +8,8 @@ import { OperatorsService } from '../../../core/services/operators/operators.ser
 import { componentDestroyed } from '@w11k/ngx-componentdestroyed';
 import { takeUntil } from 'rxjs/operators';
 import { FormulaService } from '../../../core/services/formula/formula.service';
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-
-export class FormulaTerm {
-  nodeId: string;
-  payload: any; // Puede ser un operador, una formula, una variable; puede tener diferentes datos.
-  children?: FormulaTerm[] | any[];
-  //type
-}
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { FormulaTerm } from 'src/app/core/models/formula-term.model';
 
 @Component({
   selector: 'app-formula-drop-space',
@@ -23,7 +17,15 @@ export class FormulaTerm {
   styleUrls: ['./formula-drop-space.component.scss']
 })
 export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
+  @Output() formulaResultEmitter: EventEmitter<FormulaTerm> = new EventEmitter();
   @Input() isItemPickerExpanded: boolean;
+  @Input()
+  set currentFormulaResult(value: FormulaTerm) {
+    if (value) {
+      // TODO: render
+      console.log('FormulaResult example:', value);
+    }
+  }
   @Input() formulaValue: any;
 
   public idCount: number = 0;
@@ -499,6 +501,8 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
       event.target.parentNode.innerHTML = targetValue;
 
+      this.updateInputContainerData(inputParamContainerTarget, targetValue);
+
       this.updateFormulaTerms();
     };
 
@@ -531,6 +535,16 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     inputParamContainerTarget.appendChild(input);
 
     setTimeout(() => input.focus());
+  }
+
+  private updateInputContainerData(node: HTMLElement, newValue: any) {
+    const data: FormulaTerm = {
+      nodeId: node.getAttribute('id'),
+      payload: newValue,
+      children: null
+    };
+
+    node.setAttribute('data-data', JSON.stringify(data));
   }
 
   public putChildAndRemoveFromOrigin(origin: HTMLElement, target: HTMLElement) {
@@ -621,18 +635,19 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   }
 
   public updateFormulaTerms() {
-    setTimeout(() => {
-      const mainDropSpace = document.querySelector('#main') as HTMLElement;
+    const mainDropSpace = document.querySelector('#main') as HTMLElement;
 
+    setTimeout(() => {
       if (!mainDropSpace.childNodes || mainDropSpace.childNodes.length <= 0) {
         return null;
       }
 
       const mainChildrenNodes = Array.from(mainDropSpace.childNodes) as HTMLElement[];
 
-      const formula: any = this.getChildrenFormulaTermsFromNode(mainChildrenNodes[0]);
+      this.formulaResult = this.getChildrenFormulaTermsFromNode(mainChildrenNodes[0]);
 
-      console.log('formula: ', formula);
+      // console.log('formula: ', this.formulaResult);
+      this.formulaResultEmitter.emit(this.formulaResult);
     }, 500);
   }
 
@@ -660,7 +675,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
         nodeId: filteredNode.id,
         payload: filteredNode.getAttribute('data-data') ?
           JSON.parse((filteredNode.getAttribute('data-data'))) :
-          null,
+          node.innerText,
         children: childNodesArray.map((childNode: HTMLElement) => {
           return this.getChildrenFormulaTermsFromNode(childNode);
         })
@@ -671,7 +686,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       nodeId: node.id,
       payload: node.getAttribute && node.getAttribute('data-data') ?
         JSON.parse((node.getAttribute('data-data'))) :
-        node.innerHTML,
+        node.innerText,
       children: childTerms
     };
   }

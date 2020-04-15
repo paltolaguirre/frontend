@@ -5,11 +5,6 @@ div.formula-item-picker-container {
   div.item-picker {
     margin-bottom: 2rem;
     div.category-box {
-
-      &.active {
-        background-color: #fff;
-      }
-
       div.category-name-container {
         display: flex;
         align-items: center;
@@ -38,8 +33,8 @@ div.formula-item-picker-container {
             position: relative;
 
             img.item-icon {
-              width: 2rem;
-              margin-left: 0.3rem;
+              width: 1.2rem;
+              margin: 0.3rem 0 0.3rem 0.3rem;
             }
     
             p.item-name {
@@ -71,6 +66,14 @@ div.formula-item-picker-container {
               }
             }
           }
+        }
+      }
+
+      &.active {
+        background-color: #fff;
+
+        p.item-name {
+          color: #000;
         }
       }
     }
@@ -139,7 +142,7 @@ div.formula-item-picker-container {
 
         div.selectable-badges-container {
           .pickable-badge {
-            background: $ACTIVE;
+            background: $PRIMARY_COLOR;
             color: #fff;
             border-radius: 10px;
             max-width: fit-content;
