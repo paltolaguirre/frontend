@@ -80,8 +80,8 @@ export class F1357liquidacionfinalanualListComponent implements OnInit, AfterVie
   }
 
 
-  changeTipoPresentacion(event) {
-    this.tipopresentacion = event.target.value;
+  changeTipoPresentacion(option) {
+    this.tipopresentacion = option.nombre;
   }
   
   public onYearSelectChange(payload: number, data: F1357liquidacionfinalanual) {
@@ -90,8 +90,8 @@ export class F1357liquidacionfinalanualListComponent implements OnInit, AfterVie
     
   }
  
-  changeMes(event) {
-    this.mes = event.target.value;
+  changeMes(option) {
+    this.mes = option.ID + 1;
     this.updateGrilla();
   }
   

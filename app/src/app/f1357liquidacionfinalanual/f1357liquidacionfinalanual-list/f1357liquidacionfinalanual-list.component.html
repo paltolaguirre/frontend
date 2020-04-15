@@ -9,14 +9,14 @@
     <div class="topmenu-container" >
       <div>
       
-        <app-selector-default nombre="tipopresentacion" type="hardcode" (focusout)="changeTipoPresentacion($event)"></app-selector-default>
+        <app-selector-default nombre="tipopresentacion" type="hardcode" (optionSelected)="changeTipoPresentacion($event)"></app-selector-default>
         <app-year-selector
           [defaultDate]="defaultDate$"
           (yearEmitter)="onYearSelectChange($event, data)"
           placeholder="Año">
         </app-year-selector>
 
-        <app-selector-default nombre="mes" type="hardcode" (focusout)="changeMes($event)"></app-selector-default>
+        <app-selector-default nombre="mes" type="hardcode" (optionSelected)="changeMes($event)"></app-selector-default>
       </div>
         <div>
           <button mat-button color="secondary" class="topmenu-button" (click)="printService.printTOPDF()">Imprimir</button>
