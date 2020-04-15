@@ -9,101 +9,103 @@
 
     <div *ngIf="currentLiquidaciones$ | async as data">
       <div *ngIf="show">
-        <table *ngFor="let liquidacionCalculada of data | calcularLiquidaciones" class="tg" style="table-layout:fixed;width:696px">
-          <colgroup>
-            <col style="width: 166px">
-            <col style="width: 166px">
-            <col style="width: 336px">
-            <col style="width: 166px">
-            <col style="width: 166px">
-          </colgroup>
-          <tr>
-            <th class="tg-8n49" colspan="2">Número de legajo: {{liquidacionCalculada.liquidacion.legajo.legajo}}</th>
-            <th class="tg-8n49"></th>
-            <th class="tg-8n49" colspan="2">C.U.I.L.: {{liquidacionCalculada.liquidacion.legajo.cuil}}</th>
-          </tr>
-          <tr>
-            <td class="tg-8n49" colspan="2">Apellido y nombre: {{liquidacionCalculada.liquidacion.legajo.apellido + ", " + liquidacionCalculada.liquidacion.legajo.nombre}}</td>
-            <td class="tg-8n49"></td>
-            <td class="tg-8n49" colspan="2">Fecha nacimiento:</td>
-          </tr>
-          <tr>
-            <td class="tg-8n49" colspan="2">Dirección: {{liquidacionCalculada.liquidacion.legajo.direccion}}</td>
-            <td class="tg-8n49"></td>
-            <td class="tg-8n49" colspan="2">Documento: {{obtenerDniFromCuil(liquidacionCalculada.liquidacion.legajo.cuil)}}</td>
-          </tr>
-          <tr>
-            <td class="tg-8n49" colspan="2">Fecha ingreso: {{liquidacionCalculada.liquidacion.legajo.fechaalta | date: 'dd/MM/yyyy'}}</td>
-            <td class="tg-8n49">Fecha egreso: {{liquidacionCalculada.liquidacion.legajo.fechabaja | date: 'dd/MM/yyyy'}}</td>
-            <td class="tg-8n49" colspan="2">Estado civil: {{liquidacionCalculada.liquidacion.legajo.estadocivil.nombre}}</td>
-          </tr>
-          <tr>
-            <td class="tg-8n49" colspan="2">Categoria: {{liquidacionCalculada.liquidacion.legajo.categoria}}</td>
-            <td class="tg-8n49"></td>
-            <td class="tg-8n49" colspan="2">Sueldo/Jornal: {{liquidacionCalculada.liquidacion.legajo.remuneracion | number:'1.2-2':'en'}}</td>
-          </tr>
-          <tr>
-            <td class="tg-8n49" colspan="2">Sueldo - Período: {{liquidacionCalculada.liquidacion.fechaperiodoliquidacion | date: 'MM/yyyy'}}</td>
-            <td class="tg-8n49"></td>
-            <td class="tg-8n49" colspan="2">Contratación: {{liquidacionCalculada.liquidacion.legajo.situacion.nombre}}</td>
-          </tr>
-          <tr class="simple-line-bottom">
-            <td class="tg-8n49" colspan="2">Nacionalidad: {{liquidacionCalculada.liquidacion.legajo.pais.nombre}}</td>
-            <td class="tg-8n49"></td>
-            <td class="tg-8n49" colspan="2">Modalidad: {{liquidacionCalculada.liquidacion.legajo.modalidadcontratacion.nombre}}</td>
-          </tr>
-          <tr class="simple-line-top">
-            <td class="tg-8n49" colspan="5">BENEFICIARIOS AA/FF</td>
-          </tr>
-          <tr *ngIf="liquidacionCalculada.hijosasignacionfamiliar.length==0">
-            <td class="tg-8n49" colspan="5">Sin beneficiarios</td>
-          </tr>
-          <tr *ngFor="let hijo of liquidacionCalculada.hijosasignacionfamiliar; let i = index; let firstItem = first; let lastItem = last">
-            <td class="tg-8n49" colspan="2">Apellido y Nombre: {{hijo.apellido + ", " + hijo.nombre}}</td>
-            <td class="tg-8n49">CUIL: {{hijo.cuil}}</td>
-            <td class="tg-8n49" colspan="2"></td>
-          </tr>
-          <tr class="simple-line-top">
-            <td class="tg-8n49" colspan="5">CONCEPTOS LIQUIDADOS</td>
-          </tr>
-          <tr>
-            <td class="tg-7eit">Concepto</td>
-            <td class="tg-7eit">Haber</td>
-            <td class="tg-7eit">Descuento</td>
-            <td class="tg-7eit">Retención</td>
-            <td class="tg-7eit">No remunerativo</td>
-          </tr>
-
-          <tr *ngFor="let item of liquidacionCalculada.calculo.items; let i = index; let firstItem = first; let lastItem = last">
-            <td class="tg-oe15">{{item.detalle}}</td>
-            <td class="tg-oe15"><span *ngIf="item.tipo=='REMUNERATIVO'">{{item.importe}}</span></td>
-            <td class="tg-oe15"><span *ngIf="item.tipo=='DESCUENTO'">{{item.importe}}</span></td>
-            <td class="tg-oe15"><span *ngIf="item.tipo=='RETENCION'">{{item.importe}}</span></td>
-            <td class="tg-oe15"><span *ngIf="item.tipo=='NOREMUNERATIVO'">{{item.importe}}</span></td>
-          </tr>
-
-          <tr class="simple-line-bottom">
-            <td class="tg-oe15"></td>
-            <td class="tg-oe15"></td>
-            <td class="tg-oe15"></td> 
-            <td class="tg-oe15"></td>
-            <td class="tg-oe15"></td>
-          </tr>
-          <tr class="simple-line-top">
-            <td class="tg-oe15">Total haberes: {{liquidacionCalculada.calculo.total.remunerativo}}</td>
-            <td class="tg-oe15"></td>
-            <td class="tg-oe15">Total descuentos: {{liquidacionCalculada.calculo.total.descuento}}</td>
-            <td class="tg-oe15">Total retenciones: {{liquidacionCalculada.calculo.total.retencion}}</td>
-            <td class="tg-2bxt"></td>
-          </tr>
-          <tr class="double-line-bottom">
-            <td class="tg-oe15">Total no remunerativo: {{liquidacionCalculada.calculo.total.noremunerativo}}</td>
-            <td class="tg-oe15"></td>
-            <td class="tg-oe15">Total neto: {{liquidacionCalculada.calculo.total.neto}}</td>
-            <td class="tg-oe15"></td>
-            <td class="tg-oe15"></td>
-          </tr>
-        </table>
+        <div *ngFor="let liquidacionCalculada of data | calcularLiquidaciones; let last = last" [ngClass]="{ 'page' : !last }">
+          <table  class="tg" style="table-layout:fixed;width:696px">
+            <colgroup>
+              <col style="width: 166px">
+              <col style="width: 166px">
+              <col style="width: 336px">
+              <col style="width: 166px">
+              <col style="width: 166px">
+            </colgroup>
+            <tr>
+              <th class="tg-8n49" colspan="2">Número de legajo: {{liquidacionCalculada.liquidacion.legajo.legajo}}</th>
+              <th class="tg-8n49"></th>
+              <th class="tg-8n49" colspan="2">C.U.I.L.: {{liquidacionCalculada.liquidacion.legajo.cuil}}</th>
+            </tr>
+            <tr>
+              <td class="tg-8n49" colspan="2">Apellido y nombre: {{liquidacionCalculada.liquidacion.legajo.apellido + ", " + liquidacionCalculada.liquidacion.legajo.nombre}}</td>
+              <td class="tg-8n49"></td>
+              <td class="tg-8n49" colspan="2">Fecha nacimiento:</td>
+            </tr>
+            <tr>
+              <td class="tg-8n49" colspan="2">Dirección: {{liquidacionCalculada.liquidacion.legajo.direccion}}</td>
+              <td class="tg-8n49"></td>
+              <td class="tg-8n49" colspan="2">Documento: {{obtenerDniFromCuil(liquidacionCalculada.liquidacion.legajo.cuil)}}</td>
+            </tr>
+            <tr>
+              <td class="tg-8n49" colspan="2">Fecha ingreso: {{liquidacionCalculada.liquidacion.legajo.fechaalta | date: 'dd/MM/yyyy'}}</td>
+              <td class="tg-8n49">Fecha egreso: {{liquidacionCalculada.liquidacion.legajo.fechabaja | date: 'dd/MM/yyyy'}}</td>
+              <td class="tg-8n49" colspan="2">Estado civil: {{liquidacionCalculada.liquidacion.legajo.estadocivil.nombre}}</td>
+            </tr>
+            <tr>
+              <td class="tg-8n49" colspan="2">Categoria: {{liquidacionCalculada.liquidacion.legajo.categoria}}</td>
+              <td class="tg-8n49"></td>
+              <td class="tg-8n49" colspan="2">Sueldo/Jornal: {{liquidacionCalculada.liquidacion.legajo.remuneracion | number:'1.2-2':'en'}}</td>
+            </tr>
+            <tr>
+              <td class="tg-8n49" colspan="2">Sueldo - Período: {{liquidacionCalculada.liquidacion.fechaperiodoliquidacion | date: 'MM/yyyy'}}</td>
+              <td class="tg-8n49"></td>
+              <td class="tg-8n49" colspan="2">Contratación: {{liquidacionCalculada.liquidacion.legajo.situacion.nombre}}</td>
+            </tr>
+            <tr class="simple-line-bottom">
+              <td class="tg-8n49" colspan="2">Nacionalidad: {{liquidacionCalculada.liquidacion.legajo.pais.nombre}}</td>
+              <td class="tg-8n49"></td>
+              <td class="tg-8n49" colspan="2">Modalidad: {{liquidacionCalculada.liquidacion.legajo.modalidadcontratacion.nombre}}</td>
+            </tr>
+            <tr class="simple-line-top">
+              <td class="tg-8n49" colspan="5">BENEFICIARIOS AA/FF</td>
+            </tr>
+            <tr *ngIf="liquidacionCalculada.hijosasignacionfamiliar.length==0">
+              <td class="tg-8n49" colspan="5">Sin beneficiarios</td>
+            </tr>
+            <tr *ngFor="let hijo of liquidacionCalculada.hijosasignacionfamiliar; let i = index; let firstItem = first; let lastItem = last">
+              <td class="tg-8n49" colspan="2">Apellido y Nombre: {{hijo.apellido + ", " + hijo.nombre}}</td>
+              <td class="tg-8n49">CUIL: {{hijo.cuil}}</td>
+              <td class="tg-8n49" colspan="2"></td>
+            </tr>
+            <tr class="simple-line-top">
+              <td class="tg-8n49" colspan="5">CONCEPTOS LIQUIDADOS</td>
+            </tr>
+            <tr>
+              <td class="tg-7eit">Concepto</td>
+              <td class="tg-7eit">Haber</td>
+              <td class="tg-7eit">Descuento</td>
+              <td class="tg-7eit">Retención</td>
+              <td class="tg-7eit">No remunerativo</td>
+            </tr>
+  
+            <tr *ngFor="let item of liquidacionCalculada.calculo.items; let i = index; let firstItem = first; let lastItem = last">
+              <td class="tg-oe15">{{item.detalle}}</td>
+              <td class="tg-oe15"><span *ngIf="item.tipo=='REMUNERATIVO'">{{item.importe}}</span></td>
+              <td class="tg-oe15"><span *ngIf="item.tipo=='DESCUENTO'">{{item.importe}}</span></td>
+              <td class="tg-oe15"><span *ngIf="item.tipo=='RETENCION'">{{item.importe}}</span></td>
+              <td class="tg-oe15"><span *ngIf="item.tipo=='NOREMUNERATIVO'">{{item.importe}}</span></td>
+            </tr>
+  
+            <tr class="simple-line-bottom">
+              <td class="tg-oe15"></td>
+              <td class="tg-oe15"></td>
+              <td class="tg-oe15"></td> 
+              <td class="tg-oe15"></td>
+              <td class="tg-oe15"></td>
+            </tr>
+            <tr class="simple-line-top">
+              <td class="tg-oe15">Total haberes: {{liquidacionCalculada.calculo.total.remunerativo}}</td>
+              <td class="tg-oe15"></td>
+              <td class="tg-oe15">Total descuentos: {{liquidacionCalculada.calculo.total.descuento}}</td>
+              <td class="tg-oe15">Total retenciones: {{liquidacionCalculada.calculo.total.retencion}}</td>
+              <td class="tg-2bxt"></td>
+            </tr>
+            <tr class="double-line-bottom">
+              <td class="tg-oe15">Total no remunerativo: {{liquidacionCalculada.calculo.total.noremunerativo}}</td>
+              <td class="tg-oe15"></td>
+              <td class="tg-oe15">Total neto: {{liquidacionCalculada.calculo.total.neto}}</td>
+              <td class="tg-oe15"></td>
+              <td class="tg-oe15"></td>
+            </tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>

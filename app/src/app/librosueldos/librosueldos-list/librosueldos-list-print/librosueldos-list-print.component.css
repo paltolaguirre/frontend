@@ -11,6 +11,10 @@
     padding-top: 25px;
 }
 
+.page {  
+    min-height: 1560px!important;
+}
+
 .actions-icon {
   size: 5px;
 }
