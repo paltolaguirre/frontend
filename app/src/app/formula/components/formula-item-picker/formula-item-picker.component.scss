@@ -72,8 +72,8 @@ div.formula-item-picker-container {
       &.active {
         background-color: #fff;
 
-        p.item-name {
-          color: #000;
+        .item-name{
+          color: rgba(#000, 0.7) !important;
         }
       }
     }
