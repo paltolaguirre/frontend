@@ -23,7 +23,6 @@ export class LegajoComponent implements OnInit, AfterViewInit {
   paises: any[];
   id: number;
   data : any;
-  public estaGuardandose = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -65,9 +64,7 @@ export class LegajoComponent implements OnInit, AfterViewInit {
   }
 
   async onClickSave(data: Legajo): Promise<Legajo> {
-    if(this.estaGuardandose || this.faltanRequeridos()) return null;
-
-    this.estaGuardandose = true;
+    if(this.faltanRequeridos()) return null;
 
     let legajosItem: Legajo;
 
@@ -113,7 +110,6 @@ export class LegajoComponent implements OnInit, AfterViewInit {
 
     console.log(data);
     //this.create.emit(legajosItem)
-    this.estaGuardandose = false;
     return legajosItem;
   }
 
