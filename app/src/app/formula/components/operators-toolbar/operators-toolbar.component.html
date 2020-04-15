@@ -8,6 +8,7 @@
           [id]="getDomIdByOperator(operator)"
           [attr.data-type]="operator.type"
           [attr.data-data]="getOperatorTransferData(operator, getDomIdByOperator(operator)) | json"
+          [matTooltip]="operator.tooltip"
           (dragstart)="onDragStart($event, operator)"
           (click)="onOperatorItemClick($event, operator)"
           draggable="true">
