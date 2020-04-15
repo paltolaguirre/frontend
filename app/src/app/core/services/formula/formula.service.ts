@@ -54,7 +54,8 @@ export class FormulaService {
         items: [
           {
             id: 1,
-            img: 'assets/img/descarga.jpg',
+            img: 'assets/img/icono_search.png',
+            imgActive: 'assets/img/icono_search_selec.png',
             title: 'Buscar',
             categoryId: 1,
             slug: 'search'
@@ -67,21 +68,24 @@ export class FormulaService {
         items: [
           {
             id: 2,
-            img: 'assets/img/descarga.jpg',
+            img: 'assets/img/icono_variables.png',
+            imgActive: 'assets/img/icono_variables_selec.png',
             title: 'Variables',
             categoryId: 2,
             slug: 'variables'
           },
           {
             id: 3,
-            img: 'assets/img/descarga.jpg',
+            img: 'assets/img/icono_conceptos.png',
+            imgActive: 'assets/img/icono_conceptos_selec.png',
             title: 'Conceptos en la liquidación',
             categoryId: 2,
             slug: 'concept'
           },
           {
             id: 4,
-            img: 'assets/img/descarga.jpg',
+            img: 'assets/img/icono_parametros.png',
+            imgActive: 'assets/img/icono_parametros_selec.png',
             title: 'Parámetros de entrada',
             categoryId: 2,
             slug: 'input-params'
@@ -94,14 +98,16 @@ export class FormulaService {
         items: [
           {
             id: 5,
-            img: 'assets/img/descarga.jpg',
+            img: 'assets/img/icono_formulas_xubio.png',
+            imgActive: 'assets/img/icono_formulas_xubio_selec.png',
             title: 'Fórmulas estandar',
             categoryId: 3,
             slug: 'standard-formulas'
           },
           {
             id: 6,
-            img: 'assets/img/descarga.jpg',
+            img: 'assets/img/icono_favoritas.png',
+            imgActive: 'assets/img/icono_favoritas_selec.png',
             title: 'Mis fórmulas',
             categoryId: 3,
             slug: 'user-formulas'
