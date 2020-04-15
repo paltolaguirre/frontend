@@ -5,11 +5,6 @@ div.formula-item-picker-container {
   div.item-picker {
     margin-bottom: 2rem;
     div.category-box {
-
-      &.active {
-        background-color: #fff;
-      }
-
       div.category-name-container {
         display: flex;
         align-items: center;
@@ -38,7 +33,7 @@ div.formula-item-picker-container {
             position: relative;
 
             img.item-icon {
-              width: 2rem;
+              width: 1.2rem;
               margin-left: 0.3rem;
             }
     
@@ -71,6 +66,14 @@ div.formula-item-picker-container {
               }
             }
           }
+        }
+      }
+
+      &.active {
+        background-color: #fff;
+
+        p.item-name {
+          color: #000;
         }
       }
     }
