@@ -47,21 +47,9 @@ export class F1357liquidacionfinalanualListComponent implements OnInit, AfterVie
     public printService: PrintService,
     private empresaService: EmpresaService,
   ) {
-   /*if(localStorage.getItem('liquidacionfinalanual-tipopresentacion')) {
-      this.tipopresentacion = localStorage.getItem('liquidacionfinalanual-tipopresentacion');
-    } else {
-      this.tipopresentacion = "";
-    }
-    if(localStorage.getItem('liquidacionfinalanual-anio')) {
-      this.anio = localStorage.getItem('liquidacionfinalanual-anio');
-    } else {
-      this.anio = "";
-    }
-    if(localStorage.getItem('liquidacionfinalanual-mes')) {
-      this.mes = localStorage.getItem('liquidacionfinalanual-mes');
-    } else {
-      this.mes = "";
-    }*/
+    this.mes = "";
+    this.tipopresentacion = "";
+    this.anio = "";
   }
 
   ngOnInit() {
@@ -82,10 +70,14 @@ export class F1357liquidacionfinalanualListComponent implements OnInit, AfterVie
 
   changeTipoPresentacion(option) {
     this.tipopresentacion = option.nombre;
+    this.updateGrilla();
   }
   
-  public onYearSelectChange(payload: number, data: F1357liquidacionfinalanual) {
+  public onYearSelectChange(payload: number) {
     this.anio = payload;
+    if (this.tipopresentacion == "Anual"){
+      this.mes = 12
+    }
     this.updateGrilla();
     
   }
@@ -96,28 +88,52 @@ export class F1357liquidacionfinalanualListComponent implements OnInit, AfterVie
   }
   
   async updateGrilla() {
+
+   if (this.canRequest()){
     const liquidacionfinalanualApi: ListaItems = await this.liquidacionfinalanualService.getF1357liquidacionfinalanual(this.sort.active, this.sort.direction,this.tipopresentacion,this.anio,this.mes, 1);
     this.dataSource = new MatTableDataSource<F1357liquidacionfinalanual>(liquidacionfinalanualApi.items);
     this.dataSource.paginator = this.paginator;
     this.paginator._intl.itemsPerPageLabel = "Items por página";
-    this.isLoadingResults = false;
+   
+  }
+  this.isLoadingResults = false;
+}
+
+  canRequest(){
+    if(this.tipopresentacion != "" && this.anio != "" && this.mes != ""){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  notificacion(mensajeNotificacion:String){
+    const notificacion = {
+      codigo: 400,
+      mensaje:mensajeNotificacion
+    }
+    const ret = this.notificationService.notify(notificacion);
+    return ret;
+  }
+
+  isTipoPresentacionAnual() : Boolean {
+    return this.tipopresentacion == "Anual";
   }
 
   public doFilter = (value: string) => {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
 
-  /*async exportarTXT() {
+  async exportarTXT() {
   
     const empresa = await this.empresaService.getEmpresa();
-    const liquidacionfinalanualTXT: any = await this.liquidacionfinalanualService.getLiquidacionfinalanualTXT(this.fechadesde,this.fechahasta);
+    const liquidacionfinalanualTXT: any = await this.liquidacionfinalanualService.getLiquidacionfinalanualTXT(this.tipopresentacion,this.anio,this.mes);
     var blob = new Blob([liquidacionfinalanualTXT.data], {type: "text/plain;charset=utf-8"});
     
-    const anio = parseInt(this.periodo.split("-")[0]);
-    const mes = parseInt(this.periodo.split("-")[1]);
-    const nombreArchivo = `${empresa.cuit}_${anio}-${mes}_0_`;
+    const secuencia = 1 //hablar con Rodri sobre la secuencia
+    const nombreArchivo = `F1357.${empresa.cuit}.${this.anio}0000.${secuencia}`;
     saveAs.saveAs(blob, nombreArchivo);
-  }*/
+  }
 
   refreshTableSorce() {
 

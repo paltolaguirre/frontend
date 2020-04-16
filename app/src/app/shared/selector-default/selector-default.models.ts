@@ -73,7 +73,7 @@ export class Models {
       case 'siradigtipoimpuesto':
         return "Tipo de Impuesto";
       case 'tipopresentacion':
-        return "Tipo de Presentacion"
+        return "Tipo de Presentación"
       default: 
         return "Seleccione..."; 
     } 
