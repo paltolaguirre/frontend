@@ -40,6 +40,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   fechaperiodoliquidacion: any;
   public liquidacionItemHojaCalculo$: Observable<Liquidacionitem> = null;
   public mostrarLiquidacion$: Observable<boolean> = null;
+  public estaGuardandose = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -154,23 +155,33 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   }
 
   async onClickSave(data: Liquidacion): Promise<Liquidacion> {
-    let liquidacionesItem: Liquidacion;    
     
-    this.formatData(data);
+    if (!this.estaGuardandose){
+      this.estaGuardandose = true;
+      let liquidacionesItem: Liquidacion;    
+      
+      this.formatData(data);
+      let that = this;
+      if (this.id) {
+        console.log("Updated Liquidacion");
+        liquidacionesItem = await this.liquidacionService.putLiquidacion(data).finally(function(){that.habilitarGuardado();});
+        this.gotoGrilla();
+      } else {
+        console.log("Created Liquidacion");
+        liquidacionesItem = await this.liquidacionService.postLiquidacion(data).finally(function(){that.habilitarGuardado();});
+        this.gotoGrilla();
+      }
 
-    if (this.id) {
-      console.log("Updated Liquidacion");
-      liquidacionesItem = await this.liquidacionService.putLiquidacion(data);
-      this.gotoGrilla();
-    } else {
-      console.log("Created Liquidacion");
-      liquidacionesItem = await this.liquidacionService.postLiquidacion(data);
-      this.gotoGrilla();
+      console.log(data);
+      //this.create.emit(liquidacionesItem)
+      return liquidacionesItem;
     }
+    
+  }
 
-    console.log(data);
-    //this.create.emit(liquidacionesItem)
-    return liquidacionesItem;
+
+  habilitarGuardado() {
+    this.estaGuardandose = false
   }
 
   onClickDeleteChild(child: any, arr: any) {
