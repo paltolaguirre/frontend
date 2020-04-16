@@ -1,3 +1,5 @@
+import { componentDestroyed } from '@w11k/ngx-componentdestroyed';
+import { takeUntil } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { FormulaService } from '../../../core/services/formula/formula.service';
@@ -5,15 +7,16 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { Formula } from 'src/app/core/models/formula.model';
+import { FormulaCloneDialogComponent } from '../../components/formula-clone-dialog/formula-clone-dialog.component';
 
 @Component({
   selector: 'app-formula-list',
   templateUrl: './formula-list.container.html',
   styleUrls: ['./formula-list.container.scss']
 })
-export class FormulaListContainer implements OnInit, AfterViewInit {
+export class FormulaListContainer implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -34,6 +37,8 @@ export class FormulaListContainer implements OnInit, AfterViewInit {
 
   ngOnInit() {
   }
+
+  ngOnDestroy() {}
 
   public async createFormula() {
     await this.router.navigate(['/formulas/create']);
@@ -66,14 +71,32 @@ export class FormulaListContainer implements OnInit, AfterViewInit {
     this.dataSource = new MatTableDataSource<Formula>(this.dataSource.data);
   }
 
-  public editFormula(item: Formula) {
-    this.router.navigate(['/formulas/edit', item.name]);
+  public editFormula(formula: Formula) {
+    this.router.navigate(['/formulas/edit', formula.name]);
   }
 
-  public async onDelete(item: Formula) {
-    await this.formulaService.delete(item.name);
+  public async onDelete(formula: Formula) {
+    await this.formulaService.delete(formula.name);
 
-    this.removeItemFromTable(item);
+    this.removeItemFromTable(formula);
+  }
+
+  public cloneFormula(formula: Formula) {
+    const dialogRef = this.dialog.open(FormulaCloneDialogComponent, {
+      width: '500px',
+      data: { formula }
+    });
+
+    dialogRef.afterClosed()
+      .pipe(
+        takeUntil(componentDestroyed(this))
+      ).subscribe(async (clonedFormula: Formula) => {
+        if (clonedFormula) {
+          await this.formulaService.create(clonedFormula);
+
+          this.formulaService.initFormulasStore();
+        }
+    });
   }
 
   public removeItemFromTable(item: Formula) {

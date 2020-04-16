@@ -24,6 +24,7 @@ export class OperatorsService {
         type: MathOperatorTypes.Numeric,
         symbol: '+',
         mustRemoveFromSource: false,
+        tooltip: 'Suma',
         category: OperatorCategory.Math,
         hasChildren: true
       },
@@ -33,6 +34,7 @@ export class OperatorsService {
         type: MathOperatorTypes.Numeric,
         symbol: '-',
         mustRemoveFromSource: false,
+        tooltip: 'Resta',
         category: OperatorCategory.Math,
         hasChildren: true
       },
@@ -42,6 +44,7 @@ export class OperatorsService {
         type: MathOperatorTypes.Numeric,
         symbol: '/',
         mustRemoveFromSource: false,
+        tooltip: 'División',
         category: OperatorCategory.Math,
         hasChildren: true
       },
@@ -50,6 +53,7 @@ export class OperatorsService {
         operationName: MathOperatorNames.Multiplication,
         type: MathOperatorTypes.Numeric,
         symbol: '*',
+        tooltip: 'Multiplicación',
         mustRemoveFromSource: false,
         category: OperatorCategory.Math,
         hasChildren: true
@@ -178,7 +182,7 @@ export class OperatorsService {
         type: MathOperatorTypes.Numeric,
         symbol: '%',
         mustRemoveFromSource: false,
-        tooltip: 'Porcentaje”',
+        tooltip: 'Porcentaje',
         category: OperatorCategory.Math,
         hasChildren: true
       },
