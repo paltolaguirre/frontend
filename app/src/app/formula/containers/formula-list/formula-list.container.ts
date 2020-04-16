@@ -90,11 +90,11 @@ export class FormulaListContainer implements OnInit, AfterViewInit, OnDestroy {
     dialogRef.afterClosed()
       .pipe(
         takeUntil(componentDestroyed(this))
-      ).subscribe((clonedFormula: Formula) => {
-        console.log('cloned formula: ', clonedFormula);
+      ).subscribe(async (clonedFormula: Formula) => {
         if (clonedFormula) {
-          // TODO: persist formula.
-          // await this.formulaService.create(clonedFormula);
+          await this.formulaService.create(clonedFormula);
+
+          this.formulaService.initFormulasStore();
         }
     });
   }
