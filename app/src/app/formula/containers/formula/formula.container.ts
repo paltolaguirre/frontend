@@ -147,7 +147,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
       origin: ['custom'],
       type: ['generic'],
       scope: ['private'],
-      params: this.formBuilder.array([ this.createFormulaParam() ]),
+      params: this.formBuilder.array([]),
       result: ['number', Validators.required],
       value: {
         valueinvoke: null
@@ -192,7 +192,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public createFormulaParam(formulaParam?: FormulaParam) {
     if (!formulaParam) {
       return this.formBuilder.group({
-        name: 'val1',
+        name: '',
         type: 'number'
       });
     }
