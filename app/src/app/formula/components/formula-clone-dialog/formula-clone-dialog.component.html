@@ -1,8 +1,21 @@
-<!-- <h1 mat-dialog-title>{{ data.formula.name }}</h1> -->
 <h1 mat-dialog-title>Clonar Fórmula</h1>
 
 <div mat-dialog-content>
-<p>{{ data.formula.description }}</p>
+  <div class="inputs">
+    <mat-form-field>
+      <input 
+      matInput 
+        class="width-100"
+        type="text" [formControl]="form.get('name')" placeholder="Nombre" cdkFocusInitial autocomplete="off" 
+        required>
+    </mat-form-field>
+    <mat-form-field>
+      <input 
+      matInput 
+        class="width-100"
+        type="text" [formControl]="form.get('description')" placeholder="Descripción" autocomplete="off">
+    </mat-form-field>
+  </div>
 </div>
 
 <div mat-dialog-actions>

@@ -21,9 +21,11 @@ export class FormulaCloneDialogComponent implements OnInit {
   ngOnInit() {
     this.form = this.formBuilder.group({
       ...this.data.formula,
+      name: this.data.formula.name + ' (1)',
       value: {
         valueinvoke: null
-      }
+      },
+      valueid: null
     });
   }
 
