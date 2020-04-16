@@ -66,14 +66,18 @@ export class FormulaListContainer implements OnInit, AfterViewInit {
     this.dataSource = new MatTableDataSource<Formula>(this.dataSource.data);
   }
 
-  public editFormula(item: Formula) {
-    this.router.navigate(['/formulas/edit', item.name]);
+  public editFormula(formula: Formula) {
+    this.router.navigate(['/formulas/edit', formula.name]);
   }
 
-  public async onDelete(item: Formula) {
-    await this.formulaService.delete(item.name);
+  public async onDelete(formula: Formula) {
+    await this.formulaService.delete(formula.name);
 
-    this.removeItemFromTable(item);
+    this.removeItemFromTable(formula);
+  }
+
+  public cloneFormula(formula: Formula) {
+    console.log(formula);
   }
 
   public removeItemFromTable(item: Formula) {
