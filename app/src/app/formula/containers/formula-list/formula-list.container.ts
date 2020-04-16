@@ -1,3 +1,5 @@
+import { componentDestroyed } from '@w11k/ngx-componentdestroyed';
+import { takeUntil } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { FormulaService } from '../../../core/services/formula/formula.service';
@@ -5,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { Formula } from 'src/app/core/models/formula.model';
 import { FormulaCloneDialogComponent } from '../../components/formula-clone-dialog/formula-clone-dialog.component';
 
@@ -14,7 +16,7 @@ import { FormulaCloneDialogComponent } from '../../components/formula-clone-dial
   templateUrl: './formula-list.container.html',
   styleUrls: ['./formula-list.container.scss']
 })
-export class FormulaListContainer implements OnInit, AfterViewInit {
+export class FormulaListContainer implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -35,6 +37,8 @@ export class FormulaListContainer implements OnInit, AfterViewInit {
 
   ngOnInit() {
   }
+
+  ngOnDestroy() {}
 
   public async createFormula() {
     await this.router.navigate(['/formulas/create']);
@@ -78,27 +82,16 @@ export class FormulaListContainer implements OnInit, AfterViewInit {
   }
 
   public cloneFormula(formula: Formula) {
-    console.log(formula);
-
-    // EXAMPLE:
-    // const dialogRef = this.dialog.open(InfoDialogComponent, {
-    //   width: '250px',
-    //   data: {
-    //     title: 'Hubo un problema',
-    //     text: 'No se pudieron cargar los datos de la fórmula, por favor intente nuevamente.'
-    //   }
-    // });
-
-    // dialogRef.afterClosed()
-    //   .pipe(
-    //     takeUntil(componentDestroyed(this))
-    //   ).subscribe(() => {
-    //   this.location.back();
-    // });
-
     const dialogRef = this.dialog.open(FormulaCloneDialogComponent, {
       width: '500px',
       data: { formula }
+    });
+
+    dialogRef.afterClosed()
+      .pipe(
+        takeUntil(componentDestroyed(this))
+      ).subscribe((clonedFormula: Formula) => {
+        console.log('cloned formula: ', clonedFormula);
     });
   }
 
