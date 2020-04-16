@@ -75,22 +75,26 @@ DeletedAt: n
     if(data.legajo) data.legajoid = data.legajo.ID;
     if(data.concepto) data.conceptoid = data.concepto.ID;
 
+    var that = this;
     if (this.id) {
       console.log("Updated Novedad");
-      novedadesItem = await this.novedadService.putNovedad(data);
+      novedadesItem = await this.novedadService.putNovedad(data).finally(function(){that.habilitarGuardado();});
       this.gotoGrilla();
     } else {
       console.log("Created Novedad");
-      novedadesItem = await this.novedadService.postNovedad(data);
+      novedadesItem = await this.novedadService.postNovedad(data).finally(function(){that.habilitarGuardado();});
       this.gotoGrilla();
     }
 
     console.log(data);
     //this.create.emit(novedadesItem)
-    this.estaGuardandose = false;
     return novedadesItem;
   }
 
+
+  habilitarGuardado() {
+    this.estaGuardandose = false
+  }
 
   isNew(data) : Boolean {
     return data.ID==null?false:true;

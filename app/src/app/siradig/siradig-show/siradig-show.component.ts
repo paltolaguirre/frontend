@@ -143,23 +143,28 @@ export class SiradigShowComponent implements OnInit {
     }
 
     let item: Siradig;
+    let that = this;
 
     if (this.id) {
       console.log("Updated Siradig");
-      item = await this.siradigService.putSiradig(data);
+      item = await this.siradigService.putSiradig(data).finally(function(){that.habilitarGuardado();});
       this.gotoGrilla();
     } else {
       console.log("Created Siradig");
-      item = await this.siradigService.postSiradig(data);
+      item = await this.siradigService.postSiradig(data).finally(function(){that.habilitarGuardado();});
       this.gotoGrilla();
     }
 
     console.log(data);
     //this.create.emit(legajosItem)
-    this.estaGuardandose = false;
     return item;
   }
 
+
+  habilitarGuardado() {
+    this.estaGuardandose = false
+  }
+  
   private procesarSiradig(siradig: Siradig) {
     this.procesarConyuge(siradig);
     this.procesarHijos(siradig);

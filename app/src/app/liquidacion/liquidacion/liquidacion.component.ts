@@ -161,23 +161,27 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
       let liquidacionesItem: Liquidacion;    
       
       this.formatData(data);
-
+      let that = this;
       if (this.id) {
         console.log("Updated Liquidacion");
-        liquidacionesItem = await this.liquidacionService.putLiquidacion(data);
+        liquidacionesItem = await this.liquidacionService.putLiquidacion(data).finally(function(){that.habilitarGuardado();});
         this.gotoGrilla();
       } else {
         console.log("Created Liquidacion");
-        liquidacionesItem = await this.liquidacionService.postLiquidacion(data);
+        liquidacionesItem = await this.liquidacionService.postLiquidacion(data).finally(function(){that.habilitarGuardado();});
         this.gotoGrilla();
       }
 
       console.log(data);
       //this.create.emit(liquidacionesItem)
-      this.estaGuardandose = false;
       return liquidacionesItem;
     }
     
+  }
+
+
+  habilitarGuardado() {
+    this.estaGuardandose = false
   }
 
   onClickDeleteChild(child: any, arr: any) {

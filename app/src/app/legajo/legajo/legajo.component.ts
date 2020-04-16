@@ -101,20 +101,25 @@ export class LegajoComponent implements OnInit, AfterViewInit {
         }  
       });
     }
+
+    let that = this;
     if (this.id) {
       console.log("Updated Legajo");
-      legajosItem = await this.legajoService.putLegajo(data);
+      legajosItem = await this.legajoService.putLegajo(data).finally(function(){that.habilitarGuardado();});
       this.gotoGrilla();
     } else {
       console.log("Created Legajo");
-      legajosItem = await this.legajoService.postLegajo(data);
+      legajosItem = await this.legajoService.postLegajo(data).finally(function(){that.habilitarGuardado();});
       this.gotoGrilla();
     }
 
     console.log(data);
     //this.create.emit(legajosItem)
-    this.estaGuardandose = false;
     return legajosItem;
+  }
+
+  habilitarGuardado() {
+    this.estaGuardandose = false
   }
 
   onClickNewConyuge(data: Legajo) {
