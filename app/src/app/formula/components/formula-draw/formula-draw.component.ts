@@ -1,4 +1,9 @@
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { Formula } from 'src/app/core/models/formula.model';
+
+export interface DataPayload {
+  payload: Formula;
+}
 
 @Component({
   selector: 'app-formula-draw',
@@ -18,6 +23,12 @@ export class FormulaDrawComponent implements OnInit {
     this.middleSymbol.set('Diff', "-");
     this.middleSymbol.set('Div', "/");
     this.middleSymbol.set('Multi', "*");
+    this.middleSymbol.set('Greater', ">");
+    this.middleSymbol.set('Less', "<");
+    this.middleSymbol.set('Equality', "=");
+    this.middleSymbol.set('Inequality', "<>");
+    this.middleSymbol.set('And', "Y");
+    this.middleSymbol.set('Or', "Ó");
   }
 
   ngOnInit() {
@@ -76,7 +87,7 @@ export class FormulaDrawComponent implements OnInit {
   onDrop(event, currentFormulaValue) {
     event.preventDefault();
 
-    const data = JSON.parse(event.dataTransfer.getData('text'));
+    const data: DataPayload = JSON.parse(event.dataTransfer.getData('text'));
 
     console.log("onDrop: ", data);
 
@@ -86,52 +97,31 @@ export class FormulaDrawComponent implements OnInit {
       return;
     }
 
-    let functionname;
-    switch (data.payload.symbol) {
-      case "+":
-        functionname = "Sum";
-        break;
-      case "-":
-        functionname = "Diff";
-        break;
-      case "/":
-        functionname = "Div";
-        break;
-      case "*":
-        functionname = "Multi";
-        break;
-      default:
-        return;
-        break;
-    }
+    const args = [];
+    data.payload.params.forEach((param, i) => {
+      const arg = {
+          ID: 0,
+          name: param.name,
+          type: param.type,
+          valuenumber: 0,
+          valuestring: "",
+          Valueboolean: false,
+          valueinvoke: null
+      };
+      args.push(arg);
+    });
 
-    currentFormulaValue.valueinvoke = {
+    const formulaInvoke = {
       ID: 0,
       function: {
-        name: functionname,
-        type: "operator"
+        name: data.payload.name,
+        type: data.payload.type
       },
-      functionname: functionname,
-      args: [
-          {
-              ID: 0,
-              name: "val1",
-              valuenumber: 0,
-              valuestring: "",
-              Valueboolean: false,
-              valueinvoke: null
-          },
-          {
-              ID: 0,
-              name: "val2",
-              valuenumber: 0,
-              valuestring: "",
-              Valueboolean: false,
-              valueinvoke: null,
-          }
-      ]
+      functionname: data.payload.name,
+      args: args
     };
 
+    currentFormulaValue.valueinvoke = formulaInvoke
     event.cancelBubble = true;
   }
 
