@@ -1,0 +1,12 @@
+<!-- <h1 mat-dialog-title>{{ data.formula.name }}</h1> -->
+<h1 mat-dialog-title>Clonar Fórmula</h1>
+
+<div mat-dialog-content>
+<p>{{ data.formula.description }}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button cdkFocusInitial>Cancelar</button>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="data.formula" cdkFocusInitial>Aceptar</button>
+</div>

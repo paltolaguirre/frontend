@@ -7,6 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Formula } from 'src/app/core/models/formula.model';
+import { FormulaCloneDialogComponent } from '../../components/formula-clone-dialog/formula-clone-dialog.component';
 
 @Component({
   selector: 'app-formula-list',
@@ -78,6 +79,27 @@ export class FormulaListContainer implements OnInit, AfterViewInit {
 
   public cloneFormula(formula: Formula) {
     console.log(formula);
+
+    // EXAMPLE:
+    // const dialogRef = this.dialog.open(InfoDialogComponent, {
+    //   width: '250px',
+    //   data: {
+    //     title: 'Hubo un problema',
+    //     text: 'No se pudieron cargar los datos de la fórmula, por favor intente nuevamente.'
+    //   }
+    // });
+
+    // dialogRef.afterClosed()
+    //   .pipe(
+    //     takeUntil(componentDestroyed(this))
+    //   ).subscribe(() => {
+    //   this.location.back();
+    // });
+
+    const dialogRef = this.dialog.open(FormulaCloneDialogComponent, {
+      width: '500px',
+      data: { formula }
+    });
   }
 
   public removeItemFromTable(item: Formula) {
