@@ -13,6 +13,10 @@ export interface DataPayload {
 export class FormulaDrawComponent implements OnInit {
   @Input() formulaValue: any;
 
+  private formula = {
+    result: "number"
+  };
+
   private prefixSymbol = new Map();
   private middleSymbol = new Map();
 
@@ -71,16 +75,11 @@ export class FormulaDrawComponent implements OnInit {
 
   onDrag(event, currentFormulaValue) {
     event.dataTransfer.setData('text', JSON.stringify(currentFormulaValue.valueinvoke));
-
-    //currentFormulaValue.valueinvoke = null;
-    //currentFormulaValue.valuenumber = 0;
     event.cancelBubble = true;
   }
 
   onDragEnd(event, currentFormulaValue) {
-    currentFormulaValue.valueinvokeid = null;
-    currentFormulaValue.valueinvoke = null;
-    currentFormulaValue.valuenumber = 0;
+    this.invokeRemuve(currentFormulaValue);
     event.cancelBubble = true;
   }
 
@@ -134,25 +133,37 @@ export class FormulaDrawComponent implements OnInit {
     event.cancelBubble = true;
   }
 
-  /*public onParamMouseOver(e) {
-    e.stopPropagation();
-
-    this.highlightElement(e.target);
-
-    this.addRemoveIcon(e);
-
-    this.removeHighlightToElement(e.target.parentNode);
-
-    e.cancelBubble = true;
-  }*/
-
   onOverInput(event){
     const input:HTMLElement = event.target;
     input.classList.replace('no-highlight', 'highligthed');
+
+    for (let index = 0; index < input.children.length; index++) {
+      const item = input.children.item(index);
+      if(item.className.includes("remove-badge-container")) {
+        item.classList.replace('hide', 'show');
+      }
+    }
   }
 
   onOutInput(event){
     const input:HTMLElement = event.target;
     input.classList.replace('highligthed', 'no-highlight');
+
+    for (let index = 0; index < input.children.length; index++) {
+      const item = input.children.item(index);
+      if(item.className.includes("remove-badge-container")) {
+        item.classList.replace('show', 'hide');
+      }
+    }
+  }
+
+  onClickRemove(currentFormulaValue) {
+    this.invokeRemuve(currentFormulaValue);
+  }
+
+  private invokeRemuve(currentFormulaValue) {
+    currentFormulaValue.valueinvokeid = null;
+    currentFormulaValue.valueinvoke = null;
+    currentFormulaValue.valuenumber = 0;
   }
 }
