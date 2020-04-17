@@ -107,6 +107,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   }
 
   private gotoGrilla() {
+    this.estaGuardandose = true;
     this.router.navigate(['/liquidaciones']);
   }
 

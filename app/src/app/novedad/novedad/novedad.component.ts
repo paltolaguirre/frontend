@@ -52,6 +52,7 @@ export class NovedadComponent implements OnInit, AfterViewInit {
   }
 
   private gotoGrilla() {
+    this.estaGuardandose = true;
     this.router.navigate(['/novedades']);
   }
 
