@@ -57,6 +57,7 @@ export class LegajoComponent implements OnInit, AfterViewInit {
   }
 
   private gotoGrilla() {
+    this.estaGuardandose = true;
     this.router.navigate(['/legajos']);
   }
 

@@ -76,6 +76,7 @@ export class SiradigShowComponent implements OnInit {
   }
 
   private gotoGrilla() {
+    this.estaGuardandose = true;
     this.router.navigate(['/siradig']);
   }
 
