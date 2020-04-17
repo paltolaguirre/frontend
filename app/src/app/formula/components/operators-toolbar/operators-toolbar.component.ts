@@ -17,9 +17,9 @@ export class OperatorsToolbarComponent implements OnInit {
   public formulas: Formula[];
   public moreOperators: any;
   public selectedOperator: Formula = null;
-  public basicMathOperators: Operator[];
-  public logicalOperators: Operator[];
-  public xorOperator: Operator;
+  public basicMathOperators: any[];
+  public logicalOperators: any[];
+  public xorOperator: any;
   public numberOperator: Operator;
 
   constructor(
@@ -37,6 +37,7 @@ export class OperatorsToolbarComponent implements OnInit {
 
   public fetchFormulas() {
     this.formulaService.formulasStore$.subscribe((formulas: Formula[]) => {
+      this.setSymbols(formulas);
       this.formulas = formulas;
 
       const formulaOperators: Formula[] = this.formulaService.extractFormulasByType(
@@ -44,10 +45,77 @@ export class OperatorsToolbarComponent implements OnInit {
         FormulaTypes.OPERATOR
       );
 
+      const basicMathOperators = this.formulaService.extractBasicMathOperators(formulaOperators);
+      this.basicMathOperators = basicMathOperators;
+      
+      const logicalOperators = this.formulaService.extractLogicalOperators(formulaOperators);
+      this.logicalOperators = logicalOperators;
+
+      const itemsToRemove = [
+        ...basicMathOperators,
+        ...logicalOperators
+      ];
+      itemsToRemove.forEach(item => {
+        formulaOperators.splice(formulaOperators.findIndex(e => e.name === item.name),1);
+      });
+
       this.moreOperators = [
-        ...this.operatorsService.getMoreStaticOperators(),
         ...formulaOperators
       ];
+    });
+  }
+
+  private setSymbols(formulas: Formula[]) {
+    formulas.forEach( formula => {
+      switch (formula.name) {
+        case "Sum":
+          formula.symbol = "+";
+          break;
+        case "Diff":
+          formula.symbol = "-";
+          break;
+        case "Div":
+          formula.symbol = "/";
+          break;
+        case "Multi":
+          formula.symbol = "*";
+          break;
+        case "If":
+          formula.symbol = "SI";
+          break;
+        case "Greater":
+          formula.symbol = ">";
+          break;
+        case "Less":
+          formula.symbol = "<";
+          break;
+        case "Equality":
+          formula.symbol = "=";
+          break;
+        case "Inequality":
+          formula.symbol = "<>";
+          break;
+        case "And":
+          formula.symbol = "Y";
+          break;
+        case "Or":
+          formula.symbol = "Ó";
+          break;
+        case "GreaterEqual":
+          formula.symbol = ">=";
+          break;
+        case "LessEqual":
+          formula.symbol = "<=";
+          break;
+        case "Not":
+          formula.symbol = "NO";
+          break;
+        case "Percent":
+          formula.symbol = "%";
+          break;
+        default:
+          break;
+      }
     });
   }
 

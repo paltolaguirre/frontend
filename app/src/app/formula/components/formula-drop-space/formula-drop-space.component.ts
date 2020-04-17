@@ -26,6 +26,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       console.log('FormulaResult example:', value);
     }
   }
+  @Input() formulaValue: any;
 
   public idCount: number = 0;
   public formulaResult: FormulaTerm;
