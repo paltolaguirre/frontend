@@ -20,6 +20,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
 
   public form: FormGroup;
   public currentFormula: Formula;
+  public oldFormulaName: string;
   public isItemPickerExpanded: boolean = true;
   public params: FormArray;
   public isNew: boolean = false;
@@ -136,6 +137,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
 
   public async setCurrentFormula(name: string) {
     this.currentFormula = await this.formulaService.find(name);
+    this.oldFormulaName = this.currentFormula.name;
 
     console.log(this.currentFormula);
 
@@ -238,7 +240,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
   }
 
   public async updateFormula() {
-    await this.formulaService.update(this.form.value.name, this.form.value);
+    await this.formulaService.update(this.oldFormulaName, this.form.value);
 
     return this.goToFormulasList();
   }
