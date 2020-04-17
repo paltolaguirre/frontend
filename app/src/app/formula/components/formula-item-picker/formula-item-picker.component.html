@@ -155,7 +155,7 @@
                   draggable="true"
                   (dragstart)="onDragStart($event, formula)"
                   (click)="onFormulaItemClick($event, formula)"
-                  [matTooltip]="null"
+                  [matTooltip]="formula?.description"
                   matTooltipPosition="above"
                   matTooltipClass="baloon">
                     {{ formula.name }}
