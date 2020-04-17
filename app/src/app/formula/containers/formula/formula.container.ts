@@ -154,7 +154,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
 
   private buildEmptyForm() {
     this.form = this.formBuilder.group({
-      name: ['', [Validators.required]],
+      name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9!@#$%^&*()]+$/)]],
       description: ['', [Validators.required]],
       origin: ['custom'],
       type: ['generic'],
@@ -194,6 +194,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public buildPreLoadedForm() {
     this.form = this.formBuilder.group({
       ...this.currentFormula,
+      name: [this.currentFormula.name, [Validators.pattern(/^[a-zA-Z0-9!@#$%^&*()]+$/)]],
       params: this.formBuilder.array([]),
       formulaResult: []
     });
