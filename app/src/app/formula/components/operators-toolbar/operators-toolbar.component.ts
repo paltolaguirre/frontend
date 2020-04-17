@@ -46,7 +46,7 @@ export class OperatorsToolbarComponent implements OnInit {
 
       this.moreOperators = [
         ...this.operatorsService.getMoreStaticOperators(),
-        ...formulaOperators
+        // ...formulaOperators
       ];
     });
   }
