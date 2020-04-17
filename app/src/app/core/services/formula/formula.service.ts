@@ -25,9 +25,13 @@ export class FormulaService {
   public async initFormulasStore() {
     this.formulas.next(await this.getAll());
   }
-
+ 
   public async getAll(): Promise<Formula[]> {
     return await this.api.get(`${this.BASE_URL}/formulas`).toPromise() as Formula[];
+  }
+
+  public async getByType(type: string): Promise<Formula[]> {
+    return await this.api.get(`${this.BASE_URL}/formulas?type=${type}`).toPromise() as Formula[];
   }
 
   public async delete(name: string): Promise<any> {
@@ -119,6 +123,20 @@ export class FormulaService {
 
   public isEditable(formula: Formula): boolean {
     return formula.origin !== 'primitive';
+  }
+  
+  public extractBasicMathOperators(formulas: Formula[]): Formula[] {
+    return formulas.filter((formula) => {
+      const functionNames = ["Sum","Diff","Div","Multi",];
+      return formula.type === FormulaTypes.OPERATOR && functionNames.includes(formula.name);
+    });
+  }
+
+  public extractLogicalOperators(formulas: Formula[]): Formula[] {
+    return formulas.filter((formula) => {
+      const functionNames = ["If","Greater","Less","Equality","Inequality","And","Or"];
+      return formula.type === FormulaTypes.OPERATOR && functionNames.includes(formula.name);
+    });
   }
 
   public extractFormulasByType(formulas: Formula[], type: string): Formula[] {

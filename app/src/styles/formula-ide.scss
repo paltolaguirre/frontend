@@ -3,9 +3,9 @@
 .draggable-space-container {
   .param {
     margin: 5px;
-    padding: 10px;
+    padding: 2px 10px;
     width: fit-content;
-    border-radius: 40px 40px 40px 40px;
+    border-radius: 25px 25px 25px 25px;
     position:relative;
 
     display: flex;
@@ -38,7 +38,7 @@
   }
 
   .inputedit {
-  
+    width: 3rem;
     position: absolute;
     top: 30px;
     left: -20px;
@@ -75,7 +75,10 @@
     cursor: auto;
   }
   
-  
+  .hide {
+    display: none;
+  }
+
   #main2{
     border: 5px solid black;
     width: 800px;

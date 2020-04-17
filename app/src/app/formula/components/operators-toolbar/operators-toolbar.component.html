@@ -25,7 +25,7 @@
           [id]="getDomIdByOperator(operator)"
           [attr.data-type]="operator.type"
           [attr.data-data]="getOperatorTransferData(operator, getDomIdByOperator(operator)) | json"
-          [matTooltip]="operator.tooltip"
+          [matTooltip]="operator.description"
           (dragstart)="onDragStart($event, operator)"
           (click)="onOperatorItemClick($event, operator)"
           draggable="true">

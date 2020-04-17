@@ -11,4 +11,5 @@ export class Formula {
   result: string;
   value: any;
   valueid: number;
+  symbol?: string;
 }
