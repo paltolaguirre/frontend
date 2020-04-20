@@ -19,13 +19,13 @@ export class FormulaService {
   public formulaPickerItemEmitter: EventEmitter<FormulaTransferData> = new EventEmitter();
 
   constructor(private api: ApiHttpService) {
-    this.initFormulasStore();
+    this.updateFormulasStore();
   }
 
-  public async initFormulasStore() {
+  public async updateFormulasStore() {
     this.formulas.next(await this.getAll());
   }
- 
+
   public async getAll(): Promise<Formula[]> {
     return await this.api.get(`${this.BASE_URL}/formulas`).toPromise() as Formula[];
   }
@@ -35,11 +35,19 @@ export class FormulaService {
   }
 
   public async delete(name: string): Promise<any> {
-    return await this.api.delete(`${this.BASE_URL}/formulas/${name}`).toPromise();
+    const response = await this.api.delete(`${this.BASE_URL}/formulas/${name}`).toPromise();
+
+    this.updateFormulasStore();
+
+    return response;
   }
 
   public async create(formula: Formula): Promise<any> {
-    return await this.api.post(`${this.BASE_URL}/formulas`, formula).toPromise();
+    const response = await this.api.post(`${this.BASE_URL}/formulas`, formula).toPromise();
+
+    this.updateFormulasStore();
+
+    return response;
   }
 
   public async find(name: string): Promise<Formula> {
@@ -47,7 +55,11 @@ export class FormulaService {
   }
 
   public async update(name: string, formula: Formula) {
-    return await this.api.put(`${this.BASE_URL}/formulas/${name}`, formula).toPromise();
+    const response = await this.api.put(`${this.BASE_URL}/formulas/${name}`, formula).toPromise();
+
+    this.updateFormulasStore();
+
+    return response;
   }
 
   public getFormulaCategories(): FormulaCategory[] {
@@ -124,7 +136,7 @@ export class FormulaService {
   public isEditable(formula: Formula): boolean {
     return formula.origin !== 'primitive';
   }
-  
+
   public extractBasicMathOperators(formulas: Formula[]): Formula[] {
     return formulas.filter((formula) => {
       const functionNames = ["Sum","Diff","Div","Multi",];
