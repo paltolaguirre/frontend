@@ -34,51 +34,6 @@ export class OperatorsService {
     return operators;
   }
 
-  public getMoreStaticOperators(): Operator[] {
-    return [
-      {
-        id: 1,
-        operationName: LogicalOperatorNames.LessOrEqualThan,
-        type: MathOperatorTypes.Boolean,
-        symbol: '<=',
-        mustRemoveFromSource: false,
-        tooltip: 'Condición: “Menor Igual que”',
-        category: OperatorCategory.Logical,
-        hasChildren: true
-      },
-      {
-        id: 2,
-        operationName: LogicalOperatorNames.GreaterOrEqualThan,
-        type: MathOperatorTypes.Boolean,
-        symbol: '>=',
-        mustRemoveFromSource: false,
-        tooltip: 'Condición: “Mayor Igual que”',
-        category: OperatorCategory.Logical,
-        hasChildren: true
-      },
-      {
-        id: 3,
-        operationName: MathOperatorNames.Percentage,
-        type: MathOperatorTypes.Numeric,
-        symbol: '%',
-        mustRemoveFromSource: false,
-        tooltip: 'Porcentaje',
-        category: OperatorCategory.Math,
-        hasChildren: true
-      },
-      {
-        id: 4,
-        operationName: MathOperatorNames.Pow,
-        type: MathOperatorTypes.Numeric,
-        symbol: '^',
-        mustRemoveFromSource: false,
-        tooltip: 'Potencia',
-        category: OperatorCategory.Math,
-        hasChildren: true
-      }
-    ];
-  }
-
   public getXOROperator(): Operator {
     return {
       id: 1,

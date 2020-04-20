@@ -51,7 +51,7 @@ export class OperatorsToolbarComponent implements OnInit {
         ...this.logicalOperators
       ];
       itemsToRemove.forEach(item => {
-        formulaOperators.splice(formulaOperators.findIndex(e => e.name === item.name),1);
+        formulaOperators.splice(formulaOperators.findIndex(e => e.name === item.name), 1);
       });
 
       this.moreOperators = [
@@ -61,7 +61,7 @@ export class OperatorsToolbarComponent implements OnInit {
   }
 
   private setSymbols(formulas: Formula[]) {
-    formulas.forEach( formula => {
+    formulas.forEach(formula => {
       switch (formula.name) {
         case "Sum":
           formula.symbol = "+";
