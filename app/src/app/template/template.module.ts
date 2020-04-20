@@ -65,7 +65,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
             loadChildren: () => import('../siradig/siradig.module').then(m => m.SiradigModule)
           },
           {
-            path: 'f1357-liquidacion-anual',
+            path: 'informes/liquidacion-final-anual-f1357',
             loadChildren: () => import('../f1357liquidacionfinalanual/f1357liquidacionfinalanual.module').then(m => m.F1357liquidacionfinalanualModule)
           },
           {

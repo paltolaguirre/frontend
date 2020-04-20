@@ -43,10 +43,6 @@ for (let index = 0; index < myArgs.length; index++) {
             path = "~/go/src/git-codecommit.us-east-1.amazonaws.com/v1/repos/sueldos-formula";
             runService(serviceName, path);
             break;
-        case 'liquidacionfinalanual':
-            path = "~/go/src/github.com/xubiosueldos/liquidacionfinalanual"
-            runService(serviceName, path);
-            break;
         default:
             console.log("* El servicio '" + serviceName + "' no existe.");
     }

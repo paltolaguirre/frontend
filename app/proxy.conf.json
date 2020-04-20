@@ -48,10 +48,5 @@
         "target": "http://localhost:8089/",
         "secure": false,
         "logLevel": "debug"
-    },
-    "/api/f1357-liquidacion-anual*": {
-        "target": "http://localhost:8090/",
-        "secure": false,
-        "logLevel": "debug"
     }
 }
