@@ -82,7 +82,8 @@ div.formula-item-picker-container {
       background-color: #fff;
       border: 2px solid $ACTIVE;
       padding: 1rem;
-      max-width: 15rem;
+      max-width: 11rem;
+      height: 17rem;
 
       div.search-bar-container {
         width: 93%;
@@ -134,8 +135,7 @@ div.formula-item-picker-container {
       }
 
       div.toolbox {
-        min-height: 15rem;
-        max-height: 15rem;
+        height: 16.1rem;
         overflow-y: scroll;
         overflow-x: auto;
         font-size: 0.7rem;
