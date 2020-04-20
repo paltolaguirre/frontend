@@ -1,4 +1,4 @@
-<div *ngIf="formulaValue && formulaValue.valueinvoke">
+<div class="formula-draw-container" *ngIf="formulaValue && formulaValue.valueinvoke">
     <div [ngSwitch]="formulaValue.valueinvoke.function.type">
         <div *ngSwitchCase="'operator'" [ngSwitch]="formulaValue.valueinvoke.functionname">
             <div *ngSwitchCase="'If'" class="param numeric-param no-highlight" draggable="true" (dragstart)="onDrag($event, formulaValue)" (dragend)="onDragEnd($event, formulaValue)" (mouseover)="onOverInput($event)" (mouseout)="onOutInput($event)">
