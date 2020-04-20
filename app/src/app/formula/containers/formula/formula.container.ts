@@ -121,7 +121,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
       pluck('name')).subscribe(name => {
         if (!name) {
           this.isNew = true;
-          this.currentFormula = null;
+          this.currentFormula = this.form.value;
 
           return this.buildEmptyForm();
         }
@@ -160,7 +160,14 @@ export class FormulaContainer implements OnInit, OnDestroy {
       params: this.formBuilder.array([]),
       result: ['number', Validators.required],
       value: {
-        valueinvoke: null
+          ID: 0,
+          name: "",
+          valuenumber: 0,
+          valuestring: "",
+          Valueboolean: false,
+          valueinvoke: null,
+          valueinvokeid: null,
+          arginvokeid: 0
       },
       formulaResult: []
     });
