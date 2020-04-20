@@ -1,7 +1,25 @@
 <div *ngIf="formulaValue && formulaValue.valueinvoke">
     <div [ngSwitch]="formulaValue.valueinvoke.function.type">
-        <div *ngSwitchCase="'operator'">
-            <div class="param numeric-param no-highlight" draggable="true" (dragstart)="onDrag($event, formulaValue)" (dragend)="onDragEnd($event, formulaValue)" (mouseover)="onOverInput($event)" (mouseout)="onOutInput($event)">
+        <div *ngSwitchCase="'operator'" [ngSwitch]="formulaValue.valueinvoke.functionname">
+            <div *ngSwitchCase="'If'" class="param numeric-param no-highlight" draggable="true" (dragstart)="onDrag($event, formulaValue)" (dragend)="onDragEnd($event, formulaValue)" (mouseover)="onOverInput($event)" (mouseout)="onOutInput($event)">
+                <span>SI</span>
+                <app-formula-draw *ngIf="formulaValue.valueinvoke.args[0].valueinvoke" [formulaValue]="formulaValue.valueinvoke.args[0]"></app-formula-draw>
+                <div *ngIf="!formulaValue.valueinvoke.args[0].valueinvoke" class="param boolean-param no-highlight" draggable="true" (click)="formulaValue.valueinvoke.args[0].Valueboolean = !formulaValue.valueinvoke.args[0].Valueboolean" (drop)="onDrop($event, formulaValue.valueinvoke.args[0])" (dragover)="onDragOver($event)" (mouseover)="onOverInput($event)" (mouseout)="onOutInput($event)">{{formulaValue.valueinvoke.args[0].Valueboolean}}
+                    <input type="checkbox" step="1" placeholder="0.00" class="inputedit" style="display: none;" [(ngModel)]="formulaValue.valueinvoke.args[0].Valueboolean" (change)="valueChanged()" (blur)="onBlurInput($event)">
+                </div>
+                <span>ENTONCES</span> 
+                <app-formula-draw *ngIf="formulaValue.valueinvoke.args[1].valueinvoke" [formulaValue]="formulaValue.valueinvoke.args[1]"></app-formula-draw>
+                <div *ngIf="!formulaValue.valueinvoke.args[1].valueinvoke" class="param numeric-param no-highlight" draggable="true" (click)="onClickNode($event)" (drop)="onDrop($event, formulaValue.valueinvoke.args[1])" (dragover)="onDragOver($event)" (mouseover)="onOverInput($event)" (mouseout)="onOutInput($event)">{{formulaValue.valueinvoke.args[1].valuenumber}}
+                    <input type="number" step="1" placeholder="0.00" class="inputedit" style="display: none;" [(ngModel)]="formulaValue.valueinvoke.args[1].valuenumber" (change)="valueChanged()" (blur)="onBlurInput($event)">
+                </div>
+                <span>SINO</span> 
+                <app-formula-draw *ngIf="formulaValue.valueinvoke.args[2].valueinvoke" [formulaValue]="formulaValue.valueinvoke.args[2]"></app-formula-draw>
+                <div *ngIf="!formulaValue.valueinvoke.args[2].valueinvoke" class="param numeric-param no-highlight" draggable="true" (click)="onClickNode($event)" (drop)="onDrop($event, formulaValue.valueinvoke.args[2])" (dragover)="onDragOver($event)" (mouseover)="onOverInput($event)" (mouseout)="onOutInput($event)">{{formulaValue.valueinvoke.args[2].valuenumber}}
+                    <input type="number" step="1" placeholder="0.00" class="inputedit" style="display: none;" [(ngModel)]="formulaValue.valueinvoke.args[2].valuenumber" (change)="valueChanged()" (blur)="onBlurInput($event)">
+                </div>
+                <span class="remove-badge-container no-selectable hide" draggable="false" (click)="onClickRemove(formulaValue)"><i class="remove-icon no-selectable fas fa-trash-alt highligthed"></i></span>
+            </div>
+            <div *ngSwitchDefault class="param numeric-param no-highlight" draggable="true" (dragstart)="onDrag($event, formulaValue)" (dragend)="onDragEnd($event, formulaValue)" (mouseover)="onOverInput($event)" (mouseout)="onOutInput($event)">
                 <span>{{toPrefixSymbol(formulaValue.valueinvoke.functionname)}}</span>
                 <app-formula-draw *ngIf="formulaValue.valueinvoke.args[0].valueinvoke" [formulaValue]="formulaValue.valueinvoke.args[0]"></app-formula-draw>
                 <div *ngIf="!formulaValue.valueinvoke.args[0].valueinvoke" class="param numeric-param no-highlight" draggable="true" (click)="onClickNode($event)" (drop)="onDrop($event, formulaValue.valueinvoke.args[0])" (dragover)="onDragOver($event)" (mouseover)="onOverInput($event)" (mouseout)="onOutInput($event)">{{formulaValue.valueinvoke.args[0].valuenumber}}
@@ -11,13 +29,25 @@
                 <app-formula-draw *ngIf="formulaValue.valueinvoke.args[1].valueinvoke" [formulaValue]="formulaValue.valueinvoke.args[1]"></app-formula-draw>
                 <div *ngIf="!formulaValue.valueinvoke.args[1].valueinvoke" class="param numeric-param no-highlight" draggable="true" (click)="onClickNode($event)" (drop)="onDrop($event, formulaValue.valueinvoke.args[1])" (dragover)="onDragOver($event)" (mouseover)="onOverInput($event)" (mouseout)="onOutInput($event)">{{formulaValue.valueinvoke.args[1].valuenumber}}
                     <input type="number" step="1" placeholder="0.00" class="inputedit" style="display: none;" [(ngModel)]="formulaValue.valueinvoke.args[1].valuenumber" (change)="valueChanged()" (blur)="onBlurInput($event)">
-                </div>
+                </div>                
                 <span class="remove-badge-container no-selectable hide" draggable="false" (click)="onClickRemove(formulaValue)"><i class="remove-icon no-selectable fas fa-trash-alt highligthed"></i></span>
             </div>
         </div>
         <div *ngSwitchCase="'helper'">
             <div class="param numeric-param no-highlight" draggable="true" (dragstart)="onDrag($event, formulaValue)" (dragend)="onDragEnd($event, formulaValue)" (mouseover)="onOverInput($event)" (mouseout)="onOutInput($event)">
                 {{formulaValue.valueinvoke.functionname}}
+                <span class="remove-badge-container no-selectable hide" draggable="false" (click)="onClickRemove(formulaValue)"><i class="remove-icon no-selectable fas fa-trash-alt highligthed"></i></span>
+            </div>
+        </div>
+        <div *ngSwitchCase="'generic'">
+            <div class="param numeric-param no-highlight" draggable="true" (dragstart)="onDrag($event, formulaValue)" (dragend)="onDragEnd($event, formulaValue)" (mouseover)="onOverInput($event)" (mouseout)="onOutInput($event)">
+                <span>{{formulaValue.valueinvoke.functionname}}</span>
+                <div *ngFor="let arg of formulaValue.valueinvoke.args;">
+                    <app-formula-draw *ngIf="arg.valueinvoke" [formulaValue]="arg"></app-formula-draw>
+                    <div *ngIf="!arg.valueinvoke" class="param numeric-param no-highlight" draggable="true" (click)="onClickNode($event)" (drop)="onDrop($event, arg)" (dragover)="onDragOver($event)" (mouseover)="onOverInput($event)" (mouseout)="onOutInput($event)">{{arg.valuenumber}}
+                        <input type="number" step="1" placeholder="0.00" class="inputedit" style="display: none;" [(ngModel)]="arg.valuenumber" (change)="valueChanged()" (blur)="onBlurInput($event)">
+                    </div>
+                </div>
                 <span class="remove-badge-container no-selectable hide" draggable="false" (click)="onClickRemove(formulaValue)"><i class="remove-icon no-selectable fas fa-trash-alt highligthed"></i></span>
             </div>
         </div>

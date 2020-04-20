@@ -21,7 +21,7 @@ export class FormulaDrawComponent implements OnInit {
   private middleSymbol = new Map();
 
   constructor() {
-    this.prefixSymbol.set('Not', "NOT");
+    this.prefixSymbol.set('NEGADO', "NOT");
     
     this.middleSymbol.set('Sum', "+");
     this.middleSymbol.set('Diff', "-");
