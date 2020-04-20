@@ -20,6 +20,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
 
   public form: FormGroup;
   public currentFormula: Formula;
+  public oldFormulaName: string;
   public isItemPickerExpanded: boolean = true;
   public params: FormArray;
   public isNew: boolean = false;
@@ -136,6 +137,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
 
   public async setCurrentFormula(name: string) {
     this.currentFormula = await this.formulaService.find(name);
+    this.oldFormulaName = this.currentFormula.name;
 
     console.log(this.currentFormula);
 
@@ -152,7 +154,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
 
   private buildEmptyForm() {
     this.form = this.formBuilder.group({
-      name: ['', [Validators.required]],
+      name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9!@#$%^&*()]+$/)]],
       description: ['', [Validators.required]],
       origin: ['custom'],
       type: ['generic'],
@@ -199,6 +201,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public buildPreLoadedForm() {
     this.form = this.formBuilder.group({
       ...this.currentFormula,
+      name: [this.currentFormula.name, [Validators.pattern(/^[a-zA-Z0-9!@#$%^&*()]+$/)]],
       params: this.formBuilder.array([]),
       formulaResult: []
     });
@@ -245,7 +248,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
   }
 
   public async updateFormula() {
-    await this.formulaService.update(this.form.value.name, this.form.value);
+    await this.formulaService.update(this.oldFormulaName, this.form.value);
 
     return this.goToFormulasList();
   }
