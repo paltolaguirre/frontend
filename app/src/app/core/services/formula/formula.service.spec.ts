@@ -60,6 +60,15 @@ describe('FormulaService', () => {
 
       expect(getSpy).toHaveBeenCalledWith(`${service.BASE_URL}/formulas/${fakeFormula.name}`);
     });
+
+    it('should update the store', async () => {
+      spyOn(api, 'delete').and.returnValue(of(null));
+      const updateFormulasStoreSpy = spyOn(service, 'updateFormulasStore').and.returnValue(null);
+
+      await service.delete(fakeFormula.name);
+
+      expect(updateFormulasStoreSpy).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe('create', () => {
