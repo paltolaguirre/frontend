@@ -5,8 +5,10 @@
         <div 
           *ngFor="let operator of basicMathOperators; index as index"
           class="math-operator-container no-selectable param numeric-param"
-          [id]="'math-basic-operator-' + operator.id"
+          [id]="getDomIdByOperator(operator)"
           [attr.data-type]="operator.type"
+          [attr.data-data]="getOperatorTransferData(operator, getDomIdByOperator(operator)) | json"
+          [matTooltip]="operator.tooltip"
           (dragstart)="onDragStart($event, operator)"
           (click)="onOperatorItemClick($event, operator)"
           draggable="true">
@@ -20,9 +22,10 @@
         <div 
           *ngFor="let operator of logicalOperators" 
           class="logical-operator-container"
-          [id]="'logical-operator-' + operator.id"
+          [id]="getDomIdByOperator(operator)"
           [attr.data-type]="operator.type"
-          [matTooltip]="operator.tooltip"
+          [attr.data-data]="getOperatorTransferData(operator, getDomIdByOperator(operator)) | json"
+          [matTooltip]="operator.description"
           (dragstart)="onDragStart($event, operator)"
           (click)="onOperatorItemClick($event, operator)"
           draggable="true">
@@ -36,11 +39,12 @@
     <div class="column">
       <div class="other-badges-general-container">
         <div class="other-badge-container" 
-          [id]="'xor-operator-' + xorOperator.id"
+          [id]="getDomIdByOperator(xorOperator, 'xor-operator')"
           [attr.data-type]="xorOperator.type"
+          [attr.data-data]="getOperatorTransferData(xorOperator, getDomIdByOperator(xorOperator, 'xor-operator')) | json"
           [matTooltip]="xorOperator.tooltip"
-          (dragstart)="onDragStart($event, xorOperator)"
-          (click)="onOperatorItemClick($event, xorOperator)"
+          (dragstart)="onDragStart($event, xorOperator, 'xor-operator')"
+          (click)="onOperatorItemClick($event, xorOperator, 'xor-operator')"
           draggable="true">
           <span 
             class="badge no-selectable" 
@@ -50,11 +54,12 @@
         </div>
         <div 
           class="other-badge-container active param numeric-param editable-input" 
-          [id]="'number-operator-' + numberOperator.id"
+          [id]="getDomIdByOperator(numberOperator, 'number-operator')"
           [attr.data-type]="numberOperator.type"
+          [attr.data-data]="getOperatorTransferData(numberOperator, getDomIdByOperator(numberOperator, 'number-operator')) | json"
           [matTooltip]="numberOperator.tooltip"
-          (dragstart)="onDragStart($event, numberOperator)"
-          (click)="onOperatorItemClick($event, numberOperator)"
+          (dragstart)="onDragStart($event, numberOperator, 'number-operator')"
+          (click)="onOperatorItemClick($event, numberOperator, 'number-operator')"
           draggable="true">
           <span 
             class="badge no-selectable"
@@ -83,6 +88,7 @@
               }"
               [id]="'more-operators-' + (operator.id ? operator.id : operator.valueid)"
               [attr.data-type]="(!isFormulaOperator(operator) ? operator.type : getOperatorDefaultType())"
+              [attr.data-data]="getOperatorTransferData(operator, 'more-operators-' + (operator.id ? operator.id : operator.valueid)) | json"
               [value]="operator"
               [matTooltip]="operator.tooltip"
               draggable="true">

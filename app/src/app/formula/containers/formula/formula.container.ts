@@ -9,6 +9,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
 import {componentDestroyed} from '@w11k/ngx-componentdestroyed';
 import { Location } from '@angular/common';
+import { FormulaTerm } from 'src/app/core/models/formula-term.model';
 
 @Component({
   selector: 'app-formula',
@@ -19,11 +20,90 @@ export class FormulaContainer implements OnInit, OnDestroy {
 
   public form: FormGroup;
   public currentFormula: Formula;
+  public oldFormulaName: string;
   public isItemPickerExpanded: boolean = true;
   public params: FormArray;
   public isNew: boolean = false;
   public isEditable: boolean = true;
   public formulas: Formula[];
+  public typesOptions = [
+    {
+      name: "Numérico",
+      value: 'number'
+    },
+    {
+      name: "Booleano",
+      value: 'boolean'
+    }
+  ];
+
+  public formulaResultExample =
+  {
+    nodeId: 'formula-term-math-basic-operator-1',
+    payload: {
+      nodeId: 'math-basic-operator-1',
+      payload: { id: 1, operationName: 0, type: 0, symbol: '+', mustRemoveFromSource: false, category: 0, hasChildren: true }
+    },
+    children: [
+      {
+        nodeId: '23',
+        payload: {
+          nodeId: 'math-basic-operator-1',
+          payload: {
+            id: 1,
+            operationName: 0,
+            type: 0,
+            symbol: '+',
+            mustRemoveFromSource: false,
+            category: 0,
+            hasChildren: true
+          }
+        },
+        children: [
+          {
+            nodeId: 'child-param-4',
+            payload: {
+              nodeId: 'child-param-4',
+              payload: '11',
+              children: null
+            },
+            children: []
+          },
+          {
+            nodeId: 'child-param-6',
+            payload: {
+              nodeId: 'child-param-6',
+              payload: '12',
+              children: null
+            },
+            children: []
+          }
+        ]
+      },
+      {
+        nodeId: '24',
+        payload: {
+          nodeId: 'math-basic-operator-1',
+          payload: { id: 1, operationName: 0, type: 0, symbol: '+', mustRemoveFromSource: false, category: 0, hasChildren: true }
+        },
+        children: [
+          {
+            nodeId: 'child-param-12',
+            payload: {
+              nodeId: 'child-param-12',
+              payload: '21',
+              children: null
+            }, children: []
+          },
+          {
+            nodeId: 'child-param-14',
+            payload: { nodeId: 'child-param-14', payload: '22', children: null },
+            children: []
+          }
+        ]
+      }
+    ]
+  };
 
   constructor(
     private formBuilder: FormBuilder,
@@ -42,7 +122,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
       pluck('name')).subscribe(name => {
         if (!name) {
           this.isNew = true;
-          this.currentFormula = null;
+          this.currentFormula = this.form.value;
 
           return this.buildEmptyForm();
         }
@@ -57,12 +137,17 @@ export class FormulaContainer implements OnInit, OnDestroy {
 
   public async setCurrentFormula(name: string) {
     this.currentFormula = await this.formulaService.find(name);
+    this.oldFormulaName = this.currentFormula.name;
+
+    console.log(this.currentFormula);
 
     if (!this.currentFormula) {
       return this.showNoDataDialog();
     }
 
     this.isEditable = this.formulaService.isEditable(this.currentFormula);
+
+    // TODO: Set actual formulaResult.
 
     this.buildPreLoadedForm();
   }
@@ -74,11 +159,19 @@ export class FormulaContainer implements OnInit, OnDestroy {
       origin: ['custom'],
       type: ['generic'],
       scope: ['private'],
-      params: this.formBuilder.array([ this.createFormulaParam() ]),
+      params: this.formBuilder.array([]),
       result: ['number', Validators.required],
       value: {
-        valueinvoke: null
-      }
+          ID: 0,
+          name: "",
+          valuenumber: 0,
+          valuestring: "",
+          Valueboolean: false,
+          valueinvoke: null,
+          valueinvokeid: null,
+          arginvokeid: 0
+      },
+      formulaResult: []
     });
   }
 
@@ -108,7 +201,8 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public buildPreLoadedForm() {
     this.form = this.formBuilder.group({
       ...this.currentFormula,
-      params: this.formBuilder.array([])
+      params: this.formBuilder.array([]),
+      formulaResult: []
     });
 
     this.updateFormulaParams();
@@ -117,7 +211,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public createFormulaParam(formulaParam?: FormulaParam) {
     if (!formulaParam) {
       return this.formBuilder.group({
-        name: 'val1',
+        name: '',
         type: 'number'
       });
     }
@@ -138,6 +232,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
   }
 
   public async save() {
+    console.log("Current Formula: ", this.currentFormula)
     if (this.isNew) {
       return this.createFormula();
     }
@@ -152,7 +247,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
   }
 
   public async updateFormula() {
-    await this.formulaService.update(this.form.value.name, this.form.value);
+    await this.formulaService.update(this.oldFormulaName, this.form.value);
 
     return this.goToFormulasList();
   }
@@ -172,7 +267,20 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public onAddInputParamClick(event) {
     event.preventDefault();
 
-    this.formParams.push(this.createFormulaParam());
+    const num = this.currentFormula.params.length+1;
+    let param = {
+      ID: 0,
+      CreatedAt: null,
+      UpdatedAt: null,
+      DeletedAt: null,
+      name: 'val'+num,
+      type: 'number'
+    };
+
+    this.currentFormula.params.push(param);
+    this.currentFormula = Object.assign({}, this.currentFormula)
+    this.formParams.push(this.createFormulaParam(param));
+
   }
 
   public onDeleteInputParam(event, rowIndex: number) {
@@ -183,5 +291,12 @@ export class FormulaContainer implements OnInit, OnDestroy {
 
   public isFormulaParamAvailable(param: FormControl): boolean {
     return !param.value.DeletedAt;
+  }
+
+  public updateFormulaResult(formulaResult: FormulaTerm) {
+    this.form.patchValue({ formulaResult });
+    console.log(this.form.value);
+    // console.log(JSON.stringify(this.form.value)); //SUM(SUM(11,12),SUM(21,22))
+    // console.log('formulaResult: ', JSON.stringify(this.form.value.formulaResult));
   }
 }

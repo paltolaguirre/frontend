@@ -1,3 +1,4 @@
+import { FormulaFixtures } from './../../fixtures/formulas.fixtures';
 import { Formula } from 'src/app/core/models/formula.model';
 import { Observable, of } from 'rxjs';
 import { ApiHttpServiceMock } from './../../mocks/api-http.service.mock';
@@ -23,6 +24,8 @@ describe('FormulaService', () => {
     value: 1,
     valueid: 1
   };
+
+  const formulas = FormulaFixtures.getAll();
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -100,4 +103,6 @@ describe('FormulaService', () => {
       expect(service.isEditable(fakeFormula)).toBeTruthy();
     });
   });
+
+
 });

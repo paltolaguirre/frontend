@@ -8,12 +8,13 @@ import { FormulaCategoryItemTypes } from './../../../core/enums/formula-category
 import { FormulaCategoryItem } from './../../../core/models/formula-category-item.model';
 import { FormulaService } from './../../../core/services/formula/formula.service';
 import { FormulaCategory } from './../../../core/models/formula-category.model';
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-formula-item-picker',
   templateUrl: './formula-item-picker.component.html',
-  styleUrls: ['./formula-item-picker.component.scss']
+  styleUrls: ['./formula-item-picker.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class FormulaItemPickerComponent implements OnInit {
   @Input()
@@ -49,7 +50,7 @@ export class FormulaItemPickerComponent implements OnInit {
     this.fetchFormulas();
     this.fetchConcepts();
   }
-
+  
   public setFormulaCategories() {
     this.categories = this.formulaService.getFormulaCategories();
   }
@@ -120,6 +121,13 @@ export class FormulaItemPickerComponent implements OnInit {
     this.formulaService.emitFormulaItemClick(data);
   }
 
+  public getFormulaTransferData(formula: Formula, nodeId: string): FormulaTransferData {
+    return {
+      nodeId,
+      payload: formula
+    };
+  }
+
   public getOperatorDefaultType() {
     return MathOperatorTypes.Numeric;
   }
@@ -145,5 +153,27 @@ export class FormulaItemPickerComponent implements OnInit {
 
       return sanitizedItemName.includes(sanitizedSearchInput);
     });
+  }
+
+  public getFormulaParam(param) {
+    const formula = {
+      name: "GetParamValue",
+      origin: "primitive",
+      type: "internal",
+      scope: "public",
+      result: "number",
+      params: [
+        {
+          ID: 0,
+          name: "paramName",
+          valuenumber: 0,
+          valuestring: "v1",
+          Valueboolean: false,
+          valueinvoke: null
+        }
+      ]
+    };
+
+    return formula;
   }
 }
