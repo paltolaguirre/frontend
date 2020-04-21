@@ -94,7 +94,7 @@ export class FormulaListContainer implements OnInit, AfterViewInit, OnDestroy {
         if (clonedFormula) {
           await this.formulaService.create(clonedFormula);
 
-          this.formulaService.initFormulasStore();
+          this.formulaService.updateFormulasStore();
         }
     });
   }

@@ -29,8 +29,6 @@ export class OperatorsToolbarComponent implements OnInit {
 
   ngOnInit() {
     this.fetchFormulas();
-    this.basicMathOperators = this.operatorsService.getBasicMathOperators();
-    this.logicalOperators = this.operatorsService.getLogicalOperators();
     this.xorOperator = this.operatorsService.getXOROperator();
     this.numberOperator = this.operatorsService.getNumberOperator();
   }
@@ -45,18 +43,15 @@ export class OperatorsToolbarComponent implements OnInit {
         FormulaTypes.OPERATOR
       );
 
-      const basicMathOperators = this.formulaService.extractBasicMathOperators(formulaOperators);
-      this.basicMathOperators = basicMathOperators;
-      
-      const logicalOperators = this.formulaService.extractLogicalOperators(formulaOperators);
-      this.logicalOperators = logicalOperators;
+      this.basicMathOperators = this.formulaService.extractBasicMathOperators(formulaOperators);
+      this.logicalOperators = this.formulaService.extractLogicalOperators(formulaOperators);
 
       const itemsToRemove = [
-        ...basicMathOperators,
-        ...logicalOperators
+        ...this.basicMathOperators,
+        ...this.logicalOperators
       ];
       itemsToRemove.forEach(item => {
-        formulaOperators.splice(formulaOperators.findIndex(e => e.name === item.name),1);
+        formulaOperators.splice(formulaOperators.findIndex(e => e.name === item.name), 1);
       });
 
       this.moreOperators = [
@@ -66,7 +61,7 @@ export class OperatorsToolbarComponent implements OnInit {
   }
 
   private setSymbols(formulas: Formula[]) {
-    formulas.forEach( formula => {
+    formulas.forEach(formula => {
       switch (formula.name) {
         case "Sum":
           formula.symbol = "+";

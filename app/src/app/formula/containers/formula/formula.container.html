@@ -27,6 +27,7 @@
               <div class="column is-5">
                 <mat-form-field class="width-100">
                   <input [appDisableControl]="!isEditable" matInput type="text" formControlName="name" placeholder="Nombre" cdkFocusInitial autocomplete="off">
+                  <mat-error *ngIf="form.get('name').invalid">El campo es obligatorio</mat-error>
                 </mat-form-field>
               </div>
             </div>
@@ -34,6 +35,7 @@
               <div class="column is-9">
                 <mat-form-field class="width-100">
                   <input [appDisableControl]="!isEditable" matInput type="text" formControlName="description" placeholder="Descripción" autocomplete="off">
+                  <mat-error *ngIf="form.get('description').invalid">El campo es obligatorio</mat-error>
                 </mat-form-field>
               </div>
             </div>
