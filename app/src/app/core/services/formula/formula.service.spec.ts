@@ -108,6 +108,15 @@ describe('FormulaService', () => {
 
       expect(getSpy).toHaveBeenCalledWith(`${service.BASE_URL}/formulas/${fakeFormula.name}`, fakeFormula);
     });
+
+    it('should update the store', async () => {
+      spyOn(api, 'put').and.returnValue(of(null));
+      const updateFormulasStoreSpy = spyOn(service, 'updateFormulasStore').and.returnValue(null);
+
+      await service.update(fakeFormula.name, fakeFormula);
+
+      expect(updateFormulasStoreSpy).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe('isEditable', () => {
