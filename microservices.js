@@ -35,11 +35,11 @@ for (let index = 0; index < myArgs.length; index++) {
             path = "~/go/src/github.com/xubiosueldos/informes";
             runService(serviceName, path);
             break;
-	case 'siradig':
-	    path = "~/go/src/github.com/xubiosueldos/siradig";
-	    runService(serviceName, path);
-	    break;
-	case 'formulas':
+	    case 'siradig':
+            path = "~/go/src/github.com/xubiosueldos/siradig";
+            runService(serviceName, path);
+            break;
+	    case 'formulas':
             path = "~/go/src/git-codecommit.us-east-1.amazonaws.com/v1/repos/sueldos-formula";
             runService(serviceName, path);
             break;
