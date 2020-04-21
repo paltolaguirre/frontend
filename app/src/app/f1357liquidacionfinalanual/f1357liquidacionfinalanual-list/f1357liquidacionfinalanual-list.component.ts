@@ -23,6 +23,7 @@ import { EmpresaService } from 'src/app/empresa/empresa.service';
 export class F1357liquidacionfinalanualListComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['Legajo', 'Remuneraciones', 'Deducciones Generales', 'Deducciones Personales', 'Impuesto Determinado'];
   dataSource: MatTableDataSource<F1357liquidacionfinalanual> = new MatTableDataSource<F1357liquidacionfinalanual>();
+  public defaultDate$: Observable<Date>;
 
   tipopresentacion: any;
   anio: any;
