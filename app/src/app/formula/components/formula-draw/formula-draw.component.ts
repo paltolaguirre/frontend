@@ -103,7 +103,7 @@ export class FormulaDrawComponent implements OnInit {
           name: param.name,
           type: param.type,
           valuenumber: 0,
-          valuestring: "",
+          valuestring: param.valuestring == undefined ? "" : param.valuestring,
           Valueboolean: false,
           valueinvoke: null
       };

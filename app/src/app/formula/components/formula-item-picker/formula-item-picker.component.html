@@ -119,7 +119,7 @@
                   [attr.data-type]="getOperatorDefaultType()"
                   [attr.data-data]="getFormulaTransferData(param, 'param-' + index + 1) | json"
                   draggable="true"
-                  (dragstart)="onDragStart($event, param)"
+                  (dragstart)="onDragStart($event, getFormulaParam(param))"
                   (click)="onFormulaItemClick($event, param)"
                   [matTooltip]="null"
                   matTooltipPosition="above"

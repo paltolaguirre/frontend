@@ -154,4 +154,26 @@ export class FormulaItemPickerComponent implements OnInit {
       return sanitizedItemName.includes(sanitizedSearchInput);
     });
   }
+
+  public getFormulaParam(param) {
+    const formula = {
+      name: "GetParamValue",
+      origin: "primitive",
+      type: "internal",
+      scope: "public",
+      result: "number",
+      params: [
+        {
+          ID: 0,
+          name: "paramName",
+          valuenumber: 0,
+          valuestring: "v1",
+          Valueboolean: false,
+          valueinvoke: null
+        }
+      ]
+    };
+
+    return formula;
+  }
 }
