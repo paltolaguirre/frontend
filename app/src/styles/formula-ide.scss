@@ -3,9 +3,9 @@
 .draggable-space-container {
   .param {
     margin: 5px;
-    padding: 10px;
+    padding: 2px 10px;
     width: fit-content;
-    border-radius: 40px 40px 40px 40px;
+    border-radius: 25px 25px 25px 25px;
     position:relative;
 
     display: flex;
@@ -18,7 +18,7 @@
     top: -4px;
     right: 9px;
     background-color: $GRAY_REGULAR !important;
-    padding: 0px 6px;
+    padding: 2px 3px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -27,6 +27,8 @@
 
     .remove-icon {
       background: transparent !important;
+      font-size: 10px;
+      color: red;
     }
   }
   
@@ -36,7 +38,7 @@
   }
 
   .inputedit {
-  
+    width: 3rem;
     position: absolute;
     top: 30px;
     left: -20px;
@@ -44,7 +46,7 @@
     z-index: 100;
   }
   
-  .boolean {
+  .boolean-param {
     border-left: 2px solid red;
     border-right: 2px solid red;
   }
@@ -73,7 +75,10 @@
     cursor: auto;
   }
   
-  
+  .hide {
+    display: none;
+  }
+
   #main2{
     border: 5px solid black;
     width: 800px;
