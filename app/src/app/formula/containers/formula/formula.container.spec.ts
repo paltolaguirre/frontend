@@ -1,3 +1,4 @@
+import { FormulaDrawComponent } from './../../components/formula-draw/formula-draw.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormulaDropSpaceComponent } from './../../components/formula-drop-space/formula-drop-space.component';
 import { OperatorsToolbarComponent } from './../../components/operators-toolbar/operators-toolbar.component';
@@ -38,7 +39,13 @@ describe('FormulaContainer', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FormulaContainer, FormulaItemPickerComponent, OperatorsToolbarComponent, FormulaDropSpaceComponent ],
+      declarations: [
+        FormulaContainer,
+        FormulaItemPickerComponent,
+        OperatorsToolbarComponent,
+        FormulaDropSpaceComponent,
+        FormulaDrawComponent
+      ],
       imports: [
         MaterialModule,
         ReactiveFormsModule,
@@ -52,7 +59,7 @@ describe('FormulaContainer', () => {
         MatDialog
       ]
     })
-    .compileComponents();
+      .compileComponents();
 
     formulaService = TestBed.get(FormulaService);
     dialog = TestBed.get(MatDialog);
@@ -70,8 +77,6 @@ describe('FormulaContainer', () => {
 
   describe('setCurrentFormula', () => {
     it('should set the current formula by its name', async () => {
-      expect(component.currentFormula).toBeNull();
-
       const findSpy = spyOn(formulaService, 'find').and.returnValue(fakeFormulaItem);
 
       await component.setCurrentFormula('Formula 1');

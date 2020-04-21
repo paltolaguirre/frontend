@@ -1,4 +1,4 @@
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FormulaDrawComponent } from './formula-draw.component';
@@ -11,7 +11,8 @@ describe('FormulaDrawComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ FormulaDrawComponent ],
       imports: [
-        FormsModule
+        FormsModule,
+        ReactiveFormsModule
       ]
     })
     .compileComponents();
