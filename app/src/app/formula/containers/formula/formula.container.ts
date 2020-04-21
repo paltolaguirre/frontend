@@ -233,6 +233,9 @@ export class FormulaContainer implements OnInit, OnDestroy {
 
   public async save() {
     console.log("Current Formula: ", this.currentFormula)
+
+    // TODO: validate if the form is valid.
+
     if (this.isNew) {
       return this.createFormula();
     }
