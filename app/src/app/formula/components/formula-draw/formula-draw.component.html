@@ -34,19 +34,19 @@
             </div>
         </div>
         <div *ngSwitchCase="'internal'" [ngSwitch]="formulaValue.valueinvoke.functionname">
-            <div *ngSwitchCase="'GetParamValue'" class="param numeric-param no-highlight" draggable="true" (dragstart)="onDrag($event, formulaValue)" (dragend)="onDragEnd($event, formulaValue)" (mouseover)="onOverInput($event)" (mouseout)="onOutInput($event)">
+            <div *ngSwitchCase="'GetParamValue'" class="param numeric-param no-highlight" draggable="true" (drop)="onDrop($event, formulaValue)" (dragover)="onDragOver($event)" (dragstart)="onDrag($event, formulaValue)" (dragend)="onDragEnd($event, formulaValue)" (mouseover)="onOverInput($event)" (mouseout)="onOutInput($event)">
                 {{formulaValue.valueinvoke.args[0].valuestring}}
                 <span class="remove-badge-container no-selectable hide" draggable="false" (click)="onClickRemove(formulaValue)"><i class="remove-icon no-selectable fas fa-trash-alt highligthed"></i></span>
             </div>
         </div>
         <div *ngSwitchCase="'helper'">
-            <div class="param numeric-param no-highlight" draggable="true" (dragstart)="onDrag($event, formulaValue)" (dragend)="onDragEnd($event, formulaValue)" (mouseover)="onOverInput($event)" (mouseout)="onOutInput($event)">
+            <div class="param numeric-param no-highlight" draggable="true" (drop)="onDrop($event, formulaValue)" (dragover)="onDragOver($event)" (dragstart)="onDrag($event, formulaValue)" (dragend)="onDragEnd($event, formulaValue)" (mouseover)="onOverInput($event)" (mouseout)="onOutInput($event)">
                 {{formulaValue.valueinvoke.functionname}}
                 <span class="remove-badge-container no-selectable hide" draggable="false" (click)="onClickRemove(formulaValue)"><i class="remove-icon no-selectable fas fa-trash-alt highligthed"></i></span>
             </div>
         </div>
         <div *ngSwitchCase="'generic'">
-            <div class="param numeric-param no-highlight" draggable="true" (dragstart)="onDrag($event, formulaValue)" (dragend)="onDragEnd($event, formulaValue)" (mouseover)="onOverInput($event)" (mouseout)="onOutInput($event)">
+            <div class="param numeric-param no-highlight" draggable="true" (drop)="onDrop($event, formulaValue)" (dragover)="onDragOver($event)" (dragstart)="onDrag($event, formulaValue)" (dragend)="onDragEnd($event, formulaValue)" (mouseover)="onOverInput($event)" (mouseout)="onOutInput($event)">
                 <span>{{formulaValue.valueinvoke.functionname}}</span>
                 <div *ngFor="let arg of formulaValue.valueinvoke.args;">
                     <app-formula-draw *ngIf="arg.valueinvoke" [formulaValue]="arg"></app-formula-draw>
