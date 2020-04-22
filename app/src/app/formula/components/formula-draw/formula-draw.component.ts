@@ -114,7 +114,9 @@ export class FormulaDrawComponent implements OnInit {
       ID: 0,
       function: {
         name: data.payload.name,
-        type: data.payload.type
+        params: data.payload.params,
+        type: data.payload.type,
+        result: data.payload.result
       },
       functionname: data.payload.name,
       args: args
