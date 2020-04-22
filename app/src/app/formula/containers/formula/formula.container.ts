@@ -28,82 +28,14 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public formulas: Formula[];
   public typesOptions = [
     {
-      name: "Numérico",
+      name: 'Numérico',
       value: 'number'
     },
     {
-      name: "Booleano",
+      name: 'Booleano',
       value: 'boolean'
     }
   ];
-
-  public formulaResultExample =
-  {
-    nodeId: 'formula-term-math-basic-operator-1',
-    payload: {
-      nodeId: 'math-basic-operator-1',
-      payload: { id: 1, operationName: 0, type: 0, symbol: '+', mustRemoveFromSource: false, category: 0, hasChildren: true }
-    },
-    children: [
-      {
-        nodeId: '23',
-        payload: {
-          nodeId: 'math-basic-operator-1',
-          payload: {
-            id: 1,
-            operationName: 0,
-            type: 0,
-            symbol: '+',
-            mustRemoveFromSource: false,
-            category: 0,
-            hasChildren: true
-          }
-        },
-        children: [
-          {
-            nodeId: 'child-param-4',
-            payload: {
-              nodeId: 'child-param-4',
-              payload: '11',
-              children: null
-            },
-            children: []
-          },
-          {
-            nodeId: 'child-param-6',
-            payload: {
-              nodeId: 'child-param-6',
-              payload: '12',
-              children: null
-            },
-            children: []
-          }
-        ]
-      },
-      {
-        nodeId: '24',
-        payload: {
-          nodeId: 'math-basic-operator-1',
-          payload: { id: 1, operationName: 0, type: 0, symbol: '+', mustRemoveFromSource: false, category: 0, hasChildren: true }
-        },
-        children: [
-          {
-            nodeId: 'child-param-12',
-            payload: {
-              nodeId: 'child-param-12',
-              payload: '21',
-              children: null
-            }, children: []
-          },
-          {
-            nodeId: 'child-param-14',
-            payload: { nodeId: 'child-param-14', payload: '22', children: null },
-            children: []
-          }
-        ]
-      }
-    ]
-  };
 
   constructor(
     private formBuilder: FormBuilder,
@@ -161,9 +93,9 @@ export class FormulaContainer implements OnInit, OnDestroy {
       result: ['number', Validators.required],
       value: {
           ID: 0,
-          name: "",
+          name: '',
           valuenumber: 0,
-          valuestring: "",
+          valuestring: '',
           Valueboolean: false,
           valueinvoke: null,
           valueinvokeid: null,
@@ -230,9 +162,10 @@ export class FormulaContainer implements OnInit, OnDestroy {
   }
 
   public async save() {
-    console.log("Current Formula: ", this.currentFormula)
-
-    // TODO: validate if the form is valid.
+    if (this.form.invalid) {
+      // TODO: show message.
+      return null;
+    }
 
     if (this.isNew) {
       return this.createFormula();
@@ -268,20 +201,19 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public onAddInputParamClick(event) {
     event.preventDefault();
 
-    const num = this.currentFormula.params.length+1;
-    let param = {
+    const num = this.currentFormula.params.length + 1;
+    const param = {
       ID: 0,
       CreatedAt: null,
       UpdatedAt: null,
       DeletedAt: null,
-      name: 'val'+num,
+      name: 'val' + num,
       type: 'number'
     };
 
     this.currentFormula.params.push(param);
-    this.currentFormula = Object.assign({}, this.currentFormula)
-    this.formParams.push(this.createFormulaParam(param));
 
+    this.formParams.push(this.createFormulaParam(param));
   }
 
   public onDeleteInputParam(event, rowIndex: number) {
