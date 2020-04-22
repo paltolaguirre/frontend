@@ -12,6 +12,7 @@ export interface DataPayload {
 })
 export class FormulaDrawComponent implements OnInit {
   @Input() formulaValue: Formula;
+  @Input() formulaParams: any;
 
   private formula = {
     result: "number"
@@ -83,7 +84,7 @@ export class FormulaDrawComponent implements OnInit {
     event.cancelBubble = true;
   }
 
-  onDrop(event, currentFormulaValue) {
+  onDrop(event, currentFormulaValue, parentFormulaParam={type: ''}) {
     event.preventDefault();
 
     const data: DataPayload = JSON.parse(event.dataTransfer.getData('text'));
@@ -93,6 +94,27 @@ export class FormulaDrawComponent implements OnInit {
     if(data.payload === undefined) {
       currentFormulaValue.valueinvoke = data;
       currentFormulaValue.valuenumber = 0;
+      return;
+    }
+
+    if(/*data.payload.result != undefined && currentFormulaValue.type != undefined && */data.payload.result != currentFormulaValue.type && data.payload.result != parentFormulaParam.type) {
+      let message;
+      switch (data.payload.result) {
+        case 'number':
+          message = "Se intenta usar tipo de dato NUMERICO donde se espera BOOLEANO.";
+          break;
+        case 'boolean':
+          message = "Se intenta usar tipo de dato BOOLEANO donde se espera NUMERICO.";
+          break;
+        default:
+          message = "Tipos de datos incompatibles.";
+          break;
+      }
+      
+      const warningBox = document.getElementById('warningBox');
+      warningBox.innerHTML = `<p>${message}</p>`;
+      warningBox.style.display = 'block';
+      setTimeout(() => warningBox.style.display = 'none', 3*1000);
       return;
     }
 

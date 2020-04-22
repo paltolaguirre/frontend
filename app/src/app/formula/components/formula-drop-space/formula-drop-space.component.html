@@ -2,8 +2,7 @@
   id="main"
   class="draggable-space-container bg-gray"
   [ngClass]="{ 'expanded': !isItemPickerExpanded }">
-  <app-formula-draw *ngIf="formulaValue && formulaValue !== undefined" [formulaValue]="formulaValue.value"></app-formula-draw>
+  <app-formula-draw *ngIf="formulaValue && formulaValue !== undefined" [formulaValue]="formulaValue.value" [formulaParams]="formulaValue.params"></app-formula-draw>
 </div>
-<div id="auxiliar" style="display:none">
-
+<div id="warningBox" style="display: none;height: 50px;background-color: goldenrod;bottom: 64px;position: relative;text-align: center;color: white;padding: 7px 0px;">
 </div>

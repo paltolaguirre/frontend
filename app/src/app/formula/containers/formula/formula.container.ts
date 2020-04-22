@@ -94,6 +94,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
       value: {
           ID: 0,
           name: '',
+          type: 'number',
           valuenumber: 0,
           valuestring: '',
           Valueboolean: false,
@@ -162,10 +163,9 @@ export class FormulaContainer implements OnInit, OnDestroy {
   }
 
   public async save() {
-    if (this.form.invalid) {
-      // TODO: show message.
-      return null;
-    }
+    this.currentFormula.name = this.form.get('name').value;
+    this.currentFormula.description = this.form.get('description').value;
+    console.log("Current Formula: ", this.currentFormula)
 
     if (this.isNew) {
       return this.createFormula();
@@ -175,13 +175,13 @@ export class FormulaContainer implements OnInit, OnDestroy {
   }
 
   public async createFormula() {
-    await this.formulaService.create(this.form.value);
+    await this.formulaService.create(this.currentFormula);
 
     return this.goToFormulasList();
   }
 
   public async updateFormula() {
-    await this.formulaService.update(this.oldFormulaName, this.form.value);
+    await this.formulaService.update(this.oldFormulaName, this.currentFormula);
 
     return this.goToFormulasList();
   }
