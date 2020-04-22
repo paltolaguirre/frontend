@@ -191,7 +191,7 @@
                 <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
                   <mat-icon>delete_forever</mat-icon>
                 </button>
-                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.mes" placeholder="Fecha" type="text" autocomplete="off"></mat-form-field>
+                <mat-form-field class="standard-input"><input type="date" (ngModelChange)="item.mes=$event" matInput [ngModel]="item.mes | date: 'yyyy-MM-dd'" placeholder="Fecha"  autocomplete="off"></mat-form-field>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
               </div>
@@ -225,7 +225,7 @@
                 <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
                   <mat-icon>delete_forever</mat-icon>
                 </button>
-                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.mes" placeholder="Fecha" type="text" autocomplete="off"></mat-form-field>
+                <mat-form-field class="standard-input"><input type="date" (ngModelChange)="item.mes=$event" matInput [ngModel]="item.mes | date: 'yyyy-MM-dd'" placeholder="Fecha" autocomplete="off"></mat-form-field>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.comprobante" placeholder="Comprobante" type="text" autocomplete="off"></mat-form-field>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
               </div>
@@ -234,6 +234,7 @@
         </div>
         <button style="margin-left: 17px;" mat-raised-button (click)="onClickNewDeducciondesgravacionsiradig(data, 'GASTOS_DE_SEPELIO', -9)">Agregar Item</button>
         
+        <!-- Este campo esta duplicado. Segun obj: https://xubiosoftware.atlassian.net/browse/SVC-163
         <h2>Gastos médicos y paramédicos</h2>
         <div class="children-container">
           <table style="width:100%">
@@ -249,7 +250,7 @@
             </tr>
           </table>
         </div>
-        <button style="margin-left: 17px;" mat-raised-button (click)="onClickNewDeducciondesgravacionsiradig(data, 'GASTOS_MEDICOS_Y_PARAMEDICOS', -10)">Agregar Item</button>
+        <button style="margin-left: 17px;" mat-raised-button (click)="onClickNewDeducciondesgravacionsiradig(data, 'GASTOS_MEDICOS_Y_PARAMEDICOS', -10)">Agregar Item</button>-->
         
         <h2>Gastos de adquisición de indumentaria y equipamiento para uso exclusivo en el lugar de trabajo</h2>
         <div class="children-container">
@@ -259,7 +260,7 @@
                 <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
                   <mat-icon>delete_forever</mat-icon>
                 </button>
-                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.mes" placeholder="Fecha" type="text" autocomplete="off"></mat-form-field>
+                <mat-form-field class="standard-input"><input type="date" (ngModelChange)="item.mes=$event" matInput [ngModel]="item.mes | date: 'yyyy-MM-dd'" placeholder="Fecha" autocomplete="off"></mat-form-field>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.comprobante" placeholder="Comprobante" type="text" autocomplete="off"></mat-form-field>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
               </div>
@@ -313,7 +314,7 @@
                 </button>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.cuit" placeholder="CUIT" type="text" autocomplete="off"></mat-form-field>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.empresa" placeholder="Empresa" type="text" autocomplete="off"></mat-form-field>
-                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.mes" placeholder="Fecha aporte" type="text" autocomplete="off"></mat-form-field>
+                <mat-form-field class="standard-input"><input type="date" (ngModelChange)="item.mes=$event" matInput [ngModel]="item.mes | date: 'yyyy-MM-dd'" placeholder="Fecha aporte" autocomplete="off"></mat-form-field>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.montocapitalaporte" placeholder="Monto capital aporte" type="number" autocomplete="off"></mat-form-field>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.montofondoriesgoaporte" placeholder="Monto fondo de riesgo aporte" type="number" autocomplete="off"></mat-form-field>
               </div>
@@ -622,7 +623,7 @@
     </div>
 
     <div mat-dialog-actions class="actions">
-      <button mat-raised-button color="primary" mat-button (click)="onClickSave(data)">Guardar</button>
+      <button mat-raised-button color="primary" mat-button (click)="onClickSave(data)" [disabled]="estaGuardandose">Guardar</button>
       <button mat-raised-button mat-button color="secondary" (click)="onClickAbort()">Cerrar</button>
       <button mat-raised-button *ngIf=isNew(data) color="secondary" mat-button
         (click)="onClickPreview()">Imprimir</button>

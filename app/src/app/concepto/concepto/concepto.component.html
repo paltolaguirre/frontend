@@ -41,6 +41,10 @@
           <mat-checkbox [disabled]=isDefault(data) color="primary" class="example-margin"  [(ngModel)]="data.esimprimible">Es Imprimible</mat-checkbox>
         </div>
 
+        <div style="margin: 15px 0px;">
+          <mat-checkbox [disabled]=isDefault(data) color="primary" class="example-margin"  [(ngModel)]="data.esremvariable" matTooltip="Tildá esta opción si la remuneración es variable a efectos de los cálculos de la Ley de Contrato de Trabajo">Es Remuneracion Variable</mat-checkbox>
+        </div>
+
       </mat-expansion-panel>
 
       <mat-expansion-panel>
@@ -117,7 +121,7 @@
   </div>
   <div mat-dialog-actions class="actions">
     <button mat-raised-button color="primary" mat-button *ngIf=!isDefault(data)
-      (click)="onClickSave(data)">Guardar</button>
+      (click)="onClickSave(data)" [disabled]="estaGuardandose">Guardar</button>
     <button mat-raised-button mat-button color="secondary" (click)="onClickAbort()">Cerrar</button>
     <button *ngIf=isNew(data) mat-raised-button color="secondary" mat-button
       (click)="printService.printTOPDF()">Imprimir</button>

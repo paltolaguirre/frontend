@@ -28,6 +28,7 @@ export interface Concepto {
     formula?:Formula;
     formulanombre?:string;
     eseditable?: boolean;
+    esremvariable: Boolean;
 }
 
 export interface Tipoconcepto {  

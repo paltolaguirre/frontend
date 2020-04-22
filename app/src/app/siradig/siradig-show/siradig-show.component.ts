@@ -8,6 +8,7 @@ import { SiradigService, ListaItems } from '../siradig.service';
 import { Siradig } from '../siradig.model';
 import { LegajoService } from 'src/app/legajo/legajo.service';
 import { NotificationService } from 'src/app/handler-error/notification.service';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-siradig-show',
@@ -26,6 +27,7 @@ export class SiradigShowComponent implements OnInit {
   currentDate: Date;
   currentYear;
   minDate: Date;
+  public estaGuardandose = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -74,6 +76,7 @@ export class SiradigShowComponent implements OnInit {
   }
 
   private gotoGrilla() {
+    this.estaGuardandose = true;
     this.router.navigate(['/siradig']);
   }
 
@@ -100,6 +103,8 @@ export class SiradigShowComponent implements OnInit {
 
   async onClickSave(data: Siradig): Promise<Siradig> {
     //if(this.faltanRequeridos()) return null;
+    if(this.estaGuardandose) return null;
+    this.estaGuardandose = true;
 
     // Se elimina
     if(this.conyugesiradig && this.conyugesiradig.ID && !this.conyugesiradig.aplica) {
@@ -125,15 +130,29 @@ export class SiradigShowComponent implements OnInit {
       });
     }
 
+    if(data.deducciondesgravacionsiradig) {
+      data.deducciondesgravacionsiradig.forEach(function(element) {
+        if(element.mes &&
+          (element.siradigtipogrilla.codigo == 'DONACIONES' 
+          || element.siradigtipogrilla.codigo == 'GASTOS_DE_SEPELIO' 
+          || element.siradigtipogrilla.codigo == 'GASTOS_ADQUISICION_INDUMENTARIA_Y_EQUIPAMIENTO_PARA_USO_EXCLUSIVO_EN_EL_LUGAR_DE_TRABAJO' 
+          || element.siradigtipogrilla.codigo == 'APORTES_A_SOCIEDADES_DE_GARANTIA_RECIPROCA')
+        ) {
+          element.mes = formatDate(element.mes, "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
+        }
+      });
+    }
+
     let item: Siradig;
+    let that = this;
 
     if (this.id) {
       console.log("Updated Siradig");
-      item = await this.siradigService.putSiradig(data);
+      item = await this.siradigService.putSiradig(data).finally(function(){that.habilitarGuardado();});
       this.gotoGrilla();
     } else {
       console.log("Created Siradig");
-      item = await this.siradigService.postSiradig(data);
+      item = await this.siradigService.postSiradig(data).finally(function(){that.habilitarGuardado();});
       this.gotoGrilla();
     }
 
@@ -142,6 +161,11 @@ export class SiradigShowComponent implements OnInit {
     return item;
   }
 
+
+  habilitarGuardado() {
+    this.estaGuardandose = false
+  }
+  
   private procesarSiradig(siradig: Siradig) {
     this.procesarConyuge(siradig);
     this.procesarHijos(siradig);
