@@ -54,6 +54,8 @@ export class FormulaListContainer implements OnInit, AfterViewInit, OnDestroy {
       this.dataSource.paginator = this.paginator;
       this.paginator._intl.itemsPerPageLabel = 'Items por página';
       this.isLoadingResults = false;
+      // console.log('formulas:', JSON.stringify(formulas));
+      console.log('test');
     });
   }
 

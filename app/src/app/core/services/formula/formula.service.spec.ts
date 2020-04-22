@@ -126,7 +126,7 @@ describe('FormulaService', () => {
 
       expect(service.getFormulaCategories()).toEqual(expectedCategories);
     });
-  })
+  });
 
   describe('isEditable', () => {
     it('should return false if the origin is primitive', () => {
