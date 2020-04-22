@@ -1,3 +1,5 @@
+import { FormsModule } from '@angular/forms';
+import { FormulaDrawComponent } from './../formula-draw/formula-draw.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './../../../material.module';
 import { MatDialog } from '@angular/material/dialog';
@@ -14,10 +16,11 @@ describe('FormulaDropSpaceComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FormulaDropSpaceComponent ],
+      declarations: [ FormulaDropSpaceComponent, FormulaDrawComponent ],
       imports: [
         MaterialModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        FormsModule
       ],
       providers: [
         { provide: FormulaService, useClass: FormulaServiceMock },

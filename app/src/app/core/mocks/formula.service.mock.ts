@@ -1,3 +1,4 @@
+import { FormulaFixtures } from './../fixtures/formulas.fixtures';
 import { EventEmitter } from '@angular/core';
 import { FormulaTransferData } from './../models/formula-transfer-data.model';
 import { BehaviorSubject } from 'rxjs';
@@ -10,20 +11,7 @@ export class FormulaServiceMock {
   public formulasStore$ = this.formulas.asObservable();
   public formulaPickerItemEmitter: EventEmitter<FormulaTransferData> = new EventEmitter();
 
-  fakeFormulaItem: Formula = {
-    name: 'Formula 1',
-    CreatedAt: '',
-    UpdatedAt: '',
-    DeletedAt: '',
-    params: [],
-    description: 'Esta es una formula',
-    origin: '',
-    type: '',
-    scope: '',
-    result: '',
-    value: 1,
-    valueid: 1
-  };
+  fakeFormulaItem: Formula = FormulaFixtures.getAll()[0];
 
   public getFormulaCategories(): FormulaCategory[] {
     return [
@@ -110,6 +98,14 @@ export class FormulaServiceMock {
 
   public isEditable(formula: Formula): boolean {
     return true;
+  }
+
+  public extractBasicMathOperators() {
+    return [];
+  }
+
+  public extractLogicalOperators() {
+    return [];
   }
 
   public extractFormulasByType(formulas: Formula[], type: string): Formula[] {
