@@ -1,5 +1,5 @@
+import { Formula } from './../../../core/models/formula.model';
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
-import { Formula } from 'src/app/core/models/formula.model';
 
 export interface DataPayload {
   payload: Formula;
@@ -11,7 +11,7 @@ export interface DataPayload {
   styleUrls: ['./formula-draw.component.scss']
 })
 export class FormulaDrawComponent implements OnInit {
-  @Input() formulaValue: any;
+  @Input() formulaValue: Formula;
 
   private formula = {
     result: "number"
@@ -114,7 +114,9 @@ export class FormulaDrawComponent implements OnInit {
       ID: 0,
       function: {
         name: data.payload.name,
-        type: data.payload.type
+        params: data.payload.params,
+        type: data.payload.type,
+        result: data.payload.result
       },
       functionname: data.payload.name,
       args: args

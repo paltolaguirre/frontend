@@ -137,14 +137,12 @@ export class FormulaContainer implements OnInit, OnDestroy {
 
   public async setCurrentFormula(name: string) {
     this.currentFormula = await this.formulaService.find(name);
-    this.oldFormulaName = this.currentFormula.name;
-
-    console.log(this.currentFormula);
 
     if (!this.currentFormula) {
       return this.showNoDataDialog();
     }
 
+    this.oldFormulaName = this.currentFormula.name;
     this.isEditable = this.formulaService.isEditable(this.currentFormula);
 
     // TODO: Set actual formulaResult.
@@ -233,6 +231,9 @@ export class FormulaContainer implements OnInit, OnDestroy {
 
   public async save() {
     console.log("Current Formula: ", this.currentFormula)
+
+    // TODO: validate if the form is valid.
+
     if (this.isNew) {
       return this.createFormula();
     }

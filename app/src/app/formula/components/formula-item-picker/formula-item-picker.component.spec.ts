@@ -33,6 +33,7 @@ describe('FormulaItemPickerComponent', () => {
     fakeCategoryItem = {
       id: 1,
       img: 'assets/img/descarga.jpg',
+      imgActive: '',
       title: 'Variables',
       categoryId: 1,
       slug: 'variables'
