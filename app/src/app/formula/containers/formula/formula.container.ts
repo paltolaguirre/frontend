@@ -7,7 +7,7 @@ import { pluck, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
-import {componentDestroyed} from '@w11k/ngx-componentdestroyed';
+import { componentDestroyed } from '@w11k/ngx-componentdestroyed';
 import { Location } from '@angular/common';
 import { FormulaTerm } from 'src/app/core/models/formula-term.model';
 
@@ -61,7 +61,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
 
         this.setCurrentFormula(name);
         this.fetchFormulas();
-    });
+      });
   }
 
   ngOnDestroy() {
@@ -92,14 +92,14 @@ export class FormulaContainer implements OnInit, OnDestroy {
       params: this.formBuilder.array([]),
       result: ['number', Validators.required],
       value: {
-          ID: 0,
-          name: '',
-          valuenumber: 0,
-          valuestring: '',
-          Valueboolean: false,
-          valueinvoke: null,
-          valueinvokeid: null,
-          arginvokeid: 0
+        ID: 0,
+        name: '',
+        valuenumber: 0,
+        valuestring: '',
+        Valueboolean: false,
+        valueinvoke: null,
+        valueinvokeid: null,
+        arginvokeid: 0
       },
       formulaResult: []
     });
@@ -124,8 +124,8 @@ export class FormulaContainer implements OnInit, OnDestroy {
       .pipe(
         takeUntil(componentDestroyed(this))
       ).subscribe(() => {
-      this.location.back();
-    });
+        this.location.back();
+      });
   }
 
   public buildPreLoadedForm() {
@@ -138,17 +138,8 @@ export class FormulaContainer implements OnInit, OnDestroy {
     this.updateFormulaParams();
   }
 
-  public createFormulaParam(formulaParam?: FormulaParam) {
-    if (!formulaParam) {
-      return this.formBuilder.group({
-        name: ['', [Validators.required]],
-        type: 'number'
-      });
-    }
-
-    return this.formBuilder.group({
-      ...formulaParam
-    });
+  public createFormulaParam(formulaParam: FormulaParam) {
+    return this.formBuilder.group({...formulaParam});
   }
 
   public updateFormulaParams() {
@@ -181,7 +172,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
   }
 
   public async updateFormula() {
-    await this.formulaService.update(this.oldFormulaName, this.form.value);
+    await this.formulaService.update(this.oldFormulaName, this.currentFormula);
 
     return this.goToFormulasList();
   }
@@ -202,7 +193,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
     event.preventDefault();
 
     const num = this.currentFormula.params.length + 1;
-    const param = {
+    const param: FormulaParam = {
       ID: 0,
       CreatedAt: null,
       UpdatedAt: null,
@@ -212,6 +203,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
     };
 
     this.currentFormula.params.push(param);
+    this.currentFormula = {...this.currentFormula};
 
     this.formParams.push(this.createFormulaParam(param));
   }
