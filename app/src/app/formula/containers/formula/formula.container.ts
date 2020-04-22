@@ -141,7 +141,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public createFormulaParam(formulaParam?: FormulaParam) {
     if (!formulaParam) {
       return this.formBuilder.group({
-        name: '',
+        name: ['', [Validators.required]],
         type: 'number'
       });
     }
