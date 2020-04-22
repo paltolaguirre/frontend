@@ -31,8 +31,8 @@ const routes: Routes = [
     FormulaContainer,
     FormulaItemPickerComponent,
     OperatorsToolbarComponent,
-    FormulaDropSpaceComponent,
-    FormulaDrawComponent
+    FormulaDrawComponent,
+    FormulaDropSpaceComponent
   ],
   imports: [
     CommonModule,
