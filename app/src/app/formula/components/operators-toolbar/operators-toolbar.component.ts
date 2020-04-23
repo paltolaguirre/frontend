@@ -1,3 +1,4 @@
+import { DataPayload } from './../formula-draw/formula-draw.component';
 import { MathOperatorTypes } from './../../../core/enums/math-operator-types.enum';
 import { FormulaTransferData } from './../../../core/models/formula-transfer-data.model';
 import { OperatorsService } from './../../../core/services/operators/operators.service';
@@ -32,6 +33,10 @@ export class OperatorsToolbarComponent implements OnInit {
     this.fetchFormulas();
     this.xorOperator = this.operatorsService.getXOROperator();
     this.numberOperator = this.operatorsService.getNumberOperator();
+
+    this.operatorsService.operatorDropEmitter.subscribe((operator: DataPayload) => {
+      this.closeMoreOperatorsList();
+    });
   }
 
   public fetchFormulas() {
@@ -127,7 +132,7 @@ export class OperatorsToolbarComponent implements OnInit {
       this.operatorsService.emitOperatorClicked(data);
     }
 
-    setTimeout(() => { this.selectedOperator = null; });
+    this.toogleMoreOperatorsVisibility();
   }
 
   public isFormulaOperator(operator: Operator | Formula): boolean {
@@ -174,5 +179,9 @@ export class OperatorsToolbarComponent implements OnInit {
 
   public toogleMoreOperatorsVisibility() {
     this.isMoreOperatorsListOpened = !this.isMoreOperatorsListOpened;
+  }
+
+  public closeMoreOperatorsList() {
+    this.isMoreOperatorsListOpened = false;
   }
 }

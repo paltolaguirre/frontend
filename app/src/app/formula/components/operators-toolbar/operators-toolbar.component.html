@@ -108,7 +108,7 @@
                 [matTooltip]="operator.description"
                 draggable="true"
                 (dragstart)="onMoreOperatorsDragStart($event, operator, 'more-operators' + (operator.id ? operator.id : operator.valueid))"
-                >
+                (click)="onOperatorSelected(operator)">
                 {{ operator.symbol || operator.name }}
               </li>
           </ul>
