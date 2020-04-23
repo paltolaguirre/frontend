@@ -21,6 +21,7 @@ export class OperatorsToolbarComponent implements OnInit {
   public logicalOperators: any[];
   public xorOperator: any;
   public numberOperator: Operator;
+  public isMoreOperatorsListOpened: boolean;
 
   constructor(
     private formulaService: FormulaService,
@@ -169,5 +170,9 @@ export class OperatorsToolbarComponent implements OnInit {
       nodeId: this.getDomIdByOperator(operator, prefix),
       payload: operator
     };
+  }
+
+  public toogleMoreOperatorsVisibility() {
+    this.isMoreOperatorsListOpened = !this.isMoreOperatorsListOpened;
   }
 }

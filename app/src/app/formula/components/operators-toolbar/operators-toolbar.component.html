@@ -74,7 +74,7 @@
 
     <div class="column">
       <div class="more-operators-general-container">
-        <mat-form-field class="more-operators-field custom-white-field">
+        <!-- <mat-form-field class="more-operators-field custom-white-field">
           <mat-label>Mas operadores +</mat-label>
           <mat-select 
             [(ngModel)]="selectedOperator" 
@@ -95,8 +95,24 @@
               (dragstart)="onMoreOperatorsDragStart($event, operator, 'more-operators' + (operator.id ? operator.id : operator.valueid))">
               {{ operator.symbol || operator.name }}
             </mat-option>
-          </mat-select>
-        </mat-form-field>
+          </mat-select> -->
+
+          <span class="more-operators-button badge no-selectable" (click)="toogleMoreOperatorsVisibility()">Más operadores</span>
+
+          <ul *ngIf="isMoreOperatorsListOpened" class="more-operators-list-container custom-white-field">
+            <li
+              *ngFor="let operator of moreOperators"
+              [id]="'more-operators-' + (operator.id ? operator.id : operator.valueid)"
+              [attr.data-type]="(!isFormulaOperator(operator) ? operator.type : getOperatorDefaultType())"
+              [attr.data-data]="getOperatorTransferData(operator, 'more-operators' + (operator.id ? operator.id : operator.valueid)) | json"
+              [matTooltip]="operator.tooltip"
+              draggable="true"
+              (dragstart)="onMoreOperatorsDragStart($event, operator, 'more-operators' + (operator.id ? operator.id : operator.valueid))"
+              >
+              {{ operator.symbol || operator.name }}
+            </li>
+          </ul>
+        <!-- </mat-form-field> -->
       </div>
     </div>
   </div>

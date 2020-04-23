@@ -99,6 +99,22 @@ div.operators-general-container {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    position: relative;
+
+    .more-operators-button {
+      font-size: 0.6rem;
+      white-space: nowrap;
+      background: #fff;
+      border-radius: 10px;
+      padding: 0 8px;
+      margin: 0 0.2rem;
+      cursor: pointer;
+    }
+
+    ul.more-operators-list-container {
+      position: absolute;
+      top: 100%;
+    }
 
     .more-operators-badge {
       font-size: 0.6rem;
