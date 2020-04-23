@@ -139,6 +139,17 @@ export class OperatorsToolbarComponent implements OnInit {
     event.dataTransfer.setData('text/plain', JSON.stringify(data));
   }
 
+  public onMoreOperatorsDragStart(event, operator: Operator, prefix: string) {
+    const data: FormulaTransferData = {
+      nodeId: prefix,
+      payload: operator
+    };
+
+    event.dataTransfer.setData('text/plain', JSON.stringify(data));
+
+    console.log(data);
+  }
+
   public onOperatorItemClick(event, operator, prefix?: string) {
     const data: FormulaTransferData = this.getOperatorTransferData(operator, prefix);
 
