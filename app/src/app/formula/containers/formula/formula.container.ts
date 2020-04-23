@@ -92,14 +92,15 @@ export class FormulaContainer implements OnInit, OnDestroy {
       params: this.formBuilder.array([]),
       result: ['number', Validators.required],
       value: {
-        ID: 0,
-        name: '',
-        valuenumber: 0,
-        valuestring: '',
-        Valueboolean: false,
-        valueinvoke: null,
-        valueinvokeid: null,
-        arginvokeid: 0
+          ID: 0,
+          name: '',
+          type: 'number',
+          valuenumber: 0,
+          valuestring: '',
+          Valueboolean: false,
+          valueinvoke: null,
+          valueinvokeid: null,
+          arginvokeid: 0
       },
       formulaResult: []
     });
@@ -153,10 +154,9 @@ export class FormulaContainer implements OnInit, OnDestroy {
   }
 
   public async save() {
-    if (this.form.invalid) {
-      // TODO: show message.
-      return null;
-    }
+    this.currentFormula.name = this.form.get('name').value;
+    this.currentFormula.description = this.form.get('description').value;
+    console.log("Current Formula: ", this.currentFormula)
 
     if (this.isNew) {
       return this.createFormula();
@@ -166,7 +166,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
   }
 
   public async createFormula() {
-    await this.formulaService.create(this.form.value);
+    await this.formulaService.create(this.currentFormula);
 
     return this.goToFormulasList();
   }
