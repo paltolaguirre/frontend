@@ -1,7 +1,9 @@
 import { Observable, of } from 'rxjs';
 export class ApiHttpServiceMock {
   public get(endpoint: string): Observable<any> {
-    return of(null);
+    return new Observable((observer) => {
+      observer.complete();
+    });
   }
 
   public post(endpoint: string, body?: any) {

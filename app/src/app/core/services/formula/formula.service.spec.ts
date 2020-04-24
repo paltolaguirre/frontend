@@ -53,6 +53,17 @@ describe('FormulaService', () => {
     });
   });
 
+  describe('getByType', () => {
+    it('should call to the api with the right url', async () => {
+      const apiGetSpy = spyOn(api, 'get').and.callThrough();
+      const fakeType = 'test';
+
+      await service.getByType(fakeType);
+
+      expect(apiGetSpy).toHaveBeenCalledWith(`${service.BASE_URL}/formulas?type=${fakeType}`);
+    });
+  });
+
   describe('delete', () => {
     it('should call delete method from api service', async () => {
       const getSpy = spyOn(api, 'delete').and.returnValue(of(null));
