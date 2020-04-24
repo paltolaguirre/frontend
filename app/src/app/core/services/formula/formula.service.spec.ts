@@ -217,5 +217,13 @@ describe('FormulaService', () => {
 
       expect(service.extractInputParams(formula)).toEqual(expectedParams);
     });
-  })
+  });
+
+  describe('extractStandardFormulas', () => {
+    it('should filter correctly the standard formulas', () => {
+      const fakeFormulaList = FormulaFixtures.getAll();
+
+      expect(service.extractStandardFormulas(fakeFormulaList)).toEqual(FormulaFixtures.getStandardFormulas());
+    });
+  });
 });

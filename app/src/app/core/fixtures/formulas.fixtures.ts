@@ -26,6 +26,28 @@ export class FormulaFixtures {
         valueid: 0
       },
       {
+        name: 'StandardFormula1',
+        type: 'generic',
+        params: [],
+        description: '',
+        origin: '',
+        scope: 'public',
+        result: '',
+        value: '',
+        valueid: 0
+      },
+      {
+        name: 'StandardFormula2',
+        type: 'generic',
+        params: [],
+        description: '',
+        origin: '',
+        scope: 'public',
+        result: '',
+        value: '',
+        valueid: 0
+      },
+      {
         name: 'Sum',
         CreatedAt: '2020-02-26T17:14:38.962588+03:00',
         UpdatedAt: '2020-02-26T17:14:38.962588+03:00',
@@ -792,6 +814,33 @@ export class FormulaFixtures {
         name: 'val2',
         type: 'number',
         functionname: 'Sum'
+      }
+    ];
+  }
+
+  static getStandardFormulas() {
+    return [
+      {
+        name: 'StandardFormula1',
+        type: 'generic',
+        params: [],
+        description: '',
+        origin: '',
+        scope: 'public',
+        result: '',
+        value: '',
+        valueid: 0
+      },
+      {
+        name: 'StandardFormula2',
+        type: 'generic',
+        params: [],
+        description: '',
+        origin: '',
+        scope: 'public',
+        result: '',
+        value: '',
+        valueid: 0
       }
     ];
   }
