@@ -1,7 +1,30 @@
+import { Formula } from './../models/formula.model';
 import { FormulaCategory } from './../models/formula-category.model';
 export class FormulaFixtures {
-  static getAll() {
+  static getAll(): Formula[] {
     return [
+      {
+        name: 'Greater',
+        type: 'operator',
+        params: [],
+        description: '',
+        origin: '',
+        scope: '',
+        result: '',
+        value: '',
+        valueid: 0
+      },
+      {
+        name: 'Equality',
+        type: 'operator',
+        params: [],
+        description: '',
+        origin: '',
+        scope: '',
+        result: '',
+        value: '',
+        valueid: 0
+      },
       {
         name: 'Sum',
         CreatedAt: '2020-02-26T17:14:38.962588+03:00',
@@ -661,6 +684,33 @@ export class FormulaFixtures {
         valueid: 113
       }
     ]
+  }
+
+  static getLogialOperators() {
+    return [
+      {
+        name: 'Greater',
+        type: 'operator',
+        params: [],
+        description: '',
+        origin: '',
+        scope: '',
+        result: '',
+        value: '',
+        valueid: 0
+      },
+      {
+        name: 'Equality',
+        type: 'operator',
+        params: [],
+        description: '',
+        origin: '',
+        scope: '',
+        result: '',
+        value: '',
+        valueid: 0
+      }
+    ];
   }
 
   static getFormulaCategories(): FormulaCategory[] {

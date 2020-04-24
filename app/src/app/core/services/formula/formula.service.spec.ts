@@ -176,4 +176,12 @@ describe('FormulaService', () => {
       expect(service.extractBasicMathOperators(fakeFormulaList)).toEqual(FormulaFixtures.getMathBasicOperators());
     });
   });
+
+  describe('extractLogicalOperators', () => {
+    it('should correctly filter the logical operators', () => {
+      const fakeFormulaList = FormulaFixtures.getAll();
+
+      expect(service.extractLogicalOperators(fakeFormulaList)).toEqual(FormulaFixtures.getLogialOperators());
+    });
+  });
 });

@@ -1,6 +1,6 @@
 export class Formula {
   name: string;
-  CreatedAt: string;
+  CreatedAt?: string;
   UpdatedAt?: string;
   DeletedAt?: string;
   params: any[];
