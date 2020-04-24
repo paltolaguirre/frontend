@@ -169,5 +169,11 @@ describe('FormulaService', () => {
     });
   });
 
+  describe('extractBasicMathOperators', () => {
+    it('should correctly filter the math operators', () => {
+      const fakeFormulaList = FormulaFixtures.getAll();
 
+      expect(service.extractBasicMathOperators(fakeFormulaList)).toEqual(FormulaFixtures.getMathBasicOperators());
+    });
+  });
 });
