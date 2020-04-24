@@ -226,4 +226,19 @@ describe('FormulaService', () => {
       expect(service.extractStandardFormulas(fakeFormulaList)).toEqual(FormulaFixtures.getStandardFormulas());
     });
   });
+
+  describe('emitFormulaItemClick', () => {
+    it('should call the emit method from formulaPickerItemEmitter', () => {
+      const data = {
+        nodeId: '',
+        payload: {}
+      };
+
+      const emitterSpy = spyOn(service.formulaPickerItemEmitter, 'emit').and.returnValue(null);
+
+      service.emitFormulaItemClick(data);
+
+      expect(emitterSpy).toHaveBeenCalledWith(data);
+    });
+  });
 });
