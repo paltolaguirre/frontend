@@ -209,4 +209,13 @@ describe('FormulaService', () => {
       expect(service.extractVariables(fakeFormulaList)).toEqual(FormulaFixtures.getVariables());
     });
   });
+
+  describe('extractInputParams', () => {
+    it('should extract the input params from a given formula', () => {
+      const formula = FormulaFixtures.getSumFormula();
+      const expectedParams = FormulaFixtures.getSumInputParams();
+
+      expect(service.extractInputParams(formula)).toEqual(expectedParams);
+    });
+  })
 });

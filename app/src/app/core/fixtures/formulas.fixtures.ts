@@ -725,6 +725,77 @@ export class FormulaFixtures {
     return [{'name':'TotalImporteRemunerativo','CreatedAt':'2020-02-26T17:16:54.770727+03:00','UpdatedAt':'2020-02-26T17:16:54.770727+03:00','DeletedAt':null,'params':[{'ID':53,'CreatedAt':'2020-02-26T17:16:54.772833+03:00','UpdatedAt':'2020-02-26T17:16:54.772833+03:00','DeletedAt':null,'name':'liquidacion','type':'object','functionname':'TotalImporteRemunerativo'}],'description':'dada una liquidacion obtiene la suma total de importes remunerativos de la misma','origin':'primitive','type':'helper','scope':'public','result':'number','value':{'ID':114,'CreatedAt':'2020-02-26T17:16:54.764358+03:00','UpdatedAt':'2020-02-26T17:16:54.764358+03:00','DeletedAt':null,'name':'','valuenumber':0,'valuestring':'','Valueboolean':false,'valueinvoke':null,'valueinvokeid':0,'arginvokeid':0},'valueid':114}]
   }
 
+  static getSumFormula() {
+    return  {
+      name: 'Sum',
+      CreatedAt: '2020-02-26T17:14:38.962588+03:00',
+      UpdatedAt: '2020-02-26T17:14:38.962588+03:00',
+      DeletedAt: null,
+      params: [
+        {
+          ID: 51,
+          CreatedAt: '2020-02-26T17:14:38.964804+03:00',
+          UpdatedAt: '2020-02-26T17:14:38.964804+03:00',
+          DeletedAt: null,
+          name: 'val1',
+          type: 'number',
+          functionname: 'Sum'
+        },
+        {
+          ID: 52,
+          CreatedAt: '2020-02-26T17:14:38.966603+03:00',
+          UpdatedAt: '2020-02-26T17:14:38.966603+03:00',
+          DeletedAt: null,
+          name: 'val2',
+          type: 'number',
+          functionname: 'Sum'
+        }
+      ],
+      description: '',
+      origin: 'primitive',
+      type: 'operator',
+      scope: 'public',
+      result: 'number',
+      value: {
+        ID: 113,
+        CreatedAt: '2020-02-26T17:14:38.960526+03:00',
+        UpdatedAt: '2020-02-26T17:14:38.960526+03:00',
+        DeletedAt: null,
+        name: '',
+        valuenumber: 0,
+        valuestring: '',
+        Valueboolean: false,
+        valueinvoke: null,
+        valueinvokeid: 0,
+        arginvokeid: 0
+      },
+      valueid: 113
+    };
+  }
+
+  static getSumInputParams() {
+    return [
+      {
+        ID: 51,
+        CreatedAt: '2020-02-26T17:14:38.964804+03:00',
+        UpdatedAt: '2020-02-26T17:14:38.964804+03:00',
+        DeletedAt: null,
+        name: 'val1',
+        type: 'number',
+        functionname: 'Sum'
+      },
+      {
+        ID: 52,
+        CreatedAt: '2020-02-26T17:14:38.966603+03:00',
+        UpdatedAt: '2020-02-26T17:14:38.966603+03:00',
+        DeletedAt: null,
+        name: 'val2',
+        type: 'number',
+        functionname: 'Sum'
+      }
+    ];
+  }
+
   static getFormulaCategories(): FormulaCategory[] {
     return [
       {
