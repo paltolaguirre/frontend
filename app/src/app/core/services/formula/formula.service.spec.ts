@@ -61,6 +61,14 @@ describe('FormulaService', () => {
 
       expect(getAllSpy).toHaveBeenCalledTimes(1);
     });
+
+    it('should update the store', async () => {
+      const storeSpy = spyOn(service.formulas, 'next');
+
+      await service.updateFormulasStore();
+
+      expect(storeSpy).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe('getByType', () => {
