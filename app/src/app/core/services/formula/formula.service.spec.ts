@@ -27,7 +27,7 @@ describe('FormulaService', () => {
     valueid: 1
   };
 
-  const formulas = FormulaFixtures.getAll();
+  const fakeFormulaList = FormulaFixtures.getAll();
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -172,40 +172,30 @@ describe('FormulaService', () => {
 
   describe('extractBasicMathOperators', () => {
     it('should correctly filter the math operators', () => {
-      const fakeFormulaList = FormulaFixtures.getAll();
-
       expect(service.extractBasicMathOperators(fakeFormulaList)).toEqual(FormulaFixtures.getMathBasicOperators());
     });
   });
 
   describe('extractLogicalOperators', () => {
     it('should correctly filter the logical operators', () => {
-      const fakeFormulaList = FormulaFixtures.getAll();
-
       expect(service.extractLogicalOperators(fakeFormulaList)).toEqual(FormulaFixtures.getLogialOperators());
     });
   });
 
   describe('extractFormulasByType', () => {
     it('should correctly filter formulas by a given type', () => {
-      const fakeFormulaList = FormulaFixtures.getAll();
-
       expect(service.extractFormulasByType(fakeFormulaList, FormulaTypes.HELPER)).toEqual(FormulaFixtures.getHelperFormulas());
     });
   });
 
   describe('extractUserFormulas', () => {
     it('should correctly filter user formulas' , () => {
-      const fakeFormulaList = FormulaFixtures.getAll();
-
       expect(service.extractUserFormulas(fakeFormulaList)).toEqual(FormulaFixtures.getUserFormulas());
     });
   });
 
   describe('extractVariables', () => {
     it('should correctly filter the variables', () => {
-      const fakeFormulaList = FormulaFixtures.getAll();
-
       expect(service.extractVariables(fakeFormulaList)).toEqual(FormulaFixtures.getVariables());
     });
   });
@@ -221,8 +211,6 @@ describe('FormulaService', () => {
 
   describe('extractStandardFormulas', () => {
     it('should filter correctly the standard formulas', () => {
-      const fakeFormulaList = FormulaFixtures.getAll();
-
       expect(service.extractStandardFormulas(fakeFormulaList)).toEqual(FormulaFixtures.getStandardFormulas());
     });
   });
