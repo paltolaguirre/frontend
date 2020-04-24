@@ -201,4 +201,12 @@ describe('FormulaService', () => {
       expect(service.extractUserFormulas(fakeFormulaList)).toEqual(FormulaFixtures.getUserFormulas());
     });
   });
+
+  describe('extractVariables', () => {
+    it('should correctly filter the variables', () => {
+      const fakeFormulaList = FormulaFixtures.getAll();
+
+      expect(service.extractVariables(fakeFormulaList)).toEqual(FormulaFixtures.getVariables());
+    });
+  });
 });
