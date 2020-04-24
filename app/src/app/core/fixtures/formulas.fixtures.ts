@@ -713,6 +713,10 @@ export class FormulaFixtures {
     ];
   }
 
+  static getHelperFormulas() {
+    return [{"name":"TotalImporteRemunerativo","CreatedAt":"2020-02-26T17:16:54.770727+03:00","UpdatedAt":"2020-02-26T17:16:54.770727+03:00","DeletedAt":null,"params":[{"ID":53,"CreatedAt":"2020-02-26T17:16:54.772833+03:00","UpdatedAt":"2020-02-26T17:16:54.772833+03:00","DeletedAt":null,"name":"liquidacion","type":"object","functionname":"TotalImporteRemunerativo"}],"description":"dada una liquidacion obtiene la suma total de importes remunerativos de la misma","origin":"primitive","type":"helper","scope":"public","result":"number","value":{"ID":114,"CreatedAt":"2020-02-26T17:16:54.764358+03:00","UpdatedAt":"2020-02-26T17:16:54.764358+03:00","DeletedAt":null,"name":"","valuenumber":0,"valuestring":"","Valueboolean":false,"valueinvoke":null,"valueinvokeid":0,"arginvokeid":0},"valueid":114}]
+  }
+
   static getFormulaCategories(): FormulaCategory[] {
     return [
       {

@@ -7,6 +7,7 @@ import { ApiHttpService } from './../api-http/api-http.service';
 import { TestBed } from '@angular/core/testing';
 
 import { FormulaService } from './formula.service';
+import { FormulaTypes } from '../../constants/formula-types.constants';
 
 describe('FormulaService', () => {
   let api: ApiHttpService;
@@ -182,6 +183,14 @@ describe('FormulaService', () => {
       const fakeFormulaList = FormulaFixtures.getAll();
 
       expect(service.extractLogicalOperators(fakeFormulaList)).toEqual(FormulaFixtures.getLogialOperators());
+    });
+  });
+
+  describe('extractFormulasByType', () => {
+    it('should correctly filter formulas by a given type', () => {
+      const fakeFormulaList = FormulaFixtures.getAll();
+
+      expect(service.extractFormulasByType(fakeFormulaList, FormulaTypes.HELPER)).toEqual(FormulaFixtures.getHelperFormulas());
     });
   });
 });
