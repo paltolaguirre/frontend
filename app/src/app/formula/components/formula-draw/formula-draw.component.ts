@@ -11,7 +11,7 @@ export interface DataPayload {
   styleUrls: ['./formula-draw.component.scss']
 })
 export class FormulaDrawComponent implements OnInit {
-  @Input() formulaValue: Formula;
+  @Input() formulaValue: any;
   @Input() formulaParams: any;
 
   private formula = {
@@ -97,7 +97,7 @@ export class FormulaDrawComponent implements OnInit {
       return;
     }
 
-    if(/*data.payload.result != undefined && currentFormulaValue.type != undefined && */data.payload.result != currentFormulaValue.type && data.payload.result != parentFormulaParam.type) {
+    if(data.payload.result != currentFormulaValue.type && data.payload.result != parentFormulaParam.type) {
       let message;
       switch (data.payload.result) {
         case 'number':
@@ -147,40 +147,96 @@ export class FormulaDrawComponent implements OnInit {
     currentFormulaValue.valueinvoke = formulaInvoke
     event.cancelBubble = true;
   }
-
-
-  public onDragOver(event) { // allowDrop
-    event.preventDefault();
-
-    this.onOverInput(event);
-
-    event.cancelBubble = true;
-  }
-
-  onOverInput(event){
+/** */
+  /*onOverInput(event){
     const input:HTMLElement = event.target;
-    input.classList.replace('no-highlight', 'highligthed');
+    //input.classList.replace('no-highlight', 'highligthed');
 
     for (let index = 0; index < input.children.length; index++) {
       const item = input.children.item(index);
       if(item.className.includes("remove-badge-container")) {
-        item.classList.replace('hide', 'show');
+        //item.classList.replace('hide', 'show');
       }
     }
   }
 
   onOutInput(event){
     const input:HTMLElement = event.target;
-    input.classList.replace('highligthed', 'no-highlight');
+    //input.classList.replace('highligthed', 'no-highlight');
 
     for (let index = 0; index < input.children.length; index++) {
       const item = input.children.item(index);
+      if(item.className.includes("remove-badge-container")) {
+        //item.classList.replace('show', 'hide');
+      }
+    }
+  }*/
+
+  showBadge(e) {
+    const element:HTMLElement = e.target;
+
+    for (let index = 0; index < element.children.length; index++) {
+      const item = element.children.item(index);
+      if(item.className.includes("remove-badge-container")) {
+        item.classList.replace('hide', 'show');
+      }
+    }
+  }
+
+  hideBadge(e) {
+    const element:HTMLElement = e.target;
+  
+    for (let index = 0; index < element.children.length; index++) {
+      const item = element.children.item(index);
       if(item.className.includes("remove-badge-container")) {
         item.classList.replace('show', 'hide');
       }
     }
   }
+/** */
+  onDragOver(event) { // allowDrop
+    event.preventDefault();
 
+    this.onEnter(event);
+
+    event.cancelBubble = true;
+  }
+
+  onEnter(e) {
+    const elements = document.querySelectorAll('.highligthed');document.querySelectorAll('.no-highlight');
+    elements.forEach(element => {
+      element.classList.replace('highligthed', 'no-highlight');
+    });
+
+    const element:HTMLElement = e.target;
+    element.classList.replace('no-highlight', 'highligthed');
+
+    this.showBadge(e);
+  }
+
+  onLeave(e) {
+    const element:HTMLElement = e.target;
+    element.classList.replace('highligthed', 'no-highlight');
+
+    this.hideBadge(e);
+  }
+
+  onDragEnter(e) {
+    this.onEnter(e);
+  }
+  
+  onDragLeave(e) {
+    this.onLeave(e);
+  }
+  
+  onMouseEnter(e) {
+    this.onEnter(e);
+  }
+  
+  onMouseLeave(e) {
+    this.onLeave(e);
+  }
+/** */
   onClickRemove(currentFormulaValue) {
     this.invokeRemuve(currentFormulaValue);
   }
