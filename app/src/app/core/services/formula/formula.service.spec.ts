@@ -53,6 +53,16 @@ describe('FormulaService', () => {
     });
   });
 
+  describe('updateFormulasStore', () => {
+    it('should call getAll to retreive the latest formulas from the backend', async () => {
+      const getAllSpy = spyOn(service, 'getAll').and.callThrough();
+
+      await service.updateFormulasStore();
+
+      expect(getAllSpy).toHaveBeenCalledTimes(1);
+    });
+  });
+
   describe('getByType', () => {
     it('should call to the api with the right url', async () => {
       const apiGetSpy = spyOn(api, 'get').and.callThrough();
