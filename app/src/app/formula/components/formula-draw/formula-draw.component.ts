@@ -92,6 +92,7 @@ export class FormulaDrawComponent implements OnInit {
     console.log("onDrop: ", data);
 
     if(data.payload === undefined) {
+      if(parentFormulaParam.type == '') return;
       currentFormulaValue.valueinvoke = data;
       currentFormulaValue.valuenumber = 0;
       return;
