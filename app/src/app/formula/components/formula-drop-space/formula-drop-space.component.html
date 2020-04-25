@@ -1,8 +1,9 @@
 <div
   id="main"
   class="draggable-space-container bg-gray"
-  [ngClass]="{ 'expanded': !isItemPickerExpanded }">
-  <app-formula-draw *ngIf="formulaValue && formulaValue !== undefined" [formulaValue]="formulaValue.value" [formulaParams]="formulaValue.params"></app-formula-draw>
+  [ngClass]="{ 'expanded': !isItemPickerExpanded }"
+  (dragover)='onDragOver($event)' (drop)="onDrop($event)">
+  <app-formula-draw *ngFor="let valueinvoke of valuesinvoke; index as i;" [formulaValue]="valueinvoke" [formulaParams]="valueinvoke.params"></app-formula-draw>
 </div>
 <div id="warningBox" style="display: none;height: 50px;background-color: goldenrod;bottom: 64px;position: relative;text-align: center;color: white;padding: 7px 0px;">
 </div>
