@@ -64,7 +64,8 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     main.context.id = 1;
 
     if(this.formulaValue && this.formulaValue !== undefined) {
-      this.valuesinvoke.push(this.formulaValue.value);
+      // this.valuesinvoke.push(this.formulaValue.value);
+      this.valuesinvoke = this.formulaValue;
     }
   }
 
@@ -727,5 +728,9 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
   public isParam(node: HTMLElement): boolean {
     return node.id && node.classList && node.classList.contains('param');
+  }
+
+  public showFormula() {
+    return this.valuesinvoke.length == 1;
   }
 }

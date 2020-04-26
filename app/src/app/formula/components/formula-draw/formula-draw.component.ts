@@ -116,6 +116,8 @@ export class FormulaDrawComponent implements OnInit {
       warningBox.innerHTML = `<p>${message}</p>`;
       warningBox.style.display = 'block';
       setTimeout(() => warningBox.style.display = 'none', 3*1000);
+      
+      event.cancelBubble = true;
       return;
     }
 
