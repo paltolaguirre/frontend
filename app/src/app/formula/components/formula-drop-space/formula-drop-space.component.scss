@@ -4,22 +4,9 @@ div.draggable-space-container {
   display: flex;
   align-items: center;
   overflow-x: auto;
-  max-width: 44vw;
   white-space: nowrap;
-
-  &.expanded {
-    max-width: 56vw;
-  }
 
   app-formula-draw {
     margin: 0 auto;
-  }
-
-  @media (min-width: 1920px) {
-    max-width: 47vw;
-
-    &.expanded {
-      max-width: 62vw;
-    }
   }
 }
