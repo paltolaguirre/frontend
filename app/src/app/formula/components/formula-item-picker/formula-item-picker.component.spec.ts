@@ -111,6 +111,17 @@ describe('FormulaItemPickerComponent', () => {
 
       expect(serviceSpy).toHaveBeenCalled();
     }));
+
+    it('should extract variables', fakeAsync(() => {
+      spyOn(formulaService.formulasStore$, 'subscribe').and.callThrough();
+      const serviceSpy = spyOn(formulaService, 'extractVariables').and.callThrough();
+
+      component.fetchFormulas();
+
+      tick(100);
+
+      expect(serviceSpy).toHaveBeenCalled();
+    }));
   });
 
   describe('onExpandClick', () => {
