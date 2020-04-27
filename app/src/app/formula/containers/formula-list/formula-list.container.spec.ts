@@ -129,6 +129,8 @@ describe('FormulaListContainer', () => {
           data: { formula: fakeFormulaItem }
         }
       );
+
+      expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled();
     });
   });
 });
