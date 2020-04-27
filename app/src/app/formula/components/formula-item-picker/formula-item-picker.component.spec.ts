@@ -65,6 +65,14 @@ describe('FormulaItemPickerComponent', () => {
     });
   });
 
+  describe('setDefaultCategoryItem', () => {
+    it('should return null if there are no categories setted.', () => {
+      component.categories = null;
+
+      expect(component.setDefaultCategoryItem()).toBeNull();
+    });
+  });
+
   describe('onExpandClick', () => {
     it('should toggle the isExpanded state', () => {
       component.isExpanded = false;
