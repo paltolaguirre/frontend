@@ -20,6 +20,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
 
   public form: FormGroup;
   public currentFormula: Formula;
+  public currentCanvasFormulas: any = [];
   public oldFormulaName: string;
   public isItemPickerExpanded: boolean = true;
   public params: FormArray;
@@ -61,6 +62,8 @@ export class FormulaContainer implements OnInit, OnDestroy {
 
         this.setCurrentFormula(name);
         this.fetchFormulas();
+
+        this.currentCanvasFormulas.push(this.currentFormula);
       });
   }
 
@@ -154,15 +157,28 @@ export class FormulaContainer implements OnInit, OnDestroy {
   }
 
   public async save() {
-    this.currentFormula.name = this.form.get('name').value;
-    this.currentFormula.description = this.form.get('description').value;
-    console.log("Current Formula: ", this.currentFormula)
+    if (this.validateCanvasFormulas()) {
+      this.currentFormula.value = this.currentCanvasFormulas.filter(formula => formula.valueinvoke != null)[0];
+      this.currentFormula.name = this.form.get('name').value;
+      this.currentFormula.description = this.form.get('description').value;
+      console.log("Current Formula: ", this.currentFormula)
 
-    if (this.isNew) {
-      return this.createFormula();
+      if (this.isNew) {
+        return this.createFormula();
+      }
+
+      this.updateFormula();
+    }
+  }
+
+  public validateCanvasFormulas() {
+    const formulas = this.currentCanvasFormulas.filter(formula => formula.valueinvoke != null);
+
+    if(formulas.length != 1) {
+      return false;
     }
 
-    this.updateFormula();
+    return true;
   }
 
   public async createFormula() {

@@ -92,6 +92,7 @@ export class FormulaDrawComponent implements OnInit {
     console.log("onDrop: ", data);
 
     if(data.payload === undefined) {
+      if(parentFormulaParam.type == '') return;
       currentFormulaValue.valueinvoke = data;
       currentFormulaValue.valuenumber = 0;
       return;
@@ -115,6 +116,8 @@ export class FormulaDrawComponent implements OnInit {
       warningBox.innerHTML = `<p>${message}</p>`;
       warningBox.style.display = 'block';
       setTimeout(() => warningBox.style.display = 'none', 3*1000);
+      
+      event.cancelBubble = true;
       return;
     }
 
