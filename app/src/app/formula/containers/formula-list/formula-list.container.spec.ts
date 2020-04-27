@@ -133,4 +133,14 @@ describe('FormulaListContainer', () => {
       expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled();
     });
   });
+
+  describe('isFormulaEditable', () => {
+    it('should call isEditable from the formula service', () => {
+      const serviceSpy = spyOn(formulaService, 'isEditable');
+
+      component.isFormulaEditable(fakeFormulaItem);
+
+      expect(serviceSpy).toHaveBeenCalledTimes(1);
+    });
+  });
 });
