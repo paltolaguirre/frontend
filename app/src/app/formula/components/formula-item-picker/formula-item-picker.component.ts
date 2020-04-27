@@ -50,7 +50,7 @@ export class FormulaItemPickerComponent implements OnInit {
     this.fetchFormulas();
     this.fetchConcepts();
   }
-  
+
   public setFormulaCategories() {
     this.categories = this.formulaService.getFormulaCategories();
   }

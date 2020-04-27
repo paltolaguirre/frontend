@@ -1,3 +1,5 @@
+import { FormulaCloneDialogComponent } from './../formula-clone-dialog/formula-clone-dialog.component';
+import { FormulaFixtures } from './../../../core/fixtures/formulas.fixtures';
 import { ConceptServiceMock } from './../../../core/mocks/concept.service.mock';
 import { ConceptoService } from './../../../concepto/concepto.service';
 import { SharedModule } from './../../../shared/shared.module';
@@ -14,6 +16,7 @@ describe('FormulaItemPickerComponent', () => {
   let component: FormulaItemPickerComponent;
   let fixture: ComponentFixture<FormulaItemPickerComponent>;
   let fakeCategoryItem: FormulaCategoryItem;
+  let formulaService: FormulaService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -38,6 +41,8 @@ describe('FormulaItemPickerComponent', () => {
       categoryId: 1,
       slug: 'variables'
     };
+
+    formulaService = TestBed.get(FormulaService);
   }));
 
   beforeEach(() => {
@@ -48,6 +53,16 @@ describe('FormulaItemPickerComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('setFormulaCategories', () => {
+    it('should retrieve and set the available categories', () => {
+      const serviceSpy = spyOn(formulaService, 'getFormulaCategories');
+
+      component.setFormulaCategories();
+
+      expect(serviceSpy).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe('onExpandClick', () => {
