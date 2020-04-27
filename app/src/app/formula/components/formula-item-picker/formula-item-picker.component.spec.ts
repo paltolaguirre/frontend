@@ -79,6 +79,16 @@ describe('FormulaItemPickerComponent', () => {
     });
   });
 
+  describe('fetchFormulas', () => {
+    it('should subscribe to the formula store', () => {
+      const storeSpy = spyOn(formulaService.formulasStore$, 'subscribe');
+
+      component.fetchFormulas();
+
+      expect(storeSpy).toHaveBeenCalledTimes(1);
+    });
+  });
+
   describe('onExpandClick', () => {
     it('should toggle the isExpanded state', () => {
       component.isExpanded = false;
