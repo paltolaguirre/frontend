@@ -71,6 +71,12 @@ describe('FormulaItemPickerComponent', () => {
 
       expect(component.setDefaultCategoryItem()).toBeNull();
     });
+
+    it('should set the default category item', () => {
+      component.setDefaultCategoryItem();
+
+      expect(component.selectedCategoryItem).toBeDefined();
+    });
   });
 
   describe('onExpandClick', () => {
