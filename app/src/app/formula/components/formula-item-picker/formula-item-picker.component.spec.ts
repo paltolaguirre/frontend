@@ -8,7 +8,7 @@ import { FormulaService } from './../../../core/services/formula/formula.service
 import { FormulaCategoryItem } from './../../../core/models/formula-category-item.model';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './../../../material.module';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 
 import { FormulaItemPickerComponent } from './formula-item-picker.component';
 import { doesNotThrow } from 'assert';
@@ -82,7 +82,7 @@ describe('FormulaItemPickerComponent', () => {
 
   describe('fetchFormulas', () => {
     it('should subscribe to the formula store', () => {
-      const storeSpy = spyOn(formulaService.formulasStore$, 'subscribe');
+      const storeSpy = spyOn(formulaService.formulasStore$, 'subscribe').and.callThrough();
 
       component.fetchFormulas();
 
@@ -90,12 +90,27 @@ describe('FormulaItemPickerComponent', () => {
     });
 
     it('should set the formulas from the store', (done) => {
+      spyOn(formulaService.formulasStore$, 'subscribe').and.callThrough();
+
+      component.fetchFormulas();
+
       formulaService.formulasStore$.subscribe((formulas) => {
         expect(component.formulas).toEqual(formulas);
 
         done();
       });
     });
+
+    it('should extract user formulas', fakeAsync(() => {
+      spyOn(formulaService.formulasStore$, 'subscribe').and.callThrough();
+      const serviceSpy = spyOn(formulaService, 'extractUserFormulas').and.callThrough();
+
+      component.fetchFormulas();
+
+      tick(100);
+
+      expect(serviceSpy).toHaveBeenCalled();
+    }));
   });
 
   describe('onExpandClick', () => {
