@@ -11,6 +11,7 @@ import { MaterialModule } from './../../../material.module';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FormulaItemPickerComponent } from './formula-item-picker.component';
+import { doesNotThrow } from 'assert';
 
 describe('FormulaItemPickerComponent', () => {
   let component: FormulaItemPickerComponent;
@@ -86,6 +87,14 @@ describe('FormulaItemPickerComponent', () => {
       component.fetchFormulas();
 
       expect(storeSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should set the formulas from the store', (done) => {
+      formulaService.formulasStore$.subscribe((formulas) => {
+        expect(component.formulas).toEqual(formulas);
+
+        done();
+      });
     });
   });
 
