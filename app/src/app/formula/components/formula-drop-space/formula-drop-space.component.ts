@@ -30,6 +30,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
   public idCount: number = 0;
   public formulaResult: FormulaTerm;
+  public valuesinvoke = [];
 
   constructor(
     private formulaService: FormulaService,
@@ -61,6 +62,11 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     main.context = new this.context();
     main.context.origin = null;
     main.context.id = 1;
+
+    if(this.formulaValue && this.formulaValue !== undefined) {
+      // this.valuesinvoke.push(this.formulaValue.value);
+      this.valuesinvoke = this.formulaValue;
+    }
   }
 
   ngOnDestroy() {
@@ -82,18 +88,47 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
     const data: FormulaTransferData = JSON.parse(event.dataTransfer.getData('text'));
 
-    if (data.payload.category === OperatorCategory.Logical) {
-      return this.handleLogicalOperatorClick(data);
+    if(data.payload == undefined) {
+      return;
     }
 
-    if (data.payload.category === OperatorCategory.Math) {
-      return this.handleMathOperatorClicked(data);
-    }
+    const args = [];
+    data.payload.params.forEach((param, i) => {
+      const arg = {
+          ID: 0,
+          name: param.name,
+          type: param.type,
+          valuenumber: 0,
+          valuestring: param.valuestring == undefined ? "" : param.valuestring,
+          Valueboolean: false,
+          valueinvoke: null
+      };
+      args.push(arg);
+    });
 
-    this.createDomElementWithoutChildren(data, false);
+    const formulaInvoke = {
+      ID: 0,
+      function: {
+        name: data.payload.name,
+        params: data.payload.params,
+        type: data.payload.type,
+        result: data.payload.result
+      },
+      functionname: data.payload.name,
+      args: args
+    };
+    
+    const value = {
+      ID: 0,
+      name: "",
+      type: "number",
+      valuenumber: 0,
+      valuestring: "",
+      Valueboolean: false,
+      valueinvoke: formulaInvoke
+    };
 
-    this.onDragLeave(event);
-
+    this.valuesinvoke.push(value);
     event.cancelBubble = true;
   }
 
@@ -340,7 +375,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   public onDragOver(event) { // allowDrop
     event.preventDefault();
 
-    this.onParamMouseOver(event);
+    //this.onParamMouseOver(event);
 
     event.cancelBubble = true;
   }
@@ -693,5 +728,9 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
   public isParam(node: HTMLElement): boolean {
     return node.id && node.classList && node.classList.contains('param');
+  }
+
+  public showFormula() {
+    return this.valuesinvoke.length == 1;
   }
 }
