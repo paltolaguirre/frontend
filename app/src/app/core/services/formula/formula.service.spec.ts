@@ -1,3 +1,5 @@
+import { FormulaCategory } from './../../models/formula-category.model';
+import { FormulaFixtures } from './../../fixtures/formulas.fixtures';
 import { Formula } from 'src/app/core/models/formula.model';
 import { Observable, of } from 'rxjs';
 import { ApiHttpServiceMock } from './../../mocks/api-http.service.mock';
@@ -23,6 +25,8 @@ describe('FormulaService', () => {
     value: 1,
     valueid: 1
   };
+
+  const formulas = FormulaFixtures.getAll();
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -57,6 +61,15 @@ describe('FormulaService', () => {
 
       expect(getSpy).toHaveBeenCalledWith(`${service.BASE_URL}/formulas/${fakeFormula.name}`);
     });
+
+    it('should update the store', async () => {
+      spyOn(api, 'delete').and.returnValue(of(null));
+      const updateFormulasStoreSpy = spyOn(service, 'updateFormulasStore').and.returnValue(null);
+
+      await service.delete(fakeFormula.name);
+
+      expect(updateFormulasStoreSpy).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe('create', () => {
@@ -66,6 +79,15 @@ describe('FormulaService', () => {
       await service.create(fakeFormula);
 
       expect(getSpy).toHaveBeenCalledWith(`${service.BASE_URL}/formulas`, fakeFormula);
+    });
+
+    it('should update the store', async () => {
+      spyOn(api, 'post').and.returnValue(of(null));
+      const updateFormulasStoreSpy = spyOn(service, 'updateFormulasStore').and.returnValue(null);
+
+      await service.create(fakeFormula);
+
+      expect(updateFormulasStoreSpy).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -87,7 +109,24 @@ describe('FormulaService', () => {
 
       expect(getSpy).toHaveBeenCalledWith(`${service.BASE_URL}/formulas/${fakeFormula.name}`, fakeFormula);
     });
+
+    it('should update the store', async () => {
+      spyOn(api, 'put').and.returnValue(of(null));
+      const updateFormulasStoreSpy = spyOn(service, 'updateFormulasStore').and.returnValue(null);
+
+      await service.update(fakeFormula.name, fakeFormula);
+
+      expect(updateFormulasStoreSpy).toHaveBeenCalledTimes(1);
+    });
   });
+
+  describe('getFormulaCategories', () => {
+    it('should get the correct categories', () => {
+      const expectedCategories: FormulaCategory[] = FormulaFixtures.getFormulaCategories();
+
+      expect(service.getFormulaCategories()).toEqual(expectedCategories);
+    });
+  })
 
   describe('isEditable', () => {
     it('should return false if the origin is primitive', () => {
@@ -100,4 +139,6 @@ describe('FormulaService', () => {
       expect(service.isEditable(fakeFormula)).toBeTruthy();
     });
   });
+
+
 });

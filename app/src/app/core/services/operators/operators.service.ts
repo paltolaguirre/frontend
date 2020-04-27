@@ -16,122 +16,6 @@ export class OperatorsService {
 
   constructor() { }
 
-  public getBasicMathOperators(): Operator[] {
-    return [
-      {
-        id: 1,
-        operationName: MathOperatorNames.Sum,
-        type: MathOperatorTypes.Numeric,
-        symbol: '+',
-        mustRemoveFromSource: false,
-        category: OperatorCategory.Math,
-        hasChildren: true
-      },
-      {
-        id: 2,
-        operationName: MathOperatorNames.Subtraction,
-        type: MathOperatorTypes.Numeric,
-        symbol: '-',
-        mustRemoveFromSource: false,
-        category: OperatorCategory.Math,
-        hasChildren: true
-      },
-      {
-        id: 3,
-        operationName: MathOperatorNames.Division,
-        type: MathOperatorTypes.Numeric,
-        symbol: '/',
-        mustRemoveFromSource: false,
-        category: OperatorCategory.Math,
-        hasChildren: true
-      },
-      {
-        id: 4,
-        operationName: MathOperatorNames.Multiplication,
-        type: MathOperatorTypes.Numeric,
-        symbol: '*',
-        mustRemoveFromSource: false,
-        category: OperatorCategory.Math,
-        hasChildren: true
-      }
-    ];
-  }
-
-  public getLogicalOperators(): Operator[] {
-    return [
-      {
-        id: 1,
-        operationName: LogicalOperatorNames.If,
-        type: MathOperatorTypes.Numeric,
-        symbol: 'SI',
-        mustRemoveFromSource: false,
-        tooltip: 'Para fórmulas Condicionales. El cálculo depende del cumplimineto de una determinada condición.',
-        category: OperatorCategory.Logical,
-        hasChildren: true
-      },
-      {
-        id: 2,
-        operationName: LogicalOperatorNames.GreaterThan,
-        type: MathOperatorTypes.Boolean,
-        symbol: '>',
-        mustRemoveFromSource: false,
-        tooltip: 'Condición: “Mayor que”',
-        category: OperatorCategory.Logical,
-        hasChildren: true
-      },
-      {
-        id: 3,
-        operationName: LogicalOperatorNames.LessThan,
-        type: MathOperatorTypes.Boolean,
-        symbol: '<',
-        mustRemoveFromSource: false,
-        tooltip: 'Condición: “Menor que”',
-        category: OperatorCategory.Logical,
-        hasChildren: true
-      },
-      {
-        id: 4,
-        operationName: LogicalOperatorNames.Equal,
-        type: MathOperatorTypes.Boolean,
-        symbol: '=',
-        mustRemoveFromSource: false,
-        tooltip: 'Condición: “Igual que”',
-        category: OperatorCategory.Logical,
-        hasChildren: true
-      },
-      {
-        id: 5,
-        operationName: LogicalOperatorNames.Diferent,
-        type: MathOperatorTypes.Boolean,
-        symbol: '<>',
-        mustRemoveFromSource: false,
-        tooltip: 'Condición: “Diferente que”',
-        category: OperatorCategory.Logical,
-        hasChildren: true
-      },
-      {
-        id: 6,
-        operationName: LogicalOperatorNames.And,
-        type: MathOperatorTypes.Boolean,
-        symbol: 'Y',
-        mustRemoveFromSource: false,
-        tooltip: 'Conjunción de más de una condición  “AND”',
-        category: OperatorCategory.Logical,
-        hasChildren: true
-      },
-      {
-        id: 7,
-        operationName: LogicalOperatorNames.Or,
-        type: MathOperatorTypes.Boolean,
-        symbol: 'ó',
-        mustRemoveFromSource: false,
-        tooltip: 'Disyunción de más de una condición “OR”',
-        category: OperatorCategory.Logical,
-        hasChildren: true
-      }
-    ];
-  }
-
   public createMathOperatorsFromFormulas(formulas: Formula[]): Operator[] {
     let idCount: number = 0;
 
@@ -148,51 +32,6 @@ export class OperatorsService {
     });
 
     return operators;
-  }
-
-  public getMoreStaticOperators(): Operator[] {
-    return [
-      {
-        id: 1,
-        operationName: LogicalOperatorNames.LessOrEqualThan,
-        type: MathOperatorTypes.Boolean,
-        symbol: '<=',
-        mustRemoveFromSource: false,
-        tooltip: 'Condición: “Menor Igual que”',
-        category: OperatorCategory.Logical,
-        hasChildren: true
-      },
-      {
-        id: 2,
-        operationName: LogicalOperatorNames.GreaterOrEqualThan,
-        type: MathOperatorTypes.Boolean,
-        symbol: '>=',
-        mustRemoveFromSource: false,
-        tooltip: 'Condición: “Mayor Igual que”',
-        category: OperatorCategory.Logical,
-        hasChildren: true
-      },
-      {
-        id: 3,
-        operationName: MathOperatorNames.Percentage,
-        type: MathOperatorTypes.Numeric,
-        symbol: '%',
-        mustRemoveFromSource: false,
-        tooltip: 'Porcentaje”',
-        category: OperatorCategory.Math,
-        hasChildren: true
-      },
-      {
-        id: 4,
-        operationName: MathOperatorNames.Pow,
-        type: MathOperatorTypes.Numeric,
-        symbol: '^',
-        mustRemoveFromSource: false,
-        tooltip: 'Potencia',
-        category: OperatorCategory.Math,
-        hasChildren: true
-      }
-    ];
   }
 
   public getXOROperator(): Operator {
@@ -223,5 +62,23 @@ export class OperatorsService {
 
   public emitOperatorClicked(data: FormulaTransferData) {
     this.operatorEmitter.emit(data);
+  }
+
+  public getDomIdByOperator(operator: Operator, prefix?: string): string {
+    if (prefix) {
+      return `${prefix}-${String(operator.id)}`;
+    }
+
+    if (operator.type === MathOperatorTypes.Numeric && operator.category === OperatorCategory.Math) {
+      return `math-basic-operator-${String(operator.id)}`;
+    }
+
+    if (operator.type === MathOperatorTypes.Numeric && operator.category === OperatorCategory.Logical) {
+      return `logical-operator-${String(operator.id)}`;
+    }
+
+    if (operator.type === MathOperatorTypes.Boolean && operator.category === OperatorCategory.Logical) {
+      return `logical-operator-${String(operator.id)}`;
+    }
   }
 }

@@ -25,8 +25,11 @@
                   [ngClass]="{
                     'active': selectedCategoryItem?.id === item.id
                   }"
-                  (click)="onCategoryItemClick(item)">
-                  <img [src]="item.img" alt="item-icon" class="item-icon">
+                  (click)="onCategoryItemClick(item)"
+                  [matTooltip]="!isExpanded ? item.title : null"
+                  matTooltipPosition="above"
+                  matTooltipClass="baloon">
+                  <img [src]="selectedCategoryItem?.id === item.id ? item.imgActive : item.img" alt="item-icon" class="item-icon">
                   <p *ngIf="isExpanded" class="item-name no-selectable">{{ item.title }}</p>
                 </div>
               </div>
@@ -62,9 +65,13 @@
                     class="pickable-badge no-selectable param numeric-param"
                     [id]="'pickable-item-' + index + 1"
                     [attr.data-type]="getOperatorDefaultType()"
+                    [attr.data-data]="getFormulaTransferData(item, 'pickable-item-' + index + 1) | json"
                     draggable="true"
                     (dragstart)="onDragStart($event, item)"
-                    (click)="onFormulaItemClick($event, item)">
+                    (click)="onFormulaItemClick($event, item)"
+                    [matTooltip]="null"
+                    matTooltipPosition="above"
+                    matTooltipClass="baloon">
                       {{ item.name || item.nombre }}
                   </div>
                 </div>
@@ -76,9 +83,13 @@
                   class="pickable-badge no-selectable param numeric-param"
                   [id]="'variable-' + index + 1"
                   [attr.data-type]="getOperatorDefaultType()"
+                  [attr.data-data]="getFormulaTransferData(formula, 'variable-' + index + 1) | json"
                   draggable="true"
                   (dragstart)="onDragStart($event, formula)"
-                  (click)="onFormulaItemClick($event, formula)">
+                  (click)="onFormulaItemClick($event, formula)"
+                  [matTooltip]="formula?.description"
+                  matTooltipPosition="above"
+                  matTooltipClass="baloon">
                     {{ formula.name }}
                 </div>
               </div>
@@ -89,9 +100,13 @@
                   class="pickable-badge no-selectable param numeric-param"
                   [id]="'concept-' + index + 1"
                   [attr.data-type]="getOperatorDefaultType()"
+                  [attr.data-data]="getFormulaTransferData(concept, 'concept-' + index + 1) | json"
                   draggable="true"
                   (dragstart)="onDragStart($event, concept)"
-                  (click)="onFormulaItemClick($event, concept)">
+                  (click)="onFormulaItemClick($event, concept)"
+                  [matTooltip]="null"
+                  matTooltipPosition="above"
+                  matTooltipClass="baloon">
                     {{ concept.nombre }}
                 </div>
               </div>
@@ -102,9 +117,13 @@
                   class="pickable-badge no-selectable param numeric-param"
                   [id]="'param-' + index + 1"
                   [attr.data-type]="getOperatorDefaultType()"
+                  [attr.data-data]="getFormulaTransferData(param, 'param-' + index + 1) | json"
                   draggable="true"
-                  (dragstart)="onDragStart($event, param)"
-                  (click)="onFormulaItemClick($event, param)">
+                  (dragstart)="onDragStart($event, getFormulaParam(param))"
+                  (click)="onFormulaItemClick($event, param)"
+                  [matTooltip]="null"
+                  matTooltipPosition="above"
+                  matTooltipClass="baloon">
                     {{ param.name }}
                 </div>
               </div>
@@ -115,9 +134,13 @@
                   class="pickable-badge no-selectable param numeric-param"
                   [id]="'standard-formula-' + index + 1"
                   [attr.data-type]="getOperatorDefaultType()"
+                  [attr.data-data]="getFormulaTransferData(formula, 'standard-formula-' + index + 1) | json"
                   draggable="true"
                   (dragstart)="onDragStart($event, formula)"
-                  (click)="onFormulaItemClick($event, formula)">
+                  (click)="onFormulaItemClick($event, formula)"
+                  [matTooltip]="null"
+                  matTooltipPosition="above"
+                  matTooltipClass="baloon">
                     {{ formula.name }}
                 </div>
               </div>
@@ -128,9 +151,13 @@
                   class="pickable-badge no-selectable param numeric-param"
                   [id]="'user-formula-' + index + 1"
                   [attr.data-type]="getOperatorDefaultType()"
+                  [attr.data-data]="getFormulaTransferData(formula, 'user-formula-' + index + 1) | json"
                   draggable="true"
                   (dragstart)="onDragStart($event, formula)"
-                  (click)="onFormulaItemClick($event, formula)">
+                  (click)="onFormulaItemClick($event, formula)"
+                  [matTooltip]="formula?.description"
+                  matTooltipPosition="above"
+                  matTooltipClass="baloon">
                     {{ formula.name }}
                 </div>
               </div>

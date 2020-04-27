@@ -27,6 +27,7 @@ export class SiradigShowComponent implements OnInit {
   currentDate: Date;
   currentYear;
   minDate: Date;
+  public estaGuardandose = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -75,6 +76,7 @@ export class SiradigShowComponent implements OnInit {
   }
 
   private gotoGrilla() {
+    this.estaGuardandose = true;
     this.router.navigate(['/siradig']);
   }
 
@@ -101,6 +103,8 @@ export class SiradigShowComponent implements OnInit {
 
   async onClickSave(data: Siradig): Promise<Siradig> {
     //if(this.faltanRequeridos()) return null;
+    if(this.estaGuardandose) return null;
+    this.estaGuardandose = true;
 
     // Se elimina
     if(this.conyugesiradig && this.conyugesiradig.ID && !this.conyugesiradig.aplica) {
@@ -140,14 +144,15 @@ export class SiradigShowComponent implements OnInit {
     }
 
     let item: Siradig;
+    let that = this;
 
     if (this.id) {
       console.log("Updated Siradig");
-      item = await this.siradigService.putSiradig(data);
+      item = await this.siradigService.putSiradig(data).finally(function(){that.habilitarGuardado();});
       this.gotoGrilla();
     } else {
       console.log("Created Siradig");
-      item = await this.siradigService.postSiradig(data);
+      item = await this.siradigService.postSiradig(data).finally(function(){that.habilitarGuardado();});
       this.gotoGrilla();
     }
 
@@ -156,6 +161,11 @@ export class SiradigShowComponent implements OnInit {
     return item;
   }
 
+
+  habilitarGuardado() {
+    this.estaGuardandose = false
+  }
+  
   private procesarSiradig(siradig: Siradig) {
     this.procesarConyuge(siradig);
     this.procesarHijos(siradig);

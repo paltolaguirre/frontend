@@ -22,6 +22,8 @@ export class Models {
                     {nombre: 'Octubre', ID: 9},{nombre: 'Noviembre', ID: 10},{nombre: 'Diciembre', ID: 11}];
           case 'si/no': 
             return [{nombre: 'Si', ID: 1},{nombre: 'No', ID: 0}];
+            case 'tipopresentacion': 
+              return [{nombre: 'Anual', ID: 1},{nombre: 'Final', ID: 2}]; 
           default: 
           return []; 
       } 
@@ -70,6 +72,8 @@ export class Models {
         return "Impuesto a las Ganancias";
       case 'siradigtipoimpuesto':
         return "Tipo de Impuesto";
+      case 'tipopresentacion':
+        return "Tipo de Presentación"
       default: 
         return "Seleccione..."; 
     } 

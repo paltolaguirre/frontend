@@ -98,7 +98,7 @@ export class LibrosueldosListComponent implements OnInit, AfterViewInit {
   }
 
   private gotoPreview() {
-    this.router.navigate([`/informes/libro-sueldos/imprimir`]);
+    this.router.navigate([`/informes/libro-sueldos/imprimir`], { queryParams: { fechadesde: this.fechadesde, fechahasta: this.fechahasta }});
   }
 
   onClickPreview(): void {

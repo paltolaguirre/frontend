@@ -8,7 +8,8 @@ import { OperatorsService } from '../../../core/services/operators/operators.ser
 import { componentDestroyed } from '@w11k/ngx-componentdestroyed';
 import { takeUntil } from 'rxjs/operators';
 import { FormulaService } from '../../../core/services/formula/formula.service';
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { FormulaTerm } from 'src/app/core/models/formula-term.model';
 
 @Component({
   selector: 'app-formula-drop-space',
@@ -16,9 +17,19 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
   styleUrls: ['./formula-drop-space.component.scss']
 })
 export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
+  @Output() formulaResultEmitter: EventEmitter<FormulaTerm> = new EventEmitter();
   @Input() isItemPickerExpanded: boolean;
+  @Input()
+  set currentFormulaResult(value: FormulaTerm) {
+    if (value) {
+      // TODO: render
+      console.log('FormulaResult example:', value);
+    }
+  }
+  @Input() formulaValue: any;
 
   public idCount: number = 0;
+  public formulaResult: FormulaTerm;
 
   constructor(
     private formulaService: FormulaService,
@@ -28,11 +39,11 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.formulaService.formulaPickerItemEmitter
-    .pipe(
-      takeUntil(componentDestroyed(this))
-    ).subscribe((payload: FormulaTransferData) => {
-      this.handleFormulaItemClicked(payload);
-    });
+      .pipe(
+        takeUntil(componentDestroyed(this))
+      ).subscribe((payload: FormulaTransferData) => {
+        this.handleFormulaItemClicked(payload);
+      });
 
     this.operatorsService.operatorEmitter
       .pipe(
@@ -43,7 +54,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
         }
 
         return this.handleMathOperatorClicked(data);
-    });
+      });
 
     const main = document.getElementById('main') as any;
 
@@ -52,7 +63,8 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     main.context.id = 1;
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+  }
 
   public context() {
     const origin = null;
@@ -60,7 +72,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   }
 
   public getNewID() {
-    this.idCount ++;
+    this.idCount++;
 
     return String(this.idCount);
   }
@@ -90,6 +102,8 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     const droppeableSpace = document.getElementById('main');
 
     this.appendContent(domElement, droppeableSpace, data, isInput);
+
+    this.updateFormulaTerms();
   }
 
   public appendContent(origin: HTMLElement, to: HTMLElement, data: FormulaTransferData, isInput: boolean) {
@@ -121,22 +135,21 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     badge.classList.add('no-selectable');
     badge.setAttribute('draggable', 'false');
 
-    const removeIcon = document.createElement('span');
+    const removeIcon = document.createElement('i');
     removeIcon.classList.add('remove-icon');
     removeIcon.classList.add('no-selectable');
-    removeIcon.setAttribute('draggable', 'false');
-    removeIcon.innerHTML = 'x';
+    removeIcon.classList.add('fas');
+    removeIcon.classList.add('fa-trash-alt');
 
     badge.append(removeIcon);
 
     badge.onclick = (e: any) => {
-      // e.stopPropagation();
-
-      console.log(e);
       const param = e.path.find((node) => node.classList.contains('param'));
 
       if (param) {
         param.remove();
+
+        this.updateFormulaTerms();
       }
     };
 
@@ -161,6 +174,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     }
 
     const formulaDiv = this.createFormula(
+      data,
       payload.symbol,
       payload.type,
       [MathOperatorTypes.Numeric, MathOperatorTypes.Numeric],
@@ -187,9 +201,10 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     }
 
     const formulaDiv = this.createFormula(
+      data,
       payload.symbol,
       payload.type,
-      [MathOperatorTypes.Boolean , payload.type, payload.type],
+      [MathOperatorTypes.Boolean, payload.type, payload.type],
       false,
       false
     );
@@ -217,15 +232,13 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     const { payload } = data;
 
     const formulaDiv = this.createFormula(
+      data,
       payload.symbol,
       parentType,
       [childrenTypes, childrenTypes],
       true,
       true
     );
-
-    const removeIcon = this.createRemoveIcon();
-    formulaDiv.appendChild(removeIcon);
 
     this.renderFormulaInMainContainer(formulaDiv);
   }
@@ -237,6 +250,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   }
 
   public createFormula(
+    data: FormulaTransferData,
     textContent: string,
     type: MathOperatorTypes,
     arrayParams: MathOperatorTypes[],
@@ -259,8 +273,10 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       divFormula.appendChild(divParam);
     }
 
-    const removeIcon = this.createRemoveIcon();
-    divFormula.appendChild(removeIcon);
+    divFormula.setAttribute('id', `formula-term-${data.nodeId}`);
+    divFormula.setAttribute('data-data', JSON.stringify(data));
+
+    this.updateFormulaTerms();
 
     return divFormula;
   }
@@ -271,6 +287,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
     div.setAttribute('name', functionName);
     div.setAttribute('data-type', type);
+    div.setAttribute('id', `child-param-${this.getNewID()}`);
     div.className = 'param ' + this.getClassNameFromOperatorType(type);
 
     if (isAsociative) {
@@ -290,6 +307,14 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     } else if (type === MathOperatorTypes.Boolean) {
       div.innerHTML = 'false';
     }
+
+    const formulaTermData: FormulaTerm = {
+      nodeId: div.id,
+      payload: div.innerHTML,
+      children: null
+    };
+
+    div.setAttribute('data-data', JSON.stringify(formulaTermData));
 
     return div;
   }
@@ -325,6 +350,8 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
     this.highlightElement(e.target);
 
+    this.addRemoveIcon(e);
+
     this.removeHighlightToElement(e.target.parentNode);
 
     e.cancelBubble = true;
@@ -333,7 +360,58 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   public onDragLeave(e) {
     this.removeHighlightToElement(e.target);
 
+    this.removeTrashIcon(e);
+
     e.cancelBubble = true;
+  }
+
+  public addRemoveIcon(e) {
+    // e.stopPropagation();
+    if (e.toElement.classList.contains('remove-badge-container')) {
+      return null;
+    }
+
+    if (e.target.classList && e.target.classList.contains('asociative')) {
+      if (e.target.querySelector('.remove-badge-container') || e.toElement.querySelector('.remove-badge-container')) {
+        return null;
+      }
+
+      const removeIcon = this.createRemoveIcon();
+      e.target.appendChild(removeIcon);
+    }
+
+    e.cancelBubble = true;
+  }
+
+  public removeTrashIcon(e) {
+    e.stopPropagation();
+
+    // When the mouse enters into the trash icon, we don't remove it.
+    if (e.toElement.classList.contains('remove-badge-container')) {
+      return null;
+    }
+
+    // TODO: fix that
+    // if (!e.toElement.classList.contains('asociative')) {
+    // console.log('saliste afuera del operador');
+    // console.log('el target es: ', e.target);
+    // if (e.target.querySelector('.remove-badge-container')) {
+    //   e.target.querySelector('.remove-badge-container').remove();
+    // }
+
+    // return null;
+    // }
+
+    // If the hover is on the asociative param, we don't remove the trash icon.
+    if (e.target.parentNode.classList.contains('asociative')) {
+      return null;
+    }
+
+    const removeBadge = e.target.querySelector('.remove-badge-container');
+
+    if (removeBadge) {
+      removeBadge.remove();
+    }
   }
 
   public removeHighlightToElement(target: HTMLElement) {
@@ -353,13 +431,18 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
   public onChildDrop(ev) {
     ev.preventDefault();
-    const data = ev.dataTransfer.getData('text');
+    const draggedNodeId = ev.dataTransfer.getData('text');
 
     if (ev.target.parentNode == null) {
       return null;
     }
 
-    this.cutAndPasteDroppedParam(document.getElementById(data), ev.target);
+    const origin = document.getElementById(draggedNodeId);
+    const target = ev.target;
+
+    this.cutAndPasteDroppedParam(origin, target);
+
+    this.updateFormulaTerms();
 
     ev.cancelBubble = true;
   }
@@ -402,17 +485,25 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     e.cancelBubble = true;
   }
 
-  public editCurrentElement(target) {
+  public editCurrentElement(inputParamContainerTarget) {
     const input = document.createElement('input') as any;
 
-    if (target.classList.contains('numeric-param')) {
+    if (inputParamContainerTarget.classList.contains('numeric-param')) {
       input.type = 'number';
     } else {
       input.type = 'text';
     }
 
-    input.onexit = (ei) => {
-      ei.target.parentNode.innerHTML = ei.target.value;
+    input.setAttribute('id', `input-${this.getNewID()}`);
+
+    input.onexit = (event) => {
+      const targetValue = event.target.value;
+
+      event.target.parentNode.innerHTML = targetValue;
+
+      this.updateInputContainerData(inputParamContainerTarget, targetValue);
+
+      this.updateFormulaTerms();
     };
 
     input.onblur = input.onexit;
@@ -436,14 +527,24 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     };
 
     input.className = 'inputedit';
-    input.placeholder = Number(target.getAttribute('data-type')) === MathOperatorTypes.Boolean ?
+    input.placeholder = Number(inputParamContainerTarget.getAttribute('data-type')) === MathOperatorTypes.Boolean ?
       'false' :
       '0.00';
     input.style.width = '3rem';
 
-    target.appendChild(input);
+    inputParamContainerTarget.appendChild(input);
 
     setTimeout(() => input.focus());
+  }
+
+  private updateInputContainerData(node: HTMLElement, newValue: any) {
+    const data: FormulaTerm = {
+      nodeId: node.getAttribute('id'),
+      payload: newValue,
+      children: null
+    };
+
+    node.setAttribute('data-data', JSON.stringify(data));
   }
 
   public putChildAndRemoveFromOrigin(origin: HTMLElement, target: HTMLElement) {
@@ -457,7 +558,9 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       });
     }
 
-    origin.classList.remove('pronounced');
+    if (origin.classList) {
+      origin.classList.remove('pronounced');
+    }
 
     const clonedNode = origin.cloneNode(true) as HTMLElement;
     clonedNode.id = this.getNewID();
@@ -479,6 +582,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
   public makeRecursiveWhiteParenthesis(param) {
     if (
+      !param.parentNode.classList ||
       !param.parentNode.classList.contains('param') ||
       !param.parentNode.hasChildNodes()) {
       return null;
@@ -499,6 +603,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     }
 
     if (
+      param.classList &&
       param.classList.contains('asociative') &&
       param.parentNode.hasChildNodes() &&
       param.getAttribute('name') === param.parentNode.getAttribute('name')
@@ -510,20 +615,83 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   }
 
   removeOrigin(origin) {
-    if (!origin.parentNode.classList.contains('param')) {
+    if (!origin.parentNode.classList || !origin.parentNode.classList.contains('param')) {
       return origin.remove();
     }
 
-    if (origin.classList.contains('numeric-param')) {
+    if (origin.classList && origin.classList.contains('numeric-param')) {
       origin.innerHTML = '0.00';
-    } else if (origin.classList.contains('boolean')) {
+    } else if (origin.classList && origin.classList.contains('boolean')) {
       origin.innerHTML = 'false';
     } else {
       origin.innerHTML = '';
     }
 
-    origin.classList.remove('pronounced', 'highligthed', 'white-parenthesis', 'asociative');
+    if (origin.classList) {
+      origin.classList.remove('pronounced', 'highligthed', 'white-parenthesis', 'asociative');
+    }
+
     this.makeRecursiveWhiteParenthesis(origin);
   }
 
+  public updateFormulaTerms() {
+    const mainDropSpace = document.querySelector('#main') as HTMLElement;
+
+    setTimeout(() => {
+      if (!mainDropSpace.childNodes || mainDropSpace.childNodes.length <= 0) {
+        return null;
+      }
+
+      const mainChildrenNodes = Array.from(mainDropSpace.childNodes) as HTMLElement[];
+
+      this.formulaResult = this.getChildrenFormulaTermsFromNode(mainChildrenNodes[0]);
+
+      // console.log('formula: ', this.formulaResult);
+      this.formulaResultEmitter.emit(this.formulaResult);
+    }, 500);
+  }
+
+  public getChildrenFormulaTermsFromNode(node: HTMLElement): FormulaTerm {
+    // Get child nodes and filter them by formula params.
+    const childNodes = Array.from(node.childNodes) as HTMLElement[];
+
+    // Filter nodes which are relevant for the formula terms array.
+    const filteredNodes = childNodes.filter((child) => {
+      return this.isParam(child);
+    });
+
+    const childTerms: FormulaTerm[] = [];
+
+    if (!filteredNodes) {
+      return null;
+    }
+
+    for (const filteredNode of filteredNodes) {
+      const childNodesArray = Array.from(filteredNode.childNodes).filter((childNode: HTMLElement) => {
+        return this.isParam(childNode);
+      });
+
+      childTerms.push({
+        nodeId: filteredNode.id,
+        payload: filteredNode.getAttribute('data-data') ?
+          JSON.parse((filteredNode.getAttribute('data-data'))) :
+          node.innerText,
+        children: childNodesArray.map((childNode: HTMLElement) => {
+          return this.getChildrenFormulaTermsFromNode(childNode);
+        })
+      });
+    }
+
+    return {
+      nodeId: node.id,
+      payload: node.getAttribute && node.getAttribute('data-data') ?
+        JSON.parse((node.getAttribute('data-data'))) :
+        node.innerText,
+      children: childTerms
+    };
+  }
+
+  public isParam(node: HTMLElement): boolean {
+    return node.id && node.classList && node.classList.contains('param');
+  }
 }
