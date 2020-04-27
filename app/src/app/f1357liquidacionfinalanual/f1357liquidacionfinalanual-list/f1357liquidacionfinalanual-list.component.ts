@@ -71,6 +71,9 @@ export class F1357liquidacionfinalanualListComponent implements OnInit, AfterVie
 
   changeTipoPresentacion(option) {
     this.tipopresentacion = option.nombre;
+    if (this.tipopresentacion == "Anual"){
+      this.mes = 12
+    }
     this.updateGrilla();
   }
   
