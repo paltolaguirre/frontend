@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ListaItems, LiquidacionService } from 'src/app/liquidacion/liquidacion.service';
 import { merge, Observable } from 'rxjs';
 import { Liquidacion, Tipo } from 'src/app/liquidacion/liquidacion.model';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 import { PrintService } from 'src/app/print/print.service';
 import { NotificationService } from 'src/app/handler-error/notification.service';
 import { Legajo } from 'src/app/legajo/legajo.model';
@@ -29,14 +29,20 @@ export class LibrosueldosListPrintComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+    
+    this.fechadesde = this.route.snapshot.queryParamMap.get('fechadesde');
+    this.fechahasta = this.route.snapshot.queryParamMap.get('fechahasta');
+   
+    
+    console.log("fechadesde: " + this.fechadesde);
+    console.log("fechahasta: " + this.fechahasta);
+
     this.currentLiquidaciones$ = this.route.paramMap.pipe(
       switchMap(async (params: ParamMap) => {
-        this.fechadesde = this.route.snapshot.queryParamMap.get("fechadesde");
-        this.fechahasta = this.route.snapshot.queryParamMap.get("fechahasta");
+        
 
-        const liquidacionesApi = await this.liquidacionService.getLiquidaciones(null, null, 1);
-        console.log("fechadesde: " + this.fechadesde);
-        console.log("fechahasta: " + this.fechahasta);
+        const liquidacionesApi = await this.liquidacionService.getLiquidacionesPorFecha(null, null, 1, this.fechadesde, this.fechahasta);
+        
         
         const liquidaciones = liquidacionesApi.items;
         if(!this.isLegajosValidos(liquidaciones)) {
@@ -91,7 +97,7 @@ export class LibrosueldosListPrintComponent implements OnInit {
   }
 
   async ngAfterViewInit() {
-    const liquidacionesApi: ListaItems = await this.liquidacionService.getLiquidaciones(null, null, 1);
+    const liquidacionesApi: ListaItems = await this.liquidacionService.getLiquidacionesPorFecha(null, null, 1, this.fechadesde, this.fechahasta);
     this.liquidaciones = liquidacionesApi.items;
     console.log(this.liquidaciones);
   }

@@ -5,5 +5,5 @@ export class FormulaParam {
   DeletedAt: any;
   name: string;
   type: string;
-  functionname: string;
+  functionname?: string;
 }

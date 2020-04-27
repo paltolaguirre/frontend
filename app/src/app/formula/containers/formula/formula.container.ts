@@ -7,8 +7,9 @@ import { pluck, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
-import {componentDestroyed} from '@w11k/ngx-componentdestroyed';
+import { componentDestroyed } from '@w11k/ngx-componentdestroyed';
 import { Location } from '@angular/common';
+import { FormulaTerm } from 'src/app/core/models/formula-term.model';
 
 @Component({
   selector: 'app-formula',
@@ -19,11 +20,23 @@ export class FormulaContainer implements OnInit, OnDestroy {
 
   public form: FormGroup;
   public currentFormula: Formula;
+  public currentCanvasFormulas: any = [];
+  public oldFormulaName: string;
   public isItemPickerExpanded: boolean = true;
   public params: FormArray;
   public isNew: boolean = false;
   public isEditable: boolean = true;
   public formulas: Formula[];
+  public typesOptions = [
+    {
+      name: 'Numérico',
+      value: 'number'
+    },
+    {
+      name: 'Booleano',
+      value: 'boolean'
+    }
+  ];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -42,14 +55,16 @@ export class FormulaContainer implements OnInit, OnDestroy {
       pluck('name')).subscribe(name => {
         if (!name) {
           this.isNew = true;
-          this.currentFormula = null;
+          this.currentFormula = this.form.value;
 
           return this.buildEmptyForm();
         }
 
         this.setCurrentFormula(name);
         this.fetchFormulas();
-    });
+
+        this.currentCanvasFormulas.push(this.currentFormula);
+      });
   }
 
   ngOnDestroy() {
@@ -62,7 +77,10 @@ export class FormulaContainer implements OnInit, OnDestroy {
       return this.showNoDataDialog();
     }
 
+    this.oldFormulaName = this.currentFormula.name;
     this.isEditable = this.formulaService.isEditable(this.currentFormula);
+
+    // TODO: Set actual formulaResult.
 
     this.buildPreLoadedForm();
   }
@@ -74,11 +92,20 @@ export class FormulaContainer implements OnInit, OnDestroy {
       origin: ['custom'],
       type: ['generic'],
       scope: ['private'],
-      params: this.formBuilder.array([ this.createFormulaParam() ]),
+      params: this.formBuilder.array([]),
       result: ['number', Validators.required],
       value: {
-        valueinvoke: null
-      }
+          ID: 0,
+          name: '',
+          type: 'number',
+          valuenumber: 0,
+          valuestring: '',
+          Valueboolean: false,
+          valueinvoke: null,
+          valueinvokeid: null,
+          arginvokeid: 0
+      },
+      formulaResult: []
     });
   }
 
@@ -101,30 +128,22 @@ export class FormulaContainer implements OnInit, OnDestroy {
       .pipe(
         takeUntil(componentDestroyed(this))
       ).subscribe(() => {
-      this.location.back();
-    });
+        this.location.back();
+      });
   }
 
   public buildPreLoadedForm() {
     this.form = this.formBuilder.group({
       ...this.currentFormula,
-      params: this.formBuilder.array([])
+      params: this.formBuilder.array([]),
+      formulaResult: []
     });
 
     this.updateFormulaParams();
   }
 
-  public createFormulaParam(formulaParam?: FormulaParam) {
-    if (!formulaParam) {
-      return this.formBuilder.group({
-        name: 'val1',
-        type: 'number'
-      });
-    }
-
-    return this.formBuilder.group({
-      ...formulaParam
-    });
+  public createFormulaParam(formulaParam: FormulaParam) {
+    return this.formBuilder.group({...formulaParam});
   }
 
   public updateFormulaParams() {
@@ -138,21 +157,38 @@ export class FormulaContainer implements OnInit, OnDestroy {
   }
 
   public async save() {
-    if (this.isNew) {
-      return this.createFormula();
+    if (this.validateCanvasFormulas()) {
+      this.currentFormula.value = this.currentCanvasFormulas.filter(formula => formula.valueinvoke != null)[0];
+      this.currentFormula.name = this.form.get('name').value;
+      this.currentFormula.description = this.form.get('description').value;
+      console.log("Current Formula: ", this.currentFormula)
+
+      if (this.isNew) {
+        return this.createFormula();
+      }
+
+      this.updateFormula();
+    }
+  }
+
+  public validateCanvasFormulas() {
+    const formulas = this.currentCanvasFormulas.filter(formula => formula.valueinvoke != null);
+
+    if(formulas.length != 1) {
+      return false;
     }
 
-    this.updateFormula();
+    return true;
   }
 
   public async createFormula() {
-    await this.formulaService.create(this.form.value);
+    await this.formulaService.create(this.currentFormula);
 
     return this.goToFormulasList();
   }
 
   public async updateFormula() {
-    await this.formulaService.update(this.form.value.name, this.form.value);
+    await this.formulaService.update(this.oldFormulaName, this.currentFormula);
 
     return this.goToFormulasList();
   }
@@ -172,7 +208,20 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public onAddInputParamClick(event) {
     event.preventDefault();
 
-    this.formParams.push(this.createFormulaParam());
+    const num = this.currentFormula.params.length + 1;
+    const param: FormulaParam = {
+      ID: 0,
+      CreatedAt: null,
+      UpdatedAt: null,
+      DeletedAt: null,
+      name: 'val' + num,
+      type: 'number'
+    };
+
+    this.currentFormula.params.push(param);
+    this.currentFormula = {...this.currentFormula};
+
+    this.formParams.push(this.createFormulaParam(param));
   }
 
   public onDeleteInputParam(event, rowIndex: number) {
@@ -183,5 +232,12 @@ export class FormulaContainer implements OnInit, OnDestroy {
 
   public isFormulaParamAvailable(param: FormControl): boolean {
     return !param.value.DeletedAt;
+  }
+
+  public updateFormulaResult(formulaResult: FormulaTerm) {
+    this.form.patchValue({ formulaResult });
+    console.log(this.form.value);
+    // console.log(JSON.stringify(this.form.value)); //SUM(SUM(11,12),SUM(21,22))
+    // console.log('formulaResult: ', JSON.stringify(this.form.value.formulaResult));
   }
 }

@@ -21,6 +21,7 @@ export class NovedadComponent implements OnInit, AfterViewInit {
   public currentNovedad$: Observable<Novedad> = null;
   paises: any[];
   id: number;
+  public estaGuardandose = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -51,6 +52,7 @@ export class NovedadComponent implements OnInit, AfterViewInit {
   }
 
   private gotoGrilla() {
+    this.estaGuardandose = true;
     this.router.navigate(['/novedades']);
   }
 
@@ -59,7 +61,10 @@ export class NovedadComponent implements OnInit, AfterViewInit {
   }
 
   async onClickSave(data: Novedad): Promise<Novedad> {
+    if (this.estaGuardandose) return null;
+    this.estaGuardandose = true;
     let novedadesItem: Novedad;
+    
 
     // se setea el paisID segun Option del selector de paises    
     /*
@@ -71,13 +76,14 @@ DeletedAt: n
     if(data.legajo) data.legajoid = data.legajo.ID;
     if(data.concepto) data.conceptoid = data.concepto.ID;
 
+    var that = this;
     if (this.id) {
       console.log("Updated Novedad");
-      novedadesItem = await this.novedadService.putNovedad(data);
+      novedadesItem = await this.novedadService.putNovedad(data).finally(function(){that.habilitarGuardado();});
       this.gotoGrilla();
     } else {
       console.log("Created Novedad");
-      novedadesItem = await this.novedadService.postNovedad(data);
+      novedadesItem = await this.novedadService.postNovedad(data).finally(function(){that.habilitarGuardado();});
       this.gotoGrilla();
     }
 
@@ -86,6 +92,10 @@ DeletedAt: n
     return novedadesItem;
   }
 
+
+  habilitarGuardado() {
+    this.estaGuardandose = false
+  }
 
   isNew(data) : Boolean {
     return data.ID==null?false:true;
