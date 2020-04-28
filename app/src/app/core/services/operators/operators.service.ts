@@ -1,3 +1,4 @@
+import { DataPayload } from './../../../formula/components/formula-draw/formula-draw.component';
 import { Formula } from './../../models/formula.model';
 import { LogicalOperatorNames } from './../../enums/logical-operator-names.enum';
 import { FormulaTransferData } from './../../models/formula-transfer-data.model';
@@ -13,6 +14,7 @@ import { OperatorCategory } from '../../enums/operator-category.enum';
 export class OperatorsService {
 
   public operatorEmitter: EventEmitter<FormulaTransferData> = new EventEmitter();
+  public operatorDropEmitter: EventEmitter<DataPayload> = new EventEmitter();
 
   constructor() { }
 
@@ -62,6 +64,10 @@ export class OperatorsService {
 
   public emitOperatorClicked(data: FormulaTransferData) {
     this.operatorEmitter.emit(data);
+  }
+
+  public emitOperatorDrop(data: DataPayload) {
+    this.operatorDropEmitter.emit(data);
   }
 
   public getDomIdByOperator(operator: Operator, prefix?: string): string {
