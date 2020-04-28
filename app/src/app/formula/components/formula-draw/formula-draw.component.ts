@@ -1,3 +1,4 @@
+import { OperatorsService } from './../../../core/services/operators/operators.service';
 import { Formula } from './../../../core/models/formula.model';
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 
@@ -21,7 +22,7 @@ export class FormulaDrawComponent implements OnInit {
   private prefixSymbol = new Map();
   private middleSymbol = new Map();
 
-  constructor() {
+  constructor(private operatorService: OperatorsService) {
     this.prefixSymbol.set('NEGADO', "NOT");
     
     this.middleSymbol.set('Sum', "+");
@@ -90,6 +91,7 @@ export class FormulaDrawComponent implements OnInit {
     const data: DataPayload = JSON.parse(event.dataTransfer.getData('text'));
 
     console.log("onDrop: ", data);
+    this.operatorService.emitOperatorDrop(data);
 
     if(data.payload === undefined) {
       if(parentFormulaParam.type == '') return;
@@ -206,7 +208,7 @@ export class FormulaDrawComponent implements OnInit {
   }
 
   onEnter(e) {
-    const elements = document.querySelectorAll('.highligthed');document.querySelectorAll('.no-highlight');
+    const elements = document.querySelectorAll('.highligthed');
     elements.forEach(element => {
       element.classList.replace('highligthed', 'no-highlight');
     });

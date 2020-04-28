@@ -7,6 +7,7 @@ import { ApiHttpService } from './../api-http/api-http.service';
 import { TestBed } from '@angular/core/testing';
 
 import { FormulaService } from './formula.service';
+import { FormulaTypes } from '../../constants/formula-types.constants';
 
 describe('FormulaService', () => {
   let api: ApiHttpService;
@@ -26,7 +27,7 @@ describe('FormulaService', () => {
     valueid: 1
   };
 
-  const formulas = FormulaFixtures.getAll();
+  const fakeFormulaList = FormulaFixtures.getAll();
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -50,6 +51,35 @@ describe('FormulaService', () => {
       await service.getAll();
 
       expect(getSpy).toHaveBeenCalledWith(`${service.BASE_URL}/formulas`);
+    });
+  });
+
+  describe('updateFormulasStore', () => {
+    it('should call getAll to retreive the latest formulas from the backend', async () => {
+      const getAllSpy = spyOn(service, 'getAll').and.callThrough();
+
+      await service.updateFormulasStore();
+
+      expect(getAllSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should update the store', async () => {
+      const storeSpy = spyOn(service.formulas, 'next');
+
+      await service.updateFormulasStore();
+
+      expect(storeSpy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('getByType', () => {
+    it('should call to the api with the right url', async () => {
+      const apiGetSpy = spyOn(api, 'get').and.callThrough();
+      const fakeType = 'test';
+
+      await service.getByType(fakeType);
+
+      expect(apiGetSpy).toHaveBeenCalledWith(`${service.BASE_URL}/formulas?type=${fakeType}`);
     });
   });
 
@@ -140,5 +170,63 @@ describe('FormulaService', () => {
     });
   });
 
+  describe('extractBasicMathOperators', () => {
+    it('should correctly filter the math operators', () => {
+      expect(service.extractBasicMathOperators(fakeFormulaList)).toEqual(FormulaFixtures.getMathBasicOperators());
+    });
+  });
 
+  describe('extractLogicalOperators', () => {
+    it('should correctly filter the logical operators', () => {
+      expect(service.extractLogicalOperators(fakeFormulaList)).toEqual(FormulaFixtures.getLogialOperators());
+    });
+  });
+
+  describe('extractFormulasByType', () => {
+    it('should correctly filter formulas by a given type', () => {
+      expect(service.extractFormulasByType(fakeFormulaList, FormulaTypes.HELPER)).toEqual(FormulaFixtures.getHelperFormulas());
+    });
+  });
+
+  describe('extractUserFormulas', () => {
+    it('should correctly filter user formulas' , () => {
+      expect(service.extractUserFormulas(fakeFormulaList)).toEqual(FormulaFixtures.getUserFormulas());
+    });
+  });
+
+  describe('extractVariables', () => {
+    it('should correctly filter the variables', () => {
+      expect(service.extractVariables(fakeFormulaList)).toEqual(FormulaFixtures.getVariables());
+    });
+  });
+
+  describe('extractInputParams', () => {
+    it('should extract the input params from a given formula', () => {
+      const formula = FormulaFixtures.getSumFormula();
+      const expectedParams = FormulaFixtures.getSumInputParams();
+
+      expect(service.extractInputParams(formula)).toEqual(expectedParams);
+    });
+  });
+
+  describe('extractStandardFormulas', () => {
+    it('should filter correctly the standard formulas', () => {
+      expect(service.extractStandardFormulas(fakeFormulaList)).toEqual(FormulaFixtures.getStandardFormulas());
+    });
+  });
+
+  describe('emitFormulaItemClick', () => {
+    it('should call the emit method from formulaPickerItemEmitter', () => {
+      const data = {
+        nodeId: '',
+        payload: {}
+      };
+
+      const emitterSpy = spyOn(service.formulaPickerItemEmitter, 'emit').and.returnValue(null);
+
+      service.emitFormulaItemClick(data);
+
+      expect(emitterSpy).toHaveBeenCalledWith(data);
+    });
+  });
 });
