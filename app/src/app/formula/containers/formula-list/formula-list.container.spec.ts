@@ -1,3 +1,5 @@
+import { FormulaCloneDialogComponent } from './../../components/formula-clone-dialog/formula-clone-dialog.component';
+import { of } from 'rxjs';
 import { FormulaServiceMock } from './../../../core/mocks/formula.service.mock';
 import { FormulaService } from '../../../core/services/formula/formula.service';
 import { LegajoServiceMock } from '../../../core/mocks/legajo.service.mock';
@@ -10,12 +12,16 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormulaListContainer } from './formula-list.container';
 import { Router } from '@angular/router';
 import { Formula } from 'src/app/core/models/formula.model';
+import { MatDialog } from '@angular/material';
 
 describe('FormulaListContainer', () => {
   let component: FormulaListContainer;
   let fixture: ComponentFixture<FormulaListContainer>;
   let formulaService: FormulaService;
   let router: Router;
+  let dialog: MatDialog;
+  const dialogRefSpyObj = jasmine.createSpyObj({ afterClosed : of({}), close: null });
+  dialogRefSpyObj.componentInstance = { body: '' };
 
   const fakeFormulaItem: Formula = {
     name: 'Formula 1',
@@ -49,6 +55,7 @@ describe('FormulaListContainer', () => {
 
     formulaService = TestBed.get(FormulaService);
     router = TestBed.get(Router);
+    dialog = TestBed.get(MatDialog);
   }));
 
   beforeEach(() => {
@@ -85,7 +92,7 @@ describe('FormulaListContainer', () => {
     it('should navigate to the formula edition page', async () => {
       const routerSpy = spyOn(router, 'navigate');
 
-      await component.editFormula(fakeFormulaItem);
+      component.editFormula(fakeFormulaItem);
 
       expect(routerSpy).toHaveBeenCalledWith(['/formulas/edit', fakeFormulaItem.name]);
     });
@@ -106,6 +113,34 @@ describe('FormulaListContainer', () => {
       await component.onDelete(fakeFormulaItem);
 
       expect(deleteSpy).toHaveBeenCalledWith(fakeFormulaItem);
+    });
+  });
+
+  describe('cloneFormula', () => {
+    it('should open a dialog to handle the clone feature', () => {
+      const dialogSpy = spyOn(component.dialog, 'open').and.returnValue(dialogRefSpyObj);
+
+      component.cloneFormula(fakeFormulaItem);
+
+      expect(dialogSpy).toHaveBeenCalledWith(
+        FormulaCloneDialogComponent,
+        {
+          width: '500px',
+          data: { formula: fakeFormulaItem }
+        }
+      );
+
+      expect(dialogRefSpyObj.afterClosed).toHaveBeenCalled();
+    });
+  });
+
+  describe('isFormulaEditable', () => {
+    it('should call isEditable from the formula service', () => {
+      const serviceSpy = spyOn(formulaService, 'isEditable');
+
+      component.isFormulaEditable(fakeFormulaItem);
+
+      expect(serviceSpy).toHaveBeenCalledTimes(1);
     });
   });
 });
