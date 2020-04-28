@@ -1,7 +1,52 @@
+import { Formula } from './../models/formula.model';
 import { FormulaCategory } from './../models/formula-category.model';
 export class FormulaFixtures {
-  static getAll() {
+  static getAll(): Formula[] {
     return [
+      {
+        name: 'Greater',
+        type: 'operator',
+        params: [],
+        description: '',
+        origin: '',
+        scope: '',
+        result: '',
+        value: '',
+        valueid: 0
+      },
+      {
+        name: 'Equality',
+        type: 'operator',
+        params: [],
+        description: '',
+        origin: '',
+        scope: '',
+        result: '',
+        value: '',
+        valueid: 0
+      },
+      {
+        name: 'StandardFormula1',
+        type: 'generic',
+        params: [],
+        description: '',
+        origin: '',
+        scope: 'public',
+        result: '',
+        value: '',
+        valueid: 0
+      },
+      {
+        name: 'StandardFormula2',
+        type: 'generic',
+        params: [],
+        description: '',
+        origin: '',
+        scope: 'public',
+        result: '',
+        value: '',
+        valueid: 0
+      },
       {
         name: 'Sum',
         CreatedAt: '2020-02-26T17:14:38.962588+03:00',
@@ -609,6 +654,193 @@ export class FormulaFixtures {
           arginvokeid: 0
         },
         valueid: 297
+      }
+    ];
+  }
+
+  static getMathBasicOperators() {
+    return [
+      {
+        name: 'Sum',
+        CreatedAt: '2020-02-26T17:14:38.962588+03:00',
+        UpdatedAt: '2020-02-26T17:14:38.962588+03:00',
+        DeletedAt: null,
+        params: [
+          {
+            ID: 51,
+            CreatedAt: '2020-02-26T17:14:38.964804+03:00',
+            UpdatedAt: '2020-02-26T17:14:38.964804+03:00',
+            DeletedAt: null,
+            name: 'val1',
+            type: 'number',
+            functionname: 'Sum'
+          },
+          {
+            ID: 52,
+            CreatedAt: '2020-02-26T17:14:38.966603+03:00',
+            UpdatedAt: '2020-02-26T17:14:38.966603+03:00',
+            DeletedAt: null,
+            name: 'val2',
+            type: 'number',
+            functionname: 'Sum'
+          }
+        ],
+        description: '',
+        origin: 'primitive',
+        type: 'operator',
+        scope: 'public',
+        result: 'number',
+        value: {
+          ID: 113,
+          CreatedAt: '2020-02-26T17:14:38.960526+03:00',
+          UpdatedAt: '2020-02-26T17:14:38.960526+03:00',
+          DeletedAt: null,
+          name: '',
+          valuenumber: 0,
+          valuestring: '',
+          Valueboolean: false,
+          valueinvoke: null,
+          valueinvokeid: 0,
+          arginvokeid: 0
+        },
+        valueid: 113
+      }
+    ]
+  }
+
+  static getLogialOperators() {
+    return [
+      {
+        name: 'Greater',
+        type: 'operator',
+        params: [],
+        description: '',
+        origin: '',
+        scope: '',
+        result: '',
+        value: '',
+        valueid: 0
+      },
+      {
+        name: 'Equality',
+        type: 'operator',
+        params: [],
+        description: '',
+        origin: '',
+        scope: '',
+        result: '',
+        value: '',
+        valueid: 0
+      }
+    ];
+  }
+
+  static getHelperFormulas() {
+    return [{'name':'TotalImporteRemunerativo','CreatedAt':'2020-02-26T17:16:54.770727+03:00','UpdatedAt':'2020-02-26T17:16:54.770727+03:00','DeletedAt':null,'params':[{'ID':53,'CreatedAt':'2020-02-26T17:16:54.772833+03:00','UpdatedAt':'2020-02-26T17:16:54.772833+03:00','DeletedAt':null,'name':'liquidacion','type':'object','functionname':'TotalImporteRemunerativo'}],'description':'dada una liquidacion obtiene la suma total de importes remunerativos de la misma','origin':'primitive','type':'helper','scope':'public','result':'number','value':{'ID':114,'CreatedAt':'2020-02-26T17:16:54.764358+03:00','UpdatedAt':'2020-02-26T17:16:54.764358+03:00','DeletedAt':null,'name':'','valuenumber':0,'valuestring':'','Valueboolean':false,'valueinvoke':null,'valueinvokeid':0,'arginvokeid':0},'valueid':114}]
+  }
+
+  static getUserFormulas() {
+    return [{'name':'test','CreatedAt':'2020-03-02T19:00:07.728369+03:00','UpdatedAt':'2020-03-03T15:42:13.514744+03:00','DeletedAt':null,'params':[{'ID':87,'CreatedAt':'2020-03-02T19:00:07.733969+03:00','UpdatedAt':'2020-03-03T15:42:13.516474+03:00','DeletedAt':null,'name':'val1','type':'number','functionname':'test'},{'ID':88,'CreatedAt':'2020-03-02T19:00:31.662611+03:00','UpdatedAt':'2020-03-03T15:42:13.517953+03:00','DeletedAt':null,'name':'val2','type':'number','functionname':'test'}],'description':'descripcion','origin':'custom','type':'generic','scope':'private','result':'number','value':{'ID':281,'CreatedAt':'2020-03-02T19:00:07.719167+03:00','UpdatedAt':'2020-03-02T19:00:07.719167+03:00','DeletedAt':null,'name':'','valuenumber':0,'valuestring':'','Valueboolean':false,'valueinvoke':null,'valueinvokeid':0,'arginvokeid':0},'valueid':281}]
+  }
+
+  static getVariables() {
+    return [{'name':'TotalImporteRemunerativo','CreatedAt':'2020-02-26T17:16:54.770727+03:00','UpdatedAt':'2020-02-26T17:16:54.770727+03:00','DeletedAt':null,'params':[{'ID':53,'CreatedAt':'2020-02-26T17:16:54.772833+03:00','UpdatedAt':'2020-02-26T17:16:54.772833+03:00','DeletedAt':null,'name':'liquidacion','type':'object','functionname':'TotalImporteRemunerativo'}],'description':'dada una liquidacion obtiene la suma total de importes remunerativos de la misma','origin':'primitive','type':'helper','scope':'public','result':'number','value':{'ID':114,'CreatedAt':'2020-02-26T17:16:54.764358+03:00','UpdatedAt':'2020-02-26T17:16:54.764358+03:00','DeletedAt':null,'name':'','valuenumber':0,'valuestring':'','Valueboolean':false,'valueinvoke':null,'valueinvokeid':0,'arginvokeid':0},'valueid':114}]
+  }
+
+  static getSumFormula() {
+    return  {
+      name: 'Sum',
+      CreatedAt: '2020-02-26T17:14:38.962588+03:00',
+      UpdatedAt: '2020-02-26T17:14:38.962588+03:00',
+      DeletedAt: null,
+      params: [
+        {
+          ID: 51,
+          CreatedAt: '2020-02-26T17:14:38.964804+03:00',
+          UpdatedAt: '2020-02-26T17:14:38.964804+03:00',
+          DeletedAt: null,
+          name: 'val1',
+          type: 'number',
+          functionname: 'Sum'
+        },
+        {
+          ID: 52,
+          CreatedAt: '2020-02-26T17:14:38.966603+03:00',
+          UpdatedAt: '2020-02-26T17:14:38.966603+03:00',
+          DeletedAt: null,
+          name: 'val2',
+          type: 'number',
+          functionname: 'Sum'
+        }
+      ],
+      description: '',
+      origin: 'primitive',
+      type: 'operator',
+      scope: 'public',
+      result: 'number',
+      value: {
+        ID: 113,
+        CreatedAt: '2020-02-26T17:14:38.960526+03:00',
+        UpdatedAt: '2020-02-26T17:14:38.960526+03:00',
+        DeletedAt: null,
+        name: '',
+        valuenumber: 0,
+        valuestring: '',
+        Valueboolean: false,
+        valueinvoke: null,
+        valueinvokeid: 0,
+        arginvokeid: 0
+      },
+      valueid: 113
+    };
+  }
+
+  static getSumInputParams() {
+    return [
+      {
+        ID: 51,
+        CreatedAt: '2020-02-26T17:14:38.964804+03:00',
+        UpdatedAt: '2020-02-26T17:14:38.964804+03:00',
+        DeletedAt: null,
+        name: 'val1',
+        type: 'number',
+        functionname: 'Sum'
+      },
+      {
+        ID: 52,
+        CreatedAt: '2020-02-26T17:14:38.966603+03:00',
+        UpdatedAt: '2020-02-26T17:14:38.966603+03:00',
+        DeletedAt: null,
+        name: 'val2',
+        type: 'number',
+        functionname: 'Sum'
+      }
+    ];
+  }
+
+  static getStandardFormulas() {
+    return [
+      {
+        name: 'StandardFormula1',
+        type: 'generic',
+        params: [],
+        description: '',
+        origin: '',
+        scope: 'public',
+        result: '',
+        value: '',
+        valueid: 0
+      },
+      {
+        name: 'StandardFormula2',
+        type: 'generic',
+        params: [],
+        description: '',
+        origin: '',
+        scope: 'public',
+        result: '',
+        value: '',
+        valueid: 0
       }
     ];
   }
