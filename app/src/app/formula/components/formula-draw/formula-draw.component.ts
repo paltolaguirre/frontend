@@ -208,7 +208,7 @@ export class FormulaDrawComponent implements OnInit {
   }
 
   onEnter(e) {
-    const elements = document.querySelectorAll('.highligthed');document.querySelectorAll('.no-highlight');
+    const elements = document.querySelectorAll('.highligthed');
     elements.forEach(element => {
       element.classList.replace('highligthed', 'no-highlight');
     });

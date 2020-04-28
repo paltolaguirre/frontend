@@ -10,6 +10,7 @@ import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@ang
 import { componentDestroyed } from '@w11k/ngx-componentdestroyed';
 import { Location } from '@angular/common';
 import { FormulaTerm } from 'src/app/core/models/formula-term.model';
+import { NotificationService } from 'src/app/handler-error/notification.service';
 
 @Component({
   selector: 'app-formula',
@@ -44,7 +45,8 @@ export class FormulaContainer implements OnInit, OnDestroy {
     private location: Location,
     private formulaService: FormulaService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) {
     this.buildEmptyForm();
   }
@@ -52,7 +54,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
   async ngOnInit() {
     this.route.params.pipe(
       takeUntil(componentDestroyed(this)),
-      pluck('name')).subscribe(name => {
+      pluck('name')).subscribe(async name => {
         if (!name) {
           this.isNew = true;
           this.currentFormula = this.form.value;
@@ -60,10 +62,10 @@ export class FormulaContainer implements OnInit, OnDestroy {
           return this.buildEmptyForm();
         }
 
-        this.setCurrentFormula(name);
+        await this.setCurrentFormula(name);
         this.fetchFormulas();
 
-        this.currentCanvasFormulas.push(this.currentFormula);
+        this.currentCanvasFormulas = [this.currentFormula.value];
       });
   }
 
@@ -168,6 +170,13 @@ export class FormulaContainer implements OnInit, OnDestroy {
       }
 
       this.updateFormula();
+    } else {
+      const notificacion = {
+        codigo: 400,
+        mensaje: 'El lienzo debe contener una unica formula para poder ser guardada.'
+      }
+      const ret = this.notificationService.notify(notificacion);
+      return ret;
     }
   }
 

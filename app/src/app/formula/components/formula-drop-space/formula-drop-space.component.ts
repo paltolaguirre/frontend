@@ -4,7 +4,7 @@ import { OperatorsService } from '../../../core/services/operators/operators.ser
 import { componentDestroyed } from '@w11k/ngx-componentdestroyed';
 import { takeUntil } from 'rxjs/operators';
 import { FormulaService } from '../../../core/services/formula/formula.service';
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { FormulaTerm } from 'src/app/core/models/formula-term.model';
 
 @Component({
@@ -107,11 +107,21 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     this.valuesinvoke.push(value);
     event.cancelBubble = true;
   }
+  
   public onDragOver(event) { // allowDrop
     event.preventDefault();
 
     //this.onParamMouseOver(event);
 
     event.cancelBubble = true;
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log("changed app-formula-drop-space: ", changes);
+    const value = changes.formulaValue.currentValue;
+
+    if(value && value !== undefined) {
+      this.valuesinvoke = value;
+    }
   }
 }
