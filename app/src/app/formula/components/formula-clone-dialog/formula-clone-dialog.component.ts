@@ -1,4 +1,4 @@
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { Formula } from './../../../core/models/formula.model';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Component, OnInit, Inject } from '@angular/core';
@@ -22,6 +22,7 @@ export class FormulaCloneDialogComponent implements OnInit {
     this.form = this.formBuilder.group({
       ...this.data.formula,
       name: this.data.formula.name + ' (1)',
+      params: this.formBuilder.array(this.data.formula.params),
       value: {
         valueinvoke: null
       },
