@@ -270,10 +270,14 @@ export class FormulaDrawComponent implements OnInit {
   }
   
   onMouseEnter(e, id) {
+    e.stopPropagation();
+
     this.onEnter(e, id);
   }
   
   onMouseLeave(e, id) {
+    e.stopPropagation();
+
     this.onLeave(e, id);
   }
 /** */
