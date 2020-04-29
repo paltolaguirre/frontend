@@ -211,15 +211,15 @@ export class FormulaDrawComponent implements OnInit {
     }
   }
 /** */
-  onDragOver(event) { // allowDrop
+  onDragOver(event, id) { // allowDrop
     event.preventDefault();
 
-    this.onEnter(event);
+    this.onEnter(event, id);
 
     event.cancelBubble = true;
   }
 
-  onEnter(e) {
+  onEnter(e, id) {
     const elements = document.querySelectorAll('.highligthed');
     elements.forEach(element => {
       element.classList.replace('highligthed', 'no-highlight');
@@ -228,30 +228,53 @@ export class FormulaDrawComponent implements OnInit {
     const element:HTMLElement = e.target;
     element.classList.replace('no-highlight', 'highligthed');
 
-    this.showBadge(e);
+    this.hideAllRemoveBadges();
+
+    console.clear();
+    console.log('id:', id);
+
+    const removeBadge = document.querySelector(`#value-${id}`);
+    console.log('remove badge found:', removeBadge);
+
+    if (removeBadge) {
+      removeBadge.classList.add('show');
+      removeBadge.classList.remove('hide');
+    }
+
+
+    // this.showBadge(e);
   }
 
-  onLeave(e) {
+  onLeave(e, id) {
     const element:HTMLElement = e.target;
     element.classList.replace('highligthed', 'no-highlight');
 
-    this.hideBadge(e);
+    this.hideAllRemoveBadges();
   }
 
-  onDragEnter(e) {
-    this.onEnter(e);
+  public hideAllRemoveBadges() {
+    const allBadges = document.querySelectorAll('.remove-badge-container');
+
+    for (let i = 0; i < allBadges.length; i++) {
+      allBadges[i].classList.remove('show');
+      allBadges[i].classList.add('hide');
+    }
+  }
+
+  onDragEnter(e, id) {
+    this.onEnter(e, id);
   }
   
-  onDragLeave(e) {
-    this.onLeave(e);
+  onDragLeave(e, id) {
+    this.onLeave(e, id);
   }
   
-  onMouseEnter(e) {
-    this.onEnter(e);
+  onMouseEnter(e, id) {
+    this.onEnter(e, id);
   }
   
-  onMouseLeave(e) {
-    this.onLeave(e);
+  onMouseLeave(e, id) {
+    this.onLeave(e, id);
   }
 /** */
   onClickRemove(currentFormulaValue) {
