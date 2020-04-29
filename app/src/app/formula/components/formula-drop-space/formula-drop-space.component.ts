@@ -118,6 +118,10 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges) {
     console.log("changed app-formula-drop-space: ", changes);
+    if (!changes.formulaValue) {
+      return null;
+    }
+
     const value = changes.formulaValue.currentValue;
 
     if(value && value !== undefined) {
