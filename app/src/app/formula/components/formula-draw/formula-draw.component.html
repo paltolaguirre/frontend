@@ -38,6 +38,10 @@
                 {{formulaValue.valueinvoke.args[0].valuestring}}
                 <span class="remove-badge-container no-selectable hide" draggable="false" (click)="onClickRemove(formulaValue)"><i class="remove-icon no-selectable fas fa-trash-alt highligthed"></i></span>
             </div>
+            <div *ngSwitchCase="'GetConceptValue'" class="param number-param no-highlight" draggable="true" (drop)="onDrop($event, formulaValue)" (dragover)="onDragOver($event)" (dragstart)="onDrag($event, formulaValue)" (dragend)="onDragEnd($event, formulaValue)" (dragenter)="onDragEnter($event)" (dragleave)="onDragLeave($event)" (mouseenter)="onMouseEnter($event)" (mouseleave)="onMouseLeave($event)" (mouseover)="onMouseEnter($event)">
+                {{formulaValue.valueinvoke.args[0].valuestring}}
+                <span class="remove-badge-container no-selectable hide" draggable="false" (click)="onClickRemove(formulaValue)"><i class="remove-icon no-selectable fas fa-trash-alt highligthed"></i></span>
+            </div>
         </div>
         <div *ngSwitchCase="'helper'">
             <div class="param number-param no-highlight" draggable="true" (drop)="onDrop($event, formulaValue)" (dragover)="onDragOver($event)" (dragstart)="onDrag($event, formulaValue)" (dragend)="onDragEnd($event, formulaValue)" (dragenter)="onDragEnter($event)" (dragleave)="onDragLeave($event)" (mouseenter)="onMouseEnter($event)" (mouseleave)="onMouseLeave($event)" (mouseover)="onMouseEnter($event)">

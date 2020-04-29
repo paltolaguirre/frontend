@@ -102,7 +102,7 @@
                   [attr.data-type]="getOperatorDefaultType()"
                   [attr.data-data]="getFormulaTransferData(concept, 'concept-' + index + 1) | json"
                   draggable="true"
-                  (dragstart)="onDragStart($event, concept)"
+                  (dragstart)="onDragStart($event, getConceptParam(concept))"
                   (click)="onFormulaItemClick($event, concept)"
                   [matTooltip]="null"
                   matTooltipPosition="above"
