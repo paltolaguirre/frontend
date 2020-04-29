@@ -181,35 +181,6 @@ export class FormulaDrawComponent implements OnInit {
     }
   }*/
 
-  showBadge(e) {
-    const element:HTMLElement = e.target;
-
-    /*const elements = document.querySelectorAll('.remove-badge-container');
-    for (let index = 2; index < elements.length; index++) {
-      const item = elements[index];
-      if(item.className.includes("remove-badge-container")) {
-        item.classList.replace('show', 'hide');
-      }
-    }*/
-
-    for (let index = 0; index < element.children.length; index++) {
-      const item = element.children.item(index);
-      if(item.className.includes("remove-badge-container")) {
-        item.classList.replace('hide', 'show');
-      }
-    }
-  }
-
-  hideBadge(e) {
-    const element:HTMLElement = e.target;
-  
-    for (let index = 0; index < element.children.length; index++) {
-      const item = element.children.item(index);
-      if(item.className.includes("remove-badge-container")) {
-        item.classList.replace('show', 'hide');
-      }
-    }
-  }
 /** */
   onDragOver(event, id) { // allowDrop
     event.preventDefault();
@@ -225,60 +196,57 @@ export class FormulaDrawComponent implements OnInit {
       element.classList.replace('highligthed', 'no-highlight');
     });
 
-    const element:HTMLElement = e.target;
+    const element: HTMLElement = e.target;
     element.classList.replace('no-highlight', 'highligthed');
 
     this.hideAllRemoveBadges();
 
-    console.clear();
-    console.log('id:', id);
-
-    const removeBadge = document.querySelector(`#value-${id}`);
-    console.log('remove badge found:', removeBadge);
-
-    if (removeBadge) {
-      removeBadge.classList.add('show');
-      removeBadge.classList.remove('hide');
-    }
-
-
-    // this.showBadge(e);
+    this.showRemoveBadgeById(id);
   }
 
-  onLeave(e, id) {
-    const element:HTMLElement = e.target;
+  onLeave(e) {
+    const element: HTMLElement = e.target;
     element.classList.replace('highligthed', 'no-highlight');
 
     this.hideAllRemoveBadges();
   }
 
   public hideAllRemoveBadges() {
-    const allBadges = document.querySelectorAll('.remove-badge-container');
+    const allBadges = Array.from(document.querySelectorAll('.remove-badge-container'));
 
-    for (let i = 0; i < allBadges.length; i++) {
-      allBadges[i].classList.remove('show');
-      allBadges[i].classList.add('hide');
+    for (const badge of allBadges) {
+      badge.classList.remove('show');
+      badge.classList.add('hide');
+    }
+  }
+
+  public showRemoveBadgeById(id: string) {
+    const removeBadge = document.querySelector(`#value-${id}`);
+
+    if (removeBadge) {
+      removeBadge.classList.add('show');
+      removeBadge.classList.remove('hide');
     }
   }
 
   onDragEnter(e, id) {
     this.onEnter(e, id);
   }
-  
-  onDragLeave(e, id) {
-    this.onLeave(e, id);
+
+  onDragLeave(e) {
+    this.onLeave(e);
   }
-  
+
   onMouseEnter(e, id) {
     e.stopPropagation();
 
     this.onEnter(e, id);
   }
-  
-  onMouseLeave(e, id) {
+
+  onMouseLeave(e) {
     e.stopPropagation();
 
-    this.onLeave(e, id);
+    this.onLeave(e);
   }
 /** */
   onClickRemove(currentFormulaValue) {
