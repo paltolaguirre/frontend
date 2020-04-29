@@ -159,10 +159,12 @@ export class FormulaContainer implements OnInit, OnDestroy {
   }
 
   public async save() {
+    this.currentFormula.value = this.currentCanvasFormulas.filter(formula => formula.valueinvoke != null)[0];
+    this.currentFormula.name = this.form.get('name').value;
+    this.currentFormula.description = this.form.get('description').value;
+    this.currentFormula.result = this.form.get('result').value;
+
     if (this.validateCanvasFormulas()) {
-      this.currentFormula.value = this.currentCanvasFormulas.filter(formula => formula.valueinvoke != null)[0];
-      this.currentFormula.name = this.form.get('name').value;
-      this.currentFormula.description = this.form.get('description').value;
       console.log("Current Formula: ", this.currentFormula)
 
       if (this.isNew) {
@@ -170,20 +172,39 @@ export class FormulaContainer implements OnInit, OnDestroy {
       }
 
       this.updateFormula();
-    } else {
-      const notificacion = {
-        codigo: 400,
-        mensaje: 'El lienzo debe contener una unica formula para poder ser guardada.'
-      }
-      const ret = this.notificationService.notify(notificacion);
-      return ret;
     }
   }
 
   public validateCanvasFormulas() {
     const formulas = this.currentCanvasFormulas.filter(formula => formula.valueinvoke != null);
 
+    if(this.currentFormula.name.length < 3) {
+      const notificacion = {
+        codigo: 400,
+        mensaje: 'El campo "nombre" es obligatorio y debe contener mas de 3 caracteres.'
+      }
+      const ret = this.notificationService.notify(notificacion);
+
+      return false;
+    }
+
     if(formulas.length != 1) {
+      const notificacion = {
+        codigo: 400,
+        mensaje: 'El lienzo debe contener una unica formula para poder ser guardada.'
+      }
+      const ret = this.notificationService.notify(notificacion);
+
+      return false;
+    }
+
+    if(this.currentFormula.result != formulas[0].valueinvoke.function.result) {
+      const notificacion = {
+        codigo: 400,
+        mensaje: 'La formula creada retorna un tipo de dato diferente al tipo de dato del Parámetro de Salida.'
+      }
+      const ret = this.notificationService.notify(notificacion);
+
       return false;
     }
 

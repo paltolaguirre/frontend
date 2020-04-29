@@ -23,7 +23,7 @@ export class FormulaDrawComponent implements OnInit {
   private middleSymbol = new Map();
 
   constructor(private operatorService: OperatorsService) {
-    this.prefixSymbol.set('NEGADO', "NOT");
+    this.prefixSymbol.set('Not', "NEGADO");
     
     this.middleSymbol.set('Sum', "+");
     this.middleSymbol.set('Diff', "-");
@@ -35,6 +35,10 @@ export class FormulaDrawComponent implements OnInit {
     this.middleSymbol.set('Inequality', "<>");
     this.middleSymbol.set('And', "Y");
     this.middleSymbol.set('Or', "Ó");
+
+    this.middleSymbol.set('Percent', "% DE");
+    this.middleSymbol.set('GreaterEqual', ">=");
+    this.middleSymbol.set('LessEqual', "<=");
   }
 
   ngOnInit() {
@@ -179,6 +183,14 @@ export class FormulaDrawComponent implements OnInit {
 
   showBadge(e) {
     const element:HTMLElement = e.target;
+
+    /*const elements = document.querySelectorAll('.remove-badge-container');
+    for (let index = 2; index < elements.length; index++) {
+      const item = elements[index];
+      if(item.className.includes("remove-badge-container")) {
+        item.classList.replace('show', 'hide');
+      }
+    }*/
 
     for (let index = 0; index < element.children.length; index++) {
       const item = element.children.item(index);
