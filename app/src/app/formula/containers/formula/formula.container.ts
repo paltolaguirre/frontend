@@ -109,6 +109,8 @@ export class FormulaContainer implements OnInit, OnDestroy {
       },
       formulaResult: []
     });
+
+    this.subscribeToInputParamsChanges();
   }
 
   public fetchFormulas() {
@@ -143,10 +145,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
 
     this.updateFormulaParams();
 
-    // Subscribe to the input params changes.
-    this.form.controls['params'].valueChanges.subscribe((changes) => {
-      this.currentFormula.params = changes;
-    });
+    this.subscribeToInputParamsChanges();
   }
 
   public createFormulaParam(formulaParam: FormulaParam) {
@@ -157,6 +156,12 @@ export class FormulaContainer implements OnInit, OnDestroy {
     for (const param of this.currentFormula.params) {
       this.formParams.push(this.createFormulaParam(param));
     }
+  }
+
+  public subscribeToInputParamsChanges() {
+    this.form.controls.params.valueChanges.subscribe((changes) => {
+      this.currentFormula.params = changes;
+    });
   }
 
   get formParams() {
