@@ -29,9 +29,35 @@ export class FormulaCloneDialogComponent implements OnInit {
 
     clonedFormula.name = this.form.value.name;
     clonedFormula.description = this.form.value.description;
-    clonedFormula.valueid = null;
+
+    clonedFormula.valueid = 0;
+    clonedFormula.value.ID = 0;
+    clonedFormula.value.valueinvoke.ID = 0;
+    clonedFormula.value.valueinvokeid = 0;
+    clonedFormula.valueinvokeid = 0;
+
+    this.setToZeroArgIds(clonedFormula.value.valueinvoke);
 
     this.dialogRef.close(clonedFormula);
+  }
+
+  private setToZeroArgIds(valueinvoke) {
+    const args = valueinvoke.args;
+
+    if (!args) {
+      return null;
+    }
+
+    for (const arg of args) {
+      arg.ID = 0;
+
+      if (arg.valueinvoke) {
+        arg.valueinvoke.ID = 0;
+        arg.valueinvokeid = 0;
+
+        this.setToZeroArgIds(arg.valueinvoke);
+      }
+    }
   }
 
 }
