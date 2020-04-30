@@ -1,5 +1,4 @@
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Formula } from './../../../core/models/formula.model';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Component, OnInit, Inject } from '@angular/core';
 
@@ -21,12 +20,18 @@ export class FormulaCloneDialogComponent implements OnInit {
   ngOnInit() {
     this.form = this.formBuilder.group({
       ...this.data.formula,
-      name: this.data.formula.name + ' (1)',
-      value: {
-        valueinvoke: null
-      },
-      valueid: null
+      name: this.data.formula.name + ' (1)'
     });
+  }
+
+  public apply() {
+    const clonedFormula = {...this.data.formula};
+
+    clonedFormula.name = this.form.value.name;
+    clonedFormula.description = this.form.value.description;
+    clonedFormula.valueid = null;
+
+    this.dialogRef.close(clonedFormula);
   }
 
 }

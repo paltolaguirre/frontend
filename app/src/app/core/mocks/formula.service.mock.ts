@@ -13,6 +13,14 @@ export class FormulaServiceMock {
 
   fakeFormulaItem: Formula = FormulaFixtures.getAll()[0];
 
+  constructor() {
+    this.updateFormulasStore();
+  }
+
+  public async updateFormulasStore() {
+    this.formulas.next(await this.getAll());
+  }
+
   public getFormulaCategories(): FormulaCategory[] {
     return [
       {
@@ -85,7 +93,7 @@ export class FormulaServiceMock {
   }
 
   public getAll() {
-    return Promise.resolve([]);
+    return Promise.resolve(FormulaFixtures.getAll());
   }
 
   public delete(formula: Formula): Promise<any> {

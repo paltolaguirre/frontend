@@ -50,7 +50,7 @@ export class FormulaItemPickerComponent implements OnInit {
     this.fetchFormulas();
     this.fetchConcepts();
   }
-  
+
   public setFormulaCategories() {
     this.categories = this.formulaService.getFormulaCategories();
   }
@@ -166,8 +166,32 @@ export class FormulaItemPickerComponent implements OnInit {
         {
           ID: 0,
           name: "paramName",
+          type: "string",
           valuenumber: 0,
-          valuestring: "v1",
+          valuestring: param.name,
+          Valueboolean: false,
+          valueinvoke: null
+        }
+      ]
+    };
+
+    return formula;
+  }
+
+  public getConceptParam(concept) {
+    const formula = {
+      name: "GetConceptValue",
+      origin: "primitive",
+      type: "internal",
+      scope: "public",
+      result: "number",
+      params: [
+        {
+          ID: 0,
+          name: "conceptid",
+          type: "number",
+          valuenumber: concept.ID,
+          valuestring: concept.nombre,
           Valueboolean: false,
           valueinvoke: null
         }

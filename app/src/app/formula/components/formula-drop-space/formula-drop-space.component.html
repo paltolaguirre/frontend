@@ -4,7 +4,7 @@
   [ngClass]="{ 'expanded': !isItemPickerExpanded }"
   (dragover)='onDragOver($event)' (drop)="onDrop($event)">
   <ng-container *ngFor="let value of valuesinvoke; index as i;">
-    <app-formula-draw *ngIf="value.valueinvoke != null || (value.valueinvoke == null && valuesinvoke.length == 1)" [formulaValue]="value" [formulaParams]="value.params"></app-formula-draw>
+    <app-formula-draw *ngIf="value.valueinvoke != null" [formulaValue]="value" [formulaParams]="value.params"></app-formula-draw>
   </ng-container>
 </div>
 <div id="warningBox" style="display: none;height: 50px;background-color: goldenrod;bottom: 64px;position: relative;text-align: center;color: white;padding: 7px 0px;">

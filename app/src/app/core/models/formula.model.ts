@@ -12,4 +12,5 @@ export class Formula {
   value: any;
   valueid: number;
   symbol?: string;
+  valueinvoke?: any;
 }
