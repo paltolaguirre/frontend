@@ -142,11 +142,6 @@ export class FormulaContainer implements OnInit, OnDestroy {
     });
 
     this.updateFormulaParams();
-
-    this.form.valueChanges.subscribe((changes) => {
-      console.log('Form changes:');
-      console.log(changes);
-    });
   }
 
   public createFormulaParam(formulaParam: FormulaParam) {
