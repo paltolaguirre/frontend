@@ -86,6 +86,7 @@
                         </mat-form-field>
                         <mat-form-field>
                           <input [appDisableControl]="!isEditable" matInput type="text" formControlName="name" placeholder="Nombre Parámetro" autocomplete="off">
+                          <mat-error *ngIf="param.invalid">El campo es obligatorio</mat-error>
                         </mat-form-field>
                       </div>
                     </div>
