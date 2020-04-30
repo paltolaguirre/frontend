@@ -142,6 +142,11 @@ export class FormulaContainer implements OnInit, OnDestroy {
     });
 
     this.updateFormulaParams();
+
+    // Subscribe to the input params changes.
+    this.form.controls['params'].valueChanges.subscribe((changes) => {
+      this.currentFormula.params = changes;
+    });
   }
 
   public createFormulaParam(formulaParam: FormulaParam) {
@@ -238,13 +243,12 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public onAddInputParamClick(event) {
     event.preventDefault();
 
-    const num = this.currentFormula.params.length + 1;
     const param: FormulaParam = {
       ID: 0,
       CreatedAt: null,
       UpdatedAt: null,
       DeletedAt: null,
-      name: 'val' + num,
+      name: '',
       type: 'number'
     };
 
@@ -260,7 +264,6 @@ export class FormulaContainer implements OnInit, OnDestroy {
     const now = new Date();
 
     this.formParams.at(rowIndex).value.DeletedAt = now;
-    this.currentFormula.params[rowIndex].DeletedAt = now;
   }
 
   public isFormulaParamAvailable(param: FormControl): boolean {
