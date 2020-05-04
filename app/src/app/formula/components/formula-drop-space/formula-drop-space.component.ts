@@ -137,4 +137,12 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
     return this.main.nativeElement.offsetWidth;
   }
+
+  public getDropSpaceHeight() {
+    if (!this.main) {
+      return null;
+    }
+
+    return this.main.nativeElement.offsetHeight;
+  }
 }
