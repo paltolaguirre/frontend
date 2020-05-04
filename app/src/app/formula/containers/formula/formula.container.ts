@@ -178,6 +178,8 @@ export class FormulaContainer implements OnInit, OnDestroy {
     this.currentFormula.description = this.form.get('description').value;
     this.currentFormula.result = this.form.get('result').value;
 
+
+
     if (this.validateCanvasFormulas()) {
       console.log("Current Formula: ", this.currentFormula)
 
@@ -218,6 +220,17 @@ export class FormulaContainer implements OnInit, OnDestroy {
         mensaje: 'La formula creada retorna un tipo de dato diferente al tipo de dato del Parámetro de Salida.'
       }
       const ret = this.notificationService.notify(notificacion);
+
+      return false;
+    }
+
+    if (this.form.controls.params.invalid) {
+      const notificacion = {
+        codigo: 400,
+        mensaje: 'Los parámetros de entrada no son válidos. El campo nombre es obligatorio.'
+      };
+
+      this.notificationService.notify(notificacion);
 
       return false;
     }
