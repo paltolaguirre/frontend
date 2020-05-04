@@ -139,6 +139,9 @@ export class FormulaItemPickerComponent implements OnInit {
     this.pickableItems = this.pickableItems.filter((item) => {
       return !!item && !Array.isArray(item);
     });
+
+    // Removes the duplicated values.
+    this.pickableItems = [...new Set(this.pickableItems)];
   }
 
   public doFilter() {
