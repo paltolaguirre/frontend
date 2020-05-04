@@ -164,6 +164,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public subscribeToInputParamsChanges() {
     this.form.controls.params.valueChanges.subscribe((changes) => {
       this.currentFormula.params = changes;
+      this.currentFormula = {...this.currentFormula};
     });
   }
 
