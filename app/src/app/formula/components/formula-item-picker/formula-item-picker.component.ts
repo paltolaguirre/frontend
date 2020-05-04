@@ -152,7 +152,15 @@ export class FormulaItemPickerComponent implements OnInit {
     const sanitizedSearchInput = this.searchInput.toLowerCase();
 
     this.searchResult = this.pickableItems.filter(item => {
-      const sanitizedItemName = item.name ? item.name.toLowerCase() : item.nombre.toLowerCase();
+      let sanitizedItemName: string;
+
+      if (item.name) {
+        sanitizedItemName = item.name.toLowerCase();
+      } else if (item.nombre) {
+        sanitizedItemName = item.nombre.toLowerCase();
+      } else {
+        sanitizedItemName = '';
+      }
 
       return sanitizedItemName.includes(sanitizedSearchInput);
     });
