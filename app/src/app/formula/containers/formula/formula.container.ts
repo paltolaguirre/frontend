@@ -285,7 +285,11 @@ export class FormulaContainer implements OnInit, OnDestroy {
 
     const now = new Date();
 
-    this.formParams.at(rowIndex).value.DeletedAt = now;
+    const data = this.formParams.at(rowIndex).value;
+    data.name = ' ';
+    data.DeletedAt = now;
+
+    this.formParams.at(rowIndex).patchValue(data);
   }
 
   public isFormulaParamAvailable(param: FormControl): boolean {
