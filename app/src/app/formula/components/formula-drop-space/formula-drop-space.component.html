@@ -4,6 +4,11 @@
   class="draggable-space-container bg-gray"
   [ngClass]="{ 'expanded': !isItemPickerExpanded }"
   (dragover)='onDragOver($event)' (drop)="onDrop($event)">
+  <div class="trash-container">
+    <span class="trash-icon no-selectable" draggable="false">
+      <i class="remove-icon no-selectable far fa-trash-alt highligthed"></i>
+    </span>
+  </div>
   <ng-container *ngFor="let value of valuesinvoke; index as i;">
     <div id="draw-container" [ngStyle]="{'max-width.px': getDropSpaceWidth(), 'max-height.px': getDropSpaceHeight()}">
       <app-formula-draw *ngIf="value.valueinvoke != null" [formulaValue]="value" [formulaParams]="value.params"></app-formula-draw>
