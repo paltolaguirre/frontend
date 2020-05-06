@@ -69,7 +69,7 @@
                     draggable="true"
                     (dragstart)="onDragStart($event, item)"
                     (click)="onFormulaItemClick($event, item)"
-                    [matTooltip]="null"
+                    [matTooltip]="item?.description"
                     matTooltipPosition="above"
                     matTooltipClass="baloon">
                       {{ item.name || item.nombre }}

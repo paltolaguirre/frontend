@@ -5,8 +5,9 @@ div.draggable-space-container {
   align-items: center;
   overflow-x: auto;
   white-space: nowrap;
+  width: 100%;
 
-  app-formula-draw {
+  #draw-container {
     margin: 0 auto;
   }
 }
