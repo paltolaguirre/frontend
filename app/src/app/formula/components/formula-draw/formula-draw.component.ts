@@ -201,7 +201,7 @@ export class FormulaDrawComponent implements OnInit {
 
     this.hideAllRemoveBadges();
 
-    this.showRemoveBadgeById(id);
+    // this.showRemoveBadgeById(id);
   }
 
   onLeave(e) {

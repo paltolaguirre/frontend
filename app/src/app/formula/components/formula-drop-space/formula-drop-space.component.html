@@ -4,9 +4,9 @@
   class="draggable-space-container bg-gray"
   [ngClass]="{ 'expanded': !isItemPickerExpanded }"
   (dragover)='onDragOver($event)' (drop)="onDrop($event)">
-  <div class="trash-container">
+  <div class="trash-container" (dragover)="onTrashDragOver($event)" (drop)="onTrashDrop($event)">
     <span class="trash-icon no-selectable" draggable="false">
-      <i class="remove-icon no-selectable far fa-trash-alt highligthed"></i>
+      <i class="remove-icon no-selectable far fa-trash-alt"></i>
     </span>
   </div>
   <ng-container *ngFor="let value of valuesinvoke; index as i;">

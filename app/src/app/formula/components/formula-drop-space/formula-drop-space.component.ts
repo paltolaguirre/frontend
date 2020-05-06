@@ -1,11 +1,5 @@
-import { OperatorCategory } from '../../../core/enums/operator-category.enum';
 import { FormulaTransferData } from '../../../core/models/formula-transfer-data.model';
-import { OperatorsService } from '../../../core/services/operators/operators.service';
-import { componentDestroyed } from '@w11k/ngx-componentdestroyed';
-import { takeUntil } from 'rxjs/operators';
-import { FormulaService } from '../../../core/services/formula/formula.service';
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
-import { FormulaTerm } from 'src/app/core/models/formula-term.model';
+import { Component, OnInit, OnDestroy, Input, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-formula-drop-space',
@@ -14,44 +8,15 @@ import { FormulaTerm } from 'src/app/core/models/formula-term.model';
 })
 export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   @ViewChild('main', { static: false }) main: ElementRef;
-  @Output() formulaResultEmitter: EventEmitter<FormulaTerm> = new EventEmitter();
   @Input() isItemPickerExpanded: boolean;
-  @Input()
-  set currentFormulaResult(value: FormulaTerm) {
-    if (value) {
-      // TODO: render
-      console.log('FormulaResult example:', value);
-    }
-  }
   @Input() formulaValue: any;
 
   public idCount: number = 0;
-  public formulaResult: FormulaTerm;
   public valuesinvoke = [];
 
-  constructor(
-    private formulaService: FormulaService,
-    private operatorsService: OperatorsService
-  ) { }
+  constructor() { }
 
   ngOnInit() {
-    this.formulaService.formulaPickerItemEmitter
-      .pipe(
-        takeUntil(componentDestroyed(this))
-      ).subscribe((payload: FormulaTransferData) => {
-        // this.handleFormulaItemClicked(payload);
-      });
-
-    this.operatorsService.operatorEmitter
-      .pipe(
-        takeUntil(componentDestroyed(this))
-      ).subscribe((data: FormulaTransferData) => {
-        if (data.payload.category === OperatorCategory.Logical) {
-          // return this.handleLogicalOperatorClick(data);
-        }
-
-        // return this.handleMathOperatorClicked(data);
-      });
     if(this.formulaValue && this.formulaValue !== undefined) {
       this.valuesinvoke = this.formulaValue;
     }
@@ -118,7 +83,6 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log("changed app-formula-drop-space: ", changes);
     if (!changes.formulaValue) {
       return null;
     }
@@ -145,4 +109,48 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
     return this.main.nativeElement.offsetHeight;
   }
+
+  public onTrashDragOver(event) {
+    event.preventDefault();
+
+    event.cancelBubble = true;
+  }
+
+  // public onTrashDrop(event) {
+  //   event.stopPropagation();
+
+  //   const droppedData = JSON.parse(event.dataTransfer.getData('text'));
+  //   // const currentFormulaDroppedValue = droppedData.currentFormulaValue;
+  //   console.clear();
+  //   console.log('values invoke:', this.valuesinvoke);
+  //   console.log('currentFormulaDroppedValue', droppedData);
+
+  //   droppedData.valueinvokeid = null;
+  //   droppedData.valueinvoke = null;
+  //   droppedData.valuenumber = 0;
+
+  //   // this.findAndReplaceCurrentFormulaValue(this.formulaValue.valueinvoke, droppedData);
+
+  //   // console.log('modified:', currentFormulaValue);
+  // }
+
+  // public findAndReplaceCurrentFormulaValue(valueinvoke, droppedData) {
+  //   if (valueinvoke.ID === droppedData.ID) {
+  //     valueinvoke = droppedData;
+
+  //     return null;
+  //   }
+
+  //   valueinvoke.args.forEach((arg) => {
+  //     if (arg.valueinvoke.ID === droppedData.ID) {
+  //       arg.valueinvoke = droppedData;
+  //     } else {
+  //       if (arg.valueinvoke) {
+  //         this.findAndReplaceCurrentFormulaValue(arg.valueinvoke, droppedData);
+  //       }
+  //     }
+
+  //     console.log('arg:', arg);
+  //   });
+  // }
 }
