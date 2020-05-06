@@ -85,7 +85,8 @@
                           </mat-select>
                         </mat-form-field>
                         <mat-form-field>
-                          <input [appDisableControl]="true" matInput type="text" formControlName="name" placeholder="Nombre Parámetro" autocomplete="off">
+                          <input [appDisableControl]="!isEditable" matInput type="text" formControlName="name" placeholder="Nombre Parámetro" autocomplete="off">
+                          <mat-error *ngIf="param.invalid">El campo es obligatorio</mat-error>
                         </mat-form-field>
                       </div>
                     </div>
@@ -104,7 +105,7 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
 
-          <div class="columns">
+          <div class="columns ide-columns">
             <div class="column" [ngClass]="{ 
               'is-5': isItemPickerExpanded,
               'is-3': !isItemPickerExpanded

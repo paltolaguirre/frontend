@@ -4,7 +4,7 @@ import { OperatorsService } from '../../../core/services/operators/operators.ser
 import { componentDestroyed } from '@w11k/ngx-componentdestroyed';
 import { takeUntil } from 'rxjs/operators';
 import { FormulaService } from '../../../core/services/formula/formula.service';
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
 import { FormulaTerm } from 'src/app/core/models/formula-term.model';
 
 @Component({
@@ -13,6 +13,7 @@ import { FormulaTerm } from 'src/app/core/models/formula-term.model';
   styleUrls: ['./formula-drop-space.component.scss']
 })
 export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
+  @ViewChild('main', { static: false }) main: ElementRef;
   @Output() formulaResultEmitter: EventEmitter<FormulaTerm> = new EventEmitter();
   @Input() isItemPickerExpanded: boolean;
   @Input()
@@ -127,5 +128,21 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     if(value && value !== undefined) {
       this.valuesinvoke = value;
     }
+  }
+
+  public getDropSpaceWidth() {
+    if (!this.main) {
+      return null;
+    }
+
+    return this.main.nativeElement.offsetWidth;
+  }
+
+  public getDropSpaceHeight() {
+    if (!this.main) {
+      return null;
+    }
+
+    return this.main.nativeElement.offsetHeight;
   }
 }

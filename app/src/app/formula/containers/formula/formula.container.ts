@@ -109,6 +109,8 @@ export class FormulaContainer implements OnInit, OnDestroy {
       },
       formulaResult: []
     });
+
+    this.subscribeToInputParamsChanges();
   }
 
   public fetchFormulas() {
@@ -142,16 +144,28 @@ export class FormulaContainer implements OnInit, OnDestroy {
     });
 
     this.updateFormulaParams();
+
+    this.subscribeToInputParamsChanges();
   }
 
   public createFormulaParam(formulaParam: FormulaParam) {
-    return this.formBuilder.group({...formulaParam});
+    return this.formBuilder.group({
+      ...formulaParam,
+      name: [formulaParam.name, [Validators.required]]
+    });
   }
 
   public updateFormulaParams() {
     for (const param of this.currentFormula.params) {
       this.formParams.push(this.createFormulaParam(param));
     }
+  }
+
+  public subscribeToInputParamsChanges() {
+    this.form.controls.params.valueChanges.subscribe((changes) => {
+      this.currentFormula.params = changes;
+      this.currentFormula = {...this.currentFormula};
+    });
   }
 
   get formParams() {
@@ -163,6 +177,8 @@ export class FormulaContainer implements OnInit, OnDestroy {
     this.currentFormula.name = this.form.get('name').value;
     this.currentFormula.description = this.form.get('description').value;
     this.currentFormula.result = this.form.get('result').value;
+
+
 
     if (this.validateCanvasFormulas()) {
       console.log("Current Formula: ", this.currentFormula)
@@ -208,6 +224,17 @@ export class FormulaContainer implements OnInit, OnDestroy {
       return false;
     }
 
+    if (this.form.controls.params.invalid) {
+      const notificacion = {
+        codigo: 400,
+        mensaje: 'Los parámetros de entrada no son válidos. El campo nombre es obligatorio.'
+      };
+
+      this.notificationService.notify(notificacion);
+
+      return false;
+    }
+
     return true;
   }
 
@@ -238,13 +265,12 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public onAddInputParamClick(event) {
     event.preventDefault();
 
-    const num = this.currentFormula.params.length + 1;
     const param: FormulaParam = {
       ID: 0,
       CreatedAt: null,
       UpdatedAt: null,
       DeletedAt: null,
-      name: 'val' + num,
+      name: '',
       type: 'number'
     };
 
@@ -257,7 +283,13 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public onDeleteInputParam(event, rowIndex: number) {
     event.preventDefault();
 
-    this.formParams.value[rowIndex].DeletedAt = new Date();
+    const now = new Date();
+
+    const data = this.formParams.at(rowIndex).value;
+    data.name = ' ';
+    data.DeletedAt = now;
+
+    this.formParams.at(rowIndex).patchValue(data);
   }
 
   public isFormulaParamAvailable(param: FormControl): boolean {
