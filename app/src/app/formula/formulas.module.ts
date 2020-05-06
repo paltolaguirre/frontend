@@ -16,6 +16,10 @@ const routes: Routes = [
     component: FormulaListContainer
   },
   {
+    path: 'nueva',
+    component: FormulaContainer
+  },
+  {
     path: 'create',
     component: FormulaContainer
   },
