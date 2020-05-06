@@ -1,10 +1,35 @@
 import { FormulaTransferData } from '../../../core/models/formula-transfer-data.model';
 import { Component, OnInit, OnDestroy, Input, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition
+} from '@angular/animations';
 
 @Component({
   selector: 'app-formula-drop-space',
   templateUrl: './formula-drop-space.component.html',
-  styleUrls: ['./formula-drop-space.component.scss']
+  styleUrls: ['./formula-drop-space.component.scss'],
+  animations: [
+    trigger('dragEnterDragLeave', [
+      state('enter', style({
+        boxShadow: '2px 2px 2px',
+        background: 'red',
+        transform: 'scale(1.3)'
+      })),
+      state('leave', style({
+        boxShadow: '0 0 3px'
+      })),
+      transition('enter => leave', [
+        animate('0.3s')
+      ]),
+      transition('leave => enter', [
+        animate('0.15s')
+      ]),
+    ])
+  ]
 })
 export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   @ViewChild('main', { static: false }) main: ElementRef;
@@ -13,6 +38,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
   public idCount: number = 0;
   public valuesinvoke = [];
+  public isTrashDragOver: boolean;
 
   constructor() { }
 
@@ -113,26 +139,28 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   public onTrashDragOver(event) {
     event.preventDefault();
 
+    this.setTrashDragEnterState();
     event.cancelBubble = true;
   }
 
-  // public onTrashDrop(event) {
-  //   event.stopPropagation();
+  public onTrashDrop(event) {
+    event.stopPropagation();
+    this.setTrashDragLeaveState();
 
-  //   const droppedData = JSON.parse(event.dataTransfer.getData('text'));
-  //   // const currentFormulaDroppedValue = droppedData.currentFormulaValue;
-  //   console.clear();
-  //   console.log('values invoke:', this.valuesinvoke);
-  //   console.log('currentFormulaDroppedValue', droppedData);
+    const droppedData = JSON.parse(event.dataTransfer.getData('text'));
 
-  //   droppedData.valueinvokeid = null;
-  //   droppedData.valueinvoke = null;
-  //   droppedData.valuenumber = 0;
+    console.clear();
+    console.log('values invoke:', this.valuesinvoke);
+    console.log('currentFormulaDroppedValue', droppedData);
 
-  //   // this.findAndReplaceCurrentFormulaValue(this.formulaValue.valueinvoke, droppedData);
+    droppedData.valueinvokeid = null;
+    droppedData.valueinvoke = null;
+    droppedData.valuenumber = 0;
 
-  //   // console.log('modified:', currentFormulaValue);
-  // }
+    // this.findAndReplaceCurrentFormulaValue(this.formulaValue.valueinvoke, droppedData);
+
+    // console.log('modified:', currentFormulaValue);
+  }
 
   // public findAndReplaceCurrentFormulaValue(valueinvoke, droppedData) {
   //   if (valueinvoke.ID === droppedData.ID) {
@@ -153,4 +181,12 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   //     console.log('arg:', arg);
   //   });
   // }
+
+  public setTrashDragEnterState() {
+    this.isTrashDragOver = true;
+  }
+
+  public setTrashDragLeaveState() {
+    this.isTrashDragOver = false;
+  }
 }
