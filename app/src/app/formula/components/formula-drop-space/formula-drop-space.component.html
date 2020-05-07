@@ -1,21 +1,10 @@
-<div 
-  class="trash-container" 
-  (dragover)="onTrashDragOver($event)"
-  (dragleave)="setTrashDragLeaveState()"
-  (mouseleave)="setTrashDragLeaveState()"
-  (drop)="onTrashDrop($event)"
-  [matTooltip]="!isTrashDragOver ? 'Arrastra elementos para eliminar' : null">
-  <span class="trash-icon no-selectable" [@dragEnterDragLeave]="isTrashDragOver ? 'enter' : 'leave'" draggable="false">
-    <i class="remove-icon no-selectable far fa-trash-alt"></i>
-  </span>
-</div>
+<app-trash></app-trash>
 <div
   id="main"
   #main
   class="draggable-space-container bg-gray"
   [ngClass]="{ 'expanded': !isItemPickerExpanded }"
-  (dragover)='onDragOver($event)' (drop)="onDrop($event)"
-  (scroll)="onScroll($event)">
+  (dragover)='onDragOver($event)' (drop)="onDrop($event)">
 
   <ng-container *ngFor="let value of valuesinvoke; index as i;">
     <div id="draw-container" [ngStyle]="{'max-width.px': getDropSpaceWidth(), 'max-height.px': getDropSpaceHeight()}">

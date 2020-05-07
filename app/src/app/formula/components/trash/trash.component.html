@@ -1,0 +1,11 @@
+<div 
+  class="trash-container" 
+  (dragover)="onTrashDragOver($event)"
+  (dragleave)="setTrashDragLeaveState()"
+  (mouseleave)="setTrashDragLeaveState()"
+  (drop)="onTrashDrop($event)"
+  [matTooltip]="!isTrashDragOver ? 'Arrastra elementos para eliminar' : null">
+  <span class="trash-icon no-selectable" [@dragEnterDragLeave]="isTrashDragOver ? 'enter' : 'leave'" draggable="false">
+    <i class="remove-icon no-selectable far fa-trash-alt"></i>
+  </span>
+</div>
