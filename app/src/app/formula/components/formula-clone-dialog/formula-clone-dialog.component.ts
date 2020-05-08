@@ -41,7 +41,7 @@ export class FormulaCloneDialogComponent implements OnInit {
       this.setToZeroArgIds(clonedFormula.value.valueinvoke);
     }
 
-    clonedFormula.origin = null;
+    clonedFormula.origin = 'custom';
 
     this.dialogRef.close(clonedFormula);
   }
