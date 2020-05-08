@@ -134,7 +134,7 @@ export class FormulaService {
   }
 
   public isEditable(formula: Formula): boolean {
-    return formula.origin !== 'primitive';
+    return formula.scope === 'private';
   }
 
   public extractBasicMathOperators(formulas: Formula[]): Formula[] {
