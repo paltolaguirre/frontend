@@ -214,4 +214,12 @@ export class FormulaItemPickerComponent implements OnInit {
 
     return formula;
   }
+
+  public getParamInsideSearch(item) {
+    if (item.tipoconceptoid) {
+      return this.getConceptParam(item);
+    }
+
+    return item;
+  }
 }
