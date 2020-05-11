@@ -42,6 +42,7 @@ export class FormulaCloneDialogComponent implements OnInit {
     }
 
     clonedFormula.origin = 'custom';
+    clonedFormula.scope = 'private';
 
     this.dialogRef.close(clonedFormula);
   }
