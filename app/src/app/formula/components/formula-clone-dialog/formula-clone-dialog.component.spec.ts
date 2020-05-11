@@ -70,5 +70,11 @@ describe('FormulaCloneDialogComponent', () => {
 
       expect(formula.origin).toEqual('custom');
     });
+
+    it('should set the formula scope as private', () => {
+      const formula = component.prepareFormula();
+
+      expect(formula.scope).toEqual('private');
+    });
   });
 });
