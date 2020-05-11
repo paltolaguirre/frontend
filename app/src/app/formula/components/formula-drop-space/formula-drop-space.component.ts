@@ -28,8 +28,33 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   public onDrop(event) {
     event.preventDefault();
 
-    const data: FormulaTransferData = JSON.parse(event.dataTransfer.getData('text'));
+    const data: any = JSON.parse(event.dataTransfer.getData('text'));
+    console.log("Space onDrop: ", data);
 
+    if(data.functionname && data.functionname != undefined) {
+      const formulaInvoke = {
+        ID: 0,
+        function: data.function,
+        functionname: data.function.name,
+        args: data.args
+      };
+      
+      const value = {
+        ID: 0,
+        name: "",
+        type: data.function.result,
+        valuenumber: 0,
+        valuestring: "",
+        Valueboolean: false,
+        valueinvoke: formulaInvoke
+      };
+  
+      this.valuesinvoke.push(value);
+      // event.cancelBubble = true;
+
+      return;
+    }
+    
     if(data.payload == undefined) {
       return;
     }
