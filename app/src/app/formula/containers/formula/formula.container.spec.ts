@@ -1,3 +1,4 @@
+import { NotificationService } from './../../../handler-error/notification.service';
 import { TrashComponent } from './../../components/trash/trash.component';
 import { FormulaDrawComponent } from './../../components/formula-draw/formula-draw.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -58,6 +59,7 @@ describe('FormulaContainer', () => {
       ],
       providers: [
         { provide: FormulaService, useClass: FormulaServiceMock },
+        NotificationService,
         MatDialog
       ]
     })
