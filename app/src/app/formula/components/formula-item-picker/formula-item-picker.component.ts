@@ -9,6 +9,7 @@ import { FormulaCategoryItem } from './../../../core/models/formula-category-ite
 import { FormulaService } from './../../../core/services/formula/formula.service';
 import { FormulaCategory } from './../../../core/models/formula-category.model';
 import { Component, OnInit, Output, EventEmitter, Input, ViewEncapsulation } from '@angular/core';
+import uniqBy from 'lodash/uniqBy';
 
 @Component({
   selector: 'app-formula-item-picker',
@@ -85,6 +86,8 @@ export class FormulaItemPickerComponent implements OnInit {
 
   public async fetchConcepts() {
     this.concepts = await this.conceptService.getAll();
+
+    this.concepts = uniqBy(this.concepts, 'nombre');
 
     this.addToPickableItems(this.concepts);
   }

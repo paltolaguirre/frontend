@@ -1,3 +1,5 @@
+@import "../../../../styles/variables.scss";
+
 div.draggable-space-container {
   height: 79%;
   margin-top: 0.6rem;
@@ -6,6 +8,7 @@ div.draggable-space-container {
   overflow-x: auto;
   white-space: nowrap;
   width: 100%;
+  position: relative;
 
   #draw-container {
     margin: 0 auto;
