@@ -63,4 +63,12 @@ describe('FormulaCloneDialogComponent', () => {
       expect(closeModalSpy).toHaveBeenCalledTimes(1);
     });
   });
+
+  describe('prepareFormula', () => {
+    it('should set the formula origin as custom', () => {
+      const formula = component.prepareFormula();
+
+      expect(formula.origin).toEqual('custom');
+    });
+  });
 });
