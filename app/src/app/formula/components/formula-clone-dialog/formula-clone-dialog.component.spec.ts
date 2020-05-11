@@ -1,6 +1,6 @@
 import { MatDialogRefMock } from './../../../core/mocks/mat-dialogref.mock';
 import { FormulaFixtures } from './../../../core/fixtures/formulas.fixtures';
-import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SharedModule } from './../../../shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './../../../material.module';
@@ -12,6 +12,7 @@ import { FormulaCloneDialogComponent } from './formula-clone-dialog.component';
 describe('FormulaCloneDialogComponent', () => {
   let component: FormulaCloneDialogComponent;
   let fixture: ComponentFixture<FormulaCloneDialogComponent>;
+  let matDialogRef;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -28,13 +29,15 @@ describe('FormulaCloneDialogComponent', () => {
       ]
     })
     .compileComponents();
+
+    matDialogRef = TestBed.get(MatDialogRef);
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(FormulaCloneDialogComponent);
     component = fixture.componentInstance;
 
-    component.data.formula = FormulaFixtures.getAll()[0];
+    component.data.formula = FormulaFixtures.getAll()[4];
 
     fixture.detectChanges();
   });
@@ -50,6 +53,14 @@ describe('FormulaCloneDialogComponent', () => {
       component.apply();
 
       expect(prepareFormulaSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should call to dialogRef to close the modal', () => {
+      const closeModalSpy = spyOn(matDialogRef, 'close').and.returnValue(null);
+
+      component.apply();
+
+      expect(closeModalSpy).toHaveBeenCalledTimes(1);
     });
   });
 });
