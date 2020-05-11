@@ -144,7 +144,7 @@ export class F1357liquidacionfinalanualListComponent implements OnInit, AfterVie
     var blob = new Blob([liquidacionfinalanualTXT.data], {type: "text/plain;charset=utf-8"});
     const cuitempresa = empresa.cuit.replace("-","").replace("-","");
     const secuencia = "00"
-    const nombreArchivo = `F1357.${cuitempresa}.${this.anio}0000.${secuencia}`;
+    const nombreArchivo = `F1357.${cuitempresa}.${this.anio}0000.${secuencia}.txt`;
     saveAs.saveAs(blob, nombreArchivo);
   }
 
