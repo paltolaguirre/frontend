@@ -1,3 +1,4 @@
+import { Formula } from './../../../core/models/formula.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Component, OnInit, Inject } from '@angular/core';
@@ -25,6 +26,12 @@ export class FormulaCloneDialogComponent implements OnInit {
   }
 
   public apply() {
+    const clonedFormula: Formula = this.prepareFormula();
+
+    this.dialogRef.close(clonedFormula);
+  }
+
+  public prepareFormula(): Formula {
     const clonedFormula = {...this.data.formula};
 
     clonedFormula.name = this.form.value.name;
@@ -44,7 +51,7 @@ export class FormulaCloneDialogComponent implements OnInit {
     clonedFormula.origin = 'custom';
     clonedFormula.scope = 'private';
 
-    this.dialogRef.close(clonedFormula);
+    return clonedFormula;
   }
 
   private setToZeroArgIds(valueinvoke) {

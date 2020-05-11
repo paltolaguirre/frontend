@@ -1,3 +1,4 @@
+import { MatDialogRefMock } from './../../../core/mocks/mat-dialogref.mock';
 import { FormulaFixtures } from './../../../core/fixtures/formulas.fixtures';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SharedModule } from './../../../shared/shared.module';
@@ -22,7 +23,7 @@ describe('FormulaCloneDialogComponent', () => {
         SharedModule,
       ],
       providers: [
-        { provide: MatDialogRef, useClass: class {} },
+        { provide: MatDialogRef, useClass: MatDialogRefMock },
         { provide: MAT_DIALOG_DATA, useValue: {} },
       ]
     })
@@ -40,5 +41,15 @@ describe('FormulaCloneDialogComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('apply', () => {
+    it('should prepare the formula', () => {
+      const prepareFormulaSpy = spyOn(component, 'prepareFormula');
+
+      component.apply();
+
+      expect(prepareFormulaSpy).toHaveBeenCalledTimes(1);
+    });
   });
 });
