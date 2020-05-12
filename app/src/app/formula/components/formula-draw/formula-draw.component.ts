@@ -86,7 +86,13 @@ export class FormulaDrawComponent implements OnInit {
 
   onDragEnd(event, currentFormulaValue) {
     console.log("Draw onDragEnd: ", event);
-    if(event.x > 965 && event.x < 1840 && event.y > 365 && event.y < 660) {
+    const rect = document.getElementById('main').getBoundingClientRect();
+    const xstart = rect.left;
+    const xend = rect.left + rect.width;
+    const ystart = rect.top;
+    const yend = rect.top + rect.height;
+
+    if(event.x > xstart && event.x < xend && event.y > ystart && event.y < yend) {
       this.invokeRemuve(currentFormulaValue);
     }
     event.cancelBubble = true;
