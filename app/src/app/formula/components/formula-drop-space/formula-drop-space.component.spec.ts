@@ -1,3 +1,4 @@
+import { TrashComponent } from './../trash/trash.component';
 import { FormsModule } from '@angular/forms';
 import { FormulaDrawComponent } from './../formula-draw/formula-draw.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -16,7 +17,7 @@ describe('FormulaDropSpaceComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FormulaDropSpaceComponent, FormulaDrawComponent ],
+      declarations: [ FormulaDropSpaceComponent, FormulaDrawComponent, TrashComponent ],
       imports: [
         MaterialModule,
         BrowserAnimationsModule,
