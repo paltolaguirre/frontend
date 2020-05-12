@@ -77,4 +77,4 @@ describe('FormulaCloneDialogComponent', () => {
       expect(formula.scope).toEqual('private');
     });
   });
-});
+}); 
