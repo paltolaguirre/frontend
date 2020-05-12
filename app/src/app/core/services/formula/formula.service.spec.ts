@@ -163,10 +163,16 @@ describe('FormulaService', () => {
       expect(service.isEditable(fakeFormula)).toBeFalsy();
     });
 
-    it('should return true in any case where the origin is not primitive', () => {
-      fakeFormula.origin = 'any';
+    it('should return true in any case where the scope is private', () => {
+      fakeFormula.scope = 'private';
 
       expect(service.isEditable(fakeFormula)).toBeTruthy();
+    });
+
+    it('should return false in any case where the scope is not private', () => {
+      fakeFormula.scope = 'any';
+
+      expect(service.isEditable(fakeFormula)).toBeFalsy();
     });
   });
 

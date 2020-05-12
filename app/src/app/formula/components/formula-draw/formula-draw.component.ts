@@ -85,7 +85,16 @@ export class FormulaDrawComponent implements OnInit {
   }
 
   onDragEnd(event, currentFormulaValue) {
-    this.invokeRemuve(currentFormulaValue);
+    console.log("Draw onDragEnd: ", event);
+    const rect = document.getElementById('main').getBoundingClientRect();
+    const xstart = rect.left;
+    const xend = rect.left + rect.width;
+    const ystart = rect.top;
+    const yend = rect.top + rect.height;
+
+    if(event.x > xstart && event.x < xend && event.y > ystart && event.y < yend) {
+      this.invokeRemuve(currentFormulaValue);
+    }
     event.cancelBubble = true;
   }
 
@@ -94,11 +103,14 @@ export class FormulaDrawComponent implements OnInit {
 
     const data: DataPayload = JSON.parse(event.dataTransfer.getData('text'));
 
-    console.log("onDrop: ", data);
+    console.log("Draw onDrop: ", data);
     this.operatorService.emitOperatorDrop(data);
 
     if(data.payload === undefined) {
-      if(parentFormulaParam.type == '') return;
+      if(parentFormulaParam.type == '') {
+        event.cancelBubble = true;
+        return;
+      }
       currentFormulaValue.valueinvoke = data;
       currentFormulaValue.valuenumber = 0;
       return;
@@ -133,7 +145,7 @@ export class FormulaDrawComponent implements OnInit {
           ID: 0,
           name: param.name,
           type: param.type,
-          valuenumber: 0,
+          valuenumber: param.valuenumber == undefined ? 0 : param.valuenumber,
           valuestring: param.valuestring == undefined ? "" : param.valuestring,
           Valueboolean: false,
           valueinvoke: null
