@@ -195,4 +195,8 @@ export class FormulaService {
   public isPrimitive(formula: Formula): boolean {
     return formula.origin === 'primitive';
   }
+
+  public isClonable(formula: Formula): boolean {
+    return formula.origin !== 'primitive';
+  }
 }
