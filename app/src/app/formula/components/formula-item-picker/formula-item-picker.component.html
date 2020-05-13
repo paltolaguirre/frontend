@@ -67,7 +67,7 @@
                     [attr.data-type]="getOperatorDefaultType()"
                     [attr.data-data]="getFormulaTransferData(item, 'pickable-item-' + index + 1) | json"
                     draggable="true"
-                    (dragstart)="onDragStart($event, item)"
+                    (dragstart)="onDragStart($event, getParamInsideSearch(item))"
                     (click)="onFormulaItemClick($event, item)"
                     [matTooltip]="item?.description"
                     matTooltipPosition="above"
@@ -138,7 +138,7 @@
                   draggable="true"
                   (dragstart)="onDragStart($event, formula)"
                   (click)="onFormulaItemClick($event, formula)"
-                  [matTooltip]="null"
+                  [matTooltip]="formula?.description"
                   matTooltipPosition="above"
                   matTooltipClass="baloon">
                     {{ formula.name }}

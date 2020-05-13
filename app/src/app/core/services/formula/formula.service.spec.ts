@@ -163,10 +163,16 @@ describe('FormulaService', () => {
       expect(service.isEditable(fakeFormula)).toBeFalsy();
     });
 
-    it('should return true in any case where the origin is not primitive', () => {
-      fakeFormula.origin = 'any';
+    it('should return true in any case where the scope is private', () => {
+      fakeFormula.scope = 'private';
 
       expect(service.isEditable(fakeFormula)).toBeTruthy();
+    });
+
+    it('should return false in any case where the scope is not private', () => {
+      fakeFormula.scope = 'any';
+
+      expect(service.isEditable(fakeFormula)).toBeFalsy();
     });
   });
 
@@ -227,6 +233,20 @@ describe('FormulaService', () => {
       service.emitFormulaItemClick(data);
 
       expect(emitterSpy).toHaveBeenCalledWith(data);
+    });
+  });
+
+  describe('isPrimitive', () => {
+    it('should return true if the formula origin is primitive', () => {
+      fakeFormula.origin = 'primitive';
+
+      expect(service.isPrimitive(fakeFormula)).toBeTruthy();
+    });
+
+    it('should return false in any case where the formula origin is not primitive', () => {
+      fakeFormula.origin = 'any';
+
+      expect(service.isPrimitive(fakeFormula)).toBeFalsy();
     });
   });
 });

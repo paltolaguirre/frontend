@@ -39,6 +39,7 @@ export class FormulaDrawComponent implements OnInit {
     this.middleSymbol.set('Percent', "% DE");
     this.middleSymbol.set('GreaterEqual', ">=");
     this.middleSymbol.set('LessEqual', "<=");
+    this.middleSymbol.set('BooleanInequality', "O exclusivo");
   }
 
   ngOnInit() {

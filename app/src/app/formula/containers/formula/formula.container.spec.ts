@@ -1,3 +1,5 @@
+import { NotificationService } from './../../../handler-error/notification.service';
+import { TrashComponent } from './../../components/trash/trash.component';
 import { FormulaDrawComponent } from './../../components/formula-draw/formula-draw.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormulaDropSpaceComponent } from './../../components/formula-drop-space/formula-drop-space.component';
@@ -44,7 +46,8 @@ describe('FormulaContainer', () => {
         FormulaItemPickerComponent,
         OperatorsToolbarComponent,
         FormulaDropSpaceComponent,
-        FormulaDrawComponent
+        FormulaDrawComponent,
+        TrashComponent
       ],
       imports: [
         MaterialModule,
@@ -56,6 +59,7 @@ describe('FormulaContainer', () => {
       ],
       providers: [
         { provide: FormulaService, useClass: FormulaServiceMock },
+        NotificationService,
         MatDialog
       ]
     })
