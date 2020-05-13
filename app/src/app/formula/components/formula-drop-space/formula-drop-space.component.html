@@ -7,7 +7,7 @@
   (dragover)='onDragOver($event)' (drop)="onDrop($event)">
 
   <ng-container *ngFor="let value of valuesinvoke; index as i;">
-    <div id="draw-container" [ngStyle]="{'max-width.px': getDropSpaceWidth(), 'max-height.px': getDropSpaceHeight()}">
+    <div *ngIf="value.valueinvoke" id="draw-container" [ngStyle]="{'max-width.px': getDropSpaceWidth(), 'max-height.px': getDropSpaceHeight()}">
       <app-formula-draw *ngIf="value.valueinvoke != null" [formulaValue]="value" [formulaParams]="value.params" [formulaIsEditable]="formulaIsEditable" [formulaIsNew]="formulaIsNew"></app-formula-draw>
     </div>
   </ng-container>
