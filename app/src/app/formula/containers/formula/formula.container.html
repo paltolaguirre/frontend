@@ -1,11 +1,11 @@
 <div class="formula-create-container">
-  <h1 *ngIf="currentFormula; else newFormulaTitle" class="page-title">
-    Editar Fórmula
+  <h1 *ngIf="isNew; else editFormulaTitle" class="page-title">
+    Nueva fórmula
   </h1>
 
-  <ng-template #newFormulaTitle>
+  <ng-template #editFormulaTitle>
     <h1 class="page-title">
-      Nueva fórmula
+      Editar Fórmula
     </h1>
   </ng-template>
 
@@ -124,7 +124,12 @@
               <div class="ide-container">
                 <app-operators-toolbar></app-operators-toolbar>
 
-                <app-formula-drop-space [isItemPickerExpanded]="isItemPickerExpanded" [formulaValue]="currentCanvasFormulas"></app-formula-drop-space>
+                <app-formula-drop-space 
+                  [isItemPickerExpanded]="isItemPickerExpanded" 
+                  [formulaValue]="currentCanvasFormulas"
+                  [formulaIsEditable]="isEditable"
+                  [formulaIsNew]="isNew">
+                </app-formula-drop-space>
               </div>
             </div>
           </div>

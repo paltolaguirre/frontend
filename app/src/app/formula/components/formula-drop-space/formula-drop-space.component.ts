@@ -10,6 +10,8 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   @ViewChild('main', { static: false }) main: ElementRef;
   @Input() isItemPickerExpanded: boolean;
   @Input() formulaValue: any;
+  @Input() formulaIsEditable: boolean;
+  @Input() formulaIsNew: boolean;
 
   public idCount: number = 0;
   public valuesinvoke = [];
@@ -27,6 +29,10 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
   public onDrop(event) {
     event.preventDefault();
+
+    if (!this.isAbleToEdit()) {
+      return null;
+    }
 
     const data: FormulaTransferData = JSON.parse(event.dataTransfer.getData('text'));
 
@@ -108,5 +114,13 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
     }
 
     return this.main.nativeElement.offsetHeight;
+  }
+
+  public isAbleToEdit(): boolean {
+    if (this.formulaIsNew) {
+      return true;
+    }
+
+    return this.formulaIsEditable;
   }
 }
