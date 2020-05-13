@@ -19,6 +19,7 @@
       <td mat-cell *matCellDef="let row">        
         <app-table-row-actions
           [isEditable]="isFormulaEditable(row)"
+          [isClonable]="isFormulaClonable(row)"
           (editEmitter)="editFormula(row)"
           (deleteEmitter)="onDelete(row)"
           (viewEmitter)="editFormula(row)"

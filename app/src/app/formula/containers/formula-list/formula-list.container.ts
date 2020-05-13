@@ -110,4 +110,8 @@ export class FormulaListContainer implements OnInit, AfterViewInit, OnDestroy {
   public isFormulaEditable(formula: Formula): boolean {
     return this.formulaService.isEditable(formula);
   }
+
+  public isFormulaClonable(formula: Formula): boolean {
+    return this.formulaService.isClonable(formula);
+  }
 }
