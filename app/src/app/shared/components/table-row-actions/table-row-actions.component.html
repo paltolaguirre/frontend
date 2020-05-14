@@ -7,6 +7,6 @@
 <button *ngIf="!isEditable"  mat-icon-button class="actions-icon" color="black" (click)="onViewClick()" matTooltip="Ver" matTooltipPosition="above">
   <mat-icon>remove_red_eye</mat-icon>
 </button>
-<button mat-icon-button class="actions-icon" color="black" (click)="onCloneClick()" matTooltip="Clonar" matTooltipPosition="above">
+<button *ngIf="isClonable" mat-icon-button class="actions-icon" color="black" (click)="onCloneClick()" matTooltip="Clonar" matTooltipPosition="above">
   <mat-icon>flip_to_front</mat-icon>
 </button>

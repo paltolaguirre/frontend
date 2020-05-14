@@ -9,11 +9,16 @@ import { FormulaContainer } from './containers/formula/formula.container';
 import { OperatorsToolbarComponent } from './components/operators-toolbar/operators-toolbar.component';
 import { FormulaDropSpaceComponent } from './components/formula-drop-space/formula-drop-space.component';
 import { FormulaDrawComponent } from './components/formula-draw/formula-draw.component';
+import { TrashComponent } from './components/trash/trash.component';
 
 const routes: Routes = [
   {
     path: '',
     component: FormulaListContainer
+  },
+  {
+    path: 'nueva',
+    component: FormulaContainer
   },
   {
     path: 'create',
@@ -32,7 +37,8 @@ const routes: Routes = [
     FormulaItemPickerComponent,
     OperatorsToolbarComponent,
     FormulaDrawComponent,
-    FormulaDropSpaceComponent
+    FormulaDropSpaceComponent,
+    TrashComponent
   ],
   imports: [
     CommonModule,

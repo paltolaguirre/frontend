@@ -109,6 +109,8 @@ export class FormulaContainer implements OnInit, OnDestroy {
       },
       formulaResult: []
     });
+
+    this.subscribeToInputParamsChanges();
   }
 
   public fetchFormulas() {
@@ -137,15 +139,21 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public buildPreLoadedForm() {
     this.form = this.formBuilder.group({
       ...this.currentFormula,
+      name: [{ value: this.currentFormula.name, disabled: true }],
       params: this.formBuilder.array([]),
       formulaResult: []
     });
 
     this.updateFormulaParams();
+
+    this.subscribeToInputParamsChanges();
   }
 
   public createFormulaParam(formulaParam: FormulaParam) {
-    return this.formBuilder.group({...formulaParam});
+    return this.formBuilder.group({
+      ...formulaParam,
+      name: [formulaParam.name, [Validators.required]]
+    });
   }
 
   public updateFormulaParams() {
@@ -154,15 +162,26 @@ export class FormulaContainer implements OnInit, OnDestroy {
     }
   }
 
+  public subscribeToInputParamsChanges() {
+    this.form.controls.params.valueChanges.subscribe((changes) => {
+      this.currentFormula.params = changes;
+      this.currentFormula = {...this.currentFormula};
+    });
+  }
+
   get formParams() {
     return this.form.get('params') as FormArray;
   }
 
   public async save() {
+    this.currentFormula.value = this.currentCanvasFormulas.filter(formula => formula.valueinvoke != null)[0];
+    this.currentFormula.name = this.form.get('name').value;
+    this.currentFormula.description = this.form.get('description').value;
+    this.currentFormula.result = this.form.get('result').value;
+
+
+
     if (this.validateCanvasFormulas()) {
-      this.currentFormula.value = this.currentCanvasFormulas.filter(formula => formula.valueinvoke != null)[0];
-      this.currentFormula.name = this.form.get('name').value;
-      this.currentFormula.description = this.form.get('description').value;
       console.log("Current Formula: ", this.currentFormula)
 
       if (this.isNew) {
@@ -170,20 +189,50 @@ export class FormulaContainer implements OnInit, OnDestroy {
       }
 
       this.updateFormula();
-    } else {
-      const notificacion = {
-        codigo: 400,
-        mensaje: 'El lienzo debe contener una unica formula para poder ser guardada.'
-      }
-      const ret = this.notificationService.notify(notificacion);
-      return ret;
     }
   }
 
   public validateCanvasFormulas() {
     const formulas = this.currentCanvasFormulas.filter(formula => formula.valueinvoke != null);
 
+    if(this.currentFormula.name.length < 3) {
+      const notificacion = {
+        codigo: 400,
+        mensaje: 'El campo "nombre" es obligatorio y debe contener mas de 3 caracteres.'
+      }
+      const ret = this.notificationService.notify(notificacion);
+
+      return false;
+    }
+
     if(formulas.length != 1) {
+      const notificacion = {
+        codigo: 400,
+        mensaje: 'El lienzo debe contener una unica formula para poder ser guardada.'
+      }
+      const ret = this.notificationService.notify(notificacion);
+
+      return false;
+    }
+
+    if(this.currentFormula.result != formulas[0].valueinvoke.function.result) {
+      const notificacion = {
+        codigo: 400,
+        mensaje: 'La formula creada retorna un tipo de dato diferente al tipo de dato del Parámetro de Salida.'
+      }
+      const ret = this.notificationService.notify(notificacion);
+
+      return false;
+    }
+
+    if (this.form.controls.params.invalid) {
+      const notificacion = {
+        codigo: 400,
+        mensaje: 'Los parámetros de entrada no son válidos. El campo nombre es obligatorio.'
+      };
+
+      this.notificationService.notify(notificacion);
+
       return false;
     }
 
@@ -217,13 +266,12 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public onAddInputParamClick(event) {
     event.preventDefault();
 
-    const num = this.currentFormula.params.length + 1;
     const param: FormulaParam = {
       ID: 0,
       CreatedAt: null,
       UpdatedAt: null,
       DeletedAt: null,
-      name: 'val' + num,
+      name: '',
       type: 'number'
     };
 
@@ -236,7 +284,13 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public onDeleteInputParam(event, rowIndex: number) {
     event.preventDefault();
 
-    this.formParams.value[rowIndex].DeletedAt = new Date();
+    const now = new Date();
+
+    const data = this.formParams.at(rowIndex).value;
+    data.name = ' ';
+    data.DeletedAt = now;
+
+    this.formParams.at(rowIndex).patchValue(data);
   }
 
   public isFormulaParamAvailable(param: FormControl): boolean {
@@ -248,5 +302,10 @@ export class FormulaContainer implements OnInit, OnDestroy {
     console.log(this.form.value);
     // console.log(JSON.stringify(this.form.value)); //SUM(SUM(11,12),SUM(21,22))
     // console.log('formulaResult: ', JSON.stringify(this.form.value.formulaResult));
+  }
+
+  showCanvas() {
+    const ret = (this.currentFormula != null && this.currentFormula.origin != 'primitive');
+    return ret;
   }
 }

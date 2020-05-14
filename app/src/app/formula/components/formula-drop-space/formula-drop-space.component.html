@@ -1,10 +1,15 @@
+<app-trash></app-trash>
 <div
   id="main"
-  class="draggable-space-container bg-gray"
+  #main
+  class="draggable-space-container bg-gray custom-vertical-scroll"
   [ngClass]="{ 'expanded': !isItemPickerExpanded }"
   (dragover)='onDragOver($event)' (drop)="onDrop($event)">
+
   <ng-container *ngFor="let value of valuesinvoke; index as i;">
-    <app-formula-draw *ngIf="value.valueinvoke != null || (value.valueinvoke == null && valuesinvoke.length == 1)" [formulaValue]="value" [formulaParams]="value.params"></app-formula-draw>
+    <div *ngIf="value.valueinvoke" id="draw-container" [ngStyle]="{'max-width.px': getDropSpaceWidth(), 'max-height.px': getDropSpaceHeight()}">
+      <app-formula-draw *ngIf="value.valueinvoke != null" [formulaValue]="value" [formulaParams]="value.params" [formulaIsEditable]="formulaIsEditable" [formulaIsNew]="formulaIsNew"></app-formula-draw>
+    </div>
   </ng-container>
 </div>
 <div id="warningBox" style="display: none;height: 50px;background-color: goldenrod;bottom: 64px;position: relative;text-align: center;color: white;padding: 7px 0px;">

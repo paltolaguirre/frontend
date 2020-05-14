@@ -134,7 +134,7 @@ export class FormulaService {
   }
 
   public isEditable(formula: Formula): boolean {
-    return formula.origin !== 'primitive';
+    return formula.scope === 'private';
   }
 
   public extractBasicMathOperators(formulas: Formula[]): Formula[] {
@@ -190,5 +190,13 @@ export class FormulaService {
 
   public emitFormulaItemClick(payload: FormulaTransferData) {
     this.formulaPickerItemEmitter.emit(payload);
+  }
+
+  public isPrimitive(formula: Formula): boolean {
+    return formula.origin === 'primitive';
+  }
+
+  public isClonable(formula: Formula): boolean {
+    return formula.origin !== 'primitive';
   }
 }

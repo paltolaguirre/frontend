@@ -9,6 +9,7 @@ import { FormulaCategoryItem } from './../../../core/models/formula-category-ite
 import { FormulaService } from './../../../core/services/formula/formula.service';
 import { FormulaCategory } from './../../../core/models/formula-category.model';
 import { Component, OnInit, Output, EventEmitter, Input, ViewEncapsulation } from '@angular/core';
+import uniqBy from 'lodash/uniqBy';
 
 @Component({
   selector: 'app-formula-item-picker',
@@ -50,7 +51,7 @@ export class FormulaItemPickerComponent implements OnInit {
     this.fetchFormulas();
     this.fetchConcepts();
   }
-  
+
   public setFormulaCategories() {
     this.categories = this.formulaService.getFormulaCategories();
   }
@@ -85,6 +86,8 @@ export class FormulaItemPickerComponent implements OnInit {
 
   public async fetchConcepts() {
     this.concepts = await this.conceptService.getAll();
+
+    this.concepts = uniqBy(this.concepts, 'nombre');
 
     this.addToPickableItems(this.concepts);
   }
@@ -139,6 +142,9 @@ export class FormulaItemPickerComponent implements OnInit {
     this.pickableItems = this.pickableItems.filter((item) => {
       return !!item && !Array.isArray(item);
     });
+
+    // Removes the duplicated values.
+    this.pickableItems = [...new Set(this.pickableItems)];
   }
 
   public doFilter() {
@@ -149,7 +155,15 @@ export class FormulaItemPickerComponent implements OnInit {
     const sanitizedSearchInput = this.searchInput.toLowerCase();
 
     this.searchResult = this.pickableItems.filter(item => {
-      const sanitizedItemName = item.name ? item.name.toLowerCase() : item.nombre.toLowerCase();
+      let sanitizedItemName: string;
+
+      if (item.name) {
+        sanitizedItemName = item.name.toLowerCase();
+      } else if (item.nombre) {
+        sanitizedItemName = item.nombre.toLowerCase();
+      } else {
+        sanitizedItemName = '';
+      }
 
       return sanitizedItemName.includes(sanitizedSearchInput);
     });
@@ -166,8 +180,9 @@ export class FormulaItemPickerComponent implements OnInit {
         {
           ID: 0,
           name: "paramName",
+          type: "string",
           valuenumber: 0,
-          valuestring: "v1",
+          valuestring: param.name,
           Valueboolean: false,
           valueinvoke: null
         }
@@ -175,5 +190,36 @@ export class FormulaItemPickerComponent implements OnInit {
     };
 
     return formula;
+  }
+
+  public getConceptParam(concept) {
+    const formula = {
+      name: "GetConceptValue",
+      origin: "primitive",
+      type: "internal",
+      scope: "public",
+      result: "number",
+      params: [
+        {
+          ID: 0,
+          name: "conceptid",
+          type: "number",
+          valuenumber: concept.ID,
+          valuestring: concept.nombre,
+          Valueboolean: false,
+          valueinvoke: null
+        }
+      ]
+    };
+
+    return formula;
+  }
+
+  public getParamInsideSearch(item) {
+    if (item.tipoconceptoid) {
+      return this.getConceptParam(item);
+    }
+
+    return item;
   }
 }

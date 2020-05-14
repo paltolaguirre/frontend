@@ -14,6 +14,8 @@ export interface DataPayload {
 export class FormulaDrawComponent implements OnInit {
   @Input() formulaValue: any;
   @Input() formulaParams: any;
+  @Input() formulaIsEditable: boolean;
+  @Input() formulaIsNew: boolean;
 
   private formula = {
     result: "number"
@@ -23,7 +25,7 @@ export class FormulaDrawComponent implements OnInit {
   private middleSymbol = new Map();
 
   constructor(private operatorService: OperatorsService) {
-    this.prefixSymbol.set('NEGADO', "NOT");
+    this.prefixSymbol.set('Not', "NEGADO");
     
     this.middleSymbol.set('Sum', "+");
     this.middleSymbol.set('Diff', "-");
@@ -35,6 +37,11 @@ export class FormulaDrawComponent implements OnInit {
     this.middleSymbol.set('Inequality', "<>");
     this.middleSymbol.set('And', "Y");
     this.middleSymbol.set('Or', "Ó");
+
+    this.middleSymbol.set('Percent', "% DE");
+    this.middleSymbol.set('GreaterEqual', ">=");
+    this.middleSymbol.set('LessEqual', "<=");
+    this.middleSymbol.set('BooleanInequality', "O exclusivo");
   }
 
   ngOnInit() {
@@ -65,6 +72,10 @@ export class FormulaDrawComponent implements OnInit {
   }
 
   onClickNode(event) {
+    if (!this.isAbleToEdit()) {
+      return null;
+    }
+
     const input = event.target.children[0];
     input.style.display = "block";
     input.focus();
@@ -76,25 +87,49 @@ export class FormulaDrawComponent implements OnInit {
   }
 
   onDrag(event, currentFormulaValue) {
+    if (!this.isAbleToEdit()) {
+      return null;
+    }
+
     event.dataTransfer.setData('text', JSON.stringify(currentFormulaValue.valueinvoke));
     event.cancelBubble = true;
   }
 
   onDragEnd(event, currentFormulaValue) {
-    this.invokeRemuve(currentFormulaValue);
+    if (!this.isAbleToEdit()) {
+      return null;
+    }
+
+    console.log("Draw onDragEnd: ", event);
+    const rect = document.getElementById('main').getBoundingClientRect();
+    const xstart = rect.left;
+    const xend = rect.left + rect.width;
+    const ystart = rect.top;
+    const yend = rect.top + rect.height;
+
+    if(event.x > xstart && event.x < xend && event.y > ystart && event.y < yend) {
+      this.invokeRemuve(currentFormulaValue);
+    }
     event.cancelBubble = true;
   }
 
   onDrop(event, currentFormulaValue, parentFormulaParam={type: ''}) {
     event.preventDefault();
 
+    if (!this.isAbleToEdit()) {
+      return null;
+    }
+
     const data: DataPayload = JSON.parse(event.dataTransfer.getData('text'));
 
-    console.log("onDrop: ", data);
+    console.log("Draw onDrop: ", data);
     this.operatorService.emitOperatorDrop(data);
 
     if(data.payload === undefined) {
-      if(parentFormulaParam.type == '') return;
+      if(parentFormulaParam.type == '') {
+        event.cancelBubble = true;
+        return;
+      }
       currentFormulaValue.valueinvoke = data;
       currentFormulaValue.valuenumber = 0;
       return;
@@ -129,7 +164,7 @@ export class FormulaDrawComponent implements OnInit {
           ID: 0,
           name: param.name,
           type: param.type,
-          valuenumber: 0,
+          valuenumber: param.valuenumber == undefined ? 0 : param.valuenumber,
           valuestring: param.valuestring == undefined ? "" : param.valuestring,
           Valueboolean: false,
           valueinvoke: null
@@ -177,68 +212,83 @@ export class FormulaDrawComponent implements OnInit {
     }
   }*/
 
-  showBadge(e) {
-    const element:HTMLElement = e.target;
-
-    for (let index = 0; index < element.children.length; index++) {
-      const item = element.children.item(index);
-      if(item.className.includes("remove-badge-container")) {
-        item.classList.replace('hide', 'show');
-      }
-    }
-  }
-
-  hideBadge(e) {
-    const element:HTMLElement = e.target;
-  
-    for (let index = 0; index < element.children.length; index++) {
-      const item = element.children.item(index);
-      if(item.className.includes("remove-badge-container")) {
-        item.classList.replace('show', 'hide');
-      }
-    }
-  }
 /** */
-  onDragOver(event) { // allowDrop
+  onDragOver(event, id) { // allowDrop
+    if (!this.isAbleToEdit()) {
+      return null;
+    }
+
     event.preventDefault();
 
-    this.onEnter(event);
+    this.onEnter(event, id);
 
     event.cancelBubble = true;
   }
 
-  onEnter(e) {
+  onEnter(e, id) {
+    if (!this.isAbleToEdit()) {
+      return null;
+    }
+
     const elements = document.querySelectorAll('.highligthed');
     elements.forEach(element => {
       element.classList.replace('highligthed', 'no-highlight');
     });
 
-    const element:HTMLElement = e.target;
+    const element: HTMLElement = e.target;
     element.classList.replace('no-highlight', 'highligthed');
 
-    this.showBadge(e);
+    this.hideAllRemoveBadges();
+
+    // this.showRemoveBadgeById(id);
   }
 
   onLeave(e) {
-    const element:HTMLElement = e.target;
+    if (!this.isAbleToEdit()) {
+      return null;
+    }
+
+    const element: HTMLElement = e.target;
     element.classList.replace('highligthed', 'no-highlight');
 
-    this.hideBadge(e);
+    this.hideAllRemoveBadges();
   }
 
-  onDragEnter(e) {
-    this.onEnter(e);
+  public hideAllRemoveBadges() {
+    const allBadges = Array.from(document.querySelectorAll('.remove-badge-container'));
+
+    for (const badge of allBadges) {
+      badge.classList.remove('show');
+      badge.classList.add('hide');
+    }
   }
-  
+
+  public showRemoveBadgeById(id: string) {
+    const removeBadge = document.querySelector(`#value-${id}`);
+
+    if (removeBadge) {
+      removeBadge.classList.add('show');
+      removeBadge.classList.remove('hide');
+    }
+  }
+
+  onDragEnter(e, id) {
+    this.onEnter(e, id);
+  }
+
   onDragLeave(e) {
     this.onLeave(e);
   }
-  
-  onMouseEnter(e) {
-    this.onEnter(e);
+
+  onMouseEnter(e, id) {
+    e.stopPropagation();
+
+    this.onEnter(e, id);
   }
-  
+
   onMouseLeave(e) {
+    e.stopPropagation();
+
     this.onLeave(e);
   }
 /** */
@@ -250,5 +300,14 @@ export class FormulaDrawComponent implements OnInit {
     currentFormulaValue.valueinvokeid = null;
     currentFormulaValue.valueinvoke = null;
     currentFormulaValue.valuenumber = 0;
+  }
+
+
+  public isAbleToEdit(): boolean {
+    if (this.formulaIsNew) {
+      return true;
+    }
+
+    return this.formulaIsEditable;
   }
 }
