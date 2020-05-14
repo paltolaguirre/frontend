@@ -249,4 +249,12 @@ describe('FormulaService', () => {
       expect(service.isPrimitive(fakeFormula)).toBeFalsy();
     });
   });
+
+  describe('isClonable', () => {
+    it('non primitive formulas should be clonable', () => {
+      fakeFormula.origin = 'any';
+
+      expect(service.isClonable(fakeFormula)).toBeTruthy();
+    });
+  });
 });

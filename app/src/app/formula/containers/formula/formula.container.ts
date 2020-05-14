@@ -139,6 +139,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public buildPreLoadedForm() {
     this.form = this.formBuilder.group({
       ...this.currentFormula,
+      name: [{ value: this.currentFormula.name, disabled: true }],
       params: this.formBuilder.array([]),
       formulaResult: []
     });
