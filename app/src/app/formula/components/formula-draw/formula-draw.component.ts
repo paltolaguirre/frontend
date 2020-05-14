@@ -157,6 +157,9 @@ export class FormulaDrawComponent implements OnInit {
           Valueboolean: false,
           valueinvoke: null
       };
+
+      this.setDefaultArgValue(arg);
+
       args.push(arg);
     });
 
@@ -174,6 +177,12 @@ export class FormulaDrawComponent implements OnInit {
 
     currentFormulaValue.valueinvoke = formulaInvoke
     event.cancelBubble = true;
+  }
+
+  public setDefaultArgValue(arg) {
+    if (arg.name === 'condicion') {
+      arg.Valueboolean = true;
+    }
   }
 /** */
   /*onOverInput(event){
