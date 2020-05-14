@@ -74,6 +74,8 @@ export class Models {
         return "Tipo de Impuesto";
       case 'tipopresentacion':
         return "Tipo de Presentación"
+      case 'conceptoafip':
+          return "Libro Sueldos Digital AFIP"
       default: 
         return "Seleccione..."; 
     } 

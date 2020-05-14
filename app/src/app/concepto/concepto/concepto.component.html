@@ -117,6 +117,19 @@
           </div>
         </div>
       </mat-expansion-panel>
+
+
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Libros Sueldos Digital AFIP</mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div>
+          <app-selector-default #conceptoafip nombre="conceptoafip" [filter]="getFilterTipoimpuestosganancias(data)" [disabled]=isDefault(data) [(matSelect)]="data.conceptoafipid"
+          (optionSelected)="data.conceptoafipid=$event.ID"></app-selector-default> 
+        </div>
+     
+      </mat-expansion-panel>
     </mat-accordion>
   </div>
   <div mat-dialog-actions class="actions">
