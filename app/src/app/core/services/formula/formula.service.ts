@@ -191,4 +191,12 @@ export class FormulaService {
   public emitFormulaItemClick(payload: FormulaTransferData) {
     this.formulaPickerItemEmitter.emit(payload);
   }
+
+  public isPrimitive(formula: Formula): boolean {
+    return formula.origin === 'primitive';
+  }
+
+  public isClonable(formula: Formula): boolean {
+    return formula.origin !== 'primitive';
+  }
 }

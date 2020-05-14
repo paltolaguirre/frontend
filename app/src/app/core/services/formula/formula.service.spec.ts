@@ -235,4 +235,26 @@ describe('FormulaService', () => {
       expect(emitterSpy).toHaveBeenCalledWith(data);
     });
   });
+
+  describe('isPrimitive', () => {
+    it('should return true if the formula origin is primitive', () => {
+      fakeFormula.origin = 'primitive';
+
+      expect(service.isPrimitive(fakeFormula)).toBeTruthy();
+    });
+
+    it('should return false in any case where the formula origin is not primitive', () => {
+      fakeFormula.origin = 'any';
+
+      expect(service.isPrimitive(fakeFormula)).toBeFalsy();
+    });
+  });
+
+  describe('isClonable', () => {
+    it('non primitive formulas should be clonable', () => {
+      fakeFormula.origin = 'any';
+
+      expect(service.isClonable(fakeFormula)).toBeTruthy();
+    });
+  });
 });

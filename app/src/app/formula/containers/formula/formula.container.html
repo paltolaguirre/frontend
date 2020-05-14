@@ -1,11 +1,11 @@
 <div class="formula-create-container">
-  <h1 *ngIf="currentFormula; else newFormulaTitle" class="page-title">
-    Editar Fórmula
+  <h1 *ngIf="isNew; else editFormulaTitle" class="page-title">
+    Nueva fórmula
   </h1>
 
-  <ng-template #newFormulaTitle>
+  <ng-template #editFormulaTitle>
     <h1 class="page-title">
-      Nueva fórmula
+      Editar Fórmula
     </h1>
   </ng-template>
 
@@ -26,7 +26,7 @@
             <div class="columns">
               <div class="column is-5">
                 <mat-form-field class="width-100">
-                  <input [appDisableControl]="!isEditable" matInput type="text" formControlName="name" placeholder="Nombre" cdkFocusInitial autocomplete="off">
+                  <input [appDisableControl]="!isNew" matInput type="text" formControlName="name" placeholder="Nombre" cdkFocusInitial autocomplete="off">
                   <mat-error *ngIf="form.get('name').invalid">El campo es obligatorio</mat-error>
                 </mat-form-field>
               </div>
@@ -124,7 +124,16 @@
               <div class="ide-container">
                 <app-operators-toolbar></app-operators-toolbar>
 
-                <app-formula-drop-space [isItemPickerExpanded]="isItemPickerExpanded" [formulaValue]="currentCanvasFormulas"></app-formula-drop-space>
+                <app-formula-drop-space 
+                  *ngIf="showCanvas(); else message"
+                  [isItemPickerExpanded]="isItemPickerExpanded" 
+                  [formulaValue]="currentCanvasFormulas"
+                  [formulaIsEditable]="isEditable"
+                  [formulaIsNew]="isNew">
+                </app-formula-drop-space>
+                <ng-template #message>
+                  <p class="canvas-message">Esta es una fórmula primitiva creada por Xubio, por tal motivo no es posible editarla, ni visualizar su contenido, pero podes utilizarla para relacionarla directamente en tus conceptos y tambien podes utilizarla para crear tu propia fórmula.</p>
+                </ng-template>
               </div>
             </div>
           </div>

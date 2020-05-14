@@ -114,6 +114,9 @@ export class OperatorsToolbarComponent implements OnInit {
         case "Percent":
           formula.symbol = "%";
           break;
+        case "BooleanInequality":
+          formula.symbol = "O exclusivo";
+          break;
         default:
           break;
       }

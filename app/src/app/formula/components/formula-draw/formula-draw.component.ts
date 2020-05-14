@@ -14,6 +14,8 @@ export interface DataPayload {
 export class FormulaDrawComponent implements OnInit {
   @Input() formulaValue: any;
   @Input() formulaParams: any;
+  @Input() formulaIsEditable: boolean;
+  @Input() formulaIsNew: boolean;
 
   private formula = {
     result: "number"
@@ -39,6 +41,7 @@ export class FormulaDrawComponent implements OnInit {
     this.middleSymbol.set('Percent', "% DE");
     this.middleSymbol.set('GreaterEqual', ">=");
     this.middleSymbol.set('LessEqual', "<=");
+    this.middleSymbol.set('BooleanInequality', "O exclusivo");
   }
 
   ngOnInit() {
@@ -69,6 +72,10 @@ export class FormulaDrawComponent implements OnInit {
   }
 
   onClickNode(event) {
+    if (!this.isAbleToEdit()) {
+      return null;
+    }
+
     const input = event.target.children[0];
     input.style.display = "block";
     input.focus();
@@ -80,11 +87,19 @@ export class FormulaDrawComponent implements OnInit {
   }
 
   onDrag(event, currentFormulaValue) {
+    if (!this.isAbleToEdit()) {
+      return null;
+    }
+
     event.dataTransfer.setData('text', JSON.stringify(currentFormulaValue.valueinvoke));
     event.cancelBubble = true;
   }
 
   onDragEnd(event, currentFormulaValue) {
+    if (!this.isAbleToEdit()) {
+      return null;
+    }
+
     console.log("Draw onDragEnd: ", event);
     const rect = document.getElementById('main').getBoundingClientRect();
     const xstart = rect.left;
@@ -100,6 +115,10 @@ export class FormulaDrawComponent implements OnInit {
 
   onDrop(event, currentFormulaValue, parentFormulaParam={type: ''}) {
     event.preventDefault();
+
+    if (!this.isAbleToEdit()) {
+      return null;
+    }
 
     const data: DataPayload = JSON.parse(event.dataTransfer.getData('text'));
 
@@ -195,6 +214,10 @@ export class FormulaDrawComponent implements OnInit {
 
 /** */
   onDragOver(event, id) { // allowDrop
+    if (!this.isAbleToEdit()) {
+      return null;
+    }
+
     event.preventDefault();
 
     this.onEnter(event, id);
@@ -203,6 +226,10 @@ export class FormulaDrawComponent implements OnInit {
   }
 
   onEnter(e, id) {
+    if (!this.isAbleToEdit()) {
+      return null;
+    }
+
     const elements = document.querySelectorAll('.highligthed');
     elements.forEach(element => {
       element.classList.replace('highligthed', 'no-highlight');
@@ -217,6 +244,10 @@ export class FormulaDrawComponent implements OnInit {
   }
 
   onLeave(e) {
+    if (!this.isAbleToEdit()) {
+      return null;
+    }
+
     const element: HTMLElement = e.target;
     element.classList.replace('highligthed', 'no-highlight');
 
@@ -269,5 +300,14 @@ export class FormulaDrawComponent implements OnInit {
     currentFormulaValue.valueinvokeid = null;
     currentFormulaValue.valueinvoke = null;
     currentFormulaValue.valuenumber = 0;
+  }
+
+
+  public isAbleToEdit(): boolean {
+    if (this.formulaIsNew) {
+      return true;
+    }
+
+    return this.formulaIsEditable;
   }
 }

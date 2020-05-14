@@ -139,6 +139,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
   public buildPreLoadedForm() {
     this.form = this.formBuilder.group({
       ...this.currentFormula,
+      name: [{ value: this.currentFormula.name, disabled: true }],
       params: this.formBuilder.array([]),
       formulaResult: []
     });
@@ -301,5 +302,10 @@ export class FormulaContainer implements OnInit, OnDestroy {
     console.log(this.form.value);
     // console.log(JSON.stringify(this.form.value)); //SUM(SUM(11,12),SUM(21,22))
     // console.log('formulaResult: ', JSON.stringify(this.form.value.formulaResult));
+  }
+
+  showCanvas() {
+    const ret = (this.currentFormula != null && this.currentFormula.origin != 'primitive');
+    return ret;
   }
 }
