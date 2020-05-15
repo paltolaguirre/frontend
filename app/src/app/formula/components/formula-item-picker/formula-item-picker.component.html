@@ -5,7 +5,7 @@
         <div class="category-box" 
           *ngFor="let category of categories"
           [ngClass]="{
-            'active': selectedCategoryItem?.categoryId === category.id
+            'active': (selectedCategoryItem?.categoryId === category.id) && isExpanded
           }">
           <div class="columns is-gapless is-mobile">
             <div *ngIf="isExpanded" class="column is-3">
@@ -15,7 +15,6 @@
             </div>
             <div class="column items-column" 
               [ngClass]="{
-                'is-12': !isExpanded,
                 'is-9': isExpanded
               }">
               <div class="items-box-container">
@@ -23,7 +22,8 @@
                   class="category-item-container border-light"
                   *ngFor="let item of category.items"
                   [ngClass]="{
-                    'active': selectedCategoryItem?.id === item.id
+                    'active': (selectedCategoryItem?.id === item.id) && isExpanded,
+                    'centered': !isExpanded
                   }"
                   (click)="onCategoryItemClick(item)"
                   [matTooltip]="!isExpanded ? item.title : null"
@@ -38,9 +38,7 @@
         </div>
       </div>
       <div class="column"
-        [ngClass]="{
-          'is-10': !isExpanded
-        }">
+        *ngIf="isExpanded">
         <div class="items-toolbar-container">
           <div *ngIf="isSearchItemSelected(selectedCategoryItem)" class="search-bar-container">
             <div class="columns is-gapless search-content border-regular">
