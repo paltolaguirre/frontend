@@ -98,8 +98,16 @@ export class FormulaItemPickerComponent implements OnInit {
     this.expandedStateEmitter.emit(this.isExpanded);
   }
 
+  public expandIde() {
+    this.isExpanded = true;
+
+    this.expandedStateEmitter.emit(true);
+  }
+
   public onCategoryItemClick(item: FormulaCategoryItem) {
     this.selectedCategoryItem = item;
+
+    this.expandIde();
   }
 
   public isSearchItemSelected(item: FormulaCategoryItem): boolean {
