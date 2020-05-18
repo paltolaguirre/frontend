@@ -20,8 +20,6 @@ export class OperatorsToolbarComponent implements OnInit {
   public selectedOperator: Formula = null;
   public basicMathOperators: any[];
   public logicalOperators: any[];
-  public xorOperator: any;
-  public numberOperator: Operator;
   public isMoreOperatorsListOpened: boolean;
 
   constructor(
@@ -31,8 +29,6 @@ export class OperatorsToolbarComponent implements OnInit {
 
   ngOnInit() {
     this.fetchFormulas();
-    this.xorOperator = this.operatorsService.getXOROperator();
-    this.numberOperator = this.operatorsService.getNumberOperator();
 
     this.operatorsService.operatorDropEmitter.subscribe((operator: DataPayload) => {
       this.closeMoreOperatorsList();
