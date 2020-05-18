@@ -1,7 +1,12 @@
 @import '../../../../styles/variables.scss';
 
 div.formula-item-picker-container {
-  padding: 1rem;    
+  padding: 1rem;
+  min-height: 22rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
   div.item-picker {
     margin-bottom: 2rem;
     div.category-box {
@@ -42,6 +47,10 @@ div.formula-item-picker-container {
               color: $GRAY_REGULAR;
               font-size: 0.7rem;
               line-height: 11px;
+            }
+
+            &.centered {
+              justify-content: center;
             }
 
             &.active {
