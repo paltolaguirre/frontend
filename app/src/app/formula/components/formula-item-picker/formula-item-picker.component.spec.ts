@@ -157,6 +157,14 @@ describe('FormulaItemPickerComponent', () => {
     });
   });
 
+  describe('expandIde', () => {
+    it('should set true the isExpanded state', () => {
+      component.expandIde();
+
+      expect(component.isExpanded).toBeTruthy();
+    });
+  });
+
   describe('onCategoryItemClick', () => {
     it('should set the received item as selectedCategoryItem', () => {
       component.onCategoryItemClick(fakeCategoryItem);
