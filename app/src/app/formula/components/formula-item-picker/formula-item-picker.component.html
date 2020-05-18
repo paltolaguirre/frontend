@@ -66,7 +66,6 @@
                     [attr.data-data]="getFormulaTransferData(item, 'pickable-item-' + index + 1) | json"
                     draggable="true"
                     (dragstart)="onDragStart($event, getParamInsideSearch(item))"
-                    (click)="onFormulaItemClick($event, item)"
                     [matTooltip]="item?.description"
                     matTooltipPosition="above"
                     matTooltipClass="baloon">
@@ -84,7 +83,6 @@
                   [attr.data-data]="getFormulaTransferData(formula, 'variable-' + index + 1) | json"
                   draggable="true"
                   (dragstart)="onDragStart($event, formula)"
-                  (click)="onFormulaItemClick($event, formula)"
                   [matTooltip]="formula?.description"
                   matTooltipPosition="above"
                   matTooltipClass="baloon">
@@ -101,7 +99,6 @@
                   [attr.data-data]="getFormulaTransferData(concept, 'concept-' + index + 1) | json"
                   draggable="true"
                   (dragstart)="onDragStart($event, getConceptParam(concept))"
-                  (click)="onFormulaItemClick($event, concept)"
                   [matTooltip]="null"
                   matTooltipPosition="above"
                   matTooltipClass="baloon">
@@ -118,7 +115,6 @@
                   [attr.data-data]="getFormulaTransferData(param, 'param-' + index + 1) | json"
                   draggable="true"
                   (dragstart)="onDragStart($event, getFormulaParam(param))"
-                  (click)="onFormulaItemClick($event, param)"
                   [matTooltip]="null"
                   matTooltipPosition="above"
                   matTooltipClass="baloon">
@@ -135,7 +131,6 @@
                   [attr.data-data]="getFormulaTransferData(formula, 'standard-formula-' + index + 1) | json"
                   draggable="true"
                   (dragstart)="onDragStart($event, formula)"
-                  (click)="onFormulaItemClick($event, formula)"
                   [matTooltip]="formula?.description"
                   matTooltipPosition="above"
                   matTooltipClass="baloon">
@@ -152,7 +147,6 @@
                   [attr.data-data]="getFormulaTransferData(formula, 'user-formula-' + index + 1) | json"
                   draggable="true"
                   (dragstart)="onDragStart($event, formula)"
-                  (click)="onFormulaItemClick($event, formula)"
                   [matTooltip]="formula?.description"
                   matTooltipPosition="above"
                   matTooltipClass="baloon">
