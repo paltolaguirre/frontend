@@ -5,9 +5,7 @@
         <div 
           *ngFor="let operator of basicMathOperators; index as index"
           class="math-operator-container no-selectable param numeric-param"
-          [id]="getDomIdByOperator(operator)"
           [attr.data-type]="operator.type"
-          [attr.data-data]="getOperatorTransferData(operator, getDomIdByOperator(operator)) | json"
           [matTooltip]="operator.tooltip"
           (dragstart)="onDragStart($event, operator)"
           (click)="onOperatorItemClick($event, operator)"
@@ -22,9 +20,7 @@
         <div 
           *ngFor="let operator of logicalOperators" 
           class="logical-operator-container"
-          [id]="getDomIdByOperator(operator)"
           [attr.data-type]="operator.type"
-          [attr.data-data]="getOperatorTransferData(operator, getDomIdByOperator(operator)) | json"
           [matTooltip]="operator.description"
           (dragstart)="onDragStart($event, operator)"
           (click)="onOperatorItemClick($event, operator)"
