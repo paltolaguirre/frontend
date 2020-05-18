@@ -163,6 +163,14 @@ describe('FormulaItemPickerComponent', () => {
 
       expect(component.isExpanded).toBeTruthy();
     });
+
+    it('should emit the expanded state through the expandedStateEmitter', () => {
+      const emitterSpy = spyOn(component.expandedStateEmitter, 'emit');
+
+      component.expandIde();
+
+      expect(emitterSpy).toHaveBeenCalledWith(true);
+    });
   });
 
   describe('onCategoryItemClick', () => {
