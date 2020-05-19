@@ -84,6 +84,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
   }
 
   public setDefaultArgValue(arg) {
+        // Establece la condicion por defecto de los IFS en "verdadero".
     if (arg.name === 'condicion') {
       arg.Valueboolean = true;
     }
