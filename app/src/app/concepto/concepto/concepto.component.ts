@@ -10,6 +10,7 @@ import { NotificationService } from 'src/app/handler-error/notification.service'
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { PrintService } from 'src/app/print/print.service';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-concepto',
@@ -114,6 +115,10 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
     return data.ID<0?true:false;
   }
 
+  isDefaultOrNoImprimible(data):Boolean{
+    return this.isDefault(data)||!data.esimprimible
+  }
+
   selectChange(event,data)
   {
     data.cuenta = event
@@ -130,6 +135,52 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
     return filterTipoconcepto;
   }
 
+  getPresetearValores(concepto:Concepto){
+    switch (concepto.tipoconcepto.codigo) { 
+      case 'IMPORTE_REMUNERATIVO':
+        concepto.marcarepeticion = true;
+        concepto.aportesipa = true;
+        concepto.contribucionsipa = true;
+        concepto.aportesinssjyp = true;
+        concepto.contribucionesinssjyp = true;
+        concepto.aportesobrasocial = true;
+        concepto.contribucionesobrasocial = true;
+        concepto.aportesfondosolidario = true;
+        concepto.contribucionesfondosolidario = true;
+        concepto.aportesrenatea = true;
+        concepto.contribucionesrenatea = true;
+        concepto.asignacionesfamiliares = true;
+        concepto.contribucionesfondonacional = true;
+        concepto.contribucionesleyriesgo = true;
+        concepto.aportesregimenesdiferenciales = true;
+        concepto.aportesregimenesespeciales = true;
+        return;
+        
+      case 'IMPORTE_NO_REMUNERATIVO':
+        concepto.contribucionesleyriesgo = true;
+        return;
+      
+      case 'DESCUENTO':
+          concepto.marcarepeticion = false;
+          concepto.aportesipa = false;
+          concepto.contribucionsipa = false;
+          concepto.aportesinssjyp = false;
+          concepto.contribucionesinssjyp = false;
+          concepto.aportesobrasocial = false;
+          concepto.contribucionesobrasocial = false;
+          concepto.aportesfondosolidario = false;
+          concepto.contribucionesfondosolidario = false;
+          concepto.aportesrenatea = false;
+          concepto.contribucionesrenatea = false;
+          concepto.asignacionesfamiliares = false;
+          concepto.contribucionesfondonacional = false;
+          concepto.contribucionesleyriesgo = false;
+          concepto.aportesregimenesdiferenciales = false;
+          concepto.aportesregimenesespeciales = false;
+          return;
+    }
+  } 
+  
   changeHandler(data, tipoimpuestosganancias) {
     console.log("tipoimpuestosganancias: ", tipoimpuestosganancias);
 

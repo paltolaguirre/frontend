@@ -31,6 +31,23 @@ export interface Concepto {
     esremvariable: Boolean;
     conceptoafip?: ConceptoAfip;
     conceptoafipid?: number;
+    codigointerno?:number;
+    marcarepeticion?:boolean;
+	aportesipa?:boolean;
+	contribucionsipa?:boolean;
+	aportesinssjyp?:boolean;
+	contribucionesinssjyp?:boolean;
+    aportesobrasocial?:boolean;
+    contribucionesobrasocial?:boolean;
+	aportesfondosolidario?:boolean;
+	contribucionesfondosolidario?:boolean;
+	aportesrenatea?:boolean;
+	contribucionesrenatea?:boolean;
+	asignacionesfamiliares?:boolean;
+	contribucionesfondonacional?:boolean;
+	contribucionesleyriesgo?:boolean;
+	aportesregimenesdiferenciales?:boolean;
+	aportesregimenesespeciales?:boolean;
 }
 
 export interface Tipoconcepto {  

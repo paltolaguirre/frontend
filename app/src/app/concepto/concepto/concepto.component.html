@@ -22,6 +22,9 @@
           <mat-form-field class="standard-input"><input [disabled]=isDefault(data) 
             matInput [(ngModel)]="data.codigo" placeholder="Código" type="text" autocomplete="off">
           </mat-form-field>
+          <mat-form-field class="small-input"><input [disabled]=true 
+            matInput [(ngModel)]="data.codigointerno" placeholder="Código Interno" type="number" autocomplete="off">
+          </mat-form-field>
         </div>
         <div>
           <app-selector-default nombre="cuenta" [disabled]=isDefault(data) required=true [(matSelect)]="data.cuentacontableid"
@@ -118,17 +121,37 @@
         </div>
       </mat-expansion-panel>
 
-
-      <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>Libros Sueldos Digital AFIP</mat-panel-title>
         </mat-expansion-panel-header>
-
         <div>
-          <app-selector-default #conceptoafip nombre="conceptoafip" [filter]="getFilterTipoimpuestosganancias(data)" [disabled]=isDefault(data) [(matSelect)]="data.conceptoafipid"
+          <app-selector-default #conceptoafip nombre="conceptoafip" [filter]="getFilterTipoimpuestosganancias(data)" (optionSelected)="getPresetearValores(data)" [disabled]=isDefaultOrNoImprimible(data) [(matSelect)]="data.conceptoafipid"
           (optionSelected)="data.conceptoafipid=$event.ID"></app-selector-default> 
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>Tildar las Opciones que debe Tributar</mat-panel-title>
+            </mat-expansion-panel-header>
+            <div color="primary">
+              <div style="margin: 15px 0px;"> <mat-checkbox [disabled]=isDefaultOrNoImprimible(data) color="primary" class="example-margin" [(ngModel)]="data.marcarepeticion"> Marca de Repetición</mat-checkbox> </div>
+              <div style="margin: 15px 0px;"> <mat-checkbox [disabled]=isDefaultOrNoImprimible(data) color="primary" class="example-margin" [(ngModel)]="data.aportesipa"> Aportes Sistema Previsional Argentino - SIPA </mat-checkbox></div>
+              <div style="margin: 15px 0px;"> <mat-checkbox [disabled]=isDefaultOrNoImprimible(data) color="primary" class="example-margin" [(ngModel)]="data.contribucionsipa"> Contribuciones Sistema Previsional Argentino - SIPA </mat-checkbox></div>
+              <div style="margin: 15px 0px;"> <mat-checkbox [disabled]=isDefaultOrNoImprimible(data) color="primary" class="example-margin" [(ngModel)]="data.aportesinssjyp"> Aportes INSSJyP </mat-checkbox></div>
+              <div style="margin: 15px 0px;"> <mat-checkbox [disabled]=isDefaultOrNoImprimible(data) color="primary" class="example-margin" [(ngModel)]="data.contribucionesinssjyp"> Contribuciones INSSJyP </mat-checkbox></div>
+              <div style="margin: 15px 0px;"> <mat-checkbox [disabled]=isDefaultOrNoImprimible(data) color="primary" class="example-margin" [(ngModel)]="data.aportesobrasocial"> Aportes Obra Social </mat-checkbox></div>
+              <div style="margin: 15px 0px;"> <mat-checkbox [disabled]=isDefaultOrNoImprimible(data) color="primary" class="example-margin" [(ngModel)]="data.contribucionesobrasocial"> Contribuciones Obra Social</mat-checkbox></div>
+              <div style="margin: 15px 0px;"> <mat-checkbox [disabled]=isDefaultOrNoImprimible(data) color="primary" class="example-margin" [(ngModel)]="data.aportesfondosolidario"> Aportes Fondo Solidario de Redistribución (ex ANSSAL) </mat-checkbox></div>
+              <div style="margin: 15px 0px;"> <mat-checkbox [disabled]=isDefaultOrNoImprimible(data) color="primary" class="example-margin" [(ngModel)]="data.contribucionesfondosolidario"> Contribuciones Fondo Solidario de Redistribución (ex ANSSAL) </mat-checkbox></div>
+              <div style="margin: 15px 0px;"> <mat-checkbox [disabled]=isDefaultOrNoImprimible(data) color="primary" class="example-margin" [(ngModel)]="data.aportesrenatea"> Aportes RENATEA (ex RENATRE) </mat-checkbox></div>
+              <div style="margin: 15px 0px;"> <mat-checkbox [disabled]=isDefaultOrNoImprimible(data) color="primary" class="example-margin" [(ngModel)]="data.contribucionesrenatea"> Contribuciones RENATEA (ex RENATRE) </mat-checkbox></div>
+              <div style="margin: 15px 0px;"> <mat-checkbox [disabled]=isDefaultOrNoImprimible(data) color="primary" class="example-margin" [(ngModel)]="data.asignacionesfamiliares"> Contribuciones Asignaciones Familiares </mat-checkbox></div>
+              <div style="margin: 15px 0px;"> <mat-checkbox [disabled]=isDefaultOrNoImprimible(data) color="primary" class="example-margin" [(ngModel)]="data.contribucionesfondonacional"> Contribuciones Fondo Nacional de Empleo </mat-checkbox></div>
+              <div style="margin: 15px 0px;"> <mat-checkbox [disabled]=isDefaultOrNoImprimible(data) color="primary" class="example-margin" [(ngModel)]="data.contribucionesleyriesgo"> Contribuciones Ley de Riesgos de Trabajo </mat-checkbox></div>
+              <div style="margin: 15px 0px;"> <mat-checkbox [disabled]=isDefaultOrNoImprimible(data) color="primary" class="example-margin" [(ngModel)]="data.aportesregimenesdiferenciales"> Aportes Regimenes Diferenciales (afecta REM6) </mat-checkbox></div>
+              <div style="margin: 15px 0px;"> <mat-checkbox [disabled]=isDefaultOrNoImprimible(data) color="primary" class="example-margin" [(ngModel)]="data.aportesregimenesespeciales"> Aportes Regimenes Especiales (afecta REM7) </mat-checkbox></div>
+            </div>
+          </mat-expansion-panel>
         </div>
-     
       </mat-expansion-panel>
     </mat-accordion>
   </div>
