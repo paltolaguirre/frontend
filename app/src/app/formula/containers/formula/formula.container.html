@@ -27,7 +27,8 @@
               <div class="column is-5">
                 <mat-form-field class="width-100">
                   <input [appDisableControl]="!isNew" matInput type="text" formControlName="name" placeholder="Nombre" cdkFocusInitial autocomplete="off">
-                  <mat-error *ngIf="form.get('name').invalid">El campo es obligatorio</mat-error>
+                  <mat-error *ngIf="form.get('name').errors.required">El campo es obligatorio</mat-error>
+                  <mat-error *ngIf="form.get('name').errors.cannotContainSpace">El campo no puede contener espacios</mat-error>
                 </mat-form-field>
               </div>
             </div>
@@ -95,7 +96,7 @@
               </div>
               <button [disabled]="!isEditable" class="table-row-manipulator" mat-raised-button (click)="onAddInputParamClick($event)">Agregar Item</button>
             </mat-expansion-panel>
-          
+
         </mat-expansion-panel>
 
         <mat-expansion-panel class="formula-calculation-content">
@@ -106,7 +107,7 @@
           </mat-expansion-panel-header>
 
           <div class="columns ide-columns">
-            <div class="column" [ngClass]="{ 
+            <div class="column" [ngClass]="{
               'is-5': isItemPickerExpanded,
               'is-1': !isItemPickerExpanded
               }">
@@ -117,15 +118,15 @@
               >
             </div>
             <div class="column"
-              [ngClass]="{ 
+              [ngClass]="{
                 'is-7': isItemPickerExpanded,
                 'is-11': !isItemPickerExpanded
               }">
               <div class="ide-container">
                 <app-operators-toolbar></app-operators-toolbar>
 
-                <app-formula-drop-space 
-                  [isItemPickerExpanded]="isItemPickerExpanded" 
+                <app-formula-drop-space
+                  [isItemPickerExpanded]="isItemPickerExpanded"
                   [formulaValue]="currentCanvasFormulas"
                   [formulaIsEditable]="isEditable"
                   [formulaIsNew]="isNew">
@@ -137,7 +138,7 @@
       </mat-accordion>
 
     </form>
-    
+
   </div>
 
   <app-bottom-table-actions
