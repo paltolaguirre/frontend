@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Reporte un problema para ayudarnos a mejorar.
-title: "[SVC-249] Bug report"
+title: "[SVC-XXX] Bug report"
 labels: bug
 assignees: ''
 
