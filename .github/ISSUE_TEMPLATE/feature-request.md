@@ -1,23 +1,23 @@
 ---
 name: Feature request
-about: Suggest an idea/improvement
+about: Sugiera una idea o nueva funcionalidad.
 title: "[SVC-XXX] Feature request"
 labels: enhancement
 assignees: ''
 
 ---
 
-**Link to Jira**
+**Link a Jira**
 [link](https://xubiosoftware.atlassian.net/browse/SVC-XXX)
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+**¿Su solicitud está relacionada con un problema? Por favor describalo.**
+Una descripción clara y concisa de cuál es el problema.
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+**Describe la solución que deseas**
+Una descripción clara y concisa de lo que quieres que suceda.
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+**Describe alternativas que hayas considerado**
+Una descripción clara y concisa de cualquier solución o característica alternativa que haya considerado.
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+**Contexto adicional**
+Agregue cualquier otro contexto o capturas de pantalla sobre la solicitud.
