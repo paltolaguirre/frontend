@@ -131,11 +131,20 @@ export class F1357liquidacionfinalanualListComponent implements OnInit, AfterVie
   async exportarTXT() {
   
     const empresa = await this.empresaService.getEmpresa();
+
+    if(empresa.cuit == "") {
+      const notificacion = {
+        codigo: 400,
+        mensaje: "Debe completar el CUIT del Agente de Retención."
+      }
+      const ret = this.notificationService.notify(notificacion);
+      return ret;
+    }
     const liquidacionfinalanualTXT: any = await this.liquidacionfinalanualService.getLiquidacionfinalanualTXT(this.tipopresentacion,this.anio,this.mes);
     var blob = new Blob([liquidacionfinalanualTXT.data], {type: "text/plain;charset=utf-8"});
-    
-    const secuencia = 1 //hablar con Rodri sobre la secuencia
-    const nombreArchivo = `F1357.${empresa.cuit}.${this.anio}0000.${secuencia}`;
+    const cuitempresa = empresa.cuit.replace("-","").replace("-","");
+    const secuencia = "0000"
+    const nombreArchivo = `F1357.${cuitempresa}.${this.anio}0000.${secuencia}.txt`;
     saveAs.saveAs(blob, nombreArchivo);
   }
 

@@ -304,4 +304,9 @@ export class FormulaContainer implements OnInit, OnDestroy {
     // console.log(JSON.stringify(this.form.value)); //SUM(SUM(11,12),SUM(21,22))
     // console.log('formulaResult: ', JSON.stringify(this.form.value.formulaResult));
   }
+
+  showCanvas() {
+    const ret = (this.currentFormula != null && this.currentFormula.origin != 'primitive');
+    return ret;
+  }
 }
