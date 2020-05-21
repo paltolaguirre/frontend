@@ -146,6 +146,19 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   tieneCalculoAutomatico(item: Liquidacionitem): boolean {
     return item.acumuladores && item.acumuladores.length > 0 
   }
+
+  async setCantidadDiasTrabajados(event:any, data:any){
+   
+   switch (event.codigo) { 
+      case 'MENSUAL' || 'SAC':
+        data.cantidaddiastrabajados = 30;
+        return;
+      case 'PRIMER_QUINCENA' || 'SEGUNDA_QUINCENA':
+        data.cantidaddiastrabajados = 15;
+        return;
+    }
+  
+  }
   
   onClickAbort(): void {
     this.gotoGrilla();
@@ -442,3 +455,4 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
 
   }
 }
+

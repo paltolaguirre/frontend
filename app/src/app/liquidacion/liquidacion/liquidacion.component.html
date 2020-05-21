@@ -43,16 +43,16 @@
           </div>
           <div>
             <app-selector-default nombre="liquidaciontipo" placeholder="Tipo" [(matSelect)]="data.tipoid"
-              (optionSelected)="data.tipo=$event"></app-selector-default>
-            <app-selector-default nombre="liquidacioncondicionpago" placeholder="Condición de Pago"
-              [(matSelect)]="data.condicionpagoid" (optionSelected)="data.condicionpago=$event"></app-selector-default>
+              (optionSelected)="setCantidadDiasTrabajados($event,data)"></app-selector-default>
+              <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.cantidaddiastrabajados"
+                placeholder="Cantidad de Dias Trabajados" type="number" ></mat-form-field>
           </div>
           <div>
             <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="data.fecha=$event"
                 [ngModel]="data.fecha | date: 'yyyy-MM-dd'" placeholder="Fecha de Liquidacion" autocomplete="off">
             </mat-form-field>
-            <app-selector-default nombre="banco" placeholder="Cuenta Bancaria" [(matSelect)]="data.cuentabancoid"
-              (optionSelected)="data.banco=$event"></app-selector-default>
+            <app-selector-default nombre="liquidacioncondicionpago" placeholder="Condición de Pago"
+              [(matSelect)]="data.condicionpagoid" (optionSelected)="data.condicionpago=$event"></app-selector-default>
           </div>
           <div>
             <div>
@@ -60,14 +60,16 @@
                   (ngModelChange)="data.fechaultimodepositoaportejubilatorio=$event"
                   [ngModel]="data.fechaultimodepositoaportejubilatorio | date: 'yyyy-MM-dd'"
                   placeholder="Fecha Ult. Aporte Jubil." autocomplete="off"></mat-form-field>
-              <app-selector-default nombre="banco" placeholder="Banco Aporte Jubilatorio"
-                [(matSelect)]="data.bancoaportejubilatorioid" (optionSelected)="data.bancoaportejubilatorio=$event">
-              </app-selector-default>
+                  <app-selector-default nombre="banco" placeholder="Cuenta Bancaria" [(matSelect)]="data.cuentabancoid"
+              (optionSelected)="data.banco=$event"></app-selector-default>
             </div>
             <div>
               <mat-form-field class="standard-input"><input required=true matInput type="month"
                   placeholder="Periodo Depositado" [(ngModel)]="fechaperiododepositado" autocomplete="off">
               </mat-form-field>
+              <app-selector-default nombre="banco" placeholder="Banco Aporte Jubilatorio"
+              [(matSelect)]="data.bancoaportejubilatorioid" (optionSelected)="data.bancoaportejubilatorio=$event">
+            </app-selector-default>
             </div>
             <div>
               <mat-form-field class="standard-input"><input required=true matInput type="month"
