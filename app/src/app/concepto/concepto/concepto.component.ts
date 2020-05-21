@@ -134,7 +134,7 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
     
     return filterTipoconcepto;
   }
-
+  
   getPresetearValores(concepto:Concepto){
     switch (concepto.tipoconcepto.codigo) { 
       case 'IMPORTE_REMUNERATIVO':
@@ -155,12 +155,29 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
         concepto.aportesregimenesdiferenciales = true;
         concepto.aportesregimenesespeciales = true;
         return;
-        
+        case 'DESCUENTO':
+          concepto.marcarepeticion = true;
+          concepto.aportesipa = true;
+          concepto.contribucionsipa = true;
+          concepto.aportesinssjyp = true;
+          concepto.contribucionesinssjyp = true;
+          concepto.aportesobrasocial = true;
+          concepto.contribucionesobrasocial = true;
+          concepto.aportesfondosolidario = true;
+          concepto.contribucionesfondosolidario = true;
+          concepto.aportesrenatea = true;
+          concepto.contribucionesrenatea = true;
+          concepto.asignacionesfamiliares = true;
+          concepto.contribucionesfondonacional = true;
+          concepto.contribucionesleyriesgo = true;
+          concepto.aportesregimenesdiferenciales = true;
+          concepto.aportesregimenesespeciales = true;
+          return;  
       case 'IMPORTE_NO_REMUNERATIVO':
         concepto.contribucionesleyriesgo = true;
         return;
       
-      case 'DESCUENTO':
+      case 'RETENCION':
           concepto.marcarepeticion = false;
           concepto.aportesipa = false;
           concepto.contribucionsipa = false;
