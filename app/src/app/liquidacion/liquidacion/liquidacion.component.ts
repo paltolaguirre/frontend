@@ -150,12 +150,18 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   async setCantidadDiasTrabajados(event:any, data:any){
    
    switch (event.codigo) { 
-      case 'MENSUAL' || 'SAC':
-        data.cantidaddiastrabajados = 30;
-        return;
-      case 'PRIMER_QUINCENA' || 'SEGUNDA_QUINCENA':
+      case 'MENSUAL':
+          data.cantidaddiastrabajados = 30;
+          return;
+      case 'SAC':
+          data.cantidaddiastrabajados = 30;
+          return;
+      case 'PRIMER_QUINCENA':
         data.cantidaddiastrabajados = 15;
         return;
+      case  'SEGUNDA_QUINCENA':
+          data.cantidaddiastrabajados = 15;
+          return;
     }
   
   }
