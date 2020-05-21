@@ -1,3 +1,4 @@
+import { DataPayload } from './../formula-draw/formula-draw.component';
 import { MathOperatorTypes } from './../../../core/enums/math-operator-types.enum';
 import { FormulaTransferData } from './../../../core/models/formula-transfer-data.model';
 import { OperatorsService } from './../../../core/services/operators/operators.service';
@@ -17,10 +18,11 @@ export class OperatorsToolbarComponent implements OnInit {
   public formulas: Formula[];
   public moreOperators: any;
   public selectedOperator: Formula = null;
-  public basicMathOperators: Operator[];
-  public logicalOperators: Operator[];
-  public xorOperator: Operator;
+  public basicMathOperators: any[];
+  public logicalOperators: any[];
+  public xorOperator: any;
   public numberOperator: Operator;
+  public isMoreOperatorsListOpened: boolean;
 
   constructor(
     private formulaService: FormulaService,
@@ -29,14 +31,17 @@ export class OperatorsToolbarComponent implements OnInit {
 
   ngOnInit() {
     this.fetchFormulas();
-    this.basicMathOperators = this.operatorsService.getBasicMathOperators();
-    this.logicalOperators = this.operatorsService.getLogicalOperators();
     this.xorOperator = this.operatorsService.getXOROperator();
     this.numberOperator = this.operatorsService.getNumberOperator();
+
+    this.operatorsService.operatorDropEmitter.subscribe((operator: DataPayload) => {
+      this.closeMoreOperatorsList();
+    });
   }
 
   public fetchFormulas() {
     this.formulaService.formulasStore$.subscribe((formulas: Formula[]) => {
+      this.setSymbols(formulas);
       this.formulas = formulas;
 
       const formulaOperators: Formula[] = this.formulaService.extractFormulasByType(
@@ -44,10 +49,77 @@ export class OperatorsToolbarComponent implements OnInit {
         FormulaTypes.OPERATOR
       );
 
+      this.basicMathOperators = this.formulaService.extractBasicMathOperators(formulaOperators);
+      this.logicalOperators = this.formulaService.extractLogicalOperators(formulaOperators);
+
+      const itemsToRemove = [
+        ...this.basicMathOperators,
+        ...this.logicalOperators
+      ];
+      itemsToRemove.forEach(item => {
+        formulaOperators.splice(formulaOperators.findIndex(e => e.name === item.name), 1);
+      });
+
       this.moreOperators = [
-        ...this.operatorsService.getMoreStaticOperators(),
         ...formulaOperators
       ];
+    });
+  }
+
+  private setSymbols(formulas: Formula[]) {
+    formulas.forEach(formula => {
+      switch (formula.name) {
+        case "Sum":
+          formula.symbol = "+";
+          break;
+        case "Diff":
+          formula.symbol = "-";
+          break;
+        case "Div":
+          formula.symbol = "/";
+          break;
+        case "Multi":
+          formula.symbol = "*";
+          break;
+        case "If":
+          formula.symbol = "SI";
+          break;
+        case "Greater":
+          formula.symbol = ">";
+          break;
+        case "Less":
+          formula.symbol = "<";
+          break;
+        case "Equality":
+          formula.symbol = "=";
+          break;
+        case "Inequality":
+          formula.symbol = "<>";
+          break;
+        case "And":
+          formula.symbol = "Y";
+          break;
+        case "Or":
+          formula.symbol = "Ó";
+          break;
+        case "GreaterEqual":
+          formula.symbol = ">=";
+          break;
+        case "LessEqual":
+          formula.symbol = "<=";
+          break;
+        case "Not":
+          formula.symbol = "NO";
+          break;
+        case "Percent":
+          formula.symbol = "%";
+          break;
+        case "BooleanInequality":
+          formula.symbol = "O exclusivo";
+          break;
+        default:
+          break;
+      }
     });
   }
 
@@ -63,32 +135,56 @@ export class OperatorsToolbarComponent implements OnInit {
       this.operatorsService.emitOperatorClicked(data);
     }
 
-    setTimeout(() => { this.selectedOperator = null; });
+    this.toogleMoreOperatorsVisibility();
   }
 
   public isFormulaOperator(operator: Operator | Formula): boolean {
     return operator.hasOwnProperty('valueid');
   }
 
-  public onDragStart(event, operator: Operator) {
-    const data: FormulaTransferData = {
-      nodeId: event.target.id,
-      payload: operator
-    };
+  public onDragStart(event, operator: Operator, prefix?: string) {
+    const data: FormulaTransferData = this.getOperatorTransferData(operator, prefix);
 
     event.dataTransfer.setData('text/plain', JSON.stringify(data));
   }
 
-  public onOperatorItemClick(event, operator) {
+  public onMoreOperatorsDragStart(event, operator: Operator, prefix: string) {
     const data: FormulaTransferData = {
-      nodeId: event.target.id,
+      nodeId: prefix,
       payload: operator
     };
+
+    event.dataTransfer.setData('text/plain', JSON.stringify(data));
+
+    console.log(data);
+  }
+
+  public onOperatorItemClick(event, operator, prefix?: string) {
+    const data: FormulaTransferData = this.getOperatorTransferData(operator, prefix);
 
     this.operatorsService.emitOperatorClicked(data);
   }
 
   public getOperatorDefaultType() {
     return MathOperatorTypes.Numeric;
+  }
+
+  public getDomIdByOperator(operator: Operator, prefix?: string) {
+    return this.operatorsService.getDomIdByOperator(operator, prefix);
+  }
+
+  public getOperatorTransferData(operator: Operator, prefix?: string): FormulaTransferData {
+    return {
+      nodeId: this.getDomIdByOperator(operator, prefix),
+      payload: operator
+    };
+  }
+
+  public toogleMoreOperatorsVisibility() {
+    this.isMoreOperatorsListOpened = !this.isMoreOperatorsListOpened;
+  }
+
+  public closeMoreOperatorsList() {
+    this.isMoreOperatorsListOpened = false;
   }
 }

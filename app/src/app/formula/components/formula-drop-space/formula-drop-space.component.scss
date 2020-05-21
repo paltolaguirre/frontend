@@ -1,22 +1,16 @@
+@import "../../../../styles/variables.scss";
+
 div.draggable-space-container {
   height: 79%;
   margin-top: 0.6rem;
   display: flex;
-  justify-content: center;
   align-items: center;
   overflow-x: auto;
-  max-width: 44vw;
   white-space: nowrap;
+  width: 100%;
+  position: relative;
 
-  &.expanded {
-    max-width: 56vw;
-  }
-
-  @media (min-width: 1920px) {
-    max-width: 47vw;
-
-    &.expanded {
-      max-width: 62vw;
-    }
+  #draw-container {
+    margin: 0 auto;
   }
 }

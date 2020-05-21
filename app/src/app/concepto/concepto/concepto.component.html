@@ -93,7 +93,7 @@
                 <app-selector-default *ngIf="isDefault(data)" filter="tipoformulas=sistema" nombre="function" [disabled]="isDefault(data) || data.tipocalculoautomatico.codigo !== 'FORMULA'" required=false [(matSelect)]="data.formulanombre"
                 (optionSelected)="data.formulanombre=$event.ID; data.formula.name=$event.codigo">
               </app-selector-default> 
-              <app-selector-default *ngIf="!isDefault(data)" filter="tipoformulas=usuario" nombre="function" [disabled]="true || isDefault(data) || data.tipocalculoautomatico.codigo !== 'FORMULA'" required=false [(matSelect)]="data.formulanombre"
+              <app-selector-default *ngIf="!isDefault(data)" filter="tipoformulas=usuario" nombre="function" [disabled]="isDefault(data) || data.tipocalculoautomatico.codigo !== 'FORMULA'" required=false [(matSelect)]="data.formulanombre"
                 (optionSelected)="data.formulanombre=$event.ID; data.formula.name=$event.codigo">
               </app-selector-default>
             </div>
@@ -121,7 +121,7 @@
   </div>
   <div mat-dialog-actions class="actions">
     <button mat-raised-button color="primary" mat-button *ngIf=!isDefault(data)
-      (click)="onClickSave(data)">Guardar</button>
+      (click)="onClickSave(data)" [disabled]="estaGuardandose">Guardar</button>
     <button mat-raised-button mat-button color="secondary" (click)="onClickAbort()">Cerrar</button>
     <button *ngIf=isNew(data) mat-raised-button color="secondary" mat-button
       (click)="printService.printTOPDF()">Imprimir</button>

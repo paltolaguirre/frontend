@@ -1,6 +1,6 @@
 export class Formula {
   name: string;
-  CreatedAt: string;
+  CreatedAt?: string;
   UpdatedAt?: string;
   DeletedAt?: string;
   params: any[];
@@ -11,4 +11,6 @@ export class Formula {
   result: string;
   value: any;
   valueid: number;
+  symbol?: string;
+  valueinvoke?: any;
 }

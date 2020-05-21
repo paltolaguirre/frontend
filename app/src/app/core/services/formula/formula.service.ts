@@ -14,15 +14,15 @@ import { Formula } from '../../models/formula.model';
 export class FormulaService {
 
   public readonly BASE_URL = '/api/formula';
-  private formulas = new BehaviorSubject<Formula[]>([]);
+  public formulas = new BehaviorSubject<Formula[]>([]);
   public formulasStore$ = this.formulas.asObservable();
   public formulaPickerItemEmitter: EventEmitter<FormulaTransferData> = new EventEmitter();
 
   constructor(private api: ApiHttpService) {
-    this.initFormulasStore();
+    this.updateFormulasStore();
   }
 
-  public async initFormulasStore() {
+  public async updateFormulasStore() {
     this.formulas.next(await this.getAll());
   }
 
@@ -30,12 +30,24 @@ export class FormulaService {
     return await this.api.get(`${this.BASE_URL}/formulas`).toPromise() as Formula[];
   }
 
+  public async getByType(type: string): Promise<Formula[]> {
+    return await this.api.get(`${this.BASE_URL}/formulas?type=${type}`).toPromise() as Formula[];
+  }
+
   public async delete(name: string): Promise<any> {
-    return await this.api.delete(`${this.BASE_URL}/formulas/${name}`).toPromise();
+    const response = await this.api.delete(`${this.BASE_URL}/formulas/${name}`).toPromise();
+
+    this.updateFormulasStore();
+
+    return response;
   }
 
   public async create(formula: Formula): Promise<any> {
-    return await this.api.post(`${this.BASE_URL}/formulas`, formula).toPromise();
+    const response = await this.api.post(`${this.BASE_URL}/formulas`, formula).toPromise();
+
+    this.updateFormulasStore();
+
+    return response;
   }
 
   public async find(name: string): Promise<Formula> {
@@ -43,7 +55,11 @@ export class FormulaService {
   }
 
   public async update(name: string, formula: Formula) {
-    return await this.api.put(`${this.BASE_URL}/formulas/${name}`, formula).toPromise();
+    const response = await this.api.put(`${this.BASE_URL}/formulas/${name}`, formula).toPromise();
+
+    this.updateFormulasStore();
+
+    return response;
   }
 
   public getFormulaCategories(): FormulaCategory[] {
@@ -54,7 +70,8 @@ export class FormulaService {
         items: [
           {
             id: 1,
-            img: 'assets/img/descarga.jpg',
+            img: 'assets/img/icono_search.png',
+            imgActive: 'assets/img/icono_search_selec.png',
             title: 'Buscar',
             categoryId: 1,
             slug: 'search'
@@ -67,21 +84,24 @@ export class FormulaService {
         items: [
           {
             id: 2,
-            img: 'assets/img/descarga.jpg',
+            img: 'assets/img/icono_variables.png',
+            imgActive: 'assets/img/icono_variables_selec.png',
             title: 'Variables',
             categoryId: 2,
             slug: 'variables'
           },
           {
             id: 3,
-            img: 'assets/img/descarga.jpg',
+            img: 'assets/img/icono_conceptos.png',
+            imgActive: 'assets/img/icono_conceptos_selec.png',
             title: 'Conceptos en la liquidación',
             categoryId: 2,
             slug: 'concept'
           },
           {
             id: 4,
-            img: 'assets/img/descarga.jpg',
+            img: 'assets/img/icono_parametros.png',
+            imgActive: 'assets/img/icono_parametros_selec.png',
             title: 'Parámetros de entrada',
             categoryId: 2,
             slug: 'input-params'
@@ -94,14 +114,16 @@ export class FormulaService {
         items: [
           {
             id: 5,
-            img: 'assets/img/descarga.jpg',
+            img: 'assets/img/icono_formulas_xubio.png',
+            imgActive: 'assets/img/icono_formulas_xubio_selec.png',
             title: 'Fórmulas estandar',
             categoryId: 3,
             slug: 'standard-formulas'
           },
           {
             id: 6,
-            img: 'assets/img/descarga.jpg',
+            img: 'assets/img/icono_favoritas.png',
+            imgActive: 'assets/img/icono_favoritas_selec.png',
             title: 'Mis fórmulas',
             categoryId: 3,
             slug: 'user-formulas'
@@ -112,7 +134,21 @@ export class FormulaService {
   }
 
   public isEditable(formula: Formula): boolean {
-    return formula.origin !== 'primitive';
+    return formula.scope === 'private';
+  }
+
+  public extractBasicMathOperators(formulas: Formula[]): Formula[] {
+    return formulas.filter((formula) => {
+      const functionNames = ["Sum","Diff","Div","Multi",];
+      return formula.type === FormulaTypes.OPERATOR && functionNames.includes(formula.name);
+    });
+  }
+
+  public extractLogicalOperators(formulas: Formula[]): Formula[] {
+    return formulas.filter((formula) => {
+      const functionNames = ["If","Greater","Less","Equality","Inequality","And","Or"];
+      return formula.type === FormulaTypes.OPERATOR && functionNames.includes(formula.name);
+    });
   }
 
   public extractFormulasByType(formulas: Formula[], type: string): Formula[] {
@@ -154,5 +190,13 @@ export class FormulaService {
 
   public emitFormulaItemClick(payload: FormulaTransferData) {
     this.formulaPickerItemEmitter.emit(payload);
+  }
+
+  public isPrimitive(formula: Formula): boolean {
+    return formula.origin === 'primitive';
+  }
+
+  public isClonable(formula: Formula): boolean {
+    return formula.origin !== 'primitive';
   }
 }

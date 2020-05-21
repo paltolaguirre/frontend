@@ -3,9 +3,9 @@
 .draggable-space-container {
   .param {
     margin: 5px;
-    padding: 10px;
+    padding: 2px 10px;
     width: fit-content;
-    border-radius: 40px 40px 40px 40px;
+    border-radius: 25px 25px 25px 25px;
     position:relative;
 
     display: flex;
@@ -15,10 +15,10 @@
 
   .remove-badge-container {
     position: absolute;
-    top: -4px;
-    right: 9px;
+    top: -10px;
+    right: 0px;
     background-color: $GRAY_REGULAR !important;
-    padding: 0px 6px;
+    padding: 2px 3px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -27,16 +27,18 @@
 
     .remove-icon {
       background: transparent !important;
+      font-size: 10px;
+      color: red;
     }
   }
   
-  .numeric-param {
-    border-left: 2px solid blue;
-    border-right: 2px solid blue;
+  .number-param {
+    border-left: 2px solid rgb(33, 150, 243);
+    border-right: 2px solid rgb(33, 150, 243);
   }
 
   .inputedit {
-  
+    width: 3rem;
     position: absolute;
     top: 30px;
     left: -20px;
@@ -44,9 +46,9 @@
     z-index: 100;
   }
   
-  .boolean {
-    border-left: 2px solid red;
-    border-right: 2px solid red;
+  .boolean-param {
+    border-left: 2px solid rgb(156, 39, 176);
+    border-right: 2px solid rgb(156, 39, 176);
   }
   
   .white-parenthesis{
@@ -73,7 +75,10 @@
     cursor: auto;
   }
   
-  
+  .hide {
+    display: none;
+  }
+
   #main2{
     border: 5px solid black;
     width: 800px;

@@ -1,15 +1,15 @@
 @import '../../../../styles/variables.scss';
 
 div.formula-item-picker-container {
-  padding: 1rem;    
+  padding: 1rem;
+  min-height: 22rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
   div.item-picker {
     margin-bottom: 2rem;
     div.category-box {
-
-      &.active {
-        background-color: #fff;
-      }
-
       div.category-name-container {
         display: flex;
         align-items: center;
@@ -38,8 +38,8 @@ div.formula-item-picker-container {
             position: relative;
 
             img.item-icon {
-              width: 2rem;
-              margin-left: 0.3rem;
+              width: 1.2rem;
+              margin: 0.3rem 0 0.3rem 0.3rem;
             }
     
             p.item-name {
@@ -47,6 +47,10 @@ div.formula-item-picker-container {
               color: $GRAY_REGULAR;
               font-size: 0.7rem;
               line-height: 11px;
+            }
+
+            &.centered {
+              justify-content: center;
             }
 
             &.active {
@@ -73,13 +77,21 @@ div.formula-item-picker-container {
           }
         }
       }
+
+      &.active {
+        background-color: #fff;
+
+        .item-name{
+          color: rgba(#000, 0.7) !important;
+        }
+      }
     }
 
     div.items-toolbar-container {
       background-color: #fff;
       border: 2px solid $ACTIVE;
       padding: 1rem;
-      max-width: 15rem;
+      height: 17rem;
 
       div.search-bar-container {
         width: 93%;
@@ -131,15 +143,14 @@ div.formula-item-picker-container {
       }
 
       div.toolbox {
-        min-height: 15rem;
-        max-height: 15rem;
+        height: 16.1rem;
         overflow-y: scroll;
         overflow-x: auto;
         font-size: 0.7rem;
 
         div.selectable-badges-container {
           .pickable-badge {
-            background: $ACTIVE;
+            background: $PRIMARY_COLOR;
             color: #fff;
             border-radius: 10px;
             max-width: fit-content;

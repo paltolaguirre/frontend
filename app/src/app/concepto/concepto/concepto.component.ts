@@ -21,6 +21,7 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
   paises: any[];
   id: number;
   public selectedFormula: Formula;
+  public estaGuardandose: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -65,6 +66,7 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
   }
 
   private gotoGrilla() {
+    this.estaGuardandose = true;
     this.router.navigate(['/conceptos']);
   }
 
@@ -73,20 +75,23 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
   }
 
   async onClickSave(data: Concepto): Promise<Concepto> {
-    if(this.faltanRequeridos()) return null;
+    
+    if(this.estaGuardandose || this.faltanRequeridos()) return null;
 
+    this.estaGuardandose = true;
+    
     let conceptosItem: Concepto;
 
     //if(data.cuenta)data.cuentacontableid = data.cuenta.ID;
-
+    let that = this;
     if (this.id) {
       console.log("Updated Concepto");
-      conceptosItem = await this.conceptoService.putConcepto(data);
+      conceptosItem = await this.conceptoService.putConcepto(data).finally(function(){that.habilitarGuardado();});
       this.gotoGrilla();
    //   this.notificationService.notify("Concepto Actualizado");
     } else {
       console.log("Created Concepto");
-      conceptosItem = await this.conceptoService.postConcepto(data);
+      conceptosItem = await this.conceptoService.postConcepto(data).finally(function(){that.habilitarGuardado();});
       this.gotoGrilla();
  //     this.notificationService.notify("Concepto Creado");
     }
@@ -96,6 +101,11 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
     return conceptosItem;
   }
 
+
+  habilitarGuardado() {
+    this.estaGuardandose = false
+  }
+  
   isNew(data) : Boolean {
     return data.ID==null?false:true;
   }

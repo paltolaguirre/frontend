@@ -1,3 +1,4 @@
+import { FormulaFixtures } from './../fixtures/formulas.fixtures';
 import { EventEmitter } from '@angular/core';
 import { FormulaTransferData } from './../models/formula-transfer-data.model';
 import { BehaviorSubject } from 'rxjs';
@@ -10,20 +11,15 @@ export class FormulaServiceMock {
   public formulasStore$ = this.formulas.asObservable();
   public formulaPickerItemEmitter: EventEmitter<FormulaTransferData> = new EventEmitter();
 
-  fakeFormulaItem: Formula = {
-    name: 'Formula 1',
-    CreatedAt: '',
-    UpdatedAt: '',
-    DeletedAt: '',
-    params: [],
-    description: 'Esta es una formula',
-    origin: '',
-    type: '',
-    scope: '',
-    result: '',
-    value: 1,
-    valueid: 1
-  };
+  fakeFormulaItem: Formula = FormulaFixtures.getAll()[0];
+
+  constructor() {
+    this.updateFormulasStore();
+  }
+
+  public async updateFormulasStore() {
+    this.formulas.next(await this.getAll());
+  }
 
   public getFormulaCategories(): FormulaCategory[] {
     return [
@@ -34,6 +30,7 @@ export class FormulaServiceMock {
           {
             id: 1,
             img: 'assets/img/descarga.jpg',
+            imgActive: '',
             title: 'Buscar',
             categoryId: 1,
             slug: 'search'
@@ -47,6 +44,7 @@ export class FormulaServiceMock {
           {
             id: 2,
             img: 'assets/img/descarga.jpg',
+            imgActive: '',
             title: 'Variables',
             categoryId: 2,
             slug: 'variables'
@@ -54,6 +52,7 @@ export class FormulaServiceMock {
           {
             id: 3,
             img: 'assets/img/descarga.jpg',
+            imgActive: '',
             title: 'Conceptos en la liquidación',
             categoryId: 2,
             slug: 'concept'
@@ -61,6 +60,7 @@ export class FormulaServiceMock {
           {
             id: 4,
             img: 'assets/img/descarga.jpg',
+            imgActive: '',
             title: 'Parámetros de entrada',
             categoryId: 2,
             slug: 'input-params'
@@ -74,6 +74,7 @@ export class FormulaServiceMock {
           {
             id: 5,
             img: 'assets/img/descarga.jpg',
+            imgActive: '',
             title: 'Fórmulas estandar',
             categoryId: 3,
             slug: 'standard-formulas'
@@ -81,6 +82,7 @@ export class FormulaServiceMock {
           {
             id: 6,
             img: 'assets/img/descarga.jpg',
+            imgActive: '',
             title: 'Mis fórmulas',
             categoryId: 3,
             slug: 'my-formulas'
@@ -91,7 +93,7 @@ export class FormulaServiceMock {
   }
 
   public getAll() {
-    return Promise.resolve([]);
+    return Promise.resolve(FormulaFixtures.getAll());
   }
 
   public delete(formula: Formula): Promise<any> {
@@ -104,6 +106,14 @@ export class FormulaServiceMock {
 
   public isEditable(formula: Formula): boolean {
     return true;
+  }
+
+  public extractBasicMathOperators() {
+    return [];
+  }
+
+  public extractLogicalOperators() {
+    return [];
   }
 
   public extractFormulasByType(formulas: Formula[], type: string): Formula[] {

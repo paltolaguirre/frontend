@@ -1,9 +1,12 @@
-<button *ngIf="isEditable" mat-icon-button color="accent" (click)="onEditClick()">
+<button *ngIf="isEditable" mat-icon-button color="accent" (click)="onEditClick()" matTooltip="Editar" matTooltipPosition="above">
   <mat-icon>edit</mat-icon>
 </button>
-<button *ngIf="isEditable" mat-icon-button class="actions-icon" color="warn" (click)="onDeleteClick()">
+<button *ngIf="isEditable" mat-icon-button class="actions-icon" color="warn" (click)="onDeleteClick()" matTooltip="Eliminar" matTooltipPosition="above">
   <mat-icon>delete_forever</mat-icon>
 </button>
-<button *ngIf="!isEditable"  mat-icon-button class="actions-icon" color="black" (click)="onViewClick()">
+<button *ngIf="!isEditable"  mat-icon-button class="actions-icon" color="black" (click)="onViewClick()" matTooltip="Ver" matTooltipPosition="above">
   <mat-icon>remove_red_eye</mat-icon>
+</button>
+<button *ngIf="isClonable" mat-icon-button class="actions-icon" color="black" (click)="onCloneClick()" matTooltip="Clonar" matTooltipPosition="above">
+  <mat-icon>flip_to_front</mat-icon>
 </button>

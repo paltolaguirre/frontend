@@ -24,9 +24,14 @@ div.formula-create-container {
     }
   }
 
+  div.ide-columns {
+    max-height: 26.3rem;
+  }
+
   div.ide-container {
+    position: relative;
     height: 100%;
-    width: 100%;
+    width: 94%;
   }
 }
 
@@ -53,4 +58,15 @@ div.formula-create-container {
   mat-form-field {
     margin-right: 1rem;
   }
+}
+
+.canvas-message {
+  text-align: center;
+  margin: auto;
+  line-height: 14px;
+  height: 300px;
+  display: table-cell;
+  vertical-align: middle;
+  padding: 10px 50px;
+  border: 1px solid #f2f2f2;
 }

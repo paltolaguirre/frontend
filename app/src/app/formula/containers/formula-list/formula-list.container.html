@@ -19,9 +19,11 @@
       <td mat-cell *matCellDef="let row">        
         <app-table-row-actions
           [isEditable]="isFormulaEditable(row)"
+          [isClonable]="isFormulaClonable(row)"
           (editEmitter)="editFormula(row)"
           (deleteEmitter)="onDelete(row)"
-          (viewEmitter)="editFormula(row)">
+          (viewEmitter)="editFormula(row)"
+          (cloneEmitter)="cloneFormula(row)">
         </app-table-row-actions>
       </td>
     </ng-container>

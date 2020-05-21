@@ -1,3 +1,4 @@
+import { FormulaCloneDialogComponent } from './../formula/components/formula-clone-dialog/formula-clone-dialog.component';
 import { TableRowActionsComponent } from './components/table-row-actions/table-row-actions.component';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
@@ -21,7 +22,8 @@ import { DisableControlDirective } from './directives/disable-control/disable-co
     InfoDialogComponent,
     BottomTableActionsComponent,
     YearSelectorComponent,
-    DisableControlDirective
+    DisableControlDirective,
+    FormulaCloneDialogComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +33,8 @@ import { DisableControlDirective } from './directives/disable-control/disable-co
     RouterModule
   ],
   entryComponents: [
-    InfoDialogComponent
+    InfoDialogComponent,
+    FormulaCloneDialogComponent
   ],
   exports: [
     BottomTableActionsComponent,
@@ -44,7 +47,8 @@ import { DisableControlDirective } from './directives/disable-control/disable-co
     FormsModule,
     MaterialModule,
     ReactiveFormsModule,
-    YearSelectorComponent
+    YearSelectorComponent,
+    FormulaCloneDialogComponent
   ]
 })
 export class SharedModule { }

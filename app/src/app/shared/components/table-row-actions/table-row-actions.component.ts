@@ -7,9 +7,11 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 })
 export class TableRowActionsComponent implements OnInit {
   @Input() isEditable: boolean;
+  @Input() isClonable: boolean;
   @Output() editEmitter: EventEmitter<any> = new EventEmitter();
   @Output() deleteEmitter: EventEmitter<any> = new EventEmitter();
   @Output() viewEmitter: EventEmitter<any> = new EventEmitter();
+  @Output() cloneEmitter: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
@@ -26,5 +28,9 @@ export class TableRowActionsComponent implements OnInit {
 
   public onViewClick() {
     this.viewEmitter.emit();
+  }
+
+  public onCloneClick() {
+    this.cloneEmitter.emit();
   }
 }
