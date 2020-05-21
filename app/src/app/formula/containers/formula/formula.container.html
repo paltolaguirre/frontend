@@ -27,8 +27,8 @@
               <div class="column is-5">
                 <mat-form-field class="width-100">
                   <input [appDisableControl]="!isNew" matInput type="text" formControlName="name" placeholder="Nombre" cdkFocusInitial autocomplete="off">
-                  <mat-error *ngIf="form.get('name').errors.required">El campo es obligatorio</mat-error>
-                  <mat-error *ngIf="form.get('name').errors.cannotContainSpace">El campo no puede contener espacios</mat-error>
+                  <mat-error *ngIf="form.get('name').errors && form.get('name').errors.required">El campo es obligatorio</mat-error>
+                  <mat-error *ngIf="form.get('name').errors && form.get('name').errors.cannotContainSpace">El campo no puede contener espacios</mat-error>
                 </mat-form-field>
               </div>
             </div>
