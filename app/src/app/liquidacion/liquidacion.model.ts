@@ -41,6 +41,7 @@ export interface Liquidacion {
     aportespatronales  : Liquidacionitem[];
     liquidacionitems?: Liquidacionitem[];
     estacontabilizada?: boolean;
+    cantidaddiastrabajados?: number;
 }
 
 export interface Tipo {
