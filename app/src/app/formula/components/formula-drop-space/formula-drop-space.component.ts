@@ -34,8 +34,32 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
       return null;
     }
 
-    const data: FormulaTransferData = JSON.parse(event.dataTransfer.getData('text'));
+    const data: any = JSON.parse(event.dataTransfer.getData('text'));
 
+    if(data.functionname && data.functionname != undefined) {
+      const formulaInvoke = {
+        ID: 0,
+        function: data.function,
+        functionname: data.function.name,
+        args: data.args
+      };
+      
+      const value = {
+        ID: 0,
+        name: "",
+        type: data.function.result,
+        valuenumber: 0,
+        valuestring: "",
+        Valueboolean: false,
+        valueinvoke: formulaInvoke
+      };
+  
+      this.valuesinvoke.push(value);
+      // event.cancelBubble = true;
+
+      return;
+    }
+    
     if(data.payload == undefined) {
       return;
     }
@@ -46,7 +70,7 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
           ID: 0,
           name: param.name,
           type: param.type,
-          valuenumber: 0,
+          valuenumber: param.valuenumber == undefined ? 0 : param.valuenumber,
           valuestring: param.valuestring == undefined ? "" : param.valuestring,
           Valueboolean: false,
           valueinvoke: null

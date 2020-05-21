@@ -125,11 +125,15 @@
                 <app-operators-toolbar></app-operators-toolbar>
 
                 <app-formula-drop-space 
+                  *ngIf="showCanvas(); else message"
                   [isItemPickerExpanded]="isItemPickerExpanded" 
                   [formulaValue]="currentCanvasFormulas"
                   [formulaIsEditable]="isEditable"
                   [formulaIsNew]="isNew">
                 </app-formula-drop-space>
+                <ng-template #message>
+                  <p class="canvas-message">Esta es una fórmula primitiva creada por Xubio, por tal motivo no es posible editarla, ni visualizar su contenido, pero podes utilizarla para relacionarla directamente en tus conceptos y tambien podes utilizarla para crear tu propia fórmula.</p>
+                </ng-template>
               </div>
             </div>
           </div>
