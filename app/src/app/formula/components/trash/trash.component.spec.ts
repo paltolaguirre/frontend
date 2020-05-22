@@ -28,4 +28,15 @@ describe('TrashComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  describe('onTrashDragOver', () => {
+    it('should activate the dragenter state', () => {
+      const event = new Event('ondragover');
+      const dragEnterSpy = spyOn(component, 'setTrashDragEnterState');
+
+      component.onTrashDragOver(event);
+
+      expect(dragEnterSpy).toHaveBeenCalledTimes(1);
+    });
+  });
 });
