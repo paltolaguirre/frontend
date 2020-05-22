@@ -39,4 +39,15 @@ describe('TrashComponent', () => {
       expect(dragEnterSpy).toHaveBeenCalledTimes(1);
     });
   });
+
+  describe('onTrashDrop', () => {
+    it('should deactivate the dragenter state', () => {
+      const event = new Event('ondragover');
+      const dragLeaveSpy = spyOn(component, 'setTrashDragLeaveState');
+
+      component.onTrashDrop(event);
+
+      expect(dragLeaveSpy).toHaveBeenCalledTimes(1);
+    });
+  });
 });
