@@ -50,4 +50,14 @@ describe('TrashComponent', () => {
       expect(dragLeaveSpy).toHaveBeenCalledTimes(1);
     });
   });
+
+  describe('setTrashDragEnterState', () => {
+    it('should set isTrashDragOver state to true', () => {
+      component.isTrashDragOver = false;
+
+      component.setTrashDragEnterState();
+
+      expect(component.isTrashDragOver).toBeTruthy();
+    });
+  });
 });
