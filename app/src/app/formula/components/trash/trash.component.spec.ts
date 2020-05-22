@@ -60,4 +60,14 @@ describe('TrashComponent', () => {
       expect(component.isTrashDragOver).toBeTruthy();
     });
   });
+
+  describe('setTrashDragLeaveState', () => {
+    it('should set isTrashDragOver state to false', () => {
+      component.isTrashDragOver = true;
+
+      component.setTrashDragLeaveState();
+
+      expect(component.isTrashDragOver).toBeFalsy();
+    });
+  });
 });
