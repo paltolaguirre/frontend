@@ -44,7 +44,7 @@
           <div>
             <app-selector-default nombre="liquidaciontipo" placeholder="Tipo" [(matSelect)]="data.tipoid"
               (optionSelected)="setCantidadDiasTrabajados($event,data)"></app-selector-default>
-              <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.cantidaddiastrabajados"
+              <mat-form-field class="standard-input"><input required=true matInput [(ngModel)]="data.cantidaddiastrabajados"
                 placeholder="Cantidad de Dias Trabajados" type="number" ></mat-form-field>
           </div>
           <div>
