@@ -3,15 +3,16 @@
 <div mat-dialog-content>
   <div class="inputs">
     <mat-form-field>
-      <input 
-      matInput 
+      <input
+        matInput
         class="width-100"
-        type="text" [formControl]="form.get('name')" placeholder="Nombre" cdkFocusInitial autocomplete="off" 
+        type="text" [formControl]="form.get('name')" placeholder="Nombre" cdkFocusInitial autocomplete="off"
         required>
+      <mat-error *ngIf="form.get('name').errors.cannotContainSpace">El campo no puede contener espacios</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <input 
-      matInput 
+      <input
+        matInput
         class="width-100"
         type="text" [formControl]="form.get('description')" placeholder="Descripción" autocomplete="off">
     </mat-form-field>

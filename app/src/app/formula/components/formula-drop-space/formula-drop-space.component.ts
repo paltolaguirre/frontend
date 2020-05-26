@@ -75,6 +75,9 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
           Valueboolean: false,
           valueinvoke: null
       };
+
+      this.setDefaultArgValue(arg);
+
       args.push(arg);
     });
 
@@ -102,6 +105,13 @@ export class FormulaDropSpaceComponent implements OnInit, OnDestroy {
 
     this.valuesinvoke.push(value);
     event.cancelBubble = true;
+  }
+
+  public setDefaultArgValue(arg) {
+    // Establece la condicion por defecto de los IFS en "verdadero".
+    if (arg.name === 'condicion') {
+      arg.Valueboolean = true;
+    }
   }
   
   public onDragOver(event) { // allowDrop
