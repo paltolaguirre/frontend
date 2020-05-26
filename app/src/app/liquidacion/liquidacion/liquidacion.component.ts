@@ -148,7 +148,8 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   }
 
   async setCantidadDiasTrabajados(event:any, data:any){
-   
+   data.tipoid = event.ID
+   data.tipo = event
    switch (event.codigo) { 
       case 'MENSUAL':
           data.cantidaddiastrabajados = 30;
@@ -162,6 +163,12 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
       case  'SEGUNDA_QUINCENA':
           data.cantidaddiastrabajados = 15;
           return;
+      case 'VACACIONES':
+          data.cantidaddiastrabajados = 0;
+          return;
+      case 'LIQUIDACION_FINAL':
+        data.cantidaddiastrabajados = 0;
+        return;
     }
   
   }
