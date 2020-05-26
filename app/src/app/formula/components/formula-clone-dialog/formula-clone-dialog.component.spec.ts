@@ -76,5 +76,14 @@ describe('FormulaCloneDialogComponent', () => {
 
       expect(formula.scope).toEqual('private');
     });
+
+    it('should set its valueinvoke id to zero', () => {
+      component.data.formula.value.valueinvoke = { ID: 4 };
+
+      const formula = component.prepareFormula();
+
+      expect(formula.value.valueinvoke.ID).toEqual(0);
+      expect(formula.value.valueinvokeid).toEqual(0);
+    });
   });
-}); 
+});

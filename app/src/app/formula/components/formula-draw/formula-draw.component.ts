@@ -192,6 +192,7 @@ export class FormulaDrawComponent implements OnInit {
   }
 
   public setDefaultArgValue(arg) {
+    // Establece la condicion por defecto de los IFS en "verdadero".
     if (arg.name === 'condicion') {
       arg.Valueboolean = true;
     }
