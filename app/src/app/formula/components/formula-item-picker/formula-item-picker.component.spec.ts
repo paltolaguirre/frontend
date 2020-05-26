@@ -157,6 +157,22 @@ describe('FormulaItemPickerComponent', () => {
     });
   });
 
+  describe('expandIde', () => {
+    it('should set true the isExpanded state', () => {
+      component.expandIde();
+
+      expect(component.isExpanded).toBeTruthy();
+    });
+
+    it('should emit the expanded state through the expandedStateEmitter', () => {
+      const emitterSpy = spyOn(component.expandedStateEmitter, 'emit');
+
+      component.expandIde();
+
+      expect(emitterSpy).toHaveBeenCalledWith(true);
+    });
+  });
+
   describe('onCategoryItemClick', () => {
     it('should set the received item as selectedCategoryItem', () => {
       component.onCategoryItemClick(fakeCategoryItem);

@@ -1,11 +1,11 @@
 <div class="formula-item-picker-container bg-gray">
   <div class="item-picker">
     <div class="columns is-gapless is-mobile">
-      <div class="column">
-        <div class="category-box" 
+      <div class="column" [ngClass]="{ 'is-5': isExpanded }">
+        <div class="category-box"
           *ngFor="let category of categories"
           [ngClass]="{
-            'active': selectedCategoryItem?.categoryId === category.id
+            'active': (selectedCategoryItem?.categoryId === category.id) && isExpanded
           }">
           <div class="columns is-gapless is-mobile">
             <div *ngIf="isExpanded" class="column is-3">
@@ -13,17 +13,17 @@
                 <p class="category-name no-selectable">{{ category.title }}</p>
               </div>
             </div>
-            <div class="column items-column" 
+            <div class="column items-column"
               [ngClass]="{
-                'is-12': !isExpanded,
                 'is-9': isExpanded
               }">
               <div class="items-box-container">
-                <div 
+                <div
                   class="category-item-container border-light"
                   *ngFor="let item of category.items"
                   [ngClass]="{
-                    'active': selectedCategoryItem?.id === item.id
+                    'active': (selectedCategoryItem?.id === item.id) && isExpanded,
+                    'centered': !isExpanded
                   }"
                   (click)="onCategoryItemClick(item)"
                   [matTooltip]="!isExpanded ? item.title : null"
@@ -37,10 +37,8 @@
           </div>
         </div>
       </div>
-      <div class="column"
-        [ngClass]="{
-          'is-10': !isExpanded
-        }">
+      <div class="column" [ngClass]="{ 'is-7': isExpanded }"
+        *ngIf="isExpanded">
         <div class="items-toolbar-container">
           <div *ngIf="isSearchItemSelected(selectedCategoryItem)" class="search-bar-container">
             <div class="columns is-gapless search-content border-regular">
@@ -50,7 +48,7 @@
               <div class="column">
                 <div class="search-icon bg-gray no-selectable">
                   <mat-icon>search</mat-icon>
-                </div>  
+                </div>
               </div>
             </div>
           </div>
@@ -61,14 +59,13 @@
               <div class="search-results-container">
                 <div *ngIf="selectedCategoryItem.slug === 'search'">
                   <div
-                    *ngFor="let item of searchResult; index as index" 
+                    *ngFor="let item of searchResult; index as index"
                     class="pickable-badge no-selectable param numeric-param"
                     [id]="'pickable-item-' + index + 1"
                     [attr.data-type]="getOperatorDefaultType()"
                     [attr.data-data]="getFormulaTransferData(item, 'pickable-item-' + index + 1) | json"
                     draggable="true"
                     (dragstart)="onDragStart($event, getParamInsideSearch(item))"
-                    (click)="onFormulaItemClick($event, item)"
                     [matTooltip]="item?.description"
                     matTooltipPosition="above"
                     matTooltipClass="baloon">
@@ -79,14 +76,13 @@
 
               <div *ngIf="selectedCategoryItem.slug === 'variables'">
                 <div
-                  *ngFor="let formula of variables; index as index" 
+                  *ngFor="let formula of variables; index as index"
                   class="pickable-badge no-selectable param numeric-param"
                   [id]="'variable-' + index + 1"
                   [attr.data-type]="getOperatorDefaultType()"
                   [attr.data-data]="getFormulaTransferData(formula, 'variable-' + index + 1) | json"
                   draggable="true"
                   (dragstart)="onDragStart($event, formula)"
-                  (click)="onFormulaItemClick($event, formula)"
                   [matTooltip]="formula?.description"
                   matTooltipPosition="above"
                   matTooltipClass="baloon">
@@ -95,15 +91,14 @@
               </div>
 
               <div *ngIf="selectedCategoryItem.slug === 'concept'">
-                <div 
-                  *ngFor="let concept of concepts; index as index" 
+                <div
+                  *ngFor="let concept of concepts; index as index"
                   class="pickable-badge no-selectable param numeric-param"
                   [id]="'concept-' + index + 1"
                   [attr.data-type]="getOperatorDefaultType()"
                   [attr.data-data]="getFormulaTransferData(concept, 'concept-' + index + 1) | json"
                   draggable="true"
                   (dragstart)="onDragStart($event, getConceptParam(concept))"
-                  (click)="onFormulaItemClick($event, concept)"
                   [matTooltip]="null"
                   matTooltipPosition="above"
                   matTooltipClass="baloon">
@@ -112,15 +107,14 @@
               </div>
 
               <div *ngIf="selectedCategoryItem.slug === 'input-params'">
-                <div 
-                  *ngFor="let param of inputParams; index as index" 
+                <div
+                  *ngFor="let param of inputParams; index as index"
                   class="pickable-badge no-selectable param numeric-param"
                   [id]="'param-' + index + 1"
                   [attr.data-type]="getOperatorDefaultType()"
                   [attr.data-data]="getFormulaTransferData(param, 'param-' + index + 1) | json"
                   draggable="true"
                   (dragstart)="onDragStart($event, getFormulaParam(param))"
-                  (click)="onFormulaItemClick($event, param)"
                   [matTooltip]="null"
                   matTooltipPosition="above"
                   matTooltipClass="baloon">
@@ -129,15 +123,14 @@
               </div>
 
               <div *ngIf="selectedCategoryItem.slug === 'standard-formulas'">
-                <div 
-                  *ngFor="let formula of standardFormulas; index as index" 
+                <div
+                  *ngFor="let formula of standardFormulas; index as index"
                   class="pickable-badge no-selectable param numeric-param"
                   [id]="'standard-formula-' + index + 1"
                   [attr.data-type]="getOperatorDefaultType()"
                   [attr.data-data]="getFormulaTransferData(formula, 'standard-formula-' + index + 1) | json"
                   draggable="true"
                   (dragstart)="onDragStart($event, formula)"
-                  (click)="onFormulaItemClick($event, formula)"
                   [matTooltip]="formula?.description"
                   matTooltipPosition="above"
                   matTooltipClass="baloon">
@@ -146,15 +139,14 @@
               </div>
 
               <div *ngIf="selectedCategoryItem.slug === 'user-formulas'">
-                <div 
-                  *ngFor="let formula of userFormulas; index as index" 
+                <div
+                  *ngFor="let formula of userFormulas; index as index"
                   class="pickable-badge no-selectable param numeric-param"
                   [id]="'user-formula-' + index + 1"
                   [attr.data-type]="getOperatorDefaultType()"
                   [attr.data-data]="getFormulaTransferData(formula, 'user-formula-' + index + 1) | json"
                   draggable="true"
                   (dragstart)="onDragStart($event, formula)"
-                  (click)="onFormulaItemClick($event, formula)"
                   [matTooltip]="formula?.description"
                   matTooltipPosition="above"
                   matTooltipClass="baloon">
@@ -164,7 +156,7 @@
 
             </div>
           </div>
-    
+
         </div>
       </div>
     </div>

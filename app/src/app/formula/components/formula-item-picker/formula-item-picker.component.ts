@@ -98,8 +98,16 @@ export class FormulaItemPickerComponent implements OnInit {
     this.expandedStateEmitter.emit(this.isExpanded);
   }
 
+  public expandIde() {
+    this.isExpanded = true;
+
+    this.expandedStateEmitter.emit(true);
+  }
+
   public onCategoryItemClick(item: FormulaCategoryItem) {
     this.selectedCategoryItem = item;
+
+    this.expandIde();
   }
 
   public isSearchItemSelected(item: FormulaCategoryItem): boolean {
@@ -108,25 +116,14 @@ export class FormulaItemPickerComponent implements OnInit {
 
   public onDragStart(event, formulaItem: any) {
     const data: FormulaTransferData = {
-      nodeId: event.target.id,
       payload: formulaItem
     };
 
     event.dataTransfer.setData('text/plain', JSON.stringify(data));
   }
 
-  public onFormulaItemClick(event, formulaItem: any) {
-    const data: FormulaTransferData = {
-      nodeId: event.target.id,
-      payload: formulaItem
-    };
-
-    this.formulaService.emitFormulaItemClick(data);
-  }
-
-  public getFormulaTransferData(formula: Formula, nodeId: string): FormulaTransferData {
+  public getFormulaTransferData(formula: Formula): FormulaTransferData {
     return {
-      nodeId,
       payload: formula
     };
   }

@@ -11,6 +11,7 @@ import { componentDestroyed } from '@w11k/ngx-componentdestroyed';
 import { Location } from '@angular/common';
 import { FormulaTerm } from 'src/app/core/models/formula-term.model';
 import { NotificationService } from 'src/app/handler-error/notification.service';
+import { FormulaValidators } from 'src/app/shared/validators/formula-validators';
 
 @Component({
   selector: 'app-formula',
@@ -89,7 +90,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
 
   private buildEmptyForm() {
     this.form = this.formBuilder.group({
-      name: ['', [Validators.required]],
+      name: ['', [Validators.required, FormulaValidators.cannotContainSpaces]],
       description: ['', [Validators.required]],
       origin: ['custom'],
       type: ['generic'],
