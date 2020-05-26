@@ -2,6 +2,7 @@ import { Formula } from './../../../core/models/formula.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Component, OnInit, Inject } from '@angular/core';
+import { FormulaValidators } from 'src/app/shared/validators/formula-validators';
 
 @Component({
   selector: 'app-formula-clone-dialog',
@@ -21,11 +22,15 @@ export class FormulaCloneDialogComponent implements OnInit {
   ngOnInit() {
     this.form = this.formBuilder.group({
       ...this.data.formula,
-      name: this.data.formula.name + ' (1)'
+      name: [this.data.formula.name + ' (1)', [FormulaValidators.cannotContainSpaces]]
     });
   }
 
   public apply() {
+    if (this.form.invalid) {
+      return null;
+    }
+
     const clonedFormula: Formula = this.prepareFormula();
 
     this.dialogRef.close(clonedFormula);
