@@ -37,4 +37,14 @@ describe('OperatorsToolbarComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  describe('closeMoreOperatorsList', () => {
+    it('should set the isMoreOperatorsListOpened state to false', () => {
+      component.isMoreOperatorsListOpened = true;
+
+      component.closeMoreOperatorsList();
+
+      expect(component.isMoreOperatorsListOpened).toBeFalsy();
+    });
+  });
 });
