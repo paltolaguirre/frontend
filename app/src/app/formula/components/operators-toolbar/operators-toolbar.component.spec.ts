@@ -7,6 +7,7 @@ import { MaterialModule } from './../../../material.module';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OperatorsToolbarComponent } from './operators-toolbar.component';
+import { MathOperatorTypes } from 'src/app/core/enums/math-operator-types.enum';
 
 describe('OperatorsToolbarComponent', () => {
   let component: OperatorsToolbarComponent;
@@ -36,6 +37,12 @@ describe('OperatorsToolbarComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('getOperatorDefaultType', () => {
+    it('should return the numeric type as default', () => {
+      expect(component.getOperatorDefaultType()).toEqual(MathOperatorTypes.Numeric);
+    });
   });
 
   describe('toogleMoreOperatorsVisibility', () => {
