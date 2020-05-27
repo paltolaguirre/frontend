@@ -38,6 +38,20 @@ describe('OperatorsToolbarComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  describe('toogleMoreOperatorsVisibility', () => {
+    it('should toggle the isMoreOperatorsListOpened state', () => {
+      component.isMoreOperatorsListOpened = false;
+
+      component.toogleMoreOperatorsVisibility();
+
+      expect(component.isMoreOperatorsListOpened).toBeTruthy();
+
+      component.toogleMoreOperatorsVisibility();
+
+      expect(component.isMoreOperatorsListOpened).toBeFalsy();
+    });
+  });
+
   describe('closeMoreOperatorsList', () => {
     it('should set the isMoreOperatorsListOpened state to false', () => {
       component.isMoreOperatorsListOpened = true;
