@@ -47,8 +47,10 @@ describe('FormulaCloneDialogComponent', () => {
   });
 
   describe('apply', () => {
-    it('should prepare the formula', () => {
+    it('should prepare the formula if the form is valid', () => {
       const prepareFormulaSpy = spyOn(component, 'prepareFormula');
+      component.form.get('name').patchValue('formulaName');
+      component.form.get('description').patchValue('description');
 
       component.apply();
 
