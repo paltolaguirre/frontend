@@ -57,6 +57,15 @@ describe('FormulaCloneDialogComponent', () => {
       expect(prepareFormulaSpy).toHaveBeenCalledTimes(1);
     });
 
+    it('should not prepare the formula if the form is invalid', () => {
+      const prepareFormulaSpy = spyOn(component, 'prepareFormula');
+
+      const result = component.apply();
+
+      expect(prepareFormulaSpy).toHaveBeenCalledTimes(0);
+      expect(result).toBeNull();
+    });
+
     it('should call to dialogRef to close the modal', () => {
       const closeModalSpy = spyOn(matDialogRef, 'close').and.returnValue(null);
 
