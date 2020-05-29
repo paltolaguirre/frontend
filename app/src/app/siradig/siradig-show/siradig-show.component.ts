@@ -335,9 +335,6 @@ export class SiradigShowComponent implements OnInit {
   }
 
   public updateMont(selectedMonth: number, isoString: string, itemToUpdate: object, key: string) {
-    //console.log('selectedMonth', selectedMonth);
-    //console.log('item to update', itemToUpdate)
-
     if (!isoString) {
       // Probablemente sea un nuevo siradig.
       console.log('no hay isoString');
@@ -348,7 +345,7 @@ export class SiradigShowComponent implements OnInit {
     // Existe el siradig.
     itemToUpdate[key] = this.getDateFromYearMonth(this.getYear(isoString), selectedMonth);
 
-    console.log('item updated', itemToUpdate)
+    console.log('item updated', itemToUpdate);
   }
 
   getDateFromYear(e) {

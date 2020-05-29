@@ -125,8 +125,14 @@
                   placeholder="Mes desde">
                 </app-month-selector>
 
+                <app-month-selector
+                  [defaultDate]="getDefaultSelectorDate()"
+                  (monthIndexEmitter)="updateMont($event, data.periodosiradig, item, 'meshasta')"
+                  placeholder="Mes hasta">
+                </app-month-selector>
+
                 <!--<app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes desde" autocomplete="off"></app-selector-default>-->
-                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.meshasta)" (optionSelected)="item.meshasta=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes hasta" autocomplete="off"></app-selector-default>
+                <!--<app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.meshasta)" (optionSelected)="item.meshasta=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes hasta" autocomplete="off"></app-selector-default>-->
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
               </div>
