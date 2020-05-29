@@ -31,7 +31,7 @@ export class SiradigShowComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private siradigService: SiradigService, 
+    private siradigService: SiradigService,
     public dialog: MatDialog,
     private router: Router,
     public printService: PrintService,
@@ -103,6 +103,11 @@ export class SiradigShowComponent implements OnInit {
 
   async onClickSave(data: Siradig): Promise<Siradig> {
     //if(this.faltanRequeridos()) return null;
+
+
+    console.log('data:', data);
+    return null;
+
     if(this.estaGuardandose) return null;
     this.estaGuardandose = true;
 
@@ -133,9 +138,9 @@ export class SiradigShowComponent implements OnInit {
     if(data.deducciondesgravacionsiradig) {
       data.deducciondesgravacionsiradig.forEach(function(element) {
         if(element.mes &&
-          (element.siradigtipogrilla.codigo == 'DONACIONES' 
-          || element.siradigtipogrilla.codigo == 'GASTOS_DE_SEPELIO' 
-          || element.siradigtipogrilla.codigo == 'GASTOS_ADQUISICION_INDUMENTARIA_Y_EQUIPAMIENTO_PARA_USO_EXCLUSIVO_EN_EL_LUGAR_DE_TRABAJO' 
+          (element.siradigtipogrilla.codigo == 'DONACIONES'
+          || element.siradigtipogrilla.codigo == 'GASTOS_DE_SEPELIO'
+          || element.siradigtipogrilla.codigo == 'GASTOS_ADQUISICION_INDUMENTARIA_Y_EQUIPAMIENTO_PARA_USO_EXCLUSIVO_EN_EL_LUGAR_DE_TRABAJO'
           || element.siradigtipogrilla.codigo == 'APORTES_A_SOCIEDADES_DE_GARANTIA_RECIPROCA')
         ) {
           element.mes = formatDate(element.mes, "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
@@ -165,7 +170,7 @@ export class SiradigShowComponent implements OnInit {
   habilitarGuardado() {
     this.estaGuardandose = false
   }
-  
+
   private procesarSiradig(siradig: Siradig) {
     this.procesarConyuge(siradig);
     this.procesarHijos(siradig);
@@ -321,6 +326,31 @@ export class SiradigShowComponent implements OnInit {
     return new Date(fecha).getMonth();
   }
 
+  public getDefaultSelectorDate(): Date {
+    const date = new Date();
+
+    date.setMonth(11);
+
+    return date;
+  }
+
+  public updateMont(selectedMonth: number, isoString: string, itemToUpdate: object, key: string) {
+    //console.log('selectedMonth', selectedMonth);
+    //console.log('item to update', itemToUpdate)
+
+    if (!isoString) {
+      // Probablemente sea un nuevo siradig.
+      console.log('no hay isoString');
+
+      return null;
+    }
+
+    // Existe el siradig.
+    itemToUpdate[key] = this.getDateFromYearMonth(this.getYear(isoString), selectedMonth);
+
+    console.log('item updated', itemToUpdate)
+  }
+
   getDateFromYear(e) {
     const value = parseInt(e.target.value, 10);
     const date = new Date(value, 0, 1).toISOString();
@@ -328,7 +358,6 @@ export class SiradigShowComponent implements OnInit {
   }
 
   getDateFromYearMonth(year, month) {
-    console.log("MES: ", month);
     const date = new Date(year, month, 1).toISOString();
     return date;
   }
@@ -364,7 +393,7 @@ export class SiradigShowComponent implements OnInit {
         importehorasextrasexentas: null,
         materialdidactico: null,
         gastosmovilidad: null
-      }];      
+      }];
     } else {
       siradig.importegananciasotroempleosiradig.push({
         ID: null,
@@ -409,7 +438,7 @@ export class SiradigShowComponent implements OnInit {
         valor: null,
         porcentajeafectacion: null,
         amortizacionperiodo: null
-      }];      
+      }];
     } else {
       siradig.deducciondesgravacionsiradig.push({
         ID: null,
@@ -450,7 +479,7 @@ export class SiradigShowComponent implements OnInit {
         mes: 0,
         importe: null,
         descripcion: null
-      }]      
+      }]
     } else {
       siradig.retencionpercepcionsiradig.push({
         ID: null,
@@ -480,7 +509,7 @@ export class SiradigShowComponent implements OnInit {
         mesdesde: null,
         meshasta: null,
         valor: false
-      }];      
+      }];
     } else {
       siradig.beneficiosiradig.push({
         ID: null,
@@ -513,7 +542,7 @@ export class SiradigShowComponent implements OnInit {
         montoreintegrar: null,
         cumpletercerparrafoley24467: false,
         montoreintegrar3: null
-      }];      
+      }];
     } else {
       siradig.ajustesiradig.push({
         ID: null,
@@ -550,7 +579,7 @@ export class SiradigShowComponent implements OnInit {
 
     this.siradigValidator(data);
   }
-  
+
   existe(array, codigo) {
     if(array) {
       return array.findIndex(element => element.siradigtipogrilla.codigo == codigo && element.DeletedAt == null) >= 0;
