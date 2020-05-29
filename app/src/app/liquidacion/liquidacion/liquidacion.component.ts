@@ -172,6 +172,33 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
     }
   
   }
+
+  changeFechaDesdeSituacionRevista(fechasituacionrevista:any){
+    if (fechasituacionrevista != null) { 
+      const anioLiquidacion = this.fechaperiodoliquidacion.split("-")[0]
+      const mesLiquidacion = this.fechaperiodoliquidacion.split("-")[1]
+      
+      const anioSituacionRevista = fechasituacionrevista.split("-")[0]
+      const mesSituacionRevista = fechasituacionrevista.split("-")[1]
+      
+      
+      var fechaliquidacionigualfechasituacionrevista = (anioLiquidacion == anioSituacionRevista && mesLiquidacion == mesSituacionRevista)
+
+      if (!fechaliquidacionigualfechasituacionrevista){
+        const notificacion = {
+          codigo: 400,
+          mensaje: "La Fecha Desde de Situación Revista debe pertenecer al Periodo Liquidación"
+        }
+        const ret = this.notificationService.notify(notificacion);
+        return ret;
+      }
+    }
+
+  }
+
+  checkFechaPeriodoLiquidacion(){
+    return this.fechaperiodoliquidacion == null
+  }
   
   onClickAbort(): void {
     this.gotoGrilla();
@@ -182,7 +209,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   }
 
   async onClickSave(data: Liquidacion): Promise<Liquidacion> {
-    
+
     if (this.estaGuardandose) return null;
 
     this.estaGuardandose = true;
@@ -223,7 +250,11 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
     if(this.fechaperiododepositado)data.fechaperiododepositado = formatDate(this.fechaperiododepositado+"-01", "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
     if(this.fechaperiodoliquidacion)data.fechaperiodoliquidacion = formatDate(this.fechaperiodoliquidacion+"-01", "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
     if(data.fechaultimodepositoaportejubilatorio)data.fechaultimodepositoaportejubilatorio = formatDate(data.fechaultimodepositoaportejubilatorio, "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
- 
+    if(data.fechasituacionrevistauno)data.fechasituacionrevistauno = formatDate(data.fechasituacionrevistauno, "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
+    if(data.fechasituacionrevistados)data.fechasituacionrevistados = formatDate(data.fechasituacionrevistados, "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
+    if(data.fechasituacionrevistatres)data.fechasituacionrevistatres = formatDate(data.fechasituacionrevistatres, "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
+
+
     if(data.legajo)data.legajoid = data.legajo.ID;
     if(data.banco)data.cuentabancoid = data.banco.ID;
     if(data.bancoaportejubilatorio)data.bancoaportejubilatorioid = data.bancoaportejubilatorio.ID;
