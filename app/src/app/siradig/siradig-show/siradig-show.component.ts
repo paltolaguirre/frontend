@@ -338,7 +338,7 @@ export class SiradigShowComponent implements OnInit {
     return date;
   }
 
-  public updateMont(selectedMonth: number, isoString: string, itemToUpdate: object, key: string, data) {
+  public updateMonth(selectedMonth: number, isoString: string, itemToUpdate: object, key: string, data) {
     if (!data.periodosiradig) {
       return null;
     }

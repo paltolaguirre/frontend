@@ -121,13 +121,13 @@
                 </button>
                 <app-month-selector
                   [defaultDate]="getDefaultSelectorDate(item.mes)"
-                  (monthIndexEmitter)="updateMont($event, data.periodosiradig, item, 'mes', data)"
+                  (monthIndexEmitter)="updateMonth($event, data.periodosiradig, item, 'mes', data)"
                   placeholder="Mes desde">
                 </app-month-selector>
 
                 <app-month-selector
                   [defaultDate]="getDefaultSelectorDate(item.meshasta)"
-                  (monthIndexEmitter)="updateMont($event, data.periodosiradig, item, 'meshasta', data)"
+                  (monthIndexEmitter)="updateMonth($event, data.periodosiradig, item, 'meshasta', data)"
                   placeholder="Mes hasta">
                 </app-month-selector>
 
