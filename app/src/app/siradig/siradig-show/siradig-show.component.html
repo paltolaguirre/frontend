@@ -120,14 +120,14 @@
                   <mat-icon>delete_forever</mat-icon>
                 </button>
                 <app-month-selector
-                  [defaultDate]="getDefaultSelectorDate()"
-                  (monthIndexEmitter)="updateMont($event, data.periodosiradig, item, 'mes')"
+                  [defaultDate]="getDefaultSelectorDate(item.mes)"
+                  (monthIndexEmitter)="updateMont($event, data.periodosiradig, item, 'mes', data)"
                   placeholder="Mes desde">
                 </app-month-selector>
 
                 <app-month-selector
-                  [defaultDate]="getDefaultSelectorDate()"
-                  (monthIndexEmitter)="updateMont($event, data.periodosiradig, item, 'meshasta')"
+                  [defaultDate]="getDefaultSelectorDate(item.meshasta)"
+                  (monthIndexEmitter)="updateMont($event, data.periodosiradig, item, 'meshasta', data)"
                   placeholder="Mes hasta">
                 </app-month-selector>
 

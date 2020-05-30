@@ -105,8 +105,8 @@ export class SiradigShowComponent implements OnInit {
     //if(this.faltanRequeridos()) return null;
 
 
-    console.log('data:', data);
-    return null;
+/*     console.log('data:', data);
+    return null; */
 
     if(this.estaGuardandose) return null;
     this.estaGuardandose = true;
@@ -326,7 +326,11 @@ export class SiradigShowComponent implements OnInit {
     return new Date(fecha).getMonth();
   }
 
-  public getDefaultSelectorDate(): Date {
+  public getDefaultSelectorDate(itemDate?: string): Date {
+    if (itemDate) {
+      return new Date(itemDate);
+    }
+
     const date = new Date();
 
     date.setMonth(11);
@@ -334,15 +338,10 @@ export class SiradigShowComponent implements OnInit {
     return date;
   }
 
-  public updateMont(selectedMonth: number, isoString: string, itemToUpdate: object, key: string) {
-    if (!isoString) {
-      // Probablemente sea un nuevo siradig.
-      console.log('no hay isoString');
+  public updateMont(selectedMonth: number, isoString: string, itemToUpdate: object, key: string, data) {
 
-      return null;
-    }
 
-    // Existe el siradig.
+    // Updates existing Siradig fields.
     itemToUpdate[key] = this.getDateFromYearMonth(this.getYear(isoString), selectedMonth);
 
     console.log('item updated', itemToUpdate);
