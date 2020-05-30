@@ -339,7 +339,9 @@ export class SiradigShowComponent implements OnInit {
   }
 
   public updateMont(selectedMonth: number, isoString: string, itemToUpdate: object, key: string, data) {
-
+    if (!data.periodosiradig) {
+      return null;
+    }
 
     // Updates existing Siradig fields.
     itemToUpdate[key] = this.getDateFromYearMonth(this.getYear(isoString), selectedMonth);
