@@ -73,12 +73,12 @@
             </div>
             <div>
               <mat-form-field class="standard-input"><input required=true matInput type="month"
-                  placeholder="Periodo Liquidación" [(ngModel)]="fechaperiodoliquidacion" autocomplete="off">
+                  placeholder="Periodo Liquidación" [(ngModel)]="fechaperiodoliquidacion" autocomplete="off" (focusout)="blanquearFechaDesdeSituacionRevista(data)">
               </mat-form-field>
             </div>
             <div>
               <app-selector-default [disabled]="this.fechaperiodoliquidacion==null" required=true nombre="situacion" placeholder="Situación Revista 1"
-                [(matSelect)]="data.situacionrevistaunoid" (optionSelected)="data.situacionrevistauno=$event">
+                [(matSelect)]="data.situacionrevistaunoid" (optionSelected)="data.situacionrevistaunoid=$event.ID;data.situacionrevistauno=$event">
               </app-selector-default>
               <mat-form-field class="standard-input"><input required=true matInput type="date"
                 (ngModelChange)="data.fechasituacionrevistauno=$event"
@@ -89,7 +89,7 @@
             </div>
             <div>
               <app-selector-default [disabled]="this.fechaperiodoliquidacion==null" nombre="situacion" placeholder="Situación Revista 2"
-                [(matSelect)]="data.situacionrevistadosid" (optionSelected)="data.situacionrevistados=$event">
+                [(matSelect)]="data.situacionrevistadosid" (optionSelected)="data.situacionrevistadosid=$event.ID;data.situacionrevistados=$event">
               </app-selector-default>
               <mat-form-field class="standard-input"><input matInput type="date"
                 (ngModelChange)="data.fechasituacionrevistados=$event"
@@ -100,7 +100,7 @@
             </div>
             <div>
               <app-selector-default [disabled]="this.fechaperiodoliquidacion==null" nombre="situacion" placeholder="Situación Revista 3"
-                [(matSelect)]="data.situacionrevistatresid" (optionSelected)="data.situacionrevistatres=$event">
+                [(matSelect)]="data.situacionrevistatresid" (optionSelected)="data.situacionrevistatresid=$event.ID;data.situacionrevistatres=$event">
               </app-selector-default>
               <mat-form-field class="standard-input"><input matInput type="date"
                 (ngModelChange)="data.fechasituacionrevistatres=$event"
