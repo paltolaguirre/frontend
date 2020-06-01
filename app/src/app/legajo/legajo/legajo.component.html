@@ -80,8 +80,10 @@
                 <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="data.fechaalta=$event" [ngModel]="data.fechaalta | date: 'yyyy-MM-dd'" placeholder="Fecha de alta" autocomplete="off" required=true></mat-form-field>
                 <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="data.fechabaja=$event" [ngModel]="data.fechabaja | date: 'yyyy-MM-dd'" placeholder="Fecha de baja" autocomplete="off"></mat-form-field>
             </div>
-            <div>
-                <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.cbu" placeholder="CBU" type="text" autocomplete="off"></mat-form-field>
+            <div> 
+              <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.cbu" placeholder="CBU" type="text" autocomplete="off"></mat-form-field>
+              <mat-checkbox style="margin-right: 40px" color="primary" class="example-margin" matTooltip="Incluido en el Convenio Colectivo de Trabajo" [(ngModel)]="data.incluidoencct">Incluido en CCT</mat-checkbox>
+              <mat-checkbox color="primary" class="example-margin" matTooltip="Corresponde Seguro Colectivo Vida Obligatorio" [(ngModel)]="data.correspondescvo">Corresponde SCVO</mat-checkbox>
             </div>                  
       </mat-expansion-panel>   
 

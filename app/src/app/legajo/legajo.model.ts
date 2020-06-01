@@ -44,6 +44,8 @@ export interface Legajo {
     cbu: string;
     estadocivilid?: number;
     estadocivil?: EstadoCivil;
+    incluidoencct?:boolean;
+    correspondescvo?:boolean;
 }
 
 export interface Localidad {

@@ -173,6 +173,12 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   
   }
 
+  blanquearFechaDesdeSituacionRevista(data:any){
+    data.fechasituacionrevistauno = null;
+    data.fechasituacionrevistados = null;
+    data.fechasituacionrevistatres = null;
+  }
+
   changeFechaDesdeSituacionRevista(fechasituacionrevista:any){
     if (fechasituacionrevista != null) { 
       const anioLiquidacion = this.fechaperiodoliquidacion.split("-")[0]
