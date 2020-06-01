@@ -14,6 +14,6 @@ export class LoadingService {
   }
 
   public hide() {
-
+    this.loadingEmitter.emit(false);
   }
 }

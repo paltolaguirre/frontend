@@ -15,13 +15,23 @@ describe('LoadingService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('activate', () => {
+  describe('show', () => {
     it('should emit a true state of the emitter', () => {
       const emitterSpy = spyOn(service.loadingEmitter, 'emit');
 
       service.show();
 
       expect(emitterSpy).toHaveBeenCalledWith(true);
+    });
+  });
+
+  describe('hide', () => {
+    it('should emit a false state of the emitter', () => {
+      const emitterSpy = spyOn(service.loadingEmitter, 'emit');
+
+      service.hide();
+
+      expect(emitterSpy).toHaveBeenCalledWith(false);
     });
   });
 });
