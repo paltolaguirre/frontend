@@ -14,7 +14,7 @@ import { Formula } from '../../models/formula.model';
 export class FormulaService {
 
   public readonly BASE_URL = '/api/formula';
-  public formulas = new BehaviorSubject<Formula[]>([]);
+  public formulas = new BehaviorSubject<Formula[]>(undefined);
   public formulasStore$ = this.formulas.asObservable();
   public formulaPickerItemEmitter: EventEmitter<FormulaTransferData> = new EventEmitter();
 

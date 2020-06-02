@@ -50,21 +50,18 @@ export class FormulaListContainer implements OnInit, AfterViewInit, OnDestroy {
   }
 
   async ngAfterViewInit() {
-    this.loadingService.show();
-
     this.formulaService.formulasStore$.subscribe((formulas: Formula[]) => {
-      this.dataSource = new MatTableDataSource<Formula>(formulas.filter(formula => formula.type == 'generic'));
-      this.dataSource.paginator = this.paginator;
-      this.paginator._intl.itemsPerPageLabel = 'Items por página';
+      this.loadingService.show();
 
-      if (this.isTableFilled()) {
+      // Using undefined prevents bad behaviours if the origin sends null value when there are no formulas.
+      if (formulas !== undefined) {
+        this.dataSource = new MatTableDataSource<Formula>(formulas.filter(formula => formula.type == 'generic'));
+        this.dataSource.paginator = this.paginator;
+        this.paginator._intl.itemsPerPageLabel = 'Items por página';
+
         this.loadingService.hide();
       }
     });
-  }
-
-  public isTableFilled(): boolean {
-    return this.dataSource.data.length > 0;
   }
 
   public getPageSizeOptions(): number[] {
