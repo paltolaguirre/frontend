@@ -10,6 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { Formula } from 'src/app/core/models/formula.model';
 import { FormulaCloneDialogComponent } from '../../components/formula-clone-dialog/formula-clone-dialog.component';
+import { LoadingService } from 'src/app/core/services/loading/loading.service';
 
 @Component({
   selector: 'app-formula-list',
@@ -24,7 +25,6 @@ export class FormulaListContainer implements OnInit, AfterViewInit, OnDestroy {
   dataSource: MatTableDataSource<Formula> = new MatTableDataSource<Formula>();
 
   resultsLength = 0;
-  isLoadingResults = true;
   isRateLimitReached = false;
 
   id: number;
@@ -32,7 +32,8 @@ export class FormulaListContainer implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     public dialog: MatDialog,
     private formulaService: FormulaService,
-    private router: Router
+    private router: Router,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit() {
@@ -49,12 +50,21 @@ export class FormulaListContainer implements OnInit, AfterViewInit, OnDestroy {
   }
 
   async ngAfterViewInit() {
+    this.loadingService.show();
+
     this.formulaService.formulasStore$.subscribe((formulas: Formula[]) => {
       this.dataSource = new MatTableDataSource<Formula>(formulas.filter(formula => formula.type == 'generic'));
       this.dataSource.paginator = this.paginator;
       this.paginator._intl.itemsPerPageLabel = 'Items por página';
-      this.isLoadingResults = false;
+
+      if (this.isTableFilled()) {
+        this.loadingService.hide();
+      }
     });
+  }
+
+  public isTableFilled(): boolean {
+    return this.dataSource.data.length > 0;
   }
 
   public getPageSizeOptions(): number[] {
