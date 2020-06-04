@@ -13,6 +13,8 @@ import { OperatorsFixtures } from 'src/app/core/fixtures/operators.fixtures';
 describe('OperatorsToolbarComponent', () => {
   let component: OperatorsToolbarComponent;
   let fixture: ComponentFixture<OperatorsToolbarComponent>;
+  let formulaService: FormulaService;
+  let operatorService: OperatorsService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -28,6 +30,9 @@ describe('OperatorsToolbarComponent', () => {
       ]
     })
     .compileComponents();
+
+    formulaService = TestBed.get(FormulaService);
+    operatorService = TestBed.get(OperatorsService);
   }));
 
   beforeEach(() => {
@@ -38,6 +43,17 @@ describe('OperatorsToolbarComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('onOperatorSelected', () => {
+    it('should emit formula item click event if the given operator is a formula operator', () => {
+      spyOn(component, 'isFormulaOperator').and.returnValue(true);
+      const formulaEmitterSpy = spyOn(formulaService, 'emitFormulaItemClick');
+
+      component.onOperatorSelected(OperatorsFixtures.getFormulaOperator());
+
+      expect(formulaEmitterSpy).toHaveBeenCalledWith({ payload: OperatorsFixtures.getFormulaOperator() });
+    });
   });
 
   describe('isFormulaOperator', () => {
