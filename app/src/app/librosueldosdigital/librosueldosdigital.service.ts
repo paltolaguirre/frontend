@@ -16,9 +16,9 @@ export class LibrosueldosdigitalService {
   
   constructor(private http: HttpClient) { }
 
-  public async getLibrosueldosdigital(sort: string, order: string, fechadesde : Date , fechahasta : Date, page: number): Promise<ListaItems> {
+  public async getLibrosueldosdigital(sort: string, order: string, tipoliquidacion : string , periodomensual : string, page: number): Promise<ListaItems> {
     const requestUrl =
-      `${this.href}`+"?fechadesde="+fechadesde+"&fechahasta="+fechahasta;
+      `${this.href}`+"?tipoliquidacion="+tipoliquidacion+"&periodomensual="+periodomensual;
 
     let listaItems: ListaItems = { items: null, total_count: null };
     listaItems.items = await this.http.get<Librosueldosdigital[]>(requestUrl).toPromise();
