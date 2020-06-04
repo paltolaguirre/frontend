@@ -12,6 +12,7 @@ import { DuplicarDialogComponent } from './duplicar-dialog/duplicar-dialog.compo
 import { ContabilizarDialogComponent } from './contabilizar-dialog/contabilizar-dialog.component';
 import { DatePipe } from '@angular/common';
 import { TableService } from 'src/app/shared/services/table.service';
+import { LoadingService } from 'src/app/core/services/loading/loading.service';
 
 export interface LiquidacionTable {
   ID: number;
@@ -33,7 +34,6 @@ export interface LiquidacionTable {
 export class LiquidacionListComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['Seleccionar', 'Legajo', 'Apellido', 'Nombre', 'Fecha Liquidacion', 'Periodo Liquidacion', 'Tipo',  'Contabilizada', 'Acciones' ];
   dataSource: MatTableDataSource<LiquidacionTable> = new MatTableDataSource<LiquidacionTable>();
-  //data: LiquidacionesApi;
 
   resultsLength = 0;
   isLoadingResults = true;
@@ -51,21 +51,23 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog,
     private notificationService: NotificationService,
     public printService: PrintService,
-    private tableService: TableService, 
-  ) { }
+    private tableService: TableService,
+    private loadingService: LoadingService
+  ) {}
 
   ngOnInit() {
     this.dataSource.sort = this.sort;
   }
 
   async ngAfterViewInit() {
+    this.loadingService.show();
 
-      const liquidacionesApi: ListaItems = await this.liquidacionService.getLiquidaciones(this.sort.active, this.sort.direction, 1);
-      this.dataSource = this.tableService.getDataSource(liquidacionesApi.items, this.parseLiquidacionToLiquidacionTable);
-      this.dataSource.paginator = this.paginator;
-      this.paginator._intl.itemsPerPageLabel = "Items por página";
-      this.isLoadingResults = false;
+    const liquidacionesApi: ListaItems = await this.liquidacionService.getLiquidaciones(this.sort.active, this.sort.direction, 1);
+    this.dataSource = this.tableService.getDataSource(liquidacionesApi.items, this.parseLiquidacionToLiquidacionTable);
+    this.dataSource.paginator = this.paginator;
+    this.paginator._intl.itemsPerPageLabel = "Items por página";
 
+    this.loadingService.hide();
   }
 
   parseLiquidacionToLiquidacionTable(liquidacion: Liquidacion): LiquidacionTable {
@@ -111,23 +113,9 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
 
         // TODO: no me convence llamar directamente a este metodo... investigar al respecto.
         this.ngAfterViewInit();
-
-        /*if(result && result.refresh) {
-          // TODO: no me convence llamar directamente a este metodo... investigar al respecto.
-          this.ngAfterViewInit();
-        }*/
       });
     }
   }
-
-  /*async onClickContabilizar(datos) {
-   var elementsRequest = [];
-   datos.forEach(function (el, index) {
-      if (el.checked == true) { elementsRequest.push(el.ID)};
-    }, this);    
-    const responseContabilizarLiq: any = await this.liquidacionService.postContabilizarLiquidacion(elementsRequest);
-    this.notificationService.notify(responseContabilizarLiq);
-  }*/
 
   onCreate(liquidacion: Liquidacion) {
     console.log("Created Item: " + liquidacion.ID);
@@ -149,10 +137,6 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
   onDelete(liquidacion: Liquidacion) {
     console.log("Deleted Item: " + liquidacion.ID);
     this.dataSource = this.tableService.deleteDataSource(this.dataSource, liquidacion.ID);
-  }
-
-  refreshTableSorce() {
-
   }
 
   calcularTotal(row: Liquidacion) {
@@ -178,11 +162,6 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
 
         // TODO: no me convence llamar directamente a este metodo... investigar al respecto.
         this.ngAfterViewInit();
-
-        /*if(result && result.refresh) {
-          // TODO: no me convence llamar directamente a este metodo... investigar al respecto.
-          this.ngAfterViewInit();
-        }*/
       });
     }
   }
