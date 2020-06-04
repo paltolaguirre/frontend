@@ -43,16 +43,16 @@
           </div>
           <div>
             <app-selector-default nombre="liquidaciontipo" placeholder="Tipo" [(matSelect)]="data.tipoid"
-              (optionSelected)="data.tipo=$event"></app-selector-default>
-            <app-selector-default nombre="liquidacioncondicionpago" placeholder="Condición de Pago"
-              [(matSelect)]="data.condicionpagoid" (optionSelected)="data.condicionpago=$event"></app-selector-default>
+              (optionSelected)="setCantidadDiasTrabajados($event,data)"></app-selector-default>
+              <mat-form-field class="standard-input"><input required=true matInput [(ngModel)]="data.cantidaddiastrabajados"
+                placeholder="Cantidad de Dias Trabajados" type="number" ></mat-form-field>
           </div>
           <div>
             <mat-form-field class="standard-input"><input matInput type="date" (ngModelChange)="data.fecha=$event"
                 [ngModel]="data.fecha | date: 'yyyy-MM-dd'" placeholder="Fecha de Liquidacion" autocomplete="off">
             </mat-form-field>
-            <app-selector-default nombre="banco" placeholder="Cuenta Bancaria" [(matSelect)]="data.cuentabancoid"
-              (optionSelected)="data.banco=$event"></app-selector-default>
+            <app-selector-default nombre="liquidacioncondicionpago" placeholder="Condición de Pago"
+              [(matSelect)]="data.condicionpagoid" (optionSelected)="data.condicionpago=$event"></app-selector-default>
           </div>
           <div>
             <div>
@@ -60,19 +60,55 @@
                   (ngModelChange)="data.fechaultimodepositoaportejubilatorio=$event"
                   [ngModel]="data.fechaultimodepositoaportejubilatorio | date: 'yyyy-MM-dd'"
                   placeholder="Fecha Ult. Aporte Jubil." autocomplete="off"></mat-form-field>
-              <app-selector-default nombre="banco" placeholder="Banco Aporte Jubilatorio"
-                [(matSelect)]="data.bancoaportejubilatorioid" (optionSelected)="data.bancoaportejubilatorio=$event">
-              </app-selector-default>
+                  <app-selector-default nombre="banco" placeholder="Cuenta Bancaria" [(matSelect)]="data.cuentabancoid"
+              (optionSelected)="data.banco=$event"></app-selector-default>
             </div>
             <div>
               <mat-form-field class="standard-input"><input required=true matInput type="month"
                   placeholder="Periodo Depositado" [(ngModel)]="fechaperiododepositado" autocomplete="off">
               </mat-form-field>
+              <app-selector-default nombre="banco" placeholder="Banco Aporte Jubilatorio"
+              [(matSelect)]="data.bancoaportejubilatorioid" (optionSelected)="data.bancoaportejubilatorio=$event">
+            </app-selector-default>
             </div>
             <div>
               <mat-form-field class="standard-input"><input required=true matInput type="month"
-                  placeholder="Periodo Liquidación" [(ngModel)]="fechaperiodoliquidacion" autocomplete="off">
+                  placeholder="Periodo Liquidación" [(ngModel)]="fechaperiodoliquidacion" autocomplete="off" (focusout)="blanquearFechaDesdeSituacionRevista(data)">
               </mat-form-field>
+            </div>
+            <div>
+              <app-selector-default [disabled]="this.fechaperiodoliquidacion==null" required=true nombre="situacion" placeholder="Situación Revista 1"
+                [(matSelect)]="data.situacionrevistaunoid" (optionSelected)="data.situacionrevistaunoid=$event.ID;data.situacionrevistauno=$event">
+              </app-selector-default>
+              <mat-form-field class="standard-input"><input required=true matInput type="date"
+                (ngModelChange)="data.fechasituacionrevistauno=$event"
+                [ngModel]="data.fechasituacionrevistauno | date: 'yyyy-MM-dd'"
+                [disabled]="this.fechaperiodoliquidacion==null"
+                placeholder="Fecha Desde" autocomplete="off" (focusout)="changeFechaDesdeSituacionRevista(data.fechasituacionrevistauno)">
+            </mat-form-field>
+            </div>
+            <div>
+              <app-selector-default [disabled]="this.fechaperiodoliquidacion==null" nombre="situacion" placeholder="Situación Revista 2"
+                [(matSelect)]="data.situacionrevistadosid" (optionSelected)="data.situacionrevistadosid=$event.ID;data.situacionrevistados=$event">
+              </app-selector-default>
+              <mat-form-field class="standard-input"><input matInput type="date"
+                (ngModelChange)="data.fechasituacionrevistados=$event"
+                [ngModel]="data.fechasituacionrevistados | date: 'yyyy-MM-dd'"
+                [disabled]="this.fechaperiodoliquidacion==null"
+                placeholder="Fecha Desde" autocomplete="off" (focusout)="changeFechaDesdeSituacionRevista(data.fechasituacionrevistados)">
+              </mat-form-field>
+            </div>
+            <div>
+              <app-selector-default [disabled]="this.fechaperiodoliquidacion==null" nombre="situacion" placeholder="Situación Revista 3"
+                [(matSelect)]="data.situacionrevistatresid" (optionSelected)="data.situacionrevistatresid=$event.ID;data.situacionrevistatres=$event">
+              </app-selector-default>
+              <mat-form-field class="standard-input"><input matInput type="date"
+                (ngModelChange)="data.fechasituacionrevistatres=$event"
+                [ngModel]="data.fechasituacionrevistatres | date: 'yyyy-MM-dd'"
+                [disabled]="this.fechaperiodoliquidacion==null"
+                placeholder="Fecha Desde" autocomplete="off" (focusout)="changeFechaDesdeSituacionRevista(fechasituacionrevistatres)">
+            </mat-form-field>
+
             </div>
             <div>
               <mat-form-field class="big-input"><input matInput [(ngModel)]="data.descripcion"

@@ -64,7 +64,10 @@ export class ActionsComponent implements OnInit {
       importesnoremunerativos : null,
       descuentos : null,
       retenciones : null,
-      aportespatronales : null
+      aportespatronales : null,
+      situacionrevistauno: null,
+      situacionrevistaunoid : null,
+      fechasituacionrevistauno : null
     }
     await this.liquidacionService.deleteLiquidacion(item);
     this.delete.emit(item);
