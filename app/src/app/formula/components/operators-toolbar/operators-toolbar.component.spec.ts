@@ -54,6 +54,15 @@ describe('OperatorsToolbarComponent', () => {
 
       expect(formulaEmitterSpy).toHaveBeenCalledWith({ payload: OperatorsFixtures.getFormulaOperator() });
     });
+
+    it('should emit operator click event if the given value is an operator', () => {
+      spyOn(component, 'isFormulaOperator').and.returnValue(false);
+      const operatorEmitterSpy = spyOn(operatorService, 'emitOperatorClicked');
+
+      component.onOperatorSelected(OperatorsFixtures.getMathOperator());
+
+      expect(operatorEmitterSpy).toHaveBeenCalledWith({ payload: OperatorsFixtures.getMathOperator() });
+    });
   });
 
   describe('isFormulaOperator', () => {
