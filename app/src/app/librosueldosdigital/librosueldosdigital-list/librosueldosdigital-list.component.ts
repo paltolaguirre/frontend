@@ -21,12 +21,12 @@ import { EmpresaService } from 'src/app/empresa/empresa.service';
 })
 
 export class LibrosueldosdigitalListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['Legajo', 'Apellido', 'Nombre', 'Periodo Liquidacion', 'Importe a Detraer'];
+  displayedColumns: string[] = ['Legajo', 'Apellido', 'Nombre', 'Periodo Liquidacion'];
   dataSource: MatTableDataSource<Librosueldosdigital> = new MatTableDataSource<Librosueldosdigital>();
   public defaultDate$: Observable<Date>;
 
   fechaperiodoliquidacion: any;
-  importedetraccion: any;
+  periodoliquidacion: any;
   tipoliquidacion: any;
 
 
@@ -49,8 +49,12 @@ export class LibrosueldosdigitalListComponent implements OnInit, AfterViewInit {
     private empresaService: EmpresaService,
   ) {
     this.tipoliquidacion = "";
-    this.fechaperiodoliquidacion = "";
-    this.importedetraccion = "";
+    this.periodoliquidacion = "";
+    if(localStorage.getItem('librosueldosdigital-periodo')) {
+      this.fechaperiodoliquidacion = localStorage.getItem('librosueldosdigital-periodo');
+    } else {
+      this.fechaperiodoliquidacion = formatDate(Date.now(), "yyyy-MM", 'en-US');
+    }
   }
 
   ngOnInit() {
@@ -68,12 +72,22 @@ export class LibrosueldosdigitalListComponent implements OnInit, AfterViewInit {
     return [5, 10, 20];
   }
 
+  changePeriodo(event) {
+    this.fechaperiodoliquidacion = event.target.value;
+    localStorage.setItem("librosueldosdigital-periodo", this.fechaperiodoliquidacion);
+    this.updateGrilla();
+  }
 
+  changeTipoLiquidacion(event){
+    this.tipoliquidacion = event
+    this.updateGrilla();
+
+  }
   
   async updateGrilla() {
 
-   if (this.canRequest()){
-    const librosueldosdigitalApi: ListaItems = await this.librosueldosdigitalService.getLibrosueldosdigital(this.sort.active, this.sort.direction,this.importedetraccion,this.tipoliquidacion,1);
+  if (this.canRequest()){
+    const librosueldosdigitalApi: ListaItems = await this.librosueldosdigitalService.getLibrosueldosdigital(this.sort.active, this.sort.direction,this.tipoliquidacion.codigo,formatDate(this.fechaperiodoliquidacion+"-01", "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US'),1);
     this.dataSource = new MatTableDataSource<Librosueldosdigital>(librosueldosdigitalApi.items);
     this.dataSource.paginator = this.paginator;
     this.paginator._intl.itemsPerPageLabel = "Items por página";
@@ -83,7 +97,7 @@ export class LibrosueldosdigitalListComponent implements OnInit, AfterViewInit {
 }
 
   canRequest(){
-    if(this.fechaperiodoliquidacion != "" && this.importedetraccion != "" && this.tipoliquidacion != ""){
+    if(this.fechaperiodoliquidacion != "" && this.tipoliquidacion != ""){
       return true;
     } else {
       return false;
