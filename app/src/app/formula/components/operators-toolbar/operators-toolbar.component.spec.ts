@@ -8,6 +8,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OperatorsToolbarComponent } from './operators-toolbar.component';
 import { MathOperatorTypes } from 'src/app/core/enums/math-operator-types.enum';
+import { OperatorsFixtures } from 'src/app/core/fixtures/operators.fixtures';
 
 describe('OperatorsToolbarComponent', () => {
   let component: OperatorsToolbarComponent;
@@ -37,6 +38,20 @@ describe('OperatorsToolbarComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('isFormulaOperator', () => {
+    it('should return true if the given operator has "valueid" key', () => {
+      const operator = OperatorsFixtures.getFormulaOperator();
+
+      expect(component.isFormulaOperator(operator)).toBeTruthy();
+    });
+
+    it('should return false if the given operator has not a "valueid" key', () => {
+      const operator = OperatorsFixtures.getMathOperator();
+
+      expect(component.isFormulaOperator(operator)).toBeFalsy();
+    });
   });
 
   describe('getOperatorDefaultType', () => {
