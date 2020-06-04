@@ -63,6 +63,14 @@ describe('OperatorsToolbarComponent', () => {
 
       expect(operatorEmitterSpy).toHaveBeenCalledWith({ payload: OperatorsFixtures.getMathOperator() });
     });
+
+    it('should always toggle more operators visibility', () => {
+      const toggleMoreOperatorsVisibilitySpy = spyOn(component, 'toogleMoreOperatorsVisibility');
+
+      component.onOperatorSelected(OperatorsFixtures.getMathOperator());
+
+      expect(toggleMoreOperatorsVisibilitySpy).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe('isFormulaOperator', () => {
