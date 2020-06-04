@@ -345,8 +345,6 @@ export class SiradigShowComponent implements OnInit {
 
     // Updates existing Siradig fields.
     itemToUpdate[key] = this.getDateFromYearMonth(this.getYear(isoString), selectedMonth);
-
-    console.log('item updated', itemToUpdate);
   }
 
   getDateFromYear(e) {
