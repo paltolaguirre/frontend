@@ -1,14 +1,13 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatSort, MatPaginator, MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
-import { NotificationService } from 'src/app/handler-error/notification.service';
 import { PrintService } from 'src/app/print/print.service';
 import { ListaItems } from 'src/app/concepto/concepto.service';
 import { Siradig } from '../siradig.model';
 import { SiradigService } from '../siradig.service';
 import { DatePipe } from '@angular/common';
 import { TableService } from 'src/app/shared/services/table.service';
+import { LoadingService } from 'src/app/core/services/loading/loading.service';
 
 export interface SiradigTable {
   ID: number;
@@ -27,10 +26,7 @@ export interface SiradigTable {
 export class SiradigListComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = [ 'Legajo' , 'Apellido',  'Nombre', 'Periodo', 'Acciones'];
   dataSource: MatTableDataSource<SiradigTable> = new MatTableDataSource<SiradigTable>();
-  //data: LegajosApi;
-
   resultsLength = 0;
-  isLoadingResults = true;
   isRateLimitReached = false;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -39,12 +35,11 @@ export class SiradigListComponent implements OnInit, AfterViewInit {
   id: number;
 
   constructor(
-    private route: ActivatedRoute,
     private siradigService: SiradigService,
     public dialog: MatDialog,
-    private notificationService: NotificationService,
     public printService : PrintService,
     private tableService: TableService,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit() {
@@ -52,18 +47,19 @@ export class SiradigListComponent implements OnInit, AfterViewInit {
   }
 
   async ngAfterViewInit() {
+    this.loadingService.show();
 
-      //this.isLoadingResults = false;
-      try {
-        const itemsApi: ListaItems = await this.siradigService.getSiradigs();
-        this.dataSource = this.tableService.getDataSource(itemsApi.items, this.parseSiradigToSiradigTable);
-      } catch (error) {
-        this.dataSource = new MatTableDataSource<SiradigTable>([]);
-      }
-      
-      this.dataSource.paginator = this.paginator;
-      this.paginator._intl.itemsPerPageLabel = "Items por página";
-      this.isLoadingResults = false; 
+    try {
+      const itemsApi: ListaItems = await this.siradigService.getSiradigs();
+      this.dataSource = this.tableService.getDataSource(itemsApi.items, this.parseSiradigToSiradigTable);
+    } catch (error) {
+      this.dataSource = new MatTableDataSource<SiradigTable>([]);
+    }
+
+    this.dataSource.paginator = this.paginator;
+    this.paginator._intl.itemsPerPageLabel = "Items por página";
+
+    this.loadingService.hide();
   }
 
   parseSiradigToSiradigTable(siradig: Siradig): SiradigTable {
