@@ -115,6 +115,28 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
     return data.ID<0?true:false;
   }
 
+  onChangeTipoConcepto(concepto:Concepto, id: any) {
+    switch (id) { 
+      case -1:
+      case -2:
+        concepto.cuentacontableid = -46
+        concepto.cuentacontablepasivoid = -49
+      return;  
+      case -3:
+        concepto.cuentacontableid = -49
+        concepto.cuentacontablepasivoid = -46
+        return;
+      case -4:
+        concepto.cuentacontableid = -49
+        concepto.cuentacontablepasivoid = -48
+        return;
+      case -5:
+          concepto.cuentacontableid = -47
+          concepto.cuentacontablepasivoid = -48
+        return;
+    }
+  }
+
   isDefaultOrNoImprimible(data):Boolean{
     return this.isDefault(data)||!data.esimprimible
   }
