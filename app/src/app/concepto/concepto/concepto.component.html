@@ -31,9 +31,9 @@
           (optionSelected)="data.tipoconceptoid=$event.ID;data.tipoconcepto=$event;onChangeTipoConcepto(data, $event.ID)"></app-selector-default>
         </div>
         <div>
-          <app-selector-default placeholder="Cuenta Contable Resultado" nombre="cuenta" [disabled]=isDefault(data) required=true [(matSelect)]="data.cuentacontableid"
+          <app-selector-default placeholder="Cuenta Contable Resultado" matTooltip="Esta cuenta contable se utilizará en el DEBE del asiento de sueldos" nombre="cuenta" [disabled]=isDefault(data) required=true [(matSelect)]="data.cuentacontableid"
           (optionSelected)="data.cuentacontableid=$event.ID"></app-selector-default>
-          <app-selector-default placeholder="Cuenta Contable Pasivo" nombre="cuenta" [disabled]=isDefault(data) required=true [(matSelect)]="data.cuentacontablepasivoid"
+          <app-selector-default placeholder="Cuenta Contable Pasivo" matTooltip="Esta cuenta contable se utilizará en el HABER del asiento de sueldos" nombre="cuenta" [disabled]=isDefault(data) required=true [(matSelect)]="data.cuentacontablepasivoid"
           (optionSelected)="data.cuentacontablepasivoid=$event.ID"></app-selector-default>
         </div>
         <div>
