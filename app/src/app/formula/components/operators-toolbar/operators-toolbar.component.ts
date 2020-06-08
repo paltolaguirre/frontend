@@ -137,13 +137,13 @@ export class OperatorsToolbarComponent implements OnInit {
     return operator.hasOwnProperty('valueid');
   }
 
-  public onDragStart(event, operator: Operator, prefix?: string) {
-    const data: FormulaTransferData = this.getOperatorTransferData(operator, prefix);
+  public onDragStart(event, operator: Operator) {
+    const data: FormulaTransferData = this.getOperatorTransferData(operator);
 
     event.dataTransfer.setData('text/plain', JSON.stringify(data));
   }
 
-  public onMoreOperatorsDragStart(event, operator: Operator, prefix: string) {
+  public onMoreOperatorsDragStart(event, operator: Operator) {
     const data: FormulaTransferData = {
       payload: operator
     };
@@ -153,8 +153,8 @@ export class OperatorsToolbarComponent implements OnInit {
     console.log(data);
   }
 
-  public onOperatorItemClick(event, operator, prefix?: string) {
-    const data: FormulaTransferData = this.getOperatorTransferData(operator, prefix);
+  public onOperatorItemClick(event, operator) {
+    const data: FormulaTransferData = this.getOperatorTransferData(operator);
 
     this.operatorsService.emitOperatorClicked(data);
   }
@@ -163,7 +163,7 @@ export class OperatorsToolbarComponent implements OnInit {
     return MathOperatorTypes.Numeric;
   }
 
-  public getOperatorTransferData(operator: Operator, prefix?: string): FormulaTransferData {
+  public getOperatorTransferData(operator: Operator): FormulaTransferData {
     return {
       payload: operator
     };
