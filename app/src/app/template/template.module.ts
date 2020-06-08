@@ -69,7 +69,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
             loadChildren: () => import('../f1357liquidacionfinalanual/f1357liquidacionfinalanual.module').then(m => m.F1357liquidacionfinalanualModule)
           },
           {
-            path: 'informes/libro-sueldos-digital',
+            path: 'informes/afip-libro-sueldos-digital',
             loadChildren: () => import('../librosueldosdigital/librosueldosdigital.module').then(m => m.LibrosueldosdigitalModule)
           },
           {

@@ -22,7 +22,7 @@ export class MenuComponent implements OnInit {
     {name: 'Libro Sueldos', url: '/informes/libro-sueldos'},
     {name: 'SiRADIG', url: '/siradig'},
     {name: 'F.1357 Liquidacion Anual', url: '/informes/liquidacion-final-anual-f1357'},
-    {name: 'Libro de Sueldos Digital', url: '/informes/libro-sueldos-digital'}
+    {name: 'Libro de Sueldos Digital', url: '/informes/afip-libro-sueldos-digital'}
   ];
 
   constructor() { }
