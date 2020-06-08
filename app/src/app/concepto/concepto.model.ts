@@ -47,7 +47,9 @@ export interface Concepto {
 	contribucionesfondonacional?:boolean;
 	contribucionesleyriesgo?:boolean;
 	aportesregimenesdiferenciales?:boolean;
-	aportesregimenesespeciales?:boolean;
+    aportesregimenesespeciales?:boolean;
+    cuentacontablepasivoid?: number;
+    cuentacontablepasivo?: Cuenta;
 }
 
 export interface Tipoconcepto {  
