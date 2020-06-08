@@ -50,7 +50,7 @@ export class FormulaListContainer implements OnInit, AfterViewInit, OnDestroy {
   }
 
   async ngAfterViewInit() {
-    this.formulaService.formulasStore$.subscribe((formulas: Formula[]) => {
+    /*this.formulaService.formulasStore$.subscribe((formulas: Formula[]) => {
       this.loadingService.show();
 
       // Using undefined prevents bad behaviours if the origin sends null value when there are no formulas.
@@ -61,7 +61,16 @@ export class FormulaListContainer implements OnInit, AfterViewInit, OnDestroy {
 
         this.loadingService.hide();
       }
-    });
+    }); */
+
+    this.loadingService.show();
+
+    const formulas: Formula[] = await this.formulaService.getAll();
+    this.dataSource = new MatTableDataSource<Formula>(formulas.filter(formula => formula.type === 'generic'));
+    this.dataSource.paginator = this.paginator;
+    this.paginator._intl.itemsPerPageLabel = 'Items por página';
+
+    this.loadingService.hide();
   }
 
   public getPageSizeOptions(): number[] {
