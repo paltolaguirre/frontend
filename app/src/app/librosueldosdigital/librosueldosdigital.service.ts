@@ -12,7 +12,7 @@ export interface ListaItems {
   providedIn: 'root'
 })
 export class LibrosueldosdigitalService {
-  href = '/api/informe/informes/libro-sueldos-digital';
+  href = '/api/informe/informes/afip-libro-sueldos-digital';
   
   constructor(private http: HttpClient) { }
 
@@ -25,6 +25,30 @@ export class LibrosueldosdigitalService {
     listaItems.total_count = listaItems.items.length;
 
     return listaItems; 
+  }
+
+  public async getLibrosueldosdigitalTXTConceptosAFIP(): Promise<any> {
+    let result = <any>{};
+
+    const requestUrl =
+      `${this.href}-exportartxt-conceptosafip`;
+
+    result  = await this.http.get<any>(requestUrl).toPromise();
+
+
+    return result;
+  }
+
+  public async getLibrosueldosdigitalTXTLiquidacionesPeriodo(tipoliquidacion : string , periodomensual : string, importedetraccion: number): Promise<any> {
+    let result = <any>{};
+
+    const requestUrl =
+      `${this.href}-exportartxt-liquidacionesperiodo?tipoliquidacion="+tipoliquidacion+"&periodomensual="+periodomensual&importedetraccion=${importedetraccion}`;
+
+    result  = await this.http.get<any>(requestUrl).toPromise();
+
+
+    return result;
   }
  
 

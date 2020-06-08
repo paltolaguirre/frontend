@@ -28,7 +28,7 @@ export class LibrosueldosdigitalListComponent implements OnInit, AfterViewInit {
   fechaperiodoliquidacion: any;
   periodoliquidacion: any;
   tipoliquidacion: any;
-
+  importedetraccion: any;
 
   resultsLength = 0;
   isLoadingResults = true;
@@ -48,8 +48,13 @@ export class LibrosueldosdigitalListComponent implements OnInit, AfterViewInit {
     public printService: PrintService,
     private empresaService: EmpresaService,
   ) {
-    this.tipoliquidacion = "";
-    this.periodoliquidacion = "";
+    
+    this.importedetraccion = "";
+    if(localStorage.getItem('librosueldosdigital-tipoliquidacion')) {
+      this.tipoliquidacion = localStorage.getItem('librosueldosdigital-tipoliquidacion');
+    } else {
+      this.tipoliquidacion = {nombre: "Mensual", codigo: "MENSUAL", ID: 1};
+    }
     if(localStorage.getItem('librosueldosdigital-periodo')) {
       this.fechaperiodoliquidacion = localStorage.getItem('librosueldosdigital-periodo');
     } else {
@@ -80,6 +85,7 @@ export class LibrosueldosdigitalListComponent implements OnInit, AfterViewInit {
 
   changeTipoLiquidacion(event){
     this.tipoliquidacion = event
+    localStorage.setItem("librosueldosdigital-tipoliquidacion", this.tipoliquidacion);
     this.updateGrilla();
 
   }
@@ -96,6 +102,36 @@ export class LibrosueldosdigitalListComponent implements OnInit, AfterViewInit {
   this.isLoadingResults = false;
 }
 
+  async exportarTXTConceptosAFIP() {
+ 
+    const liquidacionfinalanualTXT: any = await this.librosueldosdigitalService.getLibrosueldosdigitalTXTConceptosAFIP();
+    var blob = new Blob([liquidacionfinalanualTXT.data], {type: "text/plain;charset=utf-8"});
+    const empresa = await this.empresaService.getEmpresa();
+    const cuitempresa = empresa.cuit.replace("-","").replace("-","");
+    const nombreArchivo = `${cuitempresa}-Concepto`;
+    saveAs.saveAs(blob, nombreArchivo);
+  }
+
+  async exportarTXTLiquidacionesPeriodo() {
+    if(!this.importedetraccion) {
+      const notificacion = {
+        codigo: 400,
+        mensaje: "Debe ingresar un importe a detraer."
+      }
+      const ret = this.notificationService.notify(notificacion);
+      return ret;
+    }
+
+    const fcargassocialessTXT: any = await this.librosueldosdigitalService.getLibrosueldosdigitalTXTLiquidacionesPeriodo(this.tipoliquidacion.codigo,formatDate(this.fechaperiodoliquidacion+"-01", "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US'), this.importedetraccion);
+    var blob = new Blob([fcargassocialessTXT.data], {type: "text/plain;charset=utf-8"});
+    const empresa = await this.empresaService.getEmpresa();
+    const cuitempresa = empresa.cuit.replace("-","").replace("-","");
+    const periodoliquidacion = formatDate(this.fechaperiodoliquidacion,"MMMM yyyy",'en-US')
+    const nombreArchivo = `${cuitempresa}-${periodoliquidacion}-Liquidacion`;
+    
+    saveAs.saveAs(blob, nombreArchivo);
+  }
+
   canRequest(){
     if(this.fechaperiodoliquidacion != "" && this.tipoliquidacion != ""){
       return true;
@@ -104,39 +140,10 @@ export class LibrosueldosdigitalListComponent implements OnInit, AfterViewInit {
     }
   }
 
-  notificacion(mensajeNotificacion:String){
-    const notificacion = {
-      codigo: 400,
-      mensaje:mensajeNotificacion
-    }
-    const ret = this.notificationService.notify(notificacion);
-    return ret;
-  }
-
 
   public doFilter = (value: string) => {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
-
-  /*async exportarTXT() {
-  
-    const empresa = await this.empresaService.getEmpresa();
-
-    if(empresa.cuit == "") {
-      const notificacion = {
-        codigo: 400,
-        mensaje: "Debe completar el CUIT del Agente de Retención."
-      }
-      const ret = this.notificationService.notify(notificacion);
-      return ret;
-    }
-    const liquidacionfinalanualTXT: any = await this.liquidacionfinalanualService.getLiquidacionfinalanualTXT(this.tipopresentacion,this.anio,this.mes);
-    var blob = new Blob([liquidacionfinalanualTXT.data], {type: "text/plain;charset=utf-8"});
-    const cuitempresa = empresa.cuit.replace("-","").replace("-","");
-    const secuencia = "0000"
-    const nombreArchivo = `F1357.${cuitempresa}.${this.anio}0000.${secuencia}.txt`;
-    saveAs.saveAs(blob, nombreArchivo);
-  }*/
 
   refreshTableSorce() {
 
