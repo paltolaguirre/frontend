@@ -10,11 +10,12 @@
       <div>
       <mat-form-field class="standard-input"><input matInput type="month" (focusout)="changePeriodo($event)" placeholder="Periodo Mensual" [(ngModel)]="fechaperiodoliquidacion" autocomplete="off"></mat-form-field>
       <mat-form-field class="standard-input"><input matInput type="number" placeholder="Importe a detraer" [(ngModel)]="importedetraccion" autocomplete="off"></mat-form-field>
-      <app-selector-default nombre="liquidaciontipo" placeholder="Tipo Liquidacion" [(ngModel)]="tipoliquidacion" (optionSelected)="changeTipoLiquidacion($event)"></app-selector-default>
-      </div>
+      <app-selector-default class="medium-selector" nombre="tipoliquidacion" type="hardcode" [(ngModel)]="tipoliquidacion" (optionSelected)="changeTipoLiquidacion($event)"></app-selector-default>
+    </div>
         <div>
           <button mat-button color="secondary" class="topmenu-button" (click)="printService.printTOPDF()">Imprimir</button>
-          <button mat-button color="secondary" class="topmenu-button" (click)="exportarTXT()">Exportar TXT</button> 
+          <button mat-button color="secondary" class="topmenu-button" (click)="exportarTXTLiquidacionesPeriodo()">Exportar TXT Liquidaciones Periodo</button> 
+          <button mat-button color="primary" class="topmenu-button" (click)="exportarTXTConceptosAFIP()">Exportar TXT Conceptos AFIP</button> 
           <mat-form-field class="topmenu-search">
               <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Buscar">
             </mat-form-field>
