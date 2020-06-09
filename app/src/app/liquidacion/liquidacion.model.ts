@@ -1,6 +1,6 @@
 
 
-import { Legajo, Hijo } from '../legajo/legajo.model';
+import { Legajo, Hijo, Situacion } from '../legajo/legajo.model';
 import { Concepto } from '../concepto/concepto.model';
 
 export interface Liquidacion {  
@@ -42,6 +42,15 @@ export interface Liquidacion {
     liquidacionitems?: Liquidacionitem[];
     estacontabilizada?: boolean;
     cantidaddiastrabajados?: number;
+    situacionrevistauno:Situacion;
+    situacionrevistaunoid:number;
+    situacionrevistados?: Situacion;
+    situacionrevistadosid?: number;
+    situacionrevistatres?: Situacion;
+    situacionrevistatresid?: number;
+    fechasituacionrevistauno:string;
+    fechasituacionrevistados?: string;
+    fechasituacionrevistatres?: string;
 }
 
 export interface Tipo {
