@@ -99,8 +99,8 @@ export class LibrosueldosdigitalListComponent implements OnInit, AfterViewInit {
 
   async exportarTXTConceptosAFIP() {
  
-    const liquidacionfinalanualTXT: any = await this.librosueldosdigitalService.getLibrosueldosdigitalTXTConceptosAFIP();
-    var blob = new Blob([liquidacionfinalanualTXT.data], {type: "text/plain;charset=utf-8"});
+    const librosueldosdigitalconceptosafipTXT: any = await this.librosueldosdigitalService.getLibrosueldosdigitalTXTConceptosAFIP();
+    var blob = new Blob([librosueldosdigitalconceptosafipTXT.data], {type: "text/plain;charset=utf-8"});
     const empresa = await this.empresaService.getEmpresa();
     const cuitempresa = empresa.cuit.replace("-","").replace("-","");
     const nombreArchivo = `${cuitempresa}-Concepto`;
@@ -117,8 +117,8 @@ export class LibrosueldosdigitalListComponent implements OnInit, AfterViewInit {
       return ret;
     }
 
-    const fcargassocialessTXT: any = await this.librosueldosdigitalService.getLibrosueldosdigitalTXTLiquidacionesPeriodo(this.tipoliquidacion.codigo,formatDate(this.fechaperiodoliquidacion+"-01", "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US'), this.importedetraccion);
-    var blob = new Blob([fcargassocialessTXT.data], {type: "text/plain;charset=utf-8"});
+    const librosueldosdigitalliquidacionesperiodoTXT: any = await this.librosueldosdigitalService.getLibrosueldosdigitalTXTLiquidacionesPeriodo(this.tipoliquidacion.codigo,formatDate(this.fechaperiodoliquidacion+"-01", "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US'), this.importedetraccion);
+    var blob = new Blob([librosueldosdigitalliquidacionesperiodoTXT.data], {type: "text/plain;charset=utf-8"});
     const empresa = await this.empresaService.getEmpresa();
     const cuitempresa = empresa.cuit.replace("-","").replace("-","");
     const periodoliquidacion = formatDate(this.fechaperiodoliquidacion,"MMMM yyyy",'en-US')

@@ -43,7 +43,7 @@ export class LibrosueldosdigitalService {
     let result = <any>{};
 
     const requestUrl =
-      `${this.href}-exportartxt-liquidacionesperiodo?tipoliquidacion="+tipoliquidacion+"&periodomensual="+periodomensual&importedetraccion=${importedetraccion}`;
+      `${this.href}-exportartxt-liquidacionesperiodo?tipoliquidacion=${tipoliquidacion}&periodomensual=${periodomensual}&importedetraccion=${importedetraccion}`;
 
     result  = await this.http.get<any>(requestUrl).toPromise();
 
