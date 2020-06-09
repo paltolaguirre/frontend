@@ -50,11 +50,7 @@ export class LibrosueldosdigitalListComponent implements OnInit, AfterViewInit {
   ) {
     
     this.importedetraccion = "";
-    if(localStorage.getItem('librosueldosdigital-tipoliquidacion')) {
-      this.tipoliquidacion = localStorage.getItem('librosueldosdigital-tipoliquidacion');
-    } else {
-      this.tipoliquidacion = {nombre: "Mensual", codigo: "MENSUAL", ID: 1};
-    }
+    this.tipoliquidacion = {nombre: "Mensual", codigo: "MENSUAL", ID: 1};
     if(localStorage.getItem('librosueldosdigital-periodo')) {
       this.fechaperiodoliquidacion = localStorage.getItem('librosueldosdigital-periodo');
     } else {
@@ -85,7 +81,6 @@ export class LibrosueldosdigitalListComponent implements OnInit, AfterViewInit {
 
   changeTipoLiquidacion(event){
     this.tipoliquidacion = event
-    localStorage.setItem("librosueldosdigital-tipoliquidacion", this.tipoliquidacion);
     this.updateGrilla();
 
   }

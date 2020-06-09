@@ -10,8 +10,7 @@
       <div>
       <mat-form-field class="standard-input"><input matInput type="month" (focusout)="changePeriodo($event)" placeholder="Periodo Mensual" [(ngModel)]="fechaperiodoliquidacion" autocomplete="off"></mat-form-field>
       <mat-form-field class="standard-input"><input matInput type="number" placeholder="Importe a detraer" [(ngModel)]="importedetraccion" autocomplete="off"></mat-form-field>
-      <app-selector-default class="medium-selector" nombre="tipoliquidacion" type="hardcode" [(ngModel)]="tipoliquidacion" (optionSelected)="changeTipoLiquidacion($event)"></app-selector-default>
-    </div>
+      <app-selector-default class="medium-selector" nombre="tipoliquidacion" type="hardcode" [(ngModel)]="tipoliquidacion" (optionSelected)="changeTipoLiquidacion($event)" [(matSelect)]="tipoliquidacion.ID"></app-selector-default>    </div>
         <div>
           <button mat-button color="secondary" class="topmenu-button" (click)="printService.printTOPDF()">Imprimir</button>
           <button mat-button color="secondary" class="topmenu-button" (click)="exportarTXTLiquidacionesPeriodo()">Exportar TXT Liquidaciones Periodo</button> 
