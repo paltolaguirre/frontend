@@ -494,9 +494,9 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
 
     this.loadingService.hide();
 
-    if(currentLiquidacion.liquidacionitems.length == data.liquidacionitems.length) {
+    if (currentLiquidacion.liquidacionitems.length == data.liquidacionitems.length) {
       data.liquidacionitems.forEach((element, index) => {
-        if(currentLiquidacion.liquidacionitems[index].conceptoid == element.conceptoid) {
+        if (currentLiquidacion.liquidacionitems[index].conceptoid == element.conceptoid) {
           currentLiquidacion.liquidacionitems[index].importeunitario = element.importeunitario;
           currentLiquidacion.liquidacionitems[index].acumuladores = element.acumuladores;
         }
