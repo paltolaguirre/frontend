@@ -90,7 +90,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-   
+      this.onClickCalculoAutomatico(data)
     });
   }
 
@@ -478,6 +478,13 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   async conceptoSelected(currentLiquidacion: Liquidacion, item: Liquidacionitem, conceptoSelected, tipoconcepto) {
     item.concepto = this.getConcepto(conceptoSelected, tipoconcepto);
     item.conceptoid = item.concepto.ID;
+    this.formatData(currentLiquidacion);
+    const data = await this.liquidacionService.calculoAutomaticoLiquidacionByConcepto(currentLiquidacion, item.concepto.ID);
+    if(data.importeunitario != null) item.importeunitario = data.importeunitario;
+    item.acumuladores = data.acumuladores;
+  }
+
+  async cantidadChange(currentLiquidacion: Liquidacion, item: Liquidacionitem) {
     this.formatData(currentLiquidacion);
     const data = await this.liquidacionService.calculoAutomaticoLiquidacionByConcepto(currentLiquidacion, item.concepto.ID);
     if(data.importeunitario != null) item.importeunitario = data.importeunitario;
