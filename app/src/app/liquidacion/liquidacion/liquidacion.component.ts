@@ -90,7 +90,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-   
+      this.onClickCalculoAutomatico(data)
     });
   }
 
