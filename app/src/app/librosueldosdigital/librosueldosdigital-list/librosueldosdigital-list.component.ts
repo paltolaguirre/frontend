@@ -4,15 +4,15 @@ import { Component, ViewChild, AfterViewInit, OnInit , Input} from '@angular/cor
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { merge, Observable, of as observableOf } from 'rxjs';
-import { catchError, map, startWith, switchMap } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { Observable, of as observableOf } from 'rxjs';
 import { NotificationService } from 'src/app/handler-error/notification.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { formatDate } from "@angular/common";
 import { PrintService } from 'src/app/print/print.service';
 import { saveAs } from 'file-saver';
 import { EmpresaService } from 'src/app/empresa/empresa.service';
+import { LoadingService } from 'src/app/core/services/loading/loading.service';
 
 @Component({
     selector: 'app-librosueldosdigital-list',
@@ -31,7 +31,6 @@ export class LibrosueldosdigitalListComponent implements OnInit, AfterViewInit {
   importedetraccion: any;
 
   resultsLength = 0;
-  isLoadingResults = true;
   isRateLimitReached = false;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -47,8 +46,9 @@ export class LibrosueldosdigitalListComponent implements OnInit, AfterViewInit {
     private notificationService: NotificationService,
     public printService: PrintService,
     private empresaService: EmpresaService,
+    private loadingService: LoadingService
   ) {
-    
+
     this.importedetraccion = "";
     this.tipoliquidacion = {nombre: "Mensual", codigo: "MENSUAL", ID: 1};
     if(localStorage.getItem('librosueldosdigital-periodo')) {
@@ -65,7 +65,7 @@ export class LibrosueldosdigitalListComponent implements OnInit, AfterViewInit {
   async ngAfterViewInit() {
     this.updateGrilla();
   }
-  
+
   getPageSizeOptions(): number[] {
     if (this.dataSource.data.length>20)
     return [5, 10, 20,  this.dataSource.paginator.length];
@@ -84,21 +84,22 @@ export class LibrosueldosdigitalListComponent implements OnInit, AfterViewInit {
     this.updateGrilla();
 
   }
-  
-  async updateGrilla() {
 
-  if (this.canRequest()){
-    const librosueldosdigitalApi: ListaItems = await this.librosueldosdigitalService.getLibrosueldosdigital(this.sort.active, this.sort.direction,this.tipoliquidacion.codigo,formatDate(this.fechaperiodoliquidacion+"-01", "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US'),1);
-    this.dataSource = new MatTableDataSource<Librosueldosdigital>(librosueldosdigitalApi.items);
-    this.dataSource.paginator = this.paginator;
-    this.paginator._intl.itemsPerPageLabel = "Items por página";
-   
+  async updateGrilla() {
+    this.loadingService.show();
+
+    if (this.canRequest()){
+      const librosueldosdigitalApi: ListaItems = await this.librosueldosdigitalService.getLibrosueldosdigital(this.sort.active, this.sort.direction,this.tipoliquidacion.codigo,formatDate(this.fechaperiodoliquidacion+"-01", "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US'),1);
+      this.dataSource = new MatTableDataSource<Librosueldosdigital>(librosueldosdigitalApi.items);
+      this.dataSource.paginator = this.paginator;
+      this.paginator._intl.itemsPerPageLabel = "Items por página";
+    }
+
+    this.loadingService.hide();
   }
-  this.isLoadingResults = false;
-}
 
   async exportarTXTConceptosAFIP() {
- 
+
     const librosueldosdigitalconceptosafipTXT: any = await this.librosueldosdigitalService.getLibrosueldosdigitalTXTConceptosAFIP();
     var blob = new Blob([librosueldosdigitalconceptosafipTXT.data], {type: "text/plain;charset=utf-8"});
     const empresa = await this.empresaService.getEmpresa();
@@ -123,7 +124,7 @@ export class LibrosueldosdigitalListComponent implements OnInit, AfterViewInit {
     const cuitempresa = empresa.cuit.replace("-","").replace("-","");
     const periodoliquidacion = formatDate(this.fechaperiodoliquidacion+"-01","MMMM yyyy",'en-US')
     const nombreArchivo = `${cuitempresa}-${periodoliquidacion}-Liquidacion`;
-    
+
     saveAs.saveAs(blob, nombreArchivo);
   }
 
