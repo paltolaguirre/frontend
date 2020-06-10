@@ -121,7 +121,7 @@ export class LibrosueldosdigitalListComponent implements OnInit, AfterViewInit {
     var blob = new Blob([librosueldosdigitalliquidacionesperiodoTXT.data], {type: "text/plain;charset=utf-8"});
     const empresa = await this.empresaService.getEmpresa();
     const cuitempresa = empresa.cuit.replace("-","").replace("-","");
-    const periodoliquidacion = formatDate(this.fechaperiodoliquidacion,"MMMM yyyy",'en-US')
+    const periodoliquidacion = formatDate(this.fechaperiodoliquidacion+"-01","MMMM yyyy",'en-US')
     const nombreArchivo = `${cuitempresa}-${periodoliquidacion}-Liquidacion`;
     
     saveAs.saveAs(blob, nombreArchivo);
