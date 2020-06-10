@@ -71,6 +71,10 @@ import { SharedModule } from '../shared/shared.module';
             loadChildren: () => import('../f1357liquidacionfinalanual/f1357liquidacionfinalanual.module').then(m => m.F1357liquidacionfinalanualModule)
           },
           {
+            path: 'informes/afip-libro-sueldos-digital',
+            loadChildren: () => import('../librosueldosdigital/librosueldosdigital.module').then(m => m.LibrosueldosdigitalModule)
+          },
+          {
             path: '',
             redirectTo: 'legajos',
           }

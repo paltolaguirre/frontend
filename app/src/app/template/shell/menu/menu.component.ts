@@ -21,7 +21,8 @@ export class MenuComponent implements OnInit {
     {name: 'Informe 931', url: '/informes/cargas-sociales-f931'},
     {name: 'Libro Sueldos', url: '/informes/libro-sueldos'},
     {name: 'SiRADIG', url: '/siradig'},
-    {name: 'F.1357 Liquidacion Anual', url: '/informes/liquidacion-final-anual-f1357'}
+    {name: 'F.1357 Liquidacion Anual', url: '/informes/liquidacion-final-anual-f1357'},
+    {name: 'Libro de Sueldos Digital', url: '/informes/afip-libro-sueldos-digital'}
   ];
 
   constructor() { }

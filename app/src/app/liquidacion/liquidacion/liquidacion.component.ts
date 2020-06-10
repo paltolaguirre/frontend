@@ -1,25 +1,15 @@
 import { LiquidacionService } from '../liquidacion.service';
-import { Liquidacion, Liquidacionitem, LiquidacionItems } from '../liquidacion.model';
+import { Liquidacion, Liquidacionitem } from '../liquidacion.model';
 import { formatDate } from "@angular/common";
-import { FormControl ,} from '@angular/forms';
-import { Component, ViewChild, AfterViewInit, OnInit , Inject } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { merge, Observable, of as observableOf, of } from 'rxjs';
-import { catchError, map, startWith, switchMap } from 'rxjs/operators';
+import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Observable, of as observableOf, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { NotificationService } from 'src/app/handler-error/notification.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { PrintService } from 'src/app/print/print.service';
 import { DialogLiquidaciones } from './liquidacion-dialog/liquidacion-dialog.component';
-import { ListaItems , NovedadService } from 'src/app/novedad/novedad.service';
-import { Novedad } from '../../novedad/novedad.model';
-import { AnonymousSubject } from 'rxjs/internal/Subject';
-import { variable } from '@angular/compiler/src/output/output_ast';
-import { LiquidacionItem } from './liquidacion-print/liquidacion-print.component';
 import { TIPO_CONCEPTO_CODIGO, Concepto } from 'src/app/concepto/concepto.model';
-import { isNgTemplate } from '@angular/compiler';
 import { LoadingService } from 'src/app/core/services/loading/loading.service';
 
 export interface ImporteUnitario {
@@ -92,7 +82,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-
+      this.onClickCalculoAutomatico(data);
     });
   }
 
@@ -480,6 +470,13 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   async conceptoSelected(currentLiquidacion: Liquidacion, item: Liquidacionitem, conceptoSelected, tipoconcepto) {
     item.concepto = this.getConcepto(conceptoSelected, tipoconcepto);
     item.conceptoid = item.concepto.ID;
+    this.formatData(currentLiquidacion);
+    const data = await this.liquidacionService.calculoAutomaticoLiquidacionByConcepto(currentLiquidacion, item.concepto.ID);
+    if(data.importeunitario != null) item.importeunitario = data.importeunitario;
+    item.acumuladores = data.acumuladores;
+  }
+
+  async cantidadChange(currentLiquidacion: Liquidacion, item: Liquidacionitem) {
     this.formatData(currentLiquidacion);
     const data = await this.liquidacionService.calculoAutomaticoLiquidacionByConcepto(currentLiquidacion, item.concepto.ID);
     if(data.importeunitario != null) item.importeunitario = data.importeunitario;
