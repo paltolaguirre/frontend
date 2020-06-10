@@ -5,7 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ListaItems , NovedadService } from 'src/app/novedad/novedad.service';
 import { Novedad } from '../../../novedad/novedad.model';
-import { TIPO_CONCEPTO } from 'src/app/concepto/concepto.model';
+import { TIPO_CONCEPTO, Concepto } from 'src/app/concepto/concepto.model';
 
 @Component({
   selector: 'liquidacion-dialog.component',
@@ -44,6 +44,10 @@ export class DialogLiquidaciones {
   onClickAgregar(): void {
     this.agregarTablas();
     this.dialogRef.close();
+  }
+
+  tieneCalculoAutomatico(concepto:Concepto): Boolean {
+    return concepto.tipocalculoautomaticoid && concepto.tipocalculoautomaticoid == -3
   }
 
   onNoClick(): void {
