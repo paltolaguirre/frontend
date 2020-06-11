@@ -11,9 +11,11 @@
   <div mat-dialog-content class="content" id="contentTOPDF">
       <mat-form-field class="standard-input"><input matInput type="date" required (ngModelChange)="data.fecha=$event" [ngModel]="data.fecha | date: 'yyyy-MM-dd'" placeholder="Fecha" autocomplete="off"></mat-form-field>
       <app-selector-default nombre="legajo" [(matSelect)]="data.legajoid" required=true (optionSelected)="data.legajo=$event"></app-selector-default>
-      <app-selector-default nombre="concepto" filter="solonovedades=true" [(matSelect)]="data.conceptoid" required=true (optionSelected)="data.concepto=$event"></app-selector-default>
+      <app-selector-default nombre="concepto" filter="solonovedades=true" [(matSelect)]="data.conceptoid" required=true (optionSelected)="data.concepto=$event; limpiarImporte(data)"></app-selector-default>
       <mat-form-field class="standard-input"><input matInput type="number"  [(ngModel)]="data.cantidad" [required]="tieneFormula(data.concepto)" placeholder="Cantidad" autocomplete="off" ></mat-form-field>
-      <mat-form-field class="standard-input"><input matInput type="number" [(ngModel)]="data.importe" [required]="!tieneFormula(data.concepto)" placeholder="Importe Total" [disabled]="tieneFormula(data.concepto)" autocomplete="off"></mat-form-field>
+      <mat-form-field class="standard-input" matTooltip="El concepto seleccionado contiene un Cálculo Automático relacionado, que realizará el cálculo correspondiente para obtener el Importe total al momento de ingresar la novedad en la Liquidación" [matTooltipDisabled]  ="!tieneFormula(data.concepto)">
+        <input matInput type="number" [(ngModel)]="data.importe" [required]="!tieneFormula(data.concepto)" placeholder="Importe Total" [disabled]="tieneFormula(data.concepto)" autocomplete="off">
+      </mat-form-field>
      
       <mat-form-field class="standard-input"><input matInput [(ngModel)]="data.descripcion" placeholder="Descripción"  type="text" autocomplete="off"></mat-form-field>
   
