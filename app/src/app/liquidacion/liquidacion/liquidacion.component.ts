@@ -214,6 +214,8 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
 
     if (this.estaGuardandose) return null;
 
+    this.loadingService.show();
+
     this.estaGuardandose = true;
     let liquidacionesItem: Liquidacion;
 
@@ -229,8 +231,8 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
       this.gotoGrilla();
     }
 
-    console.log(data);
-    //this.create.emit(liquidacionesItem)
+    this.loadingService.hide();
+
     return liquidacionesItem;
   }
 
