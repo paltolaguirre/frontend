@@ -59,6 +59,8 @@ export class LegajoComponent implements OnInit {
   async onClickSave(data: Legajo): Promise<Legajo> {
     if(this.estaGuardandose || this.faltanRequeridos()) return null;
 
+    this.loadingService.show();
+
     this.estaGuardandose = true;
 
     let legajosItem: Legajo;
@@ -107,6 +109,8 @@ export class LegajoComponent implements OnInit {
 
     console.log(data);
     //this.create.emit(legajosItem)
+    this.loadingService.hide();
+
     return legajosItem;
   }
 
