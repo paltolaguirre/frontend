@@ -63,6 +63,10 @@ export class FormulaListContainer implements OnInit, AfterViewInit, OnDestroy {
       }
     }); */
 
+    this.fetchAll();
+  }
+
+  public async fetchAll() {
     this.loadingService.show();
 
     const formulas: Formula[] = await this.formulaService.getAll();
@@ -108,9 +112,14 @@ export class FormulaListContainer implements OnInit, AfterViewInit, OnDestroy {
         takeUntil(componentDestroyed(this))
       ).subscribe(async (clonedFormula: Formula) => {
         if (clonedFormula) {
+          this.loadingService.show();
+
           await this.formulaService.create(clonedFormula);
 
-          this.formulaService.updateFormulasStore();
+          this.loadingService.hide();
+
+          //this.formulaService.updateFormulasStore();
+          this.fetchAll();
         }
     });
   }
