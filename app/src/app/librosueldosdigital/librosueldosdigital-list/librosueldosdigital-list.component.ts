@@ -99,6 +99,7 @@ export class LibrosueldosdigitalListComponent implements OnInit, AfterViewInit {
   }
 
   async exportarTXTConceptosAFIP() {
+    this.loadingService.show();
 
     const librosueldosdigitalconceptosafipTXT: any = await this.librosueldosdigitalService.getLibrosueldosdigitalTXTConceptosAFIP();
     var blob = new Blob([librosueldosdigitalconceptosafipTXT.data], {type: "text/plain;charset=utf-8"});
@@ -106,6 +107,8 @@ export class LibrosueldosdigitalListComponent implements OnInit, AfterViewInit {
     const cuitempresa = empresa.cuit.replace("-","").replace("-","");
     const nombreArchivo = `${cuitempresa}-Concepto`;
     saveAs.saveAs(blob, nombreArchivo);
+
+    this.loadingService.hide();
   }
 
   async exportarTXTLiquidacionesPeriodo() {
@@ -118,6 +121,8 @@ export class LibrosueldosdigitalListComponent implements OnInit, AfterViewInit {
       return ret;
     }
 
+    this.loadingService.show();
+
     const librosueldosdigitalliquidacionesperiodoTXT: any = await this.librosueldosdigitalService.getLibrosueldosdigitalTXTLiquidacionesPeriodo(this.tipoliquidacion.codigo,formatDate(this.fechaperiodoliquidacion+"-01", "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US'), this.importedetraccion);
     var blob = new Blob([librosueldosdigitalliquidacionesperiodoTXT.data], {type: "text/plain;charset=utf-8"});
     const empresa = await this.empresaService.getEmpresa();
@@ -126,6 +131,8 @@ export class LibrosueldosdigitalListComponent implements OnInit, AfterViewInit {
     const nombreArchivo = `${cuitempresa}-${periodoliquidacion}-Liquidacion`;
 
     saveAs.saveAs(blob, nombreArchivo);
+
+    this.loadingService.hide();
   }
 
   canRequest(){
