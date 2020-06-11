@@ -34,13 +34,18 @@ export class LegajoComponent implements OnInit {
 
   ngOnInit() {
     this.currentLegajo$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) => {
+      switchMap(async (params: ParamMap) => {
         if (params.get('id') == "nuevo") {
           console.log("Nuevo Legajo");
         }
 
         this.id = +params.get('id');
-        const legajo = this.legajoService.getLegajo(this.id);
+
+        this.loadingService.show();
+
+        const legajo = await this.legajoService.getLegajo(this.id);
+
+        this.loadingService.hide();
 
         return legajo;
       })
