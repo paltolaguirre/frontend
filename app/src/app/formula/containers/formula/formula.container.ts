@@ -188,11 +188,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
     this.currentFormula.description = this.form.get('description').value;
     this.currentFormula.result = this.form.get('result').value;
 
-
-
     if (this.validateCanvasFormulas()) {
-      console.log("Current Formula: ", this.currentFormula)
-
       if (this.isNew) {
         return this.createFormula();
       }
@@ -249,13 +245,21 @@ export class FormulaContainer implements OnInit, OnDestroy {
   }
 
   public async createFormula() {
+    this.loadingService.show();
+
     await this.formulaService.create(this.currentFormula);
+
+    this.loadingService.hide();
 
     return this.goToFormulasList();
   }
 
   public async updateFormula() {
+    this.loadingService.show();
+
     await this.formulaService.update(this.oldFormulaName, this.currentFormula);
+
+    this.loadingService.hide();
 
     return this.goToFormulasList();
   }
