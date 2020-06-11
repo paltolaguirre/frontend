@@ -111,4 +111,9 @@ DeletedAt: n
     return false;
   }
 
+  limpiarImporte(data: Novedad){
+    if (this.tieneFormula(data.concepto)){
+      data.importe = null
+    }
+  }
 }
