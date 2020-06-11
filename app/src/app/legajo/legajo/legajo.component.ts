@@ -1,24 +1,21 @@
-import { ListaItems, LegajoService } from '../legajo.service';
-import { Legajo, Hijo } from '../legajo.model';
+import { LegajoService } from '../legajo.service';
+import { Legajo } from '../legajo.model';
 import { formatDate } from "@angular/common";
-import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog, MatDialogRef, MatDialogConfig, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { merge, Observable, of as observableOf } from 'rxjs';
-import { catchError, map, startWith, switchMap } from 'rxjs/operators';
+import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Observable, of as observableOf } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { NotificationService } from 'src/app/handler-error/notification.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { SelectorDefaultComponent } from 'src/app/shared/selector-default/selector-default.component';
 import { PrintService } from 'src/app/print/print.service';
+import { LoadingService } from 'src/app/core/services/loading/loading.service';
 
 @Component({
   selector: 'app-legajo',
   templateUrl: './legajo.component.html',
   styleUrls: ['./legajo.component.css']
 })
-export class LegajoComponent implements OnInit, AfterViewInit {
+export class LegajoComponent implements OnInit {
   public currentLegajo$: Observable<Legajo> = null;
   paises: any[];
   id: number;
@@ -31,29 +28,23 @@ export class LegajoComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog,
     private notificationService: NotificationService,
     private router: Router,
-    public printService : PrintService
+    public printService : PrintService,
+    private loadingService: LoadingService
     ) { }
 
   ngOnInit() {
-    
     this.currentLegajo$ = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
         if (params.get('id') == "nuevo") {
           console.log("Nuevo Legajo");
         }
+
         this.id = +params.get('id');
         const legajo = this.legajoService.getLegajo(this.id);
-        console.log(legajo);
-         
+
         return legajo;
-
-
       })
     );
-  }
-
-  ngAfterViewInit() {
-    
   }
 
   private gotoGrilla() {
@@ -84,13 +75,13 @@ export class LegajoComponent implements OnInit, AfterViewInit {
     if(data.centrodecosto)data.centrodecostoid = data.centrodecosto.ID;
     if(data.modalidadcontratacion)data.modalidadcontratacionid = data.modalidadcontratacion.ID;
     if(data.condicion)data.condicionid = data.condicion.ID;
-    
+
     if(data.conyuge){
       data.conyuge.forEach(function(element) {
         if(element.obrasocial) {
           element.obrasocial.activo = 1;
           element.obrasocialid = element.obrasocial.ID;
-        }  
+        }
       });
     }
 
@@ -99,7 +90,7 @@ export class LegajoComponent implements OnInit, AfterViewInit {
         if(element.obrasocial) {
           element.obrasocial.activo = 1;
           element.obrasocialid = element.obrasocial.ID;
-        }  
+        }
       });
     }
 
@@ -134,7 +125,7 @@ export class LegajoComponent implements OnInit, AfterViewInit {
         cuil: null,
         activo: 1,
         obrasocialid: 1
-      }];      
+      }];
     } else {
       data.conyuge.push({
         ID: null,
@@ -161,7 +152,7 @@ export class LegajoComponent implements OnInit, AfterViewInit {
         activo: 1,
         obrasocialid: 1,
         beneficiarioasignacionfamiliar: false,
-      }];      
+      }];
     } else {
       data.hijos.push({
         ID: null,
@@ -174,9 +165,9 @@ export class LegajoComponent implements OnInit, AfterViewInit {
         obrasocialid: 1,
         beneficiarioasignacionfamiliar: false,
       });
-    }  
+    }
   }
-  
+
   onClickRefreshLocalidad (localidadid) {
 
   }
