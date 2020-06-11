@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { OperatorsService } from 'src/app/core/services/operators/operators.service';
+import { EventHandlerService } from '../../services/event-handler.service';
 
 @Component({
   selector: 'app-node-arg',
@@ -12,10 +13,9 @@ export class NodeArgComponent implements OnInit {
   @Input() formulaIsNew: boolean;
 
   @Input() type: string;
-  @Input() arg: any;
+  @Input() arg: any; 
   
-  
-  constructor(private operatorService: OperatorsService) {}
+  constructor(private operatorService: OperatorsService, private eventHandlerService: EventHandlerService) {}
 
   ngOnInit() {
   }
@@ -29,22 +29,7 @@ export class NodeArgComponent implements OnInit {
   }
 
   onClickNode(event) {
-    if (!this.isAbleToEdit()) {
-      return null;
-    }
-
-    switch (this.type) {
-      case 'number':
-        const input = event.target.children[0];
-        input.style.display = "block";
-        input.focus();   
-        break;
-      case 'boolean':
-        this.arg.Valueboolean = !this.arg.Valueboolean;
-        break;
-      default:
-        break;
-    }
+    this.eventHandlerService.onClickNode(event, this.isAbleToEdit(), this.type, this.arg);
   }
 
   public setDefaultArgValue(arg) {
@@ -55,85 +40,13 @@ export class NodeArgComponent implements OnInit {
   }
 
   onDrop(event, currentFormulaValue, paramType='') {
-    event.preventDefault();
-
-    if (!this.isAbleToEdit()) {
-      return null;
-    }
-
-    const data: any /*DataPayload*/ = JSON.parse(event.dataTransfer.getData('text'));
-
-    console.log("Draw onDrop: ", data);
-    this.operatorService.emitOperatorDrop(data);
-
-    if(data.payload === undefined) {
-      if(paramType == '') {
-        event.cancelBubble = true;
-        return;
-      }
-      currentFormulaValue.valueinvoke = data;
-      currentFormulaValue.valuenumber = 0;
-      return;
-    }
-
-    if(data.payload.result != currentFormulaValue.type && data.payload.result != paramType) {
-      let message;
-      switch (data.payload.result) {
-        case 'number':
-          message = "Se intenta usar tipo de dato NUMERICO donde se espera BOOLEANO.";
-          break;
-        case 'boolean':
-          message = "Se intenta usar tipo de dato BOOLEANO donde se espera NUMERICO.";
-          break;
-        default:
-          message = "Tipos de datos incompatibles.";
-          break;
-      }
-      
-      const warningBox = document.getElementById('warningBox');
-      warningBox.innerHTML = `<p>${message}</p>`;
-      warningBox.style.display = 'block';
-      setTimeout(() => warningBox.style.display = 'none', 3*1000);
-      
-      event.cancelBubble = true;
-      return;
-    }
-
-    const args = [];
-    data.payload.params.forEach((param, i) => {
-      const arg = {
-          ID: 0,
-          name: param.name,
-          type: param.type,
-          valuenumber: param.valuenumber == undefined ? 0 : param.valuenumber,
-          valuestring: param.valuestring == undefined ? "" : param.valuestring,
-          Valueboolean: false,
-          valueinvoke: null
-      };
-
-      this.setDefaultArgValue(arg);
-
-      args.push(arg);
-    });
-
-    const formulaInvoke = {
-      ID: 0,
-      function: {
-        name: data.payload.name,
-        params: data.payload.params,
-        type: data.payload.type,
-        result: data.payload.result
-      },
-      functionname: data.payload.name,
-      args: args
-    };
-
-    currentFormulaValue.valueinvoke = formulaInvoke
-    event.cancelBubble = true;
+    this.eventHandlerService.onDrop(event, currentFormulaValue, paramType, this.isAbleToEdit());
   }
 
 /****************************/
   onDragOver(event, id) { // allowDrop
+    this.eventHandlerService.onDragOver(event, this.isAbleToEdit());
+/*
     if (!this.isAbleToEdit()) {
       return null;
     }
@@ -143,35 +56,15 @@ export class NodeArgComponent implements OnInit {
     this.onEnter(event, id);
 
     event.cancelBubble = true;
+*/
   }
 
   onEnter(e, id) {
-    if (!this.isAbleToEdit()) {
-      return null;
-    }
-
-    const elements = document.querySelectorAll('.highligthed');
-    elements.forEach(element => {
-      element.classList.replace('highligthed', 'no-highlight');
-    });
-
-    const element: HTMLElement = e.target;
-    element.classList.replace('no-highlight', 'highligthed');
-
-    this.hideAllRemoveBadges();
-
-    // this.showRemoveBadgeById(id);
+    this.eventHandlerService.onEnter(e, this.isAbleToEdit());
   }
 
   onLeave(e) {
-    if (!this.isAbleToEdit()) {
-      return null;
-    }
-
-    const element: HTMLElement = e.target;
-    element.classList.replace('highligthed', 'no-highlight');
-
-    this.hideAllRemoveBadges();
+    this.eventHandlerService.onLeave(e, this.isAbleToEdit());
   }
 
   public hideAllRemoveBadges() {
@@ -229,7 +122,6 @@ export class NodeArgComponent implements OnInit {
   }
 
   onBlurInput(event) {
-    const input = event.target;
-    input.style.display = "none";
+    this.eventHandlerService.onBlurInput(event);
   }
 }
