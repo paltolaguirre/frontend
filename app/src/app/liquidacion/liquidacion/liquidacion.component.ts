@@ -50,10 +50,14 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
           console.log("Nuevo Liquidacion");
         }
         this.id = +params.get('id');
+
+        this.loadingService.show();
+
         const liquidacion = await this.liquidacionService.getLiquidacion(this.id);
         this.fechaperiododepositado = liquidacion.fechaperiododepositado?liquidacion.fechaperiododepositado.substring(0, 7):liquidacion.fechaperiododepositado;
         this.fechaperiodoliquidacion = liquidacion.fechaperiodoliquidacion?liquidacion.fechaperiodoliquidacion.substring(0, 7):liquidacion.fechaperiodoliquidacion;
-        console.log(liquidacion);
+
+        this.loadingService.hide();
 
         return liquidacion;
       })
