@@ -78,29 +78,31 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
   }
 
   async onClickSave(data: Concepto): Promise<Concepto> {
+    this.loadingService.show();
 
-    if(this.estaGuardandose || this.faltanRequeridos()) return null;
+    if (this.estaGuardandose || this.faltanRequeridos()) {
+      this.loadingService.hide();
+
+      return null;
+    }
 
     this.estaGuardandose = true;
 
     let conceptosItem: Concepto;
 
-    //if(data.cuenta)data.cuentacontableid = data.cuenta.ID;
     let that = this;
     if (this.id) {
-      console.log("Updated Concepto");
       conceptosItem = await this.conceptoService.putConcepto(data).finally(function(){that.habilitarGuardado();});
+
       this.gotoGrilla();
-   //   this.notificationService.notify("Concepto Actualizado");
     } else {
-      console.log("Created Concepto");
       conceptosItem = await this.conceptoService.postConcepto(data).finally(function(){that.habilitarGuardado();});
+
       this.gotoGrilla();
- //     this.notificationService.notify("Concepto Creado");
     }
 
-    console.log(data);
-    //this.create.emit(conceptosItem)
+    this.loadingService.hide();
+
     return conceptosItem;
   }
 
