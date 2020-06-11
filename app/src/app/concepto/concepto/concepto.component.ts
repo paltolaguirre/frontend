@@ -1,5 +1,3 @@
-import { AutomaticCalculationTypes } from './../../core/enums/automatic-calc-types.enum';
-import { FormulaService } from './../../core/services/formula/formula.service';
 import { Formula } from 'src/app/core/models/formula.model';
 import { ConceptoService } from '../concepto.service';
 import { Concepto, TIPO_CALCULO_AUTOMATICO } from '../concepto.model';
@@ -10,7 +8,7 @@ import { NotificationService } from 'src/app/handler-error/notification.service'
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { PrintService } from 'src/app/print/print.service';
-import { ThrowStmt } from '@angular/compiler';
+import { LoadingService } from 'src/app/core/services/loading/loading.service';
 
 @Component({
   selector: 'app-concepto',
@@ -31,23 +29,27 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
     private notificationService: NotificationService,
     private router: Router,
     public printService : PrintService,
-    private formulaService: FormulaService
+    private loadingService: LoadingService
     ) { }
 
-  
+
   ngAfterViewInit(): void {
   }
 
  async ngOnInit() {
     this.currentConcepto$ = await this.route.paramMap.pipe(
-      switchMap((params: ParamMap) => {
+      switchMap(async (params: ParamMap) => {
         if (params.get('id') == "nuevo") {
           console.log("Nuevo Concepto");
         }
+
         this.id = +params.get('id');
-        const concepto = this.conceptoService.getConcepto(this.id);
-        console.log(concepto);
-        
+        this.loadingService.show();
+
+        const concepto = await this.conceptoService.getConcepto(this.id);
+
+        this.loadingService.hide();
+
         return concepto;
       })
     );
@@ -56,14 +58,14 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
       this.selectedFormula = concepto.formula
     })
   }
-  
+
 
   tieneCalculoFormula(concepto: Concepto){
     return false
   }
 
   tieneCalculoPorcentaje(concepto: Concepto){
-      return concepto.porcentaje && concepto.tipodecalculoid 
+      return concepto.porcentaje && concepto.tipodecalculoid
   }
 
   private gotoGrilla() {
@@ -76,11 +78,11 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
   }
 
   async onClickSave(data: Concepto): Promise<Concepto> {
-    
+
     if(this.estaGuardandose || this.faltanRequeridos()) return null;
 
     this.estaGuardandose = true;
-    
+
     let conceptosItem: Concepto;
 
     //if(data.cuenta)data.cuentacontableid = data.cuenta.ID;
@@ -106,7 +108,7 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
   habilitarGuardado() {
     this.estaGuardandose = false
   }
-  
+
   isNew(data) : Boolean {
     return data.ID==null?false:true;
   }
@@ -116,12 +118,12 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
   }
 
   onChangeTipoConcepto(concepto:Concepto, id: any) {
-    switch (id) { 
+    switch (id) {
       case -1:
       case -2:
         concepto.cuentacontableid = -46
         concepto.cuentacontablepasivoid = -49
-      return;  
+      return;
       case -3:
         concepto.cuentacontableid = -49
         concepto.cuentacontablepasivoid = -46
@@ -153,12 +155,12 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
     if(concepto && concepto.tipoconcepto && concepto.tipoconcepto.codigo) {
       filterTipoconcepto = "tipoconcepto="+concepto.tipoconcepto.codigo;
     }
-    
+
     return filterTipoconcepto;
   }
-  
+
   getPresetearValores(concepto:Concepto){
-    switch (concepto.tipoconcepto.codigo) { 
+    switch (concepto.tipoconcepto.codigo) {
       case 'IMPORTE_REMUNERATIVO':
         concepto.marcarepeticion = true;
         concepto.aportesipa = true;
@@ -194,11 +196,11 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
           concepto.contribucionesleyriesgo = true;
           concepto.aportesregimenesdiferenciales = true;
           concepto.aportesregimenesespeciales = true;
-          return;  
+          return;
       case 'IMPORTE_NO_REMUNERATIVO':
         concepto.contribucionesleyriesgo = true;
         return;
-      
+
       case 'RETENCION':
           concepto.marcarepeticion = false;
           concepto.aportesipa = false;
@@ -218,8 +220,8 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
           concepto.aportesregimenesespeciales = false;
           return;
     }
-  } 
-  
+  }
+
   changeHandler(data, tipoimpuestosganancias) {
     console.log("tipoimpuestosganancias: ", tipoimpuestosganancias);
 
@@ -264,13 +266,13 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
         concepto.tipocalculoautomaticoid = TIPO_CALCULO_AUTOMATICO.FORMULA;
         concepto.tipocalculoautomatico.ID = TIPO_CALCULO_AUTOMATICO.FORMULA;
         break;
-      
-      default: 
-      
+
+      default:
+
       concepto.tipocalculoautomaticoid = TIPO_CALCULO_AUTOMATICO.NO_APLICA;
       concepto.tipocalculoautomatico.ID = TIPO_CALCULO_AUTOMATICO.NO_APLICA;
     }
-    
+
 
   }
 
