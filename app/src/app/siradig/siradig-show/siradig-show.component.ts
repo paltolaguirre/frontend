@@ -111,6 +111,8 @@ export class SiradigShowComponent implements OnInit {
     if(this.estaGuardandose) return null;
     this.estaGuardandose = true;
 
+    this.loadingService.show();
+
     // Se elimina
     if(this.conyugesiradig && this.conyugesiradig.ID && !this.conyugesiradig.aplica) {
       this.conyugesiradig.DeletedAt = new Date();
@@ -161,7 +163,7 @@ export class SiradigShowComponent implements OnInit {
       this.gotoGrilla();
     }
 
-    console.log(data);
+    this.loadingService.hide();
 
     return item;
   }
