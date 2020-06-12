@@ -27,10 +27,14 @@
           </mat-form-field>
         </div>
         <div>
-          <app-selector-default nombre="cuenta" [disabled]=isDefault(data) required=true [(matSelect)]="data.cuentacontableid"
-          (optionSelected)="data.cuentacontableid=$event.ID"></app-selector-default>
           <app-selector-default nombre="tipoconcepto" [disabled]=isDefault(data) required=true [(matSelect)]="data.tipoconceptoid"
-          (optionSelected)="data.tipoconceptoid=$event.ID;data.tipoconcepto=$event"></app-selector-default>
+          (optionSelected)="data.tipoconceptoid=$event.ID;data.tipoconcepto=$event;onChangeTipoConcepto(data, $event.ID)"></app-selector-default>
+        </div>
+        <div>
+          <app-selector-default placeholder="Cuenta Contable Resultado" matTooltip="Esta cuenta contable se utilizará en el DEBE del asiento de sueldos" nombre="cuenta" [disabled]=isDefault(data) required=true [(matSelect)]="data.cuentacontableid"
+          (optionSelected)="data.cuentacontableid=$event.ID"></app-selector-default>
+          <app-selector-default placeholder="Cuenta Contable Pasivo" matTooltip="Esta cuenta contable se utilizará en el HABER del asiento de sueldos" nombre="cuenta" [disabled]=isDefault(data) required=true [(matSelect)]="data.cuentacontablepasivoid"
+          (optionSelected)="data.cuentacontablepasivoid=$event.ID"></app-selector-default>
         </div>
         <div>
           <mat-form-field class="standard-input">
