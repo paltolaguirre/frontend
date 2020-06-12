@@ -127,7 +127,7 @@
         </mat-expansion-panel-header>
         <div>
           <app-selector-default #conceptoafip nombre="conceptoafip" [filter]="getFilterTipoimpuestosganancias(data)" (optionSelected)="getPresetearValores(data)" [disabled]=isDefaultOrNoImprimible(data) [(matSelect)]="data.conceptoafipid"
-          (optionSelected)="data.conceptoafipid=$event.ID"></app-selector-default> 
+          (optionSelected)="data.conceptoafip=$event;data.conceptoafipid=$event.ID"></app-selector-default> 
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>Subsistemas de Seguridad Social</mat-panel-title>
