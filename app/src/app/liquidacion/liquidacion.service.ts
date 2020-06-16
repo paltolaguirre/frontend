@@ -31,6 +31,18 @@ export class LiquidacionService {
     return listaItems;
   }
 
+  public async getLiquidacionesPorPeriodo(sort: string, order: string, page: number, periododesde: string, periodohasta:string, tipoliquidacion: string): Promise<ListaItems> {
+    
+    const requestUrl =
+    `${this.href}?periododesde=` + periododesde + `&periodohasta=` + periodohasta + `&liquidaciontipoid=` + tipoliquidacion;
+
+    let listaItems: ListaItems = { items: null, total_count: null };
+    listaItems.items = await this.http.get<Liquidacion[]>(requestUrl).toPromise();
+    listaItems.total_count = listaItems.items.length;
+
+    return listaItems;  
+  }
+
   public async getLiquidacionesPorFecha(sort: string, order: string, page: number, fechadesde: string, fechahasta:string): Promise<ListaItems> {
     const requestUrl =
       `${this.href}?fechadesde=` + fechadesde + `&fechahasta=` + fechahasta;
