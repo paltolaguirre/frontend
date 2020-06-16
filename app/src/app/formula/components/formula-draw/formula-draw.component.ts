@@ -1,6 +1,7 @@
 import { OperatorsService } from './../../../core/services/operators/operators.service';
 import { Formula } from './../../../core/models/formula.model';
 import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { EventHandlerService } from '../../services/event-handler.service';
 
 export interface DataPayload {
   payload: Formula;
@@ -24,7 +25,7 @@ export class FormulaDrawComponent implements OnInit {
   private prefixSymbol = new Map();
   private middleSymbol = new Map();
 
-  constructor(private operatorService: OperatorsService) {
+  constructor(private operatorService: OperatorsService, private eventHandlerService: EventHandlerService) {
     this.prefixSymbol.set('Not', "NEGADO");
     
     this.middleSymbol.set('Sum', "+");
@@ -72,158 +73,30 @@ export class FormulaDrawComponent implements OnInit {
   }
 
   onClickNode(event) {
-    if (!this.isAbleToEdit()) {
-      return null;
-    }
-
-    const input = event.target.children[0];
-    input.style.display = "block";
-    input.focus();
+    this.eventHandlerService.onClickNode(event, this.isAbleToEdit());
   }
 
   onBlurInput(event) {
-    const input = event.target;
-    input.style.display = "none";
+    this.eventHandlerService.onBlurInput(event);
   }
 
   onDrag(event, currentFormulaValue) {
-    if (!this.isAbleToEdit()) {
-      return null;
-    }
-
-    event.dataTransfer.setData('text', JSON.stringify(currentFormulaValue.valueinvoke));
-    event.cancelBubble = true;
+    this.eventHandlerService.onDrag(event, currentFormulaValue, this.isAbleToEdit());
   }
 
   onDragEnd(event, currentFormulaValue) {
-    if (!this.isAbleToEdit()) {
-      return null;
-    }
-
-    console.log("Draw onDragEnd: ", event);
-    const rect = document.getElementById('main').getBoundingClientRect();
-    const xstart = rect.left;
-    const xend = rect.left + rect.width;
-    const ystart = rect.top;
-    const yend = rect.top + rect.height;
-
-    if(event.x > xstart && event.x < xend && event.y > ystart && event.y < yend) {
-      this.invokeRemuve(currentFormulaValue);
-    }
-    event.cancelBubble = true;
+    this.eventHandlerService.onDragEnd(event, currentFormulaValue, this.isAbleToEdit());
   }
 
   onDrop(event, currentFormulaValue, parentFormulaParam={type: ''}) {
-    event.preventDefault();
-
-    if (!this.isAbleToEdit()) {
-      return null;
-    }
-
-    const data: DataPayload = JSON.parse(event.dataTransfer.getData('text'));
-
-    console.log("Draw onDrop: ", data);
-    this.operatorService.emitOperatorDrop(data);
-
-    if(data.payload === undefined) {
-      if(parentFormulaParam.type == '') {
-        event.cancelBubble = true;
-        return;
-      }
-      currentFormulaValue.valueinvoke = data;
-      currentFormulaValue.valuenumber = 0;
-      return;
-    }
-
-    if(data.payload.result != currentFormulaValue.type && data.payload.result != parentFormulaParam.type) {
-      let message;
-      switch (data.payload.result) {
-        case 'number':
-          message = "Se intenta usar tipo de dato NUMERICO donde se espera BOOLEANO.";
-          break;
-        case 'boolean':
-          message = "Se intenta usar tipo de dato BOOLEANO donde se espera NUMERICO.";
-          break;
-        default:
-          message = "Tipos de datos incompatibles.";
-          break;
-      }
-      
-      const warningBox = document.getElementById('warningBox');
-      warningBox.innerHTML = `<p>${message}</p>`;
-      warningBox.style.display = 'block';
-      setTimeout(() => warningBox.style.display = 'none', 3*1000);
-      
-      event.cancelBubble = true;
-      return;
-    }
-
-    const args = [];
-    data.payload.params.forEach((param, i) => {
-      const arg = {
-          ID: 0,
-          name: param.name,
-          type: param.type,
-          valuenumber: param.valuenumber == undefined ? 0 : param.valuenumber,
-          valuestring: param.valuestring == undefined ? "" : param.valuestring,
-          Valueboolean: false,
-          valueinvoke: null
-      };
-
-      this.setDefaultArgValue(arg);
-
-      args.push(arg);
-    });
-
-    const formulaInvoke = {
-      ID: 0,
-      function: {
-        name: data.payload.name,
-        params: data.payload.params,
-        type: data.payload.type,
-        result: data.payload.result
-      },
-      functionname: data.payload.name,
-      args: args
-    };
-
-    currentFormulaValue.valueinvoke = formulaInvoke
-    event.cancelBubble = true;
+    if(parentFormulaParam.type == '') parentFormulaParam.type = currentFormulaValue.valueinvoke.function.result;
+    this.eventHandlerService.onDrop(event, currentFormulaValue, parentFormulaParam.type, this.isAbleToEdit());
   }
 
-  public setDefaultArgValue(arg) {
-    // Establece la condicion por defecto de los IFS en "verdadero".
-    if (arg.name === 'condicion') {
-      arg.Valueboolean = true;
-    }
-  }
-/** */
-  /*onOverInput(event){
-    const input:HTMLElement = event.target;
-    //input.classList.replace('no-highlight', 'highligthed');
-
-    for (let index = 0; index < input.children.length; index++) {
-      const item = input.children.item(index);
-      if(item.className.includes("remove-badge-container")) {
-        //item.classList.replace('hide', 'show');
-      }
-    }
-  }
-
-  onOutInput(event){
-    const input:HTMLElement = event.target;
-    //input.classList.replace('highligthed', 'no-highlight');
-
-    for (let index = 0; index < input.children.length; index++) {
-      const item = input.children.item(index);
-      if(item.className.includes("remove-badge-container")) {
-        //item.classList.replace('show', 'hide');
-      }
-    }
-  }*/
-
-/** */
   onDragOver(event, id) { // allowDrop
+    this.eventHandlerService.onDragOver(event, this.isAbleToEdit());
+    /*console.log("onDragOver X: ", event.x);
+
     if (!this.isAbleToEdit()) {
       return null;
     }
@@ -232,36 +105,15 @@ export class FormulaDrawComponent implements OnInit {
 
     this.onEnter(event, id);
 
-    event.cancelBubble = true;
+    event.cancelBubble = true;*/
   }
 
   onEnter(e, id) {
-    if (!this.isAbleToEdit()) {
-      return null;
-    }
-
-    const elements = document.querySelectorAll('.highligthed');
-    elements.forEach(element => {
-      element.classList.replace('highligthed', 'no-highlight');
-    });
-
-    const element: HTMLElement = e.target;
-    element.classList.replace('no-highlight', 'highligthed');
-
-    this.hideAllRemoveBadges();
-
-    // this.showRemoveBadgeById(id);
+    this.eventHandlerService.onEnter(event, this.isAbleToEdit());
   }
 
   onLeave(e) {
-    if (!this.isAbleToEdit()) {
-      return null;
-    }
-
-    const element: HTMLElement = e.target;
-    element.classList.replace('highligthed', 'no-highlight');
-
-    this.hideAllRemoveBadges();
+    this.eventHandlerService.onLeave(e, this.isAbleToEdit());
   }
 
   public hideAllRemoveBadges() {
@@ -283,7 +135,8 @@ export class FormulaDrawComponent implements OnInit {
   }
 
   onDragEnter(e, id) {
-    this.onEnter(e, id);
+    this.eventHandlerService.onEnter(e, this.isAbleToEdit());
+    // this.onEnter(e, id);
   }
 
   onDragLeave(e) {
@@ -293,7 +146,8 @@ export class FormulaDrawComponent implements OnInit {
   onMouseEnter(e, id) {
     e.stopPropagation();
 
-    this.onEnter(e, id);
+    this.eventHandlerService.onEnter(e, this.isAbleToEdit());
+    // this.onEnter(e, id);
   }
 
   onMouseLeave(e) {
@@ -303,15 +157,7 @@ export class FormulaDrawComponent implements OnInit {
   }
 /** */
   onClickRemove(currentFormulaValue) {
-    this.invokeRemuve(currentFormulaValue);
   }
-
-  private invokeRemuve(currentFormulaValue) {
-    currentFormulaValue.valueinvokeid = null;
-    currentFormulaValue.valueinvoke = null;
-    currentFormulaValue.valuenumber = 0;
-  }
-
 
   public isAbleToEdit(): boolean {
     if (this.formulaIsNew) {
