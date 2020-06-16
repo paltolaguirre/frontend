@@ -10,7 +10,7 @@ import { NotificationService } from 'src/app/handler-error/notification.service'
 import { PrintService } from 'src/app/print/print.service';
 import { DuplicarDialogComponent } from './duplicar-dialog/duplicar-dialog.component';
 import { ContabilizarDialogComponent } from './contabilizar-dialog/contabilizar-dialog.component';
-import { DatePipe } from '@angular/common';
+import { DatePipe, formatDate } from '@angular/common';
 import { TableService } from 'src/app/shared/services/table.service';
 
 export interface LiquidacionTable {
@@ -39,6 +39,9 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
   isLoadingResults = true;
   isRateLimitReached = false;
   disabled = false;
+  periodoliquidacionhasta : any;
+  periodoliquidaciondesde : any;
+  liquidaciontipo : any;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -52,7 +55,19 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
     private notificationService: NotificationService,
     public printService: PrintService,
     private tableService: TableService, 
-  ) { }
+  ) {
+    if(localStorage.getItem('liquidacion-list-fechaliquidacionhasta')) {
+      this.periodoliquidacionhasta = localStorage.getItem('liquidacion-list-fechaliquidacionhasta');
+    } else {
+      this.periodoliquidacionhasta = formatDate(Date.now(), "yyyy-MM", 'en-US');
+    }
+    if(localStorage.getItem('liquidacion-list-fechaliquidaciondesde')) {
+      this.periodoliquidaciondesde = localStorage.getItem('liquidacion-list-fechaliquidaciondesde');
+    } else {
+      this.periodoliquidaciondesde = '2000-01';
+    }
+    this.liquidaciontipo = 0;
+  }
 
   ngOnInit() {
     this.dataSource.sort = this.sort;
@@ -60,11 +75,7 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
 
   async ngAfterViewInit() {
 
-      const liquidacionesApi: ListaItems = await this.liquidacionService.getLiquidaciones(this.sort.active, this.sort.direction, 1);
-      this.dataSource = this.tableService.getDataSource(liquidacionesApi.items, this.parseLiquidacionToLiquidacionTable);
-      this.dataSource.paginator = this.paginator;
-      this.paginator._intl.itemsPerPageLabel = "Items por página";
-      this.isLoadingResults = false;
+      this.updateGrilla()
 
   }
 
@@ -190,5 +201,31 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
   private isSelected(elemento) {
     return elemento.checked == true;
   }
+
+  changePeriodoLiquidacionDesde (value) {
+    localStorage.setItem("liquidacion-list-fechaliquidaciondesde",value);
+    this.periodoliquidaciondesde = value;
+    this.updateGrilla();
+  }
+  changePeriodoLiquidacionHasta (value) {
+    localStorage.setItem("liquidacion-list-fechaliquidacionhasta",value);
+    this.periodoliquidacionhasta = value;
+    this.updateGrilla();
+  }
+
+  async updateGrilla () {
+    const liquidacionesApi: ListaItems = await this.liquidacionService.getLiquidacionesPorPeriodo(this.sort.active, this.sort.direction, 1,this.periodoliquidaciondesde,this.periodoliquidacionhasta, this.liquidaciontipo);
+    this.dataSource = this.tableService.getDataSource(liquidacionesApi.items, this.parseLiquidacionToLiquidacionTable);
+    this.dataSource.paginator = this.paginator;
+    this.paginator._intl.itemsPerPageLabel = "Items por página";
+    this.isLoadingResults = false;
+  }
+
+  changeTipoLiquidacion (value) {
+    localStorage.setItem("liquidacion-list-liquidaciontipo",value);
+    this.liquidaciontipo = value;
+    this.updateGrilla();
+  }
+
 }
 
