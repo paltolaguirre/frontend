@@ -10,6 +10,7 @@ import { OperatorsToolbarComponent } from './components/operators-toolbar/operat
 import { FormulaDropSpaceComponent } from './components/formula-drop-space/formula-drop-space.component';
 import { FormulaDrawComponent } from './components/formula-draw/formula-draw.component';
 import { TrashComponent } from './components/trash/trash.component';
+import { NodeArgComponent } from './components/node-arg/node-arg.component';
 
 const routes: Routes = [
   {
@@ -38,7 +39,8 @@ const routes: Routes = [
     OperatorsToolbarComponent,
     FormulaDrawComponent,
     FormulaDropSpaceComponent,
-    TrashComponent
+    TrashComponent,
+    NodeArgComponent
   ],
   imports: [
     CommonModule,
