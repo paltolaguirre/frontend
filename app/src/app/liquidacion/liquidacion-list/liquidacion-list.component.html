@@ -8,7 +8,10 @@
 
 
   <div class="topmenu-container" >
-      <div>
+    <mat-form-field class="standard-input"><input matInput type="month" (ngModelChange)="changePeriodoLiquidacionDesde($event)" [ngModel]="periodoliquidaciondesde" placeholder="Periodo Liquidacion Desde" autocomplete="off"></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput type="month" (ngModelChange)="changePeriodoLiquidacionHasta($event)" [ngModel]="periodoliquidacionhasta" placeholder="Periodo Liquidacion Hasta" autocomplete="off"></mat-form-field>
+    <app-selector-default class="medium-selector" matSelect="0" nombre="liquidaciontipo" type="hardcode" (optionSelected)="changeTipoLiquidacion($event.ID)"></app-selector-default>
+    <div>
         <button mat-raised-button color="primary" class="topmenu-button" mat-button [routerLink]="['/liquidaciones', 'nuevo']">Nuevo</button>
         <button mat-raised-button color="secondary" class="topmenu-button" mat-button (click)="printService.printTOPDF()">Imprimir</button>
         <button mat-raised-button color="secondary" class="topmenu-button" mat-button (click)="onClickContabilizar(dataSource.data)">Contabilizar</button>
