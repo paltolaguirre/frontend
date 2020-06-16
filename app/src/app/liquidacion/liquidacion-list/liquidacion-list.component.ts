@@ -12,6 +12,7 @@ import { DuplicarDialogComponent } from './duplicar-dialog/duplicar-dialog.compo
 import { ContabilizarDialogComponent } from './contabilizar-dialog/contabilizar-dialog.component';
 import { DatePipe, formatDate } from '@angular/common';
 import { TableService } from 'src/app/shared/services/table.service';
+import { SelectionModel } from '@angular/cdk/collections';
 
 export interface LiquidacionTable {
   ID: number;
@@ -46,8 +47,10 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   liquidacionID$: Observable<String>;
+  
   public currentLiquidacion$: Observable<Liquidacion> = null;
   id: number;
+  selection: SelectionModel<LiquidacionTable>;
 
   constructor(
     private liquidacionService: LiquidacionService,
@@ -71,10 +74,12 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.dataSource.sort = this.sort;
+    const initialSelection = [];
+    const allowMultiSelect = true;
+    this.selection = new SelectionModel<LiquidacionTable>(allowMultiSelect, initialSelection);
   }
 
-  async ngAfterViewInit() {
-
+  async ngAfterViewInit() {  
       this.updateGrilla()
 
   }
@@ -104,7 +109,7 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
   }
 
   onClickContabilizar(data: LiquidacionTable[]): void {
-    data = data.filter(this.isSelected);
+    data = this.selection.selected
 
     if(data.length == 0) {
       const notificacion = {
@@ -171,7 +176,7 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
   }
 
   onClickDuplicar(data): void {
-    data = data.filter(this.isSelected);
+    data = this.selection.selected
 
     if(data.length == 0) {
       const notificacion = {
@@ -198,10 +203,6 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private isSelected(elemento) {
-    return elemento.checked == true;
-  }
-
   changePeriodoLiquidacionDesde (value) {
     localStorage.setItem("liquidacion-list-fechaliquidaciondesde",value);
     this.periodoliquidaciondesde = value;
@@ -214,6 +215,7 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
   }
 
   async updateGrilla () {
+    this.selection.clear()
     const liquidacionesApi: ListaItems = await this.liquidacionService.getLiquidacionesPorPeriodo(this.sort.active, this.sort.direction, 1,this.periodoliquidaciondesde,this.periodoliquidacionhasta, this.liquidaciontipo);
     this.dataSource = this.tableService.getDataSource(liquidacionesApi.items, this.parseLiquidacionToLiquidacionTable);
     this.dataSource.paginator = this.paginator;
@@ -226,6 +228,20 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
     this.liquidaciontipo = value;
     this.updateGrilla();
   }
+
+    /** Whether the number of selected elements matches the total number of rows. */
+    isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected == numRows;
+    }
+
+    /** Selects all rows if they are not all selected; otherwise clear selection. */
+    masterToggle() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => this.selection.select(row));
+    }
 
 }
 
