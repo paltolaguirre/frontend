@@ -3,44 +3,21 @@
         <div *ngSwitchCase="'operator'" [ngSwitch]="formulaValue.valueinvoke.functionname">
             <div *ngSwitchCase="'Not'" class="param boolean-param no-highlight no-selectable" style="display: flex;" [draggable]="isAbleToEdit()" (drop)="onDrop($event, formulaValue)" (dragover)="onDragOver($event)" (dragstart)="onDrag($event, formulaValue)" (dragend)="onDragEnd($event, formulaValue)" (dragenter)="onDragEnter($event)" (dragleave)="onDragLeave($event)" (mouseenter)="onMouseEnter($event, formulaValue.ID)" (mouseleave)="onMouseLeave($event)" (mouseover)="onMouseEnter($event, formulaValue.ID)">
                 NO
-                <app-formula-draw *ngIf="formulaValue.valueinvoke.args[0].valueinvoke" [formulaValue]="formulaValue.valueinvoke.args[0]" [formulaIsEditable]="formulaIsEditable" [formulaIsNew]="formulaIsNew"></app-formula-draw>
-                <div *ngIf="!formulaValue.valueinvoke.args[0].valueinvoke" [className]="formulaValue.valueinvoke.function.params[0].type + '-param param no-highlight no-selectable'" class="param boolean-param no-highlight" [draggable]="isAbleToEdit()" (click)="formulaValue.valueinvoke.args[0].Valueboolean = !formulaValue.valueinvoke.args[0].Valueboolean" (drop)="onDrop($event, formulaValue.valueinvoke.args[0], formulaValue.valueinvoke.function.params[0])" (dragover)="onDragOver($event)" (dragenter)="onDragEnter($event)" (dragleave)="onDragLeave($event)" (mouseenter)="onMouseEnter($event)" (mouseleave)="onMouseLeave($event)" (mouseover)="onMouseEnter($event)">
-                    {{formulaValue.valueinvoke.args[0].Valueboolean ? 'verdadero': 'falso'}}
-                    <input type="checkbox" step="1" placeholder="0.00" class="inputedit" style="display: none;" [(ngModel)]="formulaValue.valueinvoke.args[0].Valueboolean" (change)="valueChanged()" (blur)="onBlurInput($event)">
-                </div>
-                <span [id]="'value-' + formulaValue.ID" class="remove-badge-container no-selectable hide" draggable="false" (click)="onClickRemove(formulaValue)"><i class="remove-icon no-selectable fas fa-trash-alt highligthed"></i></span>
+                <app-node-arg [arg]="formulaValue.valueinvoke.args[0]" [type]="formulaValue.valueinvoke.function.params[0].type" [formulaIsEditable]="formulaIsEditable" [formulaIsNew]="formulaIsNew"></app-node-arg>
             </div>
             <div *ngSwitchCase="'If'" class="param number-param no-highlight no-selectable" style="display: block;" [draggable]="isAbleToEdit()" (drop)="onDrop($event, formulaValue)" (dragover)="onDragOver($event)" (dragstart)="onDrag($event, formulaValue)" (dragend)="onDragEnd($event, formulaValue)" (dragenter)="onDragEnter($event)" (dragleave)="onDragLeave($event)" (mouseenter)="onMouseEnter($event, formulaValue.ID)" (mouseleave)="onMouseLeave($event)" (mouseover)="onMouseEnter($event, formulaValue.ID)">
                 SI
-                <app-formula-draw *ngIf="formulaValue.valueinvoke.args[0].valueinvoke" [formulaValue]="formulaValue.valueinvoke.args[0]" [formulaIsEditable]="formulaIsEditable" [formulaIsNew]="formulaIsNew"></app-formula-draw>
-                <div *ngIf="!formulaValue.valueinvoke.args[0].valueinvoke" [className]="formulaValue.valueinvoke.function.params[0].type + '-param param no-highlight no-selectable'" class="param boolean-param no-highlight" [draggable]="isAbleToEdit()" (click)="formulaValue.valueinvoke.args[0].Valueboolean = !formulaValue.valueinvoke.args[0].Valueboolean" (drop)="onDrop($event, formulaValue.valueinvoke.args[0], formulaValue.valueinvoke.function.params[0])" (dragover)="onDragOver($event)" (dragenter)="onDragEnter($event)" (dragleave)="onDragLeave($event)" (mouseenter)="onMouseEnter($event)" (mouseleave)="onMouseLeave($event)" (mouseover)="onMouseEnter($event)">
-                    {{formulaValue.valueinvoke.args[0].Valueboolean ? 'verdadero': 'falso'}}
-                    <input type="checkbox" step="1" placeholder="0.00" class="inputedit" style="display: none;" [(ngModel)]="formulaValue.valueinvoke.args[0].Valueboolean" (change)="valueChanged()" (blur)="onBlurInput($event)">
-                </div>
+                <app-node-arg [arg]="formulaValue.valueinvoke.args[0]" [type]="formulaValue.valueinvoke.function.params[0].type" [formulaIsEditable]="formulaIsEditable" [formulaIsNew]="formulaIsNew"></app-node-arg>
                 ENTONCES 
-                <app-formula-draw *ngIf="formulaValue.valueinvoke.args[1].valueinvoke" [formulaValue]="formulaValue.valueinvoke.args[1]" [formulaIsEditable]="formulaIsEditable" [formulaIsNew]="formulaIsNew"></app-formula-draw>
-                <div *ngIf="!formulaValue.valueinvoke.args[1].valueinvoke" class="param number-param no-highlight no-selectable" [draggable]="isAbleToEdit()" (click)="onClickNode($event)" (drop)="onDrop($event, formulaValue.valueinvoke.args[1], formulaValue.valueinvoke.function.params[1])" (dragover)="onDragOver($event)" (dragenter)="onDragEnter($event)" (dragleave)="onDragLeave($event)" (mouseenter)="onMouseEnter($event, formulaValue.ID)" (mouseleave)="onMouseLeave($event)" (mouseover)="onMouseEnter($event, formulaValue.ID)">{{formulaValue.valueinvoke.args[1].valuenumber}}
-                    <input type="number" step="1" placeholder="0.00" class="inputedit" style="display: none;" [(ngModel)]="formulaValue.valueinvoke.args[1].valuenumber" (change)="valueChanged()" (blur)="onBlurInput($event)">
-                </div>
+                <app-node-arg [arg]="formulaValue.valueinvoke.args[1]" [type]="formulaValue.valueinvoke.function.params[1].type" [formulaIsEditable]="formulaIsEditable" [formulaIsNew]="formulaIsNew"></app-node-arg>
                 SINO 
-                <app-formula-draw *ngIf="formulaValue.valueinvoke.args[2].valueinvoke" [formulaValue]="formulaValue.valueinvoke.args[2]" [formulaIsEditable]="formulaIsEditable" [formulaIsNew]="formulaIsNew"></app-formula-draw>
-                <div *ngIf="!formulaValue.valueinvoke.args[2].valueinvoke" class="param number-param no-highlight no-selectable" [draggable]="isAbleToEdit()" (click)="onClickNode($event)" (drop)="onDrop($event, formulaValue.valueinvoke.args[2], formulaValue.valueinvoke.function.params[2])" (dragover)="onDragOver($event)" (dragenter)="onDragEnter($event)" (dragleave)="onDragLeave($event)" (mouseenter)="onMouseEnter($event, formulaValue.ID)" (mouseleave)="onMouseLeave($event)" (mouseover)="onMouseEnter($event, formulaValue.ID)">{{formulaValue.valueinvoke.args[2].valuenumber}}
-                    <input type="number" step="1" placeholder="0.00" class="inputedit" style="display: none;" [(ngModel)]="formulaValue.valueinvoke.args[2].valuenumber" (change)="valueChanged()" (blur)="onBlurInput($event)">
-                </div>
-                <span [id]="'value-' + formulaValue.ID" class="remove-badge-container no-selectable hide" draggable="false" (click)="onClickRemove(formulaValue)"><i class="remove-icon no-selectable fas fa-trash-alt highligthed"></i></span>
+                <app-node-arg [arg]="formulaValue.valueinvoke.args[2]" [type]="formulaValue.valueinvoke.function.params[2].type" [formulaIsEditable]="formulaIsEditable" [formulaIsNew]="formulaIsNew"></app-node-arg>
             </div>
             <div *ngSwitchDefault [className]="formulaValue.valueinvoke.function.result + '-param param no-highlight no-selectable'" [draggable]="isAbleToEdit()" (drop)="onDrop($event, formulaValue)" (dragover)="onDragOver($event)" (dragstart)="onDrag($event, formulaValue)" (dragend)="onDragEnd($event, formulaValue)" (dragenter)="onDragEnter($event)" (dragleave)="onDragLeave($event)" (mouseenter)="onMouseEnter($event, formulaValue.ID)" (mouseleave)="onMouseLeave($event)" (mouseover)="onMouseEnter($event, formulaValue.ID)">
                 {{toPrefixSymbol(formulaValue.valueinvoke.functionname)}}
-                <app-formula-draw *ngIf="formulaValue.valueinvoke.args[0].valueinvoke" [formulaValue]="formulaValue.valueinvoke.args[0]" [formulaIsEditable]="formulaIsEditable" [formulaIsNew]="formulaIsNew"></app-formula-draw>
-                <div *ngIf="!formulaValue.valueinvoke.args[0].valueinvoke" class="param number-param no-highlight no-selectable" [draggable]="isAbleToEdit()" (click)="onClickNode($event)" (drop)="onDrop($event, formulaValue.valueinvoke.args[0], formulaValue.valueinvoke.function.params[0])" (dragover)="onDragOver($event)" (dragenter)="onDragEnter($event)" (dragleave)="onDragLeave($event)" (mouseenter)="onMouseEnter($event, formulaValue.ID)" (mouseleave)="onMouseLeave($event)" (mouseover)="onMouseEnter($event, formulaValue.ID)">{{formulaValue.valueinvoke.args[0].valuenumber}}
-                    <input type="number" step="1" placeholder="0.00" class="inputedit" style="display: none;" [(ngModel)]="formulaValue.valueinvoke.args[0].valuenumber" (change)="valueChanged()" (blur)="onBlurInput($event)">
-                </div>
+                <app-node-arg [arg]="formulaValue.valueinvoke.args[0]" [type]="formulaValue.valueinvoke.function.params[0].type" [formulaIsEditable]="formulaIsEditable" [formulaIsNew]="formulaIsNew"></app-node-arg>
                 {{toMiddleSymbol(formulaValue.valueinvoke.functionname)}}
-                <app-formula-draw *ngIf="formulaValue.valueinvoke.args[1].valueinvoke" [formulaValue]="formulaValue.valueinvoke.args[1]" [formulaIsEditable]="formulaIsEditable" [formulaIsNew]="formulaIsNew"></app-formula-draw>
-                <div *ngIf="!formulaValue.valueinvoke.args[1].valueinvoke" class="param number-param no-highlight no-selectable" [draggable]="isAbleToEdit()" (click)="onClickNode($event)" (drop)="onDrop($event, formulaValue.valueinvoke.args[1], formulaValue.valueinvoke.function.params[1])" (dragover)="onDragOver($event)" (dragenter)="onDragEnter($event)" (dragleave)="onDragLeave($event)" (mouseenter)="onMouseEnter($event, formulaValue.ID)" (mouseleave)="onMouseLeave($event)" (mouseover)="onMouseEnter($event, formulaValue.ID)">{{formulaValue.valueinvoke.args[1].valuenumber}}
-                    <input type="number" step="1" placeholder="0.00" class="inputedit" style="display: none;" [(ngModel)]="formulaValue.valueinvoke.args[1].valuenumber" (change)="valueChanged()" (blur)="onBlurInput($event)">
-                </div>                
-                <span [id]="'value-' + formulaValue.ID" class="remove-badge-container no-selectable hide" draggable="false" (click)="onClickRemove(formulaValue)"><i class="remove-icon no-selectable fas fa-trash-alt highligthed"></i></span>
+                <app-node-arg [arg]="formulaValue.valueinvoke.args[1]" [type]="formulaValue.valueinvoke.function.params[1].type" [formulaIsEditable]="formulaIsEditable" [formulaIsNew]="formulaIsNew"></app-node-arg>
             </div>
         </div>
         <div *ngSwitchCase="'internal'" [ngSwitch]="formulaValue.valueinvoke.functionname">
@@ -63,12 +40,8 @@
             <div [className]="'number-param param no-highlight no-selectable'" [draggable]="isAbleToEdit()" (drop)="onDrop($event, formulaValue, {type: formulaValue.valueinvoke.function.result})" (dragover)="onDragOver($event)" (dragstart)="onDrag($event, formulaValue)" (dragend)="onDragEnd($event, formulaValue)" (dragenter)="onDragEnter($event)" (dragleave)="onDragLeave($event)" (mouseenter)="onMouseEnter($event, formulaValue.ID)" (mouseleave)="onMouseLeave($event)" (mouseover)="onMouseEnter($event, formulaValue.ID)">
                 {{formulaValue.valueinvoke.functionname}}
                 <div *ngFor="let arg of formulaValue.valueinvoke.args; index as i;">
-                    <app-formula-draw *ngIf="arg.valueinvoke" [formulaValue]="arg" [formulaIsEditable]="formulaIsEditable" [formulaIsNew]="formulaIsNew"></app-formula-draw>
-                    <div *ngIf="!arg.valueinvoke" [className]="formulaValue.valueinvoke.function.params[i].type + '-param param no-highlight'" [draggable]="isAbleToEdit()" (click)="onClickNode($event)" (drop)="onDrop($event, arg, formulaValue.valueinvoke.function.params[i])" (dragover)="onDragOver($event)" (dragenter)="onDragEnter($event)" (dragleave)="onDragLeave($event)" (mouseenter)="onMouseEnter($event, formulaValue.ID)" (mouseleave)="onMouseLeave($event)" (mouseover)="onMouseEnter($event, formulaValue.ID)">{{arg.valuenumber}}
-                        <input type="number" step="1" placeholder="0.00" class="inputedit" style="display: none;" [(ngModel)]="arg.valuenumber" (change)="valueChanged()" (blur)="onBlurInput($event)">
-                    </div>
+                    <app-node-arg [arg]="arg" [type]="formulaValue.valueinvoke.function.params[i].type" [formulaIsEditable]="formulaIsEditable" [formulaIsNew]="formulaIsNew"></app-node-arg>
                 </div>
-                <span [id]="'value-' + formulaValue.ID" class="remove-badge-container no-selectable hide" draggable="false" (click)="onClickRemove(formulaValue)"><i class="remove-icon no-selectable fas fa-trash-alt highligthed"></i></span>
             </div>
         </div>
         <div *ngSwitchDefault>
