@@ -141,7 +141,7 @@
                           [(matSelect)]="item.conceptoid"
                           (optionSelected)="conceptoSelected(data, item, $event, 'IMPORTE_REMUNERATIVO')">
                         </app-selector-default>
-                        <mat-form-field class="children-input"><input matInput [(ngModel)]="item.cantidad" [disabled]="esNoEditable(item)"
+                        <mat-form-field class="children-input"><input matInput [(ngModel)]="item.cantidad" (ngModelChange)="cantidadChange(data, item)"
                             placeholder="Cantidad" type="number" autocomplete="off"></mat-form-field>
                         <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importeunitario" [disabled]="esNoEditable(item)"
                             placeholder="Importe Total" type="number" autocomplete="off"></mat-form-field>
@@ -179,7 +179,7 @@
                           [(matSelect)]="item.conceptoid"
                           (optionSelected)="conceptoSelected(data, item, $event, 'IMPORTE_NO_REMUNERATIVO')">
                         </app-selector-default>
-                        <mat-form-field class="children-input"><input matInput [(ngModel)]="item.cantidad" [disabled]="esNoEditable(item)"
+                        <mat-form-field class="children-input"><input matInput [(ngModel)]="item.cantidad" (ngModelChange)="cantidadChange(data, item)"
                             placeholder="Cantidad" type="number" autocomplete="off"></mat-form-field>
                         <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importeunitario" [disabled]="esNoEditable(item)"
                             placeholder="Importe Total" type="number" autocomplete="off"></mat-form-field>
@@ -216,7 +216,7 @@
                         <app-selector-default nombre="concepto" filter="tipoconcepto=DESCUENTO"
                           [(matSelect)]="item.conceptoid"
                           (optionSelected)="conceptoSelected(data, item, $event, 'DESCUENTO')"></app-selector-default>
-                        <mat-form-field class="children-input"><input matInput [(ngModel)]="item.cantidad" [disabled]="esNoEditable(item)"
+                        <mat-form-field class="children-input"><input matInput [(ngModel)]="item.cantidad" (ngModelChange)="cantidadChange(data, item)"
                             placeholder="Cantidad" type="number" autocomplete="off"></mat-form-field>
                         <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importeunitario" [disabled]="esNoEditable(item)"
                             placeholder="Importe Total" type="number" autocomplete="off"></mat-form-field>
@@ -253,7 +253,7 @@
                         <app-selector-default nombre="concepto" filter="tipoconcepto=RETENCION"
                           [(matSelect)]="item.conceptoid"
                           (optionSelected)="conceptoSelected(data, item, $event, 'RETENCION')"></app-selector-default>
-                        <mat-form-field class="children-input"><input matInput [(ngModel)]="item.cantidad" [disabled]="esNoEditable(item)"
+                        <mat-form-field class="children-input"><input matInput [(ngModel)]="item.cantidad" (ngModelChange)="cantidadChange(data, item)"
                             placeholder="Cantidad" type="number" autocomplete="off"></mat-form-field>
                         <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importeunitario" [disabled]="esNoEditable(item)"
                             placeholder="Importe Total" type="number" autocomplete="off"></mat-form-field>
@@ -291,7 +291,7 @@
                           [(matSelect)]="item.conceptoid"
                           (optionSelected)="conceptoSelected(data, item, $event, 'APORTE_PATRONAL')">
                         </app-selector-default>
-                        <mat-form-field class="children-input"><input matInput [(ngModel)]="item.cantidad" [disabled]="esNoEditable(item)"
+                        <mat-form-field class="children-input"><input matInput [(ngModel)]="item.cantidad" (ngModelChange)="cantidadChange(data, item)"
                             placeholder="Cantidad" type="number" autocomplete="off"></mat-form-field>
                         <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importeunitario" [disabled]="esNoEditable(item)"
                             placeholder="Importe Total" type="number" autocomplete="off"></mat-form-field>

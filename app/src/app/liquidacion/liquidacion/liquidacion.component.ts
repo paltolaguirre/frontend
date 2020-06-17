@@ -90,7 +90,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-   
+      this.onClickCalculoAutomatico(data)
     });
   }
 
@@ -482,6 +482,15 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
     const data = await this.liquidacionService.calculoAutomaticoLiquidacionByConcepto(currentLiquidacion, item.concepto.ID);
     if(data.importeunitario != null) item.importeunitario = data.importeunitario;
     item.acumuladores = data.acumuladores;
+  }
+
+  async cantidadChange(currentLiquidacion: Liquidacion, item: Liquidacionitem) {
+    if (item.conceptoid) {
+      this.formatData(currentLiquidacion);
+      const data = await this.liquidacionService.calculoAutomaticoLiquidacionByConcepto(currentLiquidacion, item.concepto.ID);
+      if(data.importeunitario != null) item.importeunitario = data.importeunitario;
+      item.acumuladores = data.acumuladores;
+    }
   }
 
   async onClickCalculoAutomatico(currentLiquidacion: Liquidacion) {

@@ -11,6 +11,7 @@ import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { NotificationService } from 'src/app/handler-error/notification.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { PrintService } from 'src/app/print/print.service';
+import { Concepto } from 'src/app/concepto/concepto.model';
 
 @Component({
   selector: 'app-novedad',
@@ -99,6 +100,20 @@ DeletedAt: n
 
   isNew(data) : Boolean {
     return data.ID==null?false:true;
+  }
+
+  tieneFormula(concepto: Concepto) : Boolean {
+    if (concepto && concepto.tipocalculoautomaticoid == -3){
+      return true;
+    }
+
+    return false;
+  }
+
+  limpiarImporte(data: Novedad){
+    if (this.tieneFormula(data.concepto)){
+      data.importe = null
+    }
   }
 
 }
