@@ -37,7 +37,6 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<LiquidacionTable> = new MatTableDataSource<LiquidacionTable>();
 
   resultsLength = 0;
-  isLoadingResults = true;
   isRateLimitReached = false;
   disabled = false;
   periodoliquidacionhasta : any;
@@ -81,11 +80,7 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
   }
 
   async ngAfterViewInit() {
-    this.loadingService.show();
-
     this.updateGrilla();
-
-    this.loadingService.hide();
   }
 
   parseLiquidacionToLiquidacionTable(liquidacion: Liquidacion): LiquidacionTable {
@@ -196,12 +191,15 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
   }
 
   async updateGrilla () {
+    this.loadingService.show();
+
     this.selection.clear()
     const liquidacionesApi: ListaItems = await this.liquidacionService.getLiquidacionesPorPeriodo(this.sort.active, this.sort.direction, 1,this.periodoliquidaciondesde,this.periodoliquidacionhasta, this.liquidaciontipo);
     this.dataSource = this.tableService.getDataSource(liquidacionesApi.items, this.parseLiquidacionToLiquidacionTable);
     this.dataSource.paginator = this.paginator;
     this.paginator._intl.itemsPerPageLabel = "Items por página";
-    this.isLoadingResults = false;
+
+    this.loadingService.hide();
   }
 
   changeTipoLiquidacion (value) {
