@@ -83,7 +83,7 @@
               </mat-form-field>
               <span style="margin: 0px 10px; color: #808080;">Aplicable sobre </span>
               <app-selector-default nombre="tipodecalculo" [disabled]="isDefault(data) || data.tipocalculoautomatico.codigo !== 'PORCENTAJE'" required=false [(matSelect)]="data.tipodecalculoid"
-                (optionSelected)="data.tipodecalculoid=$event.ID; data.tipoconcepto.codigo=$event.codigo">
+                (optionSelected)="data.tipodecalculoid=$event.ID; data.tipodecalculo=$event">
               </app-selector-default> 
             </div>
           </div>
