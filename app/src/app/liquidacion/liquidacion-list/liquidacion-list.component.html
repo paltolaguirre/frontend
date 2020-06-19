@@ -99,7 +99,8 @@
     </table>
   </div>
   <div>
-      <mat-paginator class="paginator-container" #paginator [pageSize]="10" [pageSizeOptions]="getPageSizeOptions()"></mat-paginator>
+      <mat-paginator class="paginator-container" #paginator [pageSize]="10" [pageSizeOptions]="getPageSizeOptions()"> Text</mat-paginator>
+      <div class="inside-paginator">{{cantidadSeleccionada()}} elementos seleccionados</div>
   </div>
   <!--<mat-paginator [length]="resultsLength" [pageSize]="30"></mat-paginator>-->
 </div>

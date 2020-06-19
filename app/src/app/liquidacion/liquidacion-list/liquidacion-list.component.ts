@@ -238,9 +238,28 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
 
     /** Selects all rows if they are not all selected; otherwise clear selection. */
     masterToggle() {
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSource.data.forEach(row => this.selection.select(row));
+      if (this.isAllVisibleDataSelected()){
+        this.unselectVisibleData();
+      } else {
+        this.visibleData().forEach(row => this.selection.select(row));
+      }
+    }
+
+    isAllVisibleDataSelected():boolean {
+      return this.visibleData().every(row => this.selection.isSelected(row));
+    }
+
+    unselectVisibleData(): void {
+      this.visibleData().forEach(row => this.selection.deselect(row));
+    }
+
+    visibleData(): LiquidacionTable[] {
+      //actualmente se hace con la data comun, pero en caso de ordenarse la data, creo que debe hacerse con la data ordenada. TODO a confirmar.
+      return this.dataSource.data.filter(row => this.dataSource._filterData(this.dataSource.data).includes(row) && this.dataSource._pageData(this.dataSource.data).includes(row));
+    }
+
+    cantidadSeleccionada():number {
+      return this.selection.selected.length;
     }
 
 }
