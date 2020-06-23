@@ -73,8 +73,7 @@ export class NovedadComponent implements OnInit, AfterViewInit {
     2019-06-04T16:07:12.220847-03:00"
 DeletedAt: n
     data.fecha = "T00:00:00.000000-00:00";*/
-
-    if(data.fecha) data.fecha = formatDate(data.fecha, "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US');
+    if(data.fecha) data.fecha = formatDate(data.fecha, "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
     if(data.legajo) data.legajoid = data.legajo.ID;
     if(data.concepto) data.conceptoid = data.concepto.ID;
 
