@@ -1,11 +1,10 @@
 <div class="example-container">
-    <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
-      <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    <div class="example-loading-shade" *ngIf="isRateLimitReached">
       <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
         No se pudieron obtener datos. Por favor vuelva a intentar más tarde.
       </div>
     </div>
-  
+
     <div class="topmenu-container" >
       <div>
       <mat-form-field class="standard-input"><input matInput type="month" (focusout)="changePeriodo($event)" placeholder="Periodo Mensual" [(ngModel)]="fechaperiodoliquidacion" autocomplete="off"></mat-form-field>
@@ -13,24 +12,24 @@
       <app-selector-default class="medium-selector" nombre="tipoliquidacion" type="hardcode" [(ngModel)]="tipoliquidacion" (optionSelected)="changeTipoLiquidacion($event)" [(matSelect)]="tipoliquidacion.ID"></app-selector-default>    </div>
         <div>
           <button mat-button color="secondary" class="topmenu-button" (click)="printService.printTOPDF()">Imprimir</button>
-          <button mat-button color="secondary" class="topmenu-button" (click)="exportarTXTLiquidacionesPeriodo()">Exportar TXT Liquidaciones Periodo</button> 
-          <button mat-button color="primary" class="topmenu-button" (click)="exportarTXTConceptosAFIP()">Exportar TXT Conceptos AFIP</button> 
+          <button mat-button color="secondary" class="topmenu-button" (click)="exportarTXTLiquidacionesPeriodo()">Exportar TXT Liquidaciones Periodo</button>
+          <button mat-button color="primary" class="topmenu-button" (click)="exportarTXTConceptosAFIP()">Exportar TXT Conceptos AFIP</button>
           <mat-form-field class="topmenu-search">
               <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Buscar">
             </mat-form-field>
         </div>
     </div>
-    <div class="table-container">   
+    <div class="table-container">
       <table mat-table [dataSource]="dataSource" class="example-table" matSort matSortActive="Creado" matSortDisableClear
         matSortDirection="desc"  id="contentTOPDF">
         <!-- Number Column -->
-  
+
         <!-- State Column Legajo-->
         <ng-container matColumnDef="Legajo">
           <th mat-header-cell *matHeaderCellDef>Legajo</th>
           <td mat-cell *matCellDef="let row">{{row.legajo}}</td>
         </ng-container>
-  
+
           <!-- State Column Apellido-->
         <ng-container matColumnDef="Apellido">
             <th mat-header-cell *matHeaderCellDef>Apellido</th>
@@ -48,7 +47,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Periodo Liquidación</th>
           <td mat-cell *matCellDef="let row">{{row.fechaperiodoliquidacion | date: 'MMMM yyyy'}}</td>
         </ng-container>
-  
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
@@ -56,6 +55,6 @@
   <div>
     <mat-paginator class="paginator-container" #paginator [pageSize]="10" [pageSizeOptions]="getPageSizeOptions()"></mat-paginator>
   </div>
-  
+
     <!--<mat-paginator [length]="resultsLength" [pageSize]="30"></mat-paginator>-->
   </div>

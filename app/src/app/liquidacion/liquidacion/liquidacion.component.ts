@@ -1,28 +1,19 @@
 import { LiquidacionService } from '../liquidacion.service';
-import { Liquidacion, Liquidacionitem, LiquidacionItems } from '../liquidacion.model';
+import { Liquidacion, Liquidacionitem } from '../liquidacion.model';
 import { formatDate } from "@angular/common";
-import { FormControl ,} from '@angular/forms';
-import { Component, ViewChild, AfterViewInit, OnInit , Inject } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { merge, Observable, of as observableOf, of } from 'rxjs';
-import { catchError, map, startWith, switchMap } from 'rxjs/operators';
+import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Observable, of as observableOf, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { NotificationService } from 'src/app/handler-error/notification.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { PrintService } from 'src/app/print/print.service';
 import { DialogLiquidaciones } from './liquidacion-dialog/liquidacion-dialog.component';
-import { ListaItems , NovedadService } from 'src/app/novedad/novedad.service';
-import { Novedad } from '../../novedad/novedad.model';
-import { AnonymousSubject } from 'rxjs/internal/Subject';
-import { variable } from '@angular/compiler/src/output/output_ast';
-import { LiquidacionItem } from './liquidacion-print/liquidacion-print.component';
 import { TIPO_CONCEPTO_CODIGO, Concepto } from 'src/app/concepto/concepto.model';
-import { isNgTemplate } from '@angular/compiler';
+import { LoadingService } from 'src/app/core/services/loading/loading.service';
 
 export interface ImporteUnitario {
-  importeunitario: number;    
+  importeunitario: number;
 }
 
 @Component({
@@ -44,13 +35,14 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
 
   constructor(
     private route: ActivatedRoute,
-    private liquidacionService: LiquidacionService, 
+    private liquidacionService: LiquidacionService,
     public dialog: MatDialog,
     private notificationService: NotificationService,
     private router: Router,
-    public printService: PrintService
+    public printService: PrintService,
+    private loadingService: LoadingService
     ) { }
-  
+
   ngOnInit() {
     this.currentLiquidacion$ = this.route.paramMap.pipe(
       switchMap(async (params: ParamMap) => {
@@ -58,11 +50,15 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
           console.log("Nuevo Liquidacion");
         }
         this.id = +params.get('id');
+
+        this.loadingService.show();
+
         const liquidacion = await this.liquidacionService.getLiquidacion(this.id);
         this.fechaperiododepositado = liquidacion.fechaperiododepositado?liquidacion.fechaperiododepositado.substring(0, 7):liquidacion.fechaperiododepositado;
         this.fechaperiodoliquidacion = liquidacion.fechaperiodoliquidacion?liquidacion.fechaperiodoliquidacion.substring(0, 7):liquidacion.fechaperiodoliquidacion;
-        console.log(liquidacion);
-        
+
+        this.loadingService.hide();
+
         return liquidacion;
       })
     );
@@ -73,7 +69,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
       switchMap((params: ParamMap) => {
         let print = params.get('action');
         if(!print) print = 'default';
-        
+
         return of(print);
       })
     );
@@ -82,15 +78,15 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if(this.data && !this.data.liquidacionitems) this.data.liquidacionitems = new Array();
   }
-  
-  
+
+
   onClickNovedades(data): void {
     const dialogRef = this.dialog.open(DialogLiquidaciones, {
        data
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.onClickCalculoAutomatico(data)
+      this.onClickCalculoAutomatico(data);
     });
   }
 
@@ -113,24 +109,24 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
 
   private onClickVerHojaDeCalculo(item: Liquidacionitem) {
     this.liquidacionItemHojaCalculo$ = this.route.paramMap.pipe(
-      switchMap(async (params: ParamMap) => {        
+      switchMap(async (params: ParamMap) => {
         return item;
       })
     );
-   
+
     this.mostrarLiquidacion$ = of(false)
   }
 
 
   private onClickCloseVerHojaDeCalculo() {
     this.liquidacionItemHojaCalculo$ = this.route.paramMap.pipe(
-      switchMap(async (params: ParamMap) => {        
+      switchMap(async (params: ParamMap) => {
         return null;
       })
     );
     this.mostrarLiquidacion$ = of(true);
   }
-  
+
   onClickId(): void {
     this.gotoId();
   }
@@ -144,13 +140,13 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   }
 
   tieneCalculoAutomatico(item: Liquidacionitem): boolean {
-    return item.acumuladores && item.acumuladores.length > 0 
+    return item.acumuladores && item.acumuladores.length > 0
   }
 
   async setCantidadDiasTrabajados(event:any, data:any){
    data.tipoid = event.ID
    data.tipo = event
-   switch (event.codigo) { 
+   switch (event.codigo) {
       case 'MENSUAL':
           data.cantidaddiastrabajados = 30;
           return;
@@ -170,7 +166,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
         data.cantidaddiastrabajados = 0;
         return;
     }
-  
+
   }
 
   blanquearFechaDesdeSituacionRevista(data:any){
@@ -180,14 +176,14 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   }
 
   changeFechaDesdeSituacionRevista(fechasituacionrevista:any){
-    if (fechasituacionrevista != null) { 
+    if (fechasituacionrevista != null) {
       const anioLiquidacion = this.fechaperiodoliquidacion.split("-")[0]
       const mesLiquidacion = this.fechaperiodoliquidacion.split("-")[1]
-      
+
       const anioSituacionRevista = fechasituacionrevista.split("-")[0]
       const mesSituacionRevista = fechasituacionrevista.split("-")[1]
-      
-      
+
+
       var fechaliquidacionigualfechasituacionrevista = (anioLiquidacion == anioSituacionRevista && mesLiquidacion == mesSituacionRevista)
 
       if (!fechaliquidacionigualfechasituacionrevista){
@@ -205,7 +201,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   checkFechaPeriodoLiquidacion(){
     return this.fechaperiodoliquidacion == null
   }
-  
+
   onClickAbort(): void {
     this.gotoGrilla();
   }
@@ -218,9 +214,11 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
 
     if (this.estaGuardandose) return null;
 
+    this.loadingService.show();
+
     this.estaGuardandose = true;
-    let liquidacionesItem: Liquidacion;    
-    
+    let liquidacionesItem: Liquidacion;
+
     this.formatData(data);
     let that = this;
     if (this.id) {
@@ -233,9 +231,9 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
       this.gotoGrilla();
     }
 
-    console.log(data);
-    //this.create.emit(liquidacionesItem)
-    return liquidacionesItem;    
+    this.loadingService.hide();
+
+    return liquidacionesItem;
   }
 
 
@@ -293,7 +291,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   isNew(data) : Boolean {
     return data.ID==null?false:true;
   }
-  
+
   onClickNewLiquidacionItem(data: any, tipoCodigo: string) {
     if(!data.liquidacionitems) {
       data.liquidacionitems = [{
@@ -317,7 +315,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
         conceptoid: null,
         importeunitario: null,
         cantidad: null,
-      }];      
+      }];
     } else {
       data.liquidacionitems.push({
         ID: null,
@@ -356,7 +354,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   onClickNewDescuento(data: any) {
     this.onClickNewLiquidacionItem(data, TIPO_CONCEPTO_CODIGO.DESCUENTO);
   }
-  
+
 
   onClickNewAportespatronales(data: any) {
     this.onClickNewLiquidacionItem(data, TIPO_CONCEPTO_CODIGO.APORTE_PATRONAL);
@@ -374,7 +372,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
     let total: number= 0;
     if(array) {
       array.forEach(element => {
-        total += element.importeunitario;  
+        total += element.importeunitario;
       });
     }
     return total;
@@ -447,7 +445,7 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   isRemunerativo(item: Liquidacionitem): boolean {
     return (item && item.concepto.tipoconcepto && item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.REMUNERATIVO);
   }
-  
+
   isNoRemunerativo(item: Liquidacionitem): boolean {
     return (item && item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.NO_REMUNERATIVO);
   }
@@ -494,11 +492,16 @@ export class LiquidacionComponent implements OnInit, AfterViewInit {
   }
 
   async onClickCalculoAutomatico(currentLiquidacion: Liquidacion) {
+    this.loadingService.show();
+
     this.formatData(currentLiquidacion);
     const data = await this.liquidacionService.calculoAutomaticoLiquidacion(currentLiquidacion);
-    if(currentLiquidacion.liquidacionitems.length == data.liquidacionitems.length) {
+
+    this.loadingService.hide();
+
+    if (currentLiquidacion.liquidacionitems.length == data.liquidacionitems.length) {
       data.liquidacionitems.forEach((element, index) => {
-        if(currentLiquidacion.liquidacionitems[index].conceptoid == element.conceptoid) {
+        if (currentLiquidacion.liquidacionitems[index].conceptoid == element.conceptoid) {
           currentLiquidacion.liquidacionitems[index].importeunitario = element.importeunitario;
           currentLiquidacion.liquidacionitems[index].acumuladores = element.acumuladores;
         }

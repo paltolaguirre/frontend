@@ -9,6 +9,7 @@ import { Siradig } from '../siradig.model';
 import { LegajoService } from 'src/app/legajo/legajo.service';
 import { NotificationService } from 'src/app/handler-error/notification.service';
 import { formatDate } from '@angular/common';
+import { LoadingService } from 'src/app/core/services/loading/loading.service';
 
 @Component({
   selector: 'app-siradig-show',
@@ -37,7 +38,8 @@ export class SiradigShowComponent implements OnInit {
     public printService: PrintService,
     private legajoService: LegajoService,
     private cdr: ChangeDetectorRef,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private loadingService: LoadingService
   ) {
     this.currentDate = new Date();
     this.currentYear = this.currentDate.getFullYear();
@@ -54,10 +56,14 @@ export class SiradigShowComponent implements OnInit {
         }
 
         this.id = +params.get('id');
+        this.loadingService.show();
+
         const siradig = await this.siradigService.getSiradig(this.id);
 
         this.procesarSiradig(siradig);
         this.setDefaultDate(siradig);
+
+        this.loadingService.hide();
 
         return siradig;
       })
@@ -104,6 +110,8 @@ export class SiradigShowComponent implements OnInit {
   async onClickSave(data: Siradig): Promise<Siradig> {
     if(this.estaGuardandose) return null;
     this.estaGuardandose = true;
+
+    this.loadingService.show();
 
     // Se elimina
     if(this.conyugesiradig && this.conyugesiradig.ID && !this.conyugesiradig.aplica) {
@@ -155,7 +163,7 @@ export class SiradigShowComponent implements OnInit {
       this.gotoGrilla();
     }
 
-    console.log(data);
+    this.loadingService.hide();
 
     return item;
   }
