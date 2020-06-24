@@ -13,6 +13,7 @@ import { FormulaListContainer } from './formula-list.container';
 import { Router } from '@angular/router';
 import { Formula } from 'src/app/core/models/formula.model';
 import { MatDialog } from '@angular/material';
+import { FormulaFixtures } from 'src/app/core/fixtures/formulas.fixtures';
 
 describe('FormulaListContainer', () => {
   let component: FormulaListContainer;
@@ -70,7 +71,7 @@ describe('FormulaListContainer', () => {
 
   describe('ngAfterViewInit', () => {
     it('should fetch formulas from FormulaService', async () => {
-      const formulasStoreSpy = spyOn(formulaService.formulasStore$, 'subscribe');
+      const formulasStoreSpy = spyOn(formulaService, 'getAll').and.returnValue(Promise.resolve(FormulaFixtures.getAll()));
 
       await component.ngAfterViewInit();
 
