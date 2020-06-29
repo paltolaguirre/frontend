@@ -6,6 +6,7 @@ import { OperatorsService } from 'src/app/core/services/operators/operators.serv
   providedIn: 'root'
 })
 export class EventHandlerService {
+  public dragging = false;
 
   constructor(private operatorService: OperatorsService) { }
 
@@ -93,13 +94,11 @@ export class EventHandlerService {
 
   public onDragOver(e, isAbleToEdit: boolean) {
     const width = 16;
-    console.log("onDragOver X: ", e.x);
 
-    if (!isAbleToEdit) {
+    if (!isAbleToEdit || e.target.tagName == 'APP-NODE-ARG' || this.dragging /* si se esta arrastrando desde el lienzo */) {
       return null;
     }
 
-    
     const rect = e.target.getBoundingClientRect()
     const xstart = rect.left;
     const xend = rect.left + rect.width;
@@ -107,9 +106,9 @@ export class EventHandlerService {
     const yend = rect.top + rect.height;
     const element: HTMLElement = e.target;
 
-    if(e.x > xstart && e.x < xstart+width && e.target.classList.contains('highligthed')) {
+    if(e.x > xstart && e.x < xstart+width) {
       element.classList.add('bracket-left');
-    } else if(e.x > xend-width && e.x < xend && e.target.classList.contains('highligthed')) {
+    } else if(e.x > xend-width && e.x < xend) {
       element.classList.add('bracket-right');
     } else {
       element.classList.remove('bracket-left');
@@ -120,13 +119,13 @@ export class EventHandlerService {
   public onDrop(event, currentFormulaValue, paramType='', isAbleToEdit: boolean) {
     event.preventDefault();
 
-    if(!isAbleToEdit) {
+    if(!isAbleToEdit || !event.target.classList.contains('highligthed')) {
       return null;
     }
 
     const data: any /*DataPayload*/ = JSON.parse(event.dataTransfer.getData('text'));
 
-    console.log("Draw onDrop: ", data);
+    // console.log("Draw onDrop: ", data);
     this.operatorService.emitOperatorDrop(data);
 
     if(data.payload === undefined) {
@@ -214,6 +213,7 @@ export class EventHandlerService {
     if (!isAbleToEdit) {
       return null;
     }
+    this.dragging = true;
 
     event.dataTransfer.setData('text', JSON.stringify(currentFormulaValue.valueinvoke));
     event.cancelBubble = true;
@@ -223,8 +223,9 @@ export class EventHandlerService {
     if (!isAbleToEdit) {
       return null;
     }
+    this.dragging = false;
 
-    console.log("Draw onDragEnd: ", event);
+    // console.log("Draw onDragEnd: ", event);
     const rect = document.getElementById('main').getBoundingClientRect();
     const xstart = rect.left;
     const xend = rect.left + rect.width;
