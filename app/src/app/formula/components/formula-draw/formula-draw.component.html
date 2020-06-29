@@ -1,6 +1,6 @@
-<div class="formula-draw-container" *ngIf="formulaValue && formulaValue.valueinvoke">
-    <div [ngSwitch]="formulaValue.valueinvoke.function.type">
-        <div *ngSwitchCase="'operator'" [ngSwitch]="formulaValue.valueinvoke.functionname">
+<ng-container *ngIf="formulaValue && formulaValue.valueinvoke">
+    <ng-container [ngSwitch]="formulaValue.valueinvoke.function.type">
+        <ng-container *ngSwitchCase="'operator'" [ngSwitch]="formulaValue.valueinvoke.functionname">
             <div *ngSwitchCase="'Not'" class="param boolean-param no-highlight no-selectable" style="display: flex;" [draggable]="isAbleToEdit()" (drop)="onDrop($event, formulaValue)" (dragover)="onDragOver($event)" (dragstart)="onDrag($event, formulaValue)" (dragend)="onDragEnd($event, formulaValue)" (dragenter)="onDragEnter($event)" (dragleave)="onDragLeave($event)" (mouseenter)="onMouseEnter($event, formulaValue.ID)" (mouseleave)="onMouseLeave($event)" (mouseover)="onMouseEnter($event, formulaValue.ID)">
                 NO
                 <app-node-arg [arg]="formulaValue.valueinvoke.args[0]" [type]="formulaValue.valueinvoke.function.params[0].type" [formulaIsEditable]="formulaIsEditable" [formulaIsNew]="formulaIsNew"></app-node-arg>
@@ -19,8 +19,8 @@
                 {{toMiddleSymbol(formulaValue.valueinvoke.functionname)}}
                 <app-node-arg [arg]="formulaValue.valueinvoke.args[1]" [type]="formulaValue.valueinvoke.function.params[1].type" [formulaIsEditable]="formulaIsEditable" [formulaIsNew]="formulaIsNew"></app-node-arg>
             </div>
-        </div>
-        <div *ngSwitchCase="'internal'" [ngSwitch]="formulaValue.valueinvoke.functionname">
+        </ng-container>
+        <ng-container *ngSwitchCase="'internal'" [ngSwitch]="formulaValue.valueinvoke.functionname">
             <div *ngSwitchCase="'GetParamValue'" class="param number-param no-highlight no-selectable" [draggable]="isAbleToEdit()" (drop)="onDrop($event, formulaValue)" (dragover)="onDragOver($event)" (dragstart)="onDrag($event, formulaValue)" (dragend)="onDragEnd($event, formulaValue)" (dragenter)="onDragEnter($event)" (dragleave)="onDragLeave($event)" (mouseenter)="onMouseEnter($event, formulaValue.ID)" (mouseleave)="onMouseLeave($event)" (mouseover)="onMouseEnter($event, formulaValue.ID)">
                 {{formulaValue.valueinvoke.args[0].valuestring}}
                 <span [id]="'value-' + formulaValue.ID" class="remove-badge-container no-selectable hide" draggable="false" (click)="onClickRemove(formulaValue)"><i class="remove-icon no-selectable fas fa-trash-alt highligthed"></i></span>
@@ -29,29 +29,29 @@
                 {{formulaValue.valueinvoke.args[0].valuestring}}
                 <span [id]="'value-' + formulaValue.ID" class="remove-badge-container no-selectable hide" draggable="false" (click)="onClickRemove(formulaValue)"><i class="remove-icon no-selectable fas fa-trash-alt highligthed"></i></span>
             </div>
-        </div>
-        <div *ngSwitchCase="'helper'">
+        </ng-container>
+        <ng-container *ngSwitchCase="'helper'">
             <div class="param number-param no-highlight no-selectable" [draggable]="isAbleToEdit()" (drop)="onDrop($event, formulaValue)" (dragover)="onDragOver($event)" (dragstart)="onDrag($event, formulaValue)" (dragend)="onDragEnd($event, formulaValue)" (dragenter)="onDragEnter($event)" (dragleave)="onDragLeave($event)" (mouseenter)="onMouseEnter($event, formulaValue.ID)" (mouseleave)="onMouseLeave($event)" (mouseover)="onMouseEnter($event, formulaValue.ID)">
                 {{formulaValue.valueinvoke.functionname}}
                 <span [id]="'value-' + formulaValue.ID" class="remove-badge-container no-selectable hide" draggable="false" (click)="onClickRemove(formulaValue)"><i class="remove-icon no-selectable fas fa-trash-alt highligthed"></i></span>
             </div>
-        </div>
-        <div *ngSwitchCase="'generic'">
+        </ng-container>
+        <ng-container *ngSwitchCase="'generic'">
             <div [className]="'number-param param no-highlight no-selectable'" [draggable]="isAbleToEdit()" (drop)="onDrop($event, formulaValue, {type: formulaValue.valueinvoke.function.result})" (dragover)="onDragOver($event)" (dragstart)="onDrag($event, formulaValue)" (dragend)="onDragEnd($event, formulaValue)" (dragenter)="onDragEnter($event)" (dragleave)="onDragLeave($event)" (mouseenter)="onMouseEnter($event, formulaValue.ID)" (mouseleave)="onMouseLeave($event)" (mouseover)="onMouseEnter($event, formulaValue.ID)">
                 {{formulaValue.valueinvoke.functionname}}
                 <div *ngFor="let arg of formulaValue.valueinvoke.args; index as i;">
                     <app-node-arg [arg]="arg" [type]="formulaValue.valueinvoke.function.params[i].type" [formulaIsEditable]="formulaIsEditable" [formulaIsNew]="formulaIsNew"></app-node-arg>
                 </div>
             </div>
-        </div>
-        <div *ngSwitchDefault>
+        </ng-container>
+        <ng-container *ngSwitchDefault>
             <div class="param number-param no-highlight no-selectable" [draggable]="isAbleToEdit()" (dragstart)="onDrag($event, formulaValue)" (dragend)="onDragEnd($event, formulaValue)">
                 Formula {{formulaValue.valueinvoke.function.name}} no implementada
                 <span [id]="'value-' + formulaValue.ID" class="remove-badge-container no-selectable hide" draggable="false" (click)="onClickRemove(formulaValue)"><i class="remove-icon no-selectable fas fa-trash-alt highligthed"></i></span>
             </div>
-        </div>
-    </div>
-</div>
+        </ng-container>
+    </ng-container>
+</ng-container>
 <div *ngIf="formulaValue && formulaValue.valueinvoke == null">
     <div [ngSwitch]="formula.result">
         <div *ngSwitchCase="'number'">
