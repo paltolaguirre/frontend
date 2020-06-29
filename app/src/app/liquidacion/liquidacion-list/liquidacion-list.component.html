@@ -1,14 +1,15 @@
 <div class="example-container">
-  <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
-    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+  <div class="example-loading-shade" *ngIf="isRateLimitReached">
     <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
       No se pudieron obtener datos. Por favor vuelva a intentar más tarde.
     </div>
   </div>
 
-
   <div class="topmenu-container" >
-      <div>
+    <mat-form-field class="standard-input"><input matInput type="month" (ngModelChange)="changePeriodoLiquidacionDesde($event)" [ngModel]="periodoliquidaciondesde" placeholder="Periodo Liquidacion Desde" autocomplete="off"></mat-form-field>
+    <mat-form-field class="standard-input"><input matInput type="month" (ngModelChange)="changePeriodoLiquidacionHasta($event)" [ngModel]="periodoliquidacionhasta" placeholder="Periodo Liquidacion Hasta" autocomplete="off"></mat-form-field>
+    <app-selector-default class="medium-selector" matSelect="0" nombre="liquidaciontipo" type="hardcode" (optionSelected)="changeTipoLiquidacion($event.ID)"></app-selector-default>
+    <div>
         <button mat-raised-button color="primary" class="topmenu-button" mat-button [routerLink]="['/liquidaciones', 'nuevo']">Nuevo</button>
         <button mat-raised-button color="secondary" class="topmenu-button" mat-button (click)="printService.printTOPDF()">Imprimir</button>
         <button mat-raised-button color="secondary" class="topmenu-button" mat-button (click)="onClickContabilizar(dataSource.data)">Contabilizar</button>
@@ -18,17 +19,17 @@
         </mat-form-field>
       </div>
   </div>
-  <div class="table-container" id="contentTOPDF">    
+  <div class="table-container" id="contentTOPDF">
     <table mat-table [dataSource]="dataSource" class="example-table" matSort matSortActive="Creado"
       matSortDirection="desc">
 
       <!-- Seleccionar -->
       <ng-container matColumnDef="Seleccionar">
         <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
-          Seleccionar
+          <mat-checkbox color="primary" class="example-margin"(change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()"></mat-checkbox>
         </th>
         <td mat-cell *matCellDef="let row">
-          <mat-checkbox color="primary" class="example-margin" [(ngModel)]="row.checked"></mat-checkbox>
+          <mat-checkbox color="primary" class="example-margin" (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"></mat-checkbox>
         </td>
       </ng-container>
 
@@ -37,13 +38,13 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Legajo</th>
         <td mat-cell *matCellDef="let row">{{row.legajo}}</td>
       </ng-container>
- 
+
       <!-- Apellido -->
       <ng-container matColumnDef="Apellido">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Apellido</th>
         <td mat-cell *matCellDef="let row">{{row.apellido}}</td>
       </ng-container>
-      
+
       <!-- Nombre -->
       <ng-container matColumnDef="Nombre">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
@@ -77,26 +78,26 @@
       <!-- Contabilizada -->
       <ng-container matColumnDef="Contabilizada">
         <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
-            Contabilizada
+          Contabilizada
         </th>
-        <td mat-cell *matCellDef="let row">{{row.contabilizada}}</td>        
+        <td mat-cell *matCellDef="let row">{{row.contabilizada}}</td>
       </ng-container>
-      
+
       <!-- Acciones -->
-    <div data-html2canvas-ignore="true">
-      <ng-container  matColumnDef="Acciones">
-        <th mat-header-cell *matHeaderCellDef>Acciones</th>
-        <td mat-cell *matCellDef="let row">
-          <app-actions (update)="onUpdate($event)" (delete)="onDelete($event)" liquidacion={{row.ID}}></app-actions>
-        </td>
-      </ng-container>
-    </div>
+      <div data-html2canvas-ignore="true">
+        <ng-container matColumnDef="Acciones">
+          <th mat-header-cell *matHeaderCellDef>Acciones</th>
+          <td mat-cell *matCellDef="let row">
+            <app-actions (update)="onUpdate($event)" (delete)="onDelete($event)" liquidacion={{row.ID}}></app-actions>
+          </td>
+        </ng-container>
+      </div>
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
   <div>
-      <mat-paginator class="paginator-container" #paginator [pageSize]="10" [pageSizeOptions]="getPageSizeOptions()"></mat-paginator>
+      <mat-paginator class="paginator-container" #paginator [pageSize]="10" [pageSizeOptions]="getPageSizeOptions()"> Text</mat-paginator>
+      <div class="inside-paginator">{{cantidadSeleccionada()}} elementos seleccionados</div>
   </div>
-  <!--<mat-paginator [length]="resultsLength" [pageSize]="30"></mat-paginator>-->
 </div>

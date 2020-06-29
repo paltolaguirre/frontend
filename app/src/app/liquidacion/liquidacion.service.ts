@@ -31,6 +31,18 @@ export class LiquidacionService {
     return listaItems;
   }
 
+  public async getLiquidacionesPorPeriodo(sort: string, order: string, page: number, periododesde: string, periodohasta:string, tipoliquidacion: string): Promise<ListaItems> {
+    
+    const requestUrl =
+    `${this.href}?periododesde=` + periododesde + `&periodohasta=` + periodohasta + `&liquidaciontipoid=` + tipoliquidacion;
+
+    let listaItems: ListaItems = { items: null, total_count: null };
+    listaItems.items = await this.http.get<Liquidacion[]>(requestUrl).toPromise();
+    listaItems.total_count = listaItems.items.length;
+
+    return listaItems;  
+  }
+
   public async getLiquidacionesPorFecha(sort: string, order: string, page: number, fechadesde: string, fechahasta:string): Promise<ListaItems> {
     const requestUrl =
       `${this.href}?fechadesde=` + fechadesde + `&fechahasta=` + fechahasta;
@@ -154,9 +166,17 @@ export class LiquidacionService {
       result.items.push(item);
     });
 
-    result.total.neto = result.total.remunerativo + result.total.noremunerativo - result.total.descuento - result.total.retencion;
+    result.total.remunerativo = this.round2(result.total.remunerativo);
+    result.total.noremunerativo = this.round2(result.total.noremunerativo);
+    result.total.descuento = this.round2(result.total.descuento);
+    result.total.retencion = this.round2(result.total.retencion);
+    result.total.neto = this.round2(result.total.remunerativo + result.total.noremunerativo - result.total.descuento - result.total.retencion);
     
     return result;
+  }
+
+  private round2(number: number): number {
+    return Math.round(((number + Number.EPSILON) * 100) / 100)
   }
   
   public async calculoAutomaticoLiquidacion(liquidacion: Liquidacion): Promise<Liquidacion> {

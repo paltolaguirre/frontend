@@ -24,6 +24,10 @@ export class Models {
             return [{nombre: 'Si', ID: 1},{nombre: 'No', ID: 0}];
             case 'tipopresentacion': 
               return [{nombre: 'Anual', ID: 1},{nombre: 'Final', ID: 2}]; 
+            case 'tipoliquidacion': 
+              return [{nombre: 'Mensual',codigo: 'MENSUAL', ID: 1},{nombre: 'Quincenal',codigo: 'QUINCENAL', ID: 2}];
+          case 'liquidaciontipo':
+            return [{nombre: 'Todos', codigo: 'Todos',ID: 0}, {nombre: 'Mensual', codigo: 'Mensual',ID: -1},{nombre: 'Primer Quincena', ID: -2},{nombre: 'Segunda Quincena', ID: -3},{nombre: 'Vacaciones', ID: -4},{nombre: 'SAC', ID: -5},{nombre: 'Liquidacion Final', ID: -6}]; 
           default: 
           return []; 
       } 
@@ -75,7 +79,11 @@ export class Models {
       case 'tipopresentacion':
         return "Tipo de Presentación"
       case 'conceptoafip':
-          return "Libro Sueldos Digital AFIP"
+        return "Libro Sueldos Digital AFIP"
+      case 'tipoliquidacion':
+        return "Tipo Liquidación"
+      case 'liquidaciontipo':
+        return "Tipo Liquidación"
       default: 
         return "Seleccione..."; 
     } 

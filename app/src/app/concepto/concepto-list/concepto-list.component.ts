@@ -1,15 +1,13 @@
 import { ListaItems, ConceptoService } from '../concepto.service';
 import { Concepto } from '../concepto.model';
-import { Component, ViewChild, AfterViewInit, OnInit , Input} from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { merge, Observable, of as observableOf } from 'rxjs';
-import { catchError, map, startWith, switchMap } from 'rxjs/operators';
-import { NotificationService } from 'src/app/handler-error/notification.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { Observable, of as observableOf } from 'rxjs';
 import { PrintService } from 'src/app/print/print.service';
+import { LoadingService } from 'src/app/core/services/loading/loading.service';
 
 @Component({
   selector: 'app-concepto-list',
@@ -19,10 +17,7 @@ import { PrintService } from 'src/app/print/print.service';
 export class ConceptoListComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['Nombre' , 'Acciones'];
   dataSource: MatTableDataSource<Concepto> = new MatTableDataSource<Concepto>();
-  //data: ConceptosApi;
-
   resultsLength = 0;
-  isLoadingResults = true;
   isRateLimitReached = false;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -32,25 +27,23 @@ export class ConceptoListComponent implements OnInit, AfterViewInit {
   id: number;
 
   constructor(
-    private route: ActivatedRoute,
     private conceptoService: ConceptoService,
     public dialog: MatDialog,
-    private notificationService: NotificationService,
-    public printService : PrintService
+    public printService : PrintService,
+    private loadingService: LoadingService
   ) { }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   async ngAfterViewInit() {
+    this.loadingService.show();
 
-      const conceptosApi: ListaItems = await this.conceptoService.getConceptos(this.sort.active, this.sort.direction, 1);
-      this.dataSource = new MatTableDataSource<Concepto>(conceptosApi.items);
-      this.dataSource.paginator = this.paginator;
-      this.paginator._intl.itemsPerPageLabel = "Items por página";
-      this.isLoadingResults = false;
+    const conceptosApi: ListaItems = await this.conceptoService.getConceptos(this.sort.active, this.sort.direction, 1);
+    this.dataSource = new MatTableDataSource<Concepto>(conceptosApi.items);
+    this.dataSource.paginator = this.paginator;
+    this.paginator._intl.itemsPerPageLabel = "Items por página";
 
+    this.loadingService.hide();
   }
 
   public doFilter = (value: string) => {
@@ -88,9 +81,4 @@ export class ConceptoListComponent implements OnInit, AfterViewInit {
 
     this.dataSource = new MatTableDataSource<Concepto>(this.dataSource.data);
   }
-
-  refreshTableSorce() {
-
-  }
-
 }

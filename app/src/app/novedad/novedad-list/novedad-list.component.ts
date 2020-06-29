@@ -4,12 +4,10 @@ import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { merge, Observable, of as observableOf } from 'rxjs';
-import { catchError, map, startWith, switchMap } from 'rxjs/operators';
-import { NotificationService } from 'src/app/handler-error/notification.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { Observable, of as observableOf } from 'rxjs';
 import { PrintService } from 'src/app/print/print.service';
+import { LoadingService } from 'src/app/core/services/loading/loading.service';
 
 @Component({
   selector: 'app-novedad-list',
@@ -19,7 +17,6 @@ import { PrintService } from 'src/app/print/print.service';
 export class NovedadListComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['Legajo','Apellido','Nombre','Concepto', 'Fecha' , 'Acciones'];
   dataSource: MatTableDataSource<Novedad> = new MatTableDataSource<Novedad>();
-  //data: NovedadesApi;
 
   resultsLength = 0;
   isLoadingResults = true;
@@ -33,25 +30,24 @@ export class NovedadListComponent implements OnInit, AfterViewInit {
 
 
   constructor(
-    private route: ActivatedRoute,
     private novedadService: NovedadService,
     public dialog: MatDialog,
-    private notificationService: NotificationService,
-    public printService : PrintService
+    public printService: PrintService,
+    private loadingService: LoadingService
   ) { }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   async ngAfterViewInit() {
-      const novedadesApi: ListaItems = await this.novedadService.getNovedades(this.sort.active, this.sort.direction, 1);
-      this.dataSource = new MatTableDataSource<Novedad>(novedadesApi.items);
-      this.dataSource.paginator = this.paginator;
-      this.paginator._intl.itemsPerPageLabel = "Items por página";
-      this.isLoadingResults = false;
+    this.loadingService.show();
+
+    const novedadesApi: ListaItems = await this.novedadService.getNovedades(this.sort.active, this.sort.direction, 1);
+    this.dataSource = new MatTableDataSource<Novedad>(novedadesApi.items);
+    this.dataSource.paginator = this.paginator;
+    this.paginator._intl.itemsPerPageLabel = "Items por página";
+
+    this.loadingService.hide();
   }
-  
 
   onCreate(item: Novedad) {
     console.log("Created Item: " + item.ID);
@@ -70,7 +66,7 @@ export class NovedadListComponent implements OnInit, AfterViewInit {
     else
     return [5, 10, 20];
   }
-  
+
   onUpdate(item: Novedad) {
     console.log("Updated Item: " + item.ID);
     this.dataSource.data.forEach(function (el, index) {
@@ -87,9 +83,5 @@ export class NovedadListComponent implements OnInit, AfterViewInit {
     }, this);
 
     this.dataSource = new MatTableDataSource<Novedad>(this.dataSource.data);
-  }
-
-  refreshTableSorce() {
-
   }
 }

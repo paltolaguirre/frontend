@@ -1,16 +1,14 @@
 import { NovedadService } from '../novedad.service';
 import { Novedad } from '../novedad.model';
 import { formatDate } from "@angular/common";
-import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { merge, Observable, of as observableOf } from 'rxjs';
-import { catchError, map, startWith, switchMap } from 'rxjs/operators';
-import { NotificationService } from 'src/app/handler-error/notification.service';
+import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Observable, of as observableOf } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { PrintService } from 'src/app/print/print.service';
+import { Concepto } from 'src/app/concepto/concepto.model';
+import { LoadingService } from 'src/app/core/services/loading/loading.service';
 
 @Component({
   selector: 'app-novedad',
@@ -25,23 +23,25 @@ export class NovedadComponent implements OnInit, AfterViewInit {
 
   constructor(
     private route: ActivatedRoute,
-    private novedadService: NovedadService, 
+    private novedadService: NovedadService,
     public dialog: MatDialog,
-    private notificationService: NotificationService,
     private router: Router,
-    public printService: PrintService
+    public printService: PrintService,
+    private loadingService: LoadingService
     ) { }
 
   ngOnInit() {
     this.currentNovedad$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) => {
+      switchMap(async (params: ParamMap) => {
         if (params.get('id') == "nuevo") {
           console.log("Nuevo Novedad");
         }
         this.id = +params.get('id');
-        const novedad = this.novedadService.getNovedad(this.id);
-        console.log(novedad);
-        
+
+        this.loadingService.show();
+        const novedad = await this.novedadService.getNovedad(this.id);
+        this.loadingService.hide();
+
         return novedad;
       })
     );
@@ -62,17 +62,18 @@ export class NovedadComponent implements OnInit, AfterViewInit {
 
   async onClickSave(data: Novedad): Promise<Novedad> {
     if (this.estaGuardandose) return null;
+
+    this.loadingService.show();
+
     this.estaGuardandose = true;
     let novedadesItem: Novedad;
-    
 
-    // se setea el paisID segun Option del selector de paises    
+    // se setea el paisID segun Option del selector de paises
     /*
     2019-06-04T16:07:12.220847-03:00"
 DeletedAt: n
     data.fecha = "T00:00:00.000000-00:00";*/
-    
-    if(data.fecha) data.fecha = formatDate(data.fecha, "yyyy-MM-dd'T'12:00:00.000000-12:00", 'en-US');
+    if(data.fecha) data.fecha = formatDate(data.fecha, "yyyy-MM-dd'T'00:00:00.000000-03:00", 'en-US');
     if(data.legajo) data.legajoid = data.legajo.ID;
     if(data.concepto) data.conceptoid = data.concepto.ID;
 
@@ -87,8 +88,8 @@ DeletedAt: n
       this.gotoGrilla();
     }
 
-    console.log(data);
-    //this.create.emit(novedadesItem)
+    this.loadingService.hide();
+
     return novedadesItem;
   }
 
@@ -101,4 +102,17 @@ DeletedAt: n
     return data.ID==null?false:true;
   }
 
+  tieneFormula(concepto: Concepto) : Boolean {
+    if (concepto && concepto.tipocalculoautomaticoid == -3){
+      return true;
+    }
+
+    return false;
+  }
+
+  limpiarImporte(data: Novedad){
+    if (this.tieneFormula(data.concepto)){
+      data.importe = null
+    }
+  }
 }

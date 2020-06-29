@@ -10,8 +10,10 @@ import { NotificationService } from 'src/app/handler-error/notification.service'
 import { PrintService } from 'src/app/print/print.service';
 import { DuplicarDialogComponent } from './duplicar-dialog/duplicar-dialog.component';
 import { ContabilizarDialogComponent } from './contabilizar-dialog/contabilizar-dialog.component';
-import { DatePipe } from '@angular/common';
+import { DatePipe, formatDate } from '@angular/common';
 import { TableService } from 'src/app/shared/services/table.service';
+import { LoadingService } from 'src/app/core/services/loading/loading.service';
+import { SelectionModel } from '@angular/cdk/collections';
 
 export interface LiquidacionTable {
   ID: number;
@@ -33,39 +35,52 @@ export interface LiquidacionTable {
 export class LiquidacionListComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['Seleccionar', 'Legajo', 'Apellido', 'Nombre', 'Fecha Liquidacion', 'Periodo Liquidacion', 'Tipo',  'Contabilizada', 'Acciones' ];
   dataSource: MatTableDataSource<LiquidacionTable> = new MatTableDataSource<LiquidacionTable>();
-  //data: LiquidacionesApi;
 
   resultsLength = 0;
-  isLoadingResults = true;
   isRateLimitReached = false;
   disabled = false;
+  periodoliquidacionhasta : any;
+  periodoliquidaciondesde : any;
+  liquidaciontipo : any;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   liquidacionID$: Observable<String>;
+
   public currentLiquidacion$: Observable<Liquidacion> = null;
   id: number;
+  selection: SelectionModel<LiquidacionTable>;
 
   constructor(
     private liquidacionService: LiquidacionService,
     public dialog: MatDialog,
     private notificationService: NotificationService,
     public printService: PrintService,
-    private tableService: TableService, 
-  ) { }
+    private tableService: TableService,
+    private loadingService: LoadingService
+  ) {
+    if(localStorage.getItem('liquidacion-list-fechaliquidacionhasta')) {
+      this.periodoliquidacionhasta = localStorage.getItem('liquidacion-list-fechaliquidacionhasta');
+    } else {
+      this.periodoliquidacionhasta = formatDate(Date.now(), "yyyy-MM", 'en-US');
+    }
+    if(localStorage.getItem('liquidacion-list-fechaliquidaciondesde')) {
+      this.periodoliquidaciondesde = localStorage.getItem('liquidacion-list-fechaliquidaciondesde');
+    } else {
+      this.periodoliquidaciondesde = '2000-01';
+    }
+    this.liquidaciontipo = 0;
+  }
 
   ngOnInit() {
     this.dataSource.sort = this.sort;
+    const initialSelection = [];
+    const allowMultiSelect = true;
+    this.selection = new SelectionModel<LiquidacionTable>(allowMultiSelect, initialSelection);
   }
 
   async ngAfterViewInit() {
-
-      const liquidacionesApi: ListaItems = await this.liquidacionService.getLiquidaciones(this.sort.active, this.sort.direction, 1);
-      this.dataSource = this.tableService.getDataSource(liquidacionesApi.items, this.parseLiquidacionToLiquidacionTable);
-      this.dataSource.paginator = this.paginator;
-      this.paginator._intl.itemsPerPageLabel = "Items por página";
-      this.isLoadingResults = false;
-
+    this.updateGrilla();
   }
 
   parseLiquidacionToLiquidacionTable(liquidacion: Liquidacion): LiquidacionTable {
@@ -93,7 +108,7 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
   }
 
   onClickContabilizar(data: LiquidacionTable[]): void {
-    data = data.filter(this.isSelected);
+    data = this.selection.selected
 
     if(data.length == 0) {
       const notificacion = {
@@ -111,23 +126,9 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
 
         // TODO: no me convence llamar directamente a este metodo... investigar al respecto.
         this.ngAfterViewInit();
-
-        /*if(result && result.refresh) {
-          // TODO: no me convence llamar directamente a este metodo... investigar al respecto.
-          this.ngAfterViewInit();
-        }*/
       });
     }
   }
-
-  /*async onClickContabilizar(datos) {
-   var elementsRequest = [];
-   datos.forEach(function (el, index) {
-      if (el.checked == true) { elementsRequest.push(el.ID)};
-    }, this);    
-    const responseContabilizarLiq: any = await this.liquidacionService.postContabilizarLiquidacion(elementsRequest);
-    this.notificationService.notify(responseContabilizarLiq);
-  }*/
 
   onCreate(liquidacion: Liquidacion) {
     console.log("Created Item: " + liquidacion.ID);
@@ -151,16 +152,12 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
     this.dataSource = this.tableService.deleteDataSource(this.dataSource, liquidacion.ID);
   }
 
-  refreshTableSorce() {
-
-  }
-
   calcularTotal(row: Liquidacion) {
     return 'Falta calcular';
   }
 
   onClickDuplicar(data): void {
-    data = data.filter(this.isSelected);
+    data = this.selection.selected
 
     if(data.length == 0) {
       const notificacion = {
@@ -178,17 +175,71 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
 
         // TODO: no me convence llamar directamente a este metodo... investigar al respecto.
         this.ngAfterViewInit();
-
-        /*if(result && result.refresh) {
-          // TODO: no me convence llamar directamente a este metodo... investigar al respecto.
-          this.ngAfterViewInit();
-        }*/
       });
     }
   }
 
-  private isSelected(elemento) {
-    return elemento.checked == true;
+  changePeriodoLiquidacionDesde (value) {
+    localStorage.setItem("liquidacion-list-fechaliquidaciondesde",value);
+    this.periodoliquidaciondesde = value;
+    this.updateGrilla();
   }
+  changePeriodoLiquidacionHasta (value) {
+    localStorage.setItem("liquidacion-list-fechaliquidacionhasta",value);
+    this.periodoliquidacionhasta = value;
+    this.updateGrilla();
+  }
+
+  async updateGrilla () {
+    this.loadingService.show();
+
+    this.selection.clear()
+    const liquidacionesApi: ListaItems = await this.liquidacionService.getLiquidacionesPorPeriodo(this.sort.active, this.sort.direction, 1,this.periodoliquidaciondesde,this.periodoliquidacionhasta, this.liquidaciontipo);
+    this.dataSource = this.tableService.getDataSource(liquidacionesApi.items, this.parseLiquidacionToLiquidacionTable);
+    this.dataSource.paginator = this.paginator;
+    this.paginator._intl.itemsPerPageLabel = "Items por página";
+
+    this.loadingService.hide();
+  }
+
+  changeTipoLiquidacion (value) {
+    localStorage.setItem("liquidacion-list-liquidaciontipo",value);
+    this.liquidaciontipo = value;
+    this.updateGrilla();
+  }
+
+    /** Whether the number of selected elements matches the total number of rows. */
+    isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected == numRows;
+    }
+
+    /** Selects all rows if they are not all selected; otherwise clear selection. */
+    masterToggle() {
+      if (this.isAllVisibleDataSelected()){
+        this.unselectVisibleData();
+      } else {
+        this.visibleData().forEach(row => this.selection.select(row));
+      }
+    }
+
+    isAllVisibleDataSelected():boolean {
+      return this.visibleData().every(row => this.selection.isSelected(row));
+    }
+
+    unselectVisibleData(): void {
+      this.visibleData().forEach(row => this.selection.deselect(row));
+    }
+
+    visibleData(): LiquidacionTable[] {
+      //actualmente se hace con la data comun, pero en caso de ordenarse la data, creo que debe hacerse con la data ordenada. TODO a confirmar.
+      return this.dataSource.data.filter(row => this.dataSource._filterData(this.dataSource.data).includes(row) && this.dataSource._pageData(this.dataSource.data).includes(row));
+    }
+
+    cantidadSeleccionada():number {
+      return this.selection.selected.length;
+    }
+
 }
 

@@ -46,7 +46,7 @@ export class DuplicarDialogComponent implements OnInit {
 
   async onClickDuplicar(): Promise<void> {
     if(this.faltanRequeridos()) return null;
-    if(this.mismoPeriodoLiquidacion(this.liquidacion.fechaperiodoliquidacion)) return null;
+    if(this.mismoPeriodoLiquidacionYtipoLiquidacion(this.liquidacion.fechaperiodoliquidacion, this.liquidacion.tipo)) return null;
 
     const liquidacionDefault: LiquidacionDefaultValues = {
       tipoid: parseInt(this.liquidacion.tipo, 10),
@@ -144,9 +144,9 @@ export class DuplicarDialogComponent implements OnInit {
     return result;
   }
 
-  mismoPeriodoLiquidacion(periodoSeleccionado): boolean {
+  mismoPeriodoLiquidacionYtipoLiquidacion(periodoSeleccionado, tipoliquidacionid): boolean {
     let mismoPeriodo = this.data.filter(function(current) {
-      return current.item.fechaperiodoliquidacion.substring(0, 7) == periodoSeleccionado;
+      return current.item.fechaperiodoliquidacion.substring(0, 7) == periodoSeleccionado && current.item.tipoid == tipoliquidacionid;
     });
 
     let result = mismoPeriodo.length > 0;

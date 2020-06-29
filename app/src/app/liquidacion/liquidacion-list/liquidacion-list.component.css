@@ -133,3 +133,14 @@
   .actions-icon {
     size: 5px;
   }
+
+  .inside-paginator{
+    position: relative;
+    z-index: 1000;
+    top: -40px;
+    left: 40px;
+    width: fit-content;
+    font-family: Roboto,"Helvetica Neue",sans-serif;
+    font-size: 12px;
+    color: rgba(0,0,0,.54);
+  }
