@@ -363,8 +363,11 @@ export class SiradigShowComponent implements OnInit {
         importehorasextrasgravadas: null,
         importehorasextrasexentas: null,
         materialdidactico: null,
-        gastosmovilidad: null
-      }];      
+        gastosmovilidad: null,
+        ajusteperiodoanteriorremgravada: null,
+        ajusteperiodoanteriorremexentanoalcanzada: null
+
+      }];
     } else {
       siradig.importegananciasotroempleosiradig.push({
         ID: null,
@@ -381,7 +384,9 @@ export class SiradigShowComponent implements OnInit {
         importehorasextrasgravadas: null,
         importehorasextrasexentas: null,
         materialdidactico: null,
-        gastosmovilidad: null
+        gastosmovilidad: null,
+        ajusteperiodoanteriorremgravada: null,
+        ajusteperiodoanteriorremexentanoalcanzada: null
       });
     }
   }
