@@ -102,7 +102,6 @@ export class SiradigShowComponent implements OnInit {
   }
 
   async onClickSave(data: Siradig): Promise<Siradig> {
-    //if(this.faltanRequeridos()) return null;
     if(this.estaGuardandose) return null;
     this.estaGuardandose = true;
 
@@ -157,7 +156,7 @@ export class SiradigShowComponent implements OnInit {
     }
 
     console.log(data);
-    //this.create.emit(legajosItem)
+
     return item;
   }
 
