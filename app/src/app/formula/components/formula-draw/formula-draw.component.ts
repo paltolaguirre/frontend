@@ -88,9 +88,9 @@ export class FormulaDrawComponent implements OnInit {
     this.eventHandlerService.onDragEnd(event, currentFormulaValue, this.isAbleToEdit());
   }
 
-  onDrop(event, currentFormulaValue, parentFormulaParam={type: ''}) {
+  onDrop(event, currentFormulaValue, paramType='') {
     // if(parentFormulaParam.type == '') parentFormulaParam.type = currentFormulaValue.valueinvoke.function.result;
-    this.eventHandlerService.onDrop(event, currentFormulaValue, parentFormulaParam.type, this.isAbleToEdit());
+    this.eventHandlerService.onDrop(event, currentFormulaValue, paramType, this.isAbleToEdit());
   }
 
   onDragOver(event, id) { // allowDrop
