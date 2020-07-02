@@ -83,8 +83,6 @@
                     [selectedMonths]="selectedMonthsFromMonthlyReports"
                     (monthIndexEmitter)="updateMonthlyReportItem(data, item, $event)">
                   </app-month-selector>
-                  <!--<app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes, data.periodosiradig)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes" autocomplete="off"></app-selector-default>-->
-                  <!--<mat-form-field class="children-input"><input matInput [(ngModel)]="item.mes" placeholder="Mes" type="text" autocomplete="off"></mat-form-field>-->
                   <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importegananciasbrutas" placeholder="Importe ganancias brutas" type="number" autocomplete="off" #itemimportegananciasbrutas [matTooltip]="itemimportegananciasbrutas.placeholder"></mat-form-field>
                   <mat-form-field class="children-input"><input matInput [(ngModel)]="item.aporteseguridadsocial" placeholder="Aporte seguridad social" type="number" autocomplete="off" #itemaporteseguridadsocial [matTooltip]="itemaporteseguridadsocial.placeholder"></mat-form-field>
                   <mat-form-field class="children-input"><input matInput [(ngModel)]="item.aporteobrasocial" placeholder="Aporte obra social" type="number" autocomplete="off" #itemaporteobrasocial [matTooltip]="itemaporteobrasocial.placeholder"></mat-form-field>
@@ -119,8 +117,18 @@
                 <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
                   <mat-icon>delete_forever</mat-icon>
                 </button>
-                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes desde" autocomplete="off"></app-selector-default>
-                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.meshasta)" (optionSelected)="item.meshasta=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes hasta" autocomplete="off"></app-selector-default>
+                <app-month-selector
+                  [defaultDate]="getDefaultSelectorDate(item.mes)"
+                  (monthIndexEmitter)="updateMonth($event, data.periodosiradig, item, 'mes', data)"
+                  placeholder="Mes desde">
+                </app-month-selector>
+
+                <app-month-selector
+                  [defaultDate]="getDefaultSelectorDate(item.meshasta)"
+                  (monthIndexEmitter)="updateMonth($event, data.periodosiradig, item, 'meshasta', data)"
+                  placeholder="Mes hasta">
+                </app-month-selector>
+
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
               </div>
@@ -137,8 +145,17 @@
                 <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
                   <mat-icon>delete_forever</mat-icon>
                 </button>
-                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes desde" autocomplete="off"></app-selector-default>
-                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.meshasta)" (optionSelected)="item.meshasta=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes hasta" autocomplete="off"></app-selector-default>
+                <app-month-selector
+                  [defaultDate]="getDefaultSelectorDate(item.mes)"
+                  (monthIndexEmitter)="updateMonth($event, data.periodosiradig, item, 'mes', data)"
+                  placeholder="Mes desde">
+                </app-month-selector>
+
+                <app-month-selector
+                  [defaultDate]="getDefaultSelectorDate(item.meshasta)"
+                  (monthIndexEmitter)="updateMonth($event, data.periodosiradig, item, 'meshasta', data)"
+                  placeholder="Mes hasta">
+                </app-month-selector>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
               </div>
@@ -155,8 +172,18 @@
                 <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
                   <mat-icon>delete_forever</mat-icon>
                 </button>
-                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes desde" autocomplete="off"></app-selector-default>
-                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.meshasta)" (optionSelected)="item.meshasta=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes hasta" autocomplete="off"></app-selector-default>
+                <app-month-selector
+                  [defaultDate]="getDefaultSelectorDate(item.mes)"
+                  (monthIndexEmitter)="updateMonth($event, data.periodosiradig, item, 'mes', data)"
+                  placeholder="Mes desde">
+                </app-month-selector>
+
+                <app-month-selector
+                  [defaultDate]="getDefaultSelectorDate(item.meshasta)"
+                  (monthIndexEmitter)="updateMonth($event, data.periodosiradig, item, 'meshasta', data)"
+                  placeholder="Mes hasta">
+                </app-month-selector>
+
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
               </div>
@@ -173,8 +200,19 @@
                 <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
                   <mat-icon>delete_forever</mat-icon>
                 </button>
-                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes desde" autocomplete="off"></app-selector-default>
-                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.meshasta)" (optionSelected)="item.meshasta=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes hasta" autocomplete="off"></app-selector-default>
+
+                <app-month-selector
+                  [defaultDate]="getDefaultSelectorDate(item.mes)"
+                  (monthIndexEmitter)="updateMonth($event, data.periodosiradig, item, 'mes', data)"
+                  placeholder="Mes desde">
+                </app-month-selector>
+
+                <app-month-selector
+                  [defaultDate]="getDefaultSelectorDate(item.meshasta)"
+                  (monthIndexEmitter)="updateMonth($event, data.periodosiradig, item, 'meshasta', data)"
+                  placeholder="Mes hasta">
+                </app-month-selector>
+
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
               </div>
@@ -208,7 +246,11 @@
                 <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
                   <mat-icon>delete_forever</mat-icon>
                 </button>
-                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes" autocomplete="off"></app-selector-default>
+                <app-month-selector
+                  [defaultDate]="getDefaultSelectorDate(item.mes)"
+                  (monthIndexEmitter)="updateMonth($event, data.periodosiradig, item, 'mes', data)"
+                  placeholder="Mes">
+                </app-month-selector>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
               </div>
@@ -277,7 +319,11 @@
                 <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
                   <mat-icon>delete_forever</mat-icon>
                 </button>
-                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes" autocomplete="off"></app-selector-default>
+                <app-month-selector
+                  [defaultDate]="getDefaultSelectorDate(item.mes)"
+                  (monthIndexEmitter)="updateMonth($event, data.periodosiradig, item, 'mes', data)"
+                  placeholder="Mes">
+                </app-month-selector>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.comprobante" placeholder="Comprobante" type="text" autocomplete="off"></mat-form-field>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
               </div>
@@ -294,7 +340,11 @@
                 <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
                   <mat-icon>delete_forever</mat-icon>
                 </button>
-                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes" autocomplete="off"></app-selector-default>
+                <app-month-selector
+                  [defaultDate]="getDefaultSelectorDate(item.mes)"
+                  (monthIndexEmitter)="updateMonth($event, data.periodosiradig, item, 'mes', data)"
+                  placeholder="Mes">
+                </app-month-selector>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.contribucion" placeholder="Contribución" type="number" autocomplete="off"></mat-form-field>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.retribucion" placeholder="Retribución" type="number" autocomplete="off"></mat-form-field>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
@@ -349,7 +399,11 @@
                 <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
                   <mat-icon>delete_forever</mat-icon>
                 </button>
-                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes" autocomplete="off"></app-selector-default>
+                <app-month-selector
+                  [defaultDate]="getDefaultSelectorDate(item.mes)"
+                  (monthIndexEmitter)="updateMonth($event, data.periodosiradig, item, 'mes', data)"
+                  placeholder="Mes">
+                </app-month-selector>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
               </div>
@@ -366,7 +420,11 @@
                 <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
                   <mat-icon>delete_forever</mat-icon>
                 </button>
-                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes" autocomplete="off"></app-selector-default>
+                <app-month-selector
+                  [defaultDate]="getDefaultSelectorDate(item.mes)"
+                  (monthIndexEmitter)="updateMonth($event, data.periodosiradig, item, 'mes', data)"
+                  placeholder="Mes">
+                </app-month-selector>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
               </div>
@@ -383,7 +441,11 @@
                 <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
                   <mat-icon>delete_forever</mat-icon>
                 </button>
-                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes" autocomplete="off"></app-selector-default>
+                <app-month-selector
+                  [defaultDate]="getDefaultSelectorDate(item.mes)"
+                  (monthIndexEmitter)="updateMonth($event, data.periodosiradig, item, 'mes', data)"
+                  placeholder="Mes">
+                </app-month-selector>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
               </div>
@@ -400,7 +462,11 @@
                 <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
                   <mat-icon>delete_forever</mat-icon>
                 </button>
-                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes" autocomplete="off"></app-selector-default>
+                <app-month-selector
+                  [defaultDate]="getDefaultSelectorDate(item.mes)"
+                  (monthIndexEmitter)="updateMonth($event, data.periodosiradig, item, 'mes', data)"
+                  placeholder="Mes">
+                </app-month-selector>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
               </div>
@@ -417,7 +483,11 @@
                 <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
                   <mat-icon>delete_forever</mat-icon>
                 </button>
-                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes" autocomplete="off"></app-selector-default>
+                <app-month-selector
+                  [defaultDate]="getDefaultSelectorDate(item.mes)"
+                  (monthIndexEmitter)="updateMonth($event, data.periodosiradig, item, 'mes', data)"
+                  placeholder="Mes">
+                </app-month-selector>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
               </div>
@@ -442,7 +512,11 @@
                   <mat-icon>delete_forever</mat-icon>
                 </button>
                 <app-selector-default nombre="siradigtipoimpuesto" [(matSelect)]="item.siradigtipoimpuestoid" (optionSelected)="item.siradigtipoimpuesto=$event"></app-selector-default>
-                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes" autocomplete="off"></app-selector-default>
+                <app-month-selector
+                  [defaultDate]="getDefaultSelectorDate(item.mes)"
+                  (monthIndexEmitter)="updateMonth($event, data.periodosiradig, item, 'mes', data)"
+                  placeholder="Mes">
+                </app-month-selector>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
               </div>
@@ -459,7 +533,11 @@
                 <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
                   <mat-icon>delete_forever</mat-icon>
                 </button>
-                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes" autocomplete="off"></app-selector-default>
+                <app-month-selector
+                  [defaultDate]="getDefaultSelectorDate(item.mes)"
+                  (monthIndexEmitter)="updateMonth($event, data.periodosiradig, item, 'mes', data)"
+                  placeholder="Mes">
+                </app-month-selector>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
               </div>
@@ -477,7 +555,11 @@
                   <mat-icon>delete_forever</mat-icon>
                 </button>
                 <app-selector-default nombre="siradigtipoimpuesto" [(matSelect)]="item.siradigtipoimpuestoid" (optionSelected)="item.siradigtipoimpuesto=$event"></app-selector-default>
-                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mes)" (optionSelected)="item.mes=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes" autocomplete="off"></app-selector-default>
+                <app-month-selector
+                  [defaultDate]="getDefaultSelectorDate(item.mes)"
+                  (monthIndexEmitter)="updateMonth($event, data.periodosiradig, item, 'mes', data)"
+                  placeholder="Mes">
+                </app-month-selector>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
                 <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
               </div>
@@ -503,8 +585,17 @@
                 <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
                   <mat-icon>delete_forever</mat-icon>
                 </button>
-                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mesdesde)" (optionSelected)="item.mesdesde=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes desde" autocomplete="off"></app-selector-default>
-                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.meshasta)" (optionSelected)="item.meshasta=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes hasta" autocomplete="off"></app-selector-default>
+                <app-month-selector
+                  [defaultDate]="getDefaultSelectorDate(item.mes)"
+                  (monthIndexEmitter)="updateMonth($event, data.periodosiradig, item, 'mes', data)"
+                  placeholder="Mes desde">
+                </app-month-selector>
+
+                <app-month-selector
+                  [defaultDate]="getDefaultSelectorDate(item.meshasta)"
+                  (monthIndexEmitter)="updateMonth($event, data.periodosiradig, item, 'meshasta', data)"
+                  placeholder="Mes hasta">
+                </app-month-selector>
               </div>
             </tr>
           </table>
@@ -521,8 +612,17 @@
                 <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
                   <mat-icon>delete_forever</mat-icon>
                 </button>
-                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mesdesde)" (optionSelected)="item.mesdesde=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes desde" autocomplete="off"></app-selector-default>
-                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.meshasta)" (optionSelected)="item.meshasta=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes hasta" autocomplete="off"></app-selector-default>
+                <app-month-selector
+                  [defaultDate]="getDefaultSelectorDate(item.mes)"
+                  (monthIndexEmitter)="updateMonth($event, data.periodosiradig, item, 'mes', data)"
+                  placeholder="Mes desde">
+                </app-month-selector>
+
+                <app-month-selector
+                  [defaultDate]="getDefaultSelectorDate(item.meshasta)"
+                  (monthIndexEmitter)="updateMonth($event, data.periodosiradig, item, 'meshasta', data)"
+                  placeholder="Mes hasta">
+                </app-month-selector>
               </div>
             </tr>
           </table>
@@ -537,8 +637,17 @@
                 <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
                   <mat-icon>delete_forever</mat-icon>
                 </button>
-                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.mesdesde)" (optionSelected)="item.mesdesde=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes desde" autocomplete="off"></app-selector-default>
-                <app-selector-default type="hardcode" nombre="mes" [matSelect]="getMonth(item.meshasta)" (optionSelected)="item.meshasta=getDateFromYearMonth(getYear(data.periodosiradig), $event.ID)" placeholder="Mes hasta" autocomplete="off"></app-selector-default>
+                <app-month-selector
+                  [defaultDate]="getDefaultSelectorDate(item.mes)"
+                  (monthIndexEmitter)="updateMonth($event, data.periodosiradig, item, 'mes', data)"
+                  placeholder="Mes desde">
+                </app-month-selector>
+
+                <app-month-selector
+                  [defaultDate]="getDefaultSelectorDate(item.meshasta)"
+                  (monthIndexEmitter)="updateMonth($event, data.periodosiradig, item, 'meshasta', data)"
+                  placeholder="Mes hasta">
+                </app-month-selector>
               </div>
             </tr>
           </table>
