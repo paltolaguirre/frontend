@@ -321,6 +321,27 @@ export class SiradigShowComponent implements OnInit {
     return new Date(fecha).getMonth();
   }
 
+  public getDefaultSelectorDate(itemDate?: string): Date {
+    if (itemDate) {
+      return new Date(itemDate);
+    }
+
+    const date = new Date();
+
+    date.setMonth(11);
+
+    return date;
+  }
+
+  public updateMonth(selectedMonth: number, isoString: string, itemToUpdate: object, key: string, data) {
+    if (!data.periodosiradig) {
+      return null;
+    }
+
+    // Updates existing Siradig fields.
+    itemToUpdate[key] = this.getDateFromYearMonth(this.getYear(isoString), selectedMonth);
+  }
+
   getDateFromYear(e) {
     const value = parseInt(e.target.value, 10);
     const date = new Date(value, 0, 1).toISOString();
