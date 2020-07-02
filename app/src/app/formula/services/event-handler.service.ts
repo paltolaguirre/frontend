@@ -117,6 +117,7 @@ export class EventHandlerService {
   }
 
   public onDrop(event, currentFormulaValue, paramType='', isAbleToEdit: boolean) {
+    event.stopPropagation();
     event.preventDefault();
 
     if(!isAbleToEdit || !event.target.classList.contains('highligthed')) {
