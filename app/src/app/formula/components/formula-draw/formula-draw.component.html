@@ -13,7 +13,7 @@
                 SINO 
                 <app-node-arg [arg]="formulaValue.valueinvoke.args[2]" [type]="formulaValue.valueinvoke.function.params[2].type" [formulaIsEditable]="formulaIsEditable" [formulaIsNew]="formulaIsNew"></app-node-arg>
             </div>
-            <div *ngSwitchDefault [className]="formulaValue.valueinvoke.function.result + '-param param no-highlight no-selectable'" [draggable]="isAbleToEdit()" (drop)="onDrop($event, formulaValue)" (dragover)="onDragOver($event)" (dragstart)="onDrag($event, formulaValue)" (dragend)="onDragEnd($event, formulaValue)" (dragenter)="onDragEnter($event)" (dragleave)="onDragLeave($event)" (mouseenter)="onMouseEnter($event, formulaValue.ID)" (mouseleave)="onMouseLeave($event)" (mouseover)="onMouseEnter($event, formulaValue.ID)">
+            <div *ngSwitchDefault [className]="formulaValue.valueinvoke.function.result + '-param param no-highlight no-selectable'" [draggable]="isAbleToEdit()" (drop)="onDrop($event, formulaValue, formulaValue.valueinvoke.function.result)" (dragover)="onDragOver($event)" (dragstart)="onDrag($event, formulaValue)" (dragend)="onDragEnd($event, formulaValue)" (dragenter)="onDragEnter($event)" (dragleave)="onDragLeave($event)" (mouseenter)="onMouseEnter($event, formulaValue.ID)" (mouseleave)="onMouseLeave($event)" (mouseover)="onMouseEnter($event, formulaValue.ID)">
                 {{toPrefixSymbol(formulaValue.valueinvoke.functionname)}}
                 <app-node-arg [arg]="formulaValue.valueinvoke.args[0]" [type]="formulaValue.valueinvoke.function.params[0].type" [formulaIsEditable]="formulaIsEditable" [formulaIsNew]="formulaIsNew"></app-node-arg>
                 {{toMiddleSymbol(formulaValue.valueinvoke.functionname)}}
