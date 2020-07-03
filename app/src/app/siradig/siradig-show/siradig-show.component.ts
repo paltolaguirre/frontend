@@ -102,7 +102,6 @@ export class SiradigShowComponent implements OnInit {
   }
 
   async onClickSave(data: Siradig): Promise<Siradig> {
-    //if(this.faltanRequeridos()) return null;
     if(this.estaGuardandose) return null;
     this.estaGuardandose = true;
 
@@ -157,7 +156,7 @@ export class SiradigShowComponent implements OnInit {
     }
 
     console.log(data);
-    //this.create.emit(legajosItem)
+
     return item;
   }
 
@@ -319,6 +318,27 @@ export class SiradigShowComponent implements OnInit {
 
   getMonth(fecha, periodosiradig=null) {
     return new Date(fecha).getMonth();
+  }
+
+  public getDefaultSelectorDate(itemDate?: string): Date {
+    if (itemDate) {
+      return new Date(itemDate);
+    }
+
+    const date = new Date();
+
+    date.setMonth(11);
+
+    return date;
+  }
+
+  public updateMonth(selectedMonth: number, isoString: string, itemToUpdate: object, key: string, data) {
+    if (!data.periodosiradig) {
+      return null;
+    }
+
+    // Updates existing Siradig fields.
+    itemToUpdate[key] = this.getDateFromYearMonth(this.getYear(isoString), selectedMonth);
   }
 
   getDateFromYear(e) {

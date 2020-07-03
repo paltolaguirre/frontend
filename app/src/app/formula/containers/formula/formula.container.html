@@ -95,7 +95,7 @@
               </div>
               <button [disabled]="!isEditable" class="table-row-manipulator" mat-raised-button (click)="onAddInputParamClick($event)">Agregar Item</button>
             </mat-expansion-panel>
-          
+
         </mat-expansion-panel>
 
         <mat-expansion-panel class="formula-calculation-content">
@@ -106,7 +106,7 @@
           </mat-expansion-panel-header>
 
           <div class="columns ide-columns">
-            <div class="column" [ngClass]="{ 
+            <div class="column" [ngClass]="{
               'is-5': isItemPickerExpanded,
               'is-1': !isItemPickerExpanded
               }">
@@ -117,22 +117,22 @@
               >
             </div>
             <div class="column"
-              [ngClass]="{ 
+              [ngClass]="{
                 'is-7': isItemPickerExpanded,
                 'is-11': !isItemPickerExpanded
               }">
               <div class="ide-container">
                 <app-operators-toolbar></app-operators-toolbar>
 
-                <app-formula-drop-space 
+                <app-formula-drop-space
                   *ngIf="showCanvas(); else message"
-                  [isItemPickerExpanded]="isItemPickerExpanded" 
+                  [isItemPickerExpanded]="isItemPickerExpanded"
                   [formulaValue]="currentCanvasFormulas"
                   [formulaIsEditable]="isEditable"
                   [formulaIsNew]="isNew">
                 </app-formula-drop-space>
                 <ng-template #message>
-                  <p class="canvas-message">Esta es una fórmula primitiva creada por Xubio, por tal motivo no es posible editarla, ni visualizar su contenido, pero podes utilizarla para relacionarla directamente en tus conceptos y tambien podes utilizarla para crear tu propia fórmula.</p>
+                  <p class="canvas-message">Esta es una fórmula interna de Xubio, no puedes modificarla ni visualizar su contenido. Puedes utilizarla para relacionarla en tus conceptos y para crear tu propia fórmula.</p>
                 </ng-template>
               </div>
             </div>
@@ -141,7 +141,7 @@
       </mat-accordion>
 
     </form>
-    
+
   </div>
 
   <app-bottom-table-actions
