@@ -96,6 +96,8 @@
                   <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importehorasextrasexentas" placeholder="Importe horas extras exentas" type="number" autocomplete="off" #itemimportehorasextrasexentas [matTooltip]="itemimportehorasextrasexentas.placeholder"></mat-form-field>
                   <mat-form-field class="children-input"><input matInput [(ngModel)]="item.materialdidactico" placeholder="Material didactico" type="number" autocomplete="off" #itemmaterialdidactico [matTooltip]="itemmaterialdidactico.placeholder"></mat-form-field>
                   <mat-form-field class="children-input"><input matInput [(ngModel)]="item.gastosmovilidad" placeholder="Gastos movilidad y viáticos" type="number" autocomplete="off" #itemgastosmovilidad [matTooltip]="itemgastosmovilidad.placeholder"></mat-form-field>
+                  <mat-form-field class="children-input"><input matInput [(ngModel)]="item.ajusteperiodoanteriorremgravada" placeholder= "Ajustes Períodos Anteriores - Remuneraciones Gravadas" type="number" autocomplete="off" #itemajusteperiodoanteriorremgravada [matTooltip]="itemajusteperiodoanteriorremgravada.placeholder"></mat-form-field>
+                  <mat-form-field class="children-input"><input matInput [(ngModel)]="item.ajusteperiodoanteriorremexentanoalcanzada" placeholder="Ajustes Períodos Anteriores - Remuneraciones Exentas / No Alcanzadas" type="number" autocomplete="off" #itemajusteperiodoanteriorremexentanoalcanzada [matTooltip]="itemajusteperiodoanteriorremexentanoalcanzada.placeholder"></mat-form-field>
                 </div>
               </tr>
           </table>
@@ -495,6 +497,48 @@
           </table>
         </div>
         <button style="margin-left: 17px;" mat-raised-button (click)="onClickNewDeducciondesgravacionsiradig(data, 'APORTES_CAJAS_COMPLEMENTARIAS_FONDOS_COMPENSADORES_DE_PREV_SIMILARES', -20)">Agregar Item</button>
+
+        <h2>Otras Deducciones - Actores - Retribución pagada a los representantes - RG 2442/08</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr style="display: block;" *ngFor="let item of data.deducciondesgravacionsiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'OTRAS_DEDUCCIONES_ACTORES_RETRIBUCION_PAGADA_A_LOS_REPRESENTANTES_RG_2442_08' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <app-month-selector
+                  [defaultDate]="getDefaultSelectorDate(item.mes)"
+                  (monthIndexEmitter)="updateMonth($event, data.periodosiradig, item, 'mes', data)"
+                  placeholder="Mes">
+                </app-month-selector>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button style="margin-left: 17px;" mat-raised-button (click)="onClickNewDeducciondesgravacionsiradig(data, 'OTRAS_DEDUCCIONES_ACTORES_RETRIBUCION_PAGADA_A_LOS_REPRESENTANTES_RG_2442_08', -31)">Agregar Item</button>
+     
+        <h2>Otras Deducciones - Fondos Compensadores de Previsión</h2>
+        <div class="children-container">
+          <table style="width:100%">
+            <tr style="display: block;" *ngFor="let item of data.deducciondesgravacionsiradig">
+              <div *ngIf="(item.siradigtipogrilla.codigo == 'OTRAS_DEDUCCIONES_FONDOS_COMPENSADORES_DE_PREVISION' && item.DeletedAt == null)">
+                <button mat-icon-button class="actions-icon" color="warn" (click)="onClickDeleteChild(item)">
+                  <mat-icon>delete_forever</mat-icon>
+                </button>
+                <app-month-selector
+                  [defaultDate]="getDefaultSelectorDate(item.mes)"
+                  (monthIndexEmitter)="updateMonth($event, data.periodosiradig, item, 'mes', data)"
+                  placeholder="Mes">
+                </app-month-selector>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.importe" placeholder="Importe" type="number" autocomplete="off"></mat-form-field>
+                <mat-form-field class="children-input"><input matInput [(ngModel)]="item.descripcion" placeholder="Descripción" type="text" autocomplete="off"></mat-form-field>
+              </div>
+            </tr>
+          </table>
+        </div>
+        <button style="margin-left: 17px;" mat-raised-button (click)="onClickNewDeducciondesgravacionsiradig(data, 'OTRAS_DEDUCCIONES_FONDOS_COMPENSADORES_DE_PREVISION', -32)">Agregar Item</button>
       </mat-expansion-panel>
 
       <mat-expansion-panel>
