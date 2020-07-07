@@ -52,6 +52,7 @@
           <mat-checkbox [disabled]=isDefault(data) color="primary" class="example-margin"  [(ngModel)]="data.esremvariable" matTooltip="Tildá esta opción si la remuneración es variable a efectos de los cálculos de la Ley de Contrato de Trabajo">Es Remuneracion Variable</mat-checkbox>
         </div>
 
+
       </mat-expansion-panel>
 
       <mat-expansion-panel>
@@ -59,7 +60,7 @@
           <mat-panel-title>Cálculo Automático</mat-panel-title>
         </mat-expansion-panel-header>
 
-        <mat-radio-group [color]="'primary'" [(ngModel)]="data.tipocalculoautomatico.codigo" (ngModelChange)="onAutomaticCalcGroupSelected(data)">
+        <mat-radio-group [disabled]="isDefault(data) || data.esganancias" [color]="'primary'" [(ngModel)]="data.tipocalculoautomatico.codigo" (ngModelChange)="onAutomaticCalcGroupSelected(data)">
 
           <div class="columns">
             <div class="column is-2">
@@ -73,7 +74,7 @@
 
           <div class="columns">
             <div class="column is-2">
-              <mat-radio-button class="example-radio-button" [value]="'PORCENTAJE'" >
+              <mat-radio-button  class="example-radio-button" [value]="'PORCENTAJE'" >
                 Porcentajes
               </mat-radio-button>
             </div>
@@ -97,10 +98,10 @@
               </mat-radio-button>
             </div>
             <div class="column">
-                <app-selector-default *ngIf="isDefault(data)" filter="tipoformulas=sistema" nombre="function" [disabled]="isDefault(data) || data.tipocalculoautomatico.codigo !== 'FORMULA'" required=false [(matSelect)]="data.formulanombre"
+                <app-selector-default *ngIf="isDefault(data) || data.esganancias" filter="tipoformulas=sistema" nombre="function" [disabled]="isDefault(data) || data.tipocalculoautomatico.codigo !== 'FORMULA' || data.esganancias" required=false [(matSelect)]="data.formulanombre"
                 (optionSelected)="data.formulanombre=$event.ID; data.formula.name=$event.codigo">
               </app-selector-default> 
-              <app-selector-default *ngIf="!isDefault(data)" filter="tipoformulas=usuario" nombre="function" [disabled]="isDefault(data) || data.tipocalculoautomatico.codigo !== 'FORMULA'" required=false [(matSelect)]="data.formulanombre"
+              <app-selector-default *ngIf="!isDefault(data) && !data.esganancias" filter="tipoformulas=usuario" nombre="function" [disabled]="isDefault(data) || data.tipocalculoautomatico.codigo !== 'FORMULA' || data.esganancias" required=false [(matSelect)]="data.formulanombre"
                 (optionSelected)="data.formulanombre=$event.ID; data.formula.name=$event.codigo">
               </app-selector-default>
             </div>
@@ -115,12 +116,17 @@
         <mat-expansion-panel-header>
           <mat-panel-title>Impuesto a las Ganancias</mat-panel-title>
         </mat-expansion-panel-header>
+
+        <div style="margin: 15px 0px;">
+          <mat-checkbox (change)="onChangeEsGanancias(data)" [disabled]="isDefault(data) || noPuedeSerGanancias(data)" color="primary" class="example-margin"  [(ngModel)]="data.esganancias" matTooltip="Seleccioná esta opción para indicar que este concepto será tu cálculo de Impuesto a las Ganancias">Es Impuesto a las Ganancias</mat-checkbox>
+        </div>
+        
         <div>
           <app-selector-default #tipoimpuestosganancias nombre="tipoimpuestosganancias" [filter]="getFilterTipoimpuestosganancias(data)" [(matSelect)]="data.tipoimpuestogananciasid"
-          (optionSelected)="data.tipoimpuestogananciasid=$event.ID" (change)="changeHandler(data, tipoimpuestosganancias)" [disabled]=isDefault(data)></app-selector-default> 
+          (optionSelected)="data.tipoimpuestogananciasid=$event.ID" (change)="changeHandler(data, tipoimpuestosganancias)" [disabled]="isDefault(data) || data.esganancias"></app-selector-default> 
           <div *ngIf="data && data.tipoconcepto && data.tipoconcepto.codigo != 'RETENCION'">
-            <app-selector-default type="hardcode" nombre="si/no" [(matSelect)]="data.prorrateo" (optionSelected)="data.prorrateo=$event.nombre.toLowerCase() == 'si'" placeholder="Prorrateo" autocomplete="off" [required]="data.tipoimpuestogananciasid != null" [disabled]=isDefault(data)></app-selector-default>
-            <app-selector-default type="hardcode" nombre="si/no" [(matSelect)]="data.basesac" (optionSelected)="data.basesac=$event.nombre.toLowerCase() == 'si'" placeholder="Base del SAC" autocomplete="off" [required]="data.tipoimpuestogananciasid != null" [disabled]=isDefault(data)></app-selector-default>
+            <app-selector-default type="hardcode" nombre="si/no" [(matSelect)]="data.prorrateo" (optionSelected)="data.prorrateo=$event.nombre.toLowerCase() == 'si'" placeholder="Prorrateo" autocomplete="off" [required]="data.tipoimpuestogananciasid != null" [disabled]="isDefault(data) || data.esganancias"></app-selector-default>
+            <app-selector-default type="hardcode" nombre="si/no" [(matSelect)]="data.basesac" (optionSelected)="data.basesac=$event.nombre.toLowerCase() == 'si'" placeholder="Base del SAC" autocomplete="off" [required]="data.tipoimpuestogananciasid != null" [disabled]="isDefault(data) || data.esganancias"></app-selector-default>
           </div>
         </div>
       </mat-expansion-panel>
