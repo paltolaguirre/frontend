@@ -30,8 +30,7 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog,
     private notificationService: NotificationService,
     private router: Router,
-    public printService: PrintService,
-    private formulaService: FormulaService
+    public printService: PrintService
   ) { }
 
 
