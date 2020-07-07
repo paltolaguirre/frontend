@@ -1,6 +1,6 @@
 import { Formula } from 'src/app/core/models/formula.model';
 import { ConceptoService } from '../concepto.service';
-import { Concepto, TIPO_CALCULO_AUTOMATICO } from '../concepto.model';
+import { Concepto, TIPO_CALCULO_AUTOMATICO, TIPO_CONCEPTO, FORMULA_GANANCIAS, FORMULA_GANANCIAS_DEVOLUCION, TIPO_CALCULO_AUTOMATICO_CODIGO, CONCEPTO_AFIP_GANANCIAS_ID, CONCEPTO_AFIP_GANANCIAS_DEVOLUCION_ID } from '../concepto.model';
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
@@ -28,15 +28,16 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog,
     private notificationService: NotificationService,
     private router: Router,
-    public printService : PrintService,
+    public printService: PrintService,
     private loadingService: LoadingService
-    ) { }
+    private formulaService: FormulaService
+  ) { }
 
 
   ngAfterViewInit(): void {
   }
 
- async ngOnInit() {
+  async ngOnInit() {
     this.currentConcepto$ = await this.route.paramMap.pipe(
       switchMap(async (params: ParamMap) => {
         if (params.get('id') == "nuevo") {
@@ -44,12 +45,9 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
         }
 
         this.id = +params.get('id');
-        this.loadingService.show();
-
-        const concepto = await this.conceptoService.getConcepto(this.id);
-
-        this.loadingService.hide();
-
+        const concepto = this.conceptoService.getConcepto(this.id);
+        console.log(concepto);
+        
         return concepto;
       })
     );
@@ -59,13 +57,12 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
     })
   }
 
-
   tieneCalculoFormula(concepto: Concepto){
     return false
   }
 
   tieneCalculoPorcentaje(concepto: Concepto){
-      return concepto.porcentaje && concepto.tipodecalculoid
+      return concepto.porcentaje && concepto.tipodecalculoid 
   }
 
   private gotoGrilla() {
@@ -78,13 +75,8 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
   }
 
   async onClickSave(data: Concepto): Promise<Concepto> {
-    this.loadingService.show();
-
-    if (this.estaGuardandose || this.faltanRequeridos()) {
-      this.loadingService.hide();
-
-      return null;
-    }
+    
+    if(this.estaGuardandose || this.faltanRequeridos()) return null;
 
     this.estaGuardandose = true;
 
@@ -92,13 +84,15 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
 
     let that = this;
     if (this.id) {
+      console.log("Updated Concepto");
       conceptosItem = await this.conceptoService.putConcepto(data).finally(function(){that.habilitarGuardado();});
-
       this.gotoGrilla();
+   //   this.notificationService.notify("Concepto Actualizado");
     } else {
+      console.log("Created Concepto");
       conceptosItem = await this.conceptoService.postConcepto(data).finally(function(){that.habilitarGuardado();});
-
       this.gotoGrilla();
+ //     this.notificationService.notify("Concepto Creado");
     }
 
     this.loadingService.hide();
@@ -110,43 +104,46 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
   habilitarGuardado() {
     this.estaGuardandose = false
   }
-
+  
   isNew(data) : Boolean {
     return data.ID==null?false:true;
   }
 
-  isDefault(data) : Boolean {
-    return data.ID<0?true:false;
+  isDefault(data): Boolean {
+    return data.ID < 0 ? true : false;
   }
 
   onChangeTipoConcepto(concepto:Concepto, id: any) {
-    switch (id) {
+    switch (id) { 
       case -1:
+        concepto.esganancias = false
       case -2:
         concepto.cuentacontableid = -46
         concepto.cuentacontablepasivoid = -49
-      return;
+      return;  
       case -3:
         concepto.cuentacontableid = -49
         concepto.cuentacontablepasivoid = -46
-        return;
+        concepto.esganancias = false
+        break;
       case -4:
         concepto.cuentacontableid = -49
         concepto.cuentacontablepasivoid = -48
-        return;
+        break;
       case -5:
-          concepto.cuentacontableid = -47
-          concepto.cuentacontablepasivoid = -48
-        return;
+        concepto.cuentacontableid = -47
+        concepto.cuentacontablepasivoid = -48
+        concepto.esganancias = false
+        break;
     }
+    this.onChangeEsGanancias(concepto);
   }
 
-  isDefaultOrNoImprimible(data):Boolean{
-    return this.isDefault(data)||!data.esimprimible
+  isDefaultOrNoImprimible(data): Boolean {
+    return this.isDefault(data) || !data.esimprimible
   }
 
-  selectChange(event,data)
-  {
+  selectChange(event, data) {
     data.cuenta = event
     data.cuentacontableid = event.id
   }
@@ -154,15 +151,15 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
   getFilterTipoimpuestosganancias(concepto: Concepto) {
     console.log("Concepto: ", concepto);
     let filterTipoconcepto = "";
-    if(concepto && concepto.tipoconcepto && concepto.tipoconcepto.codigo) {
-      filterTipoconcepto = "tipoconcepto="+concepto.tipoconcepto.codigo;
+    if (concepto && concepto.tipoconcepto && concepto.tipoconcepto.codigo) {
+      filterTipoconcepto = "tipoconcepto=" + concepto.tipoconcepto.codigo;
     }
 
     return filterTipoconcepto;
   }
-
+  
   getPresetearValores(concepto:Concepto){
-    switch (concepto.tipoconcepto.codigo) {
+    switch (concepto.tipoconcepto.codigo) { 
       case 'IMPORTE_REMUNERATIVO':
         concepto.marcarepeticion = true;
         concepto.aportesipa = true;
@@ -198,36 +195,36 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
           concepto.contribucionesleyriesgo = true;
           concepto.aportesregimenesdiferenciales = true;
           concepto.aportesregimenesespeciales = true;
-          return;
+          return;  
       case 'IMPORTE_NO_REMUNERATIVO':
         concepto.contribucionesleyriesgo = true;
         return;
 
       case 'RETENCION':
-          concepto.marcarepeticion = false;
-          concepto.aportesipa = false;
-          concepto.contribucionsipa = false;
-          concepto.aportesinssjyp = false;
-          concepto.contribucionesinssjyp = false;
-          concepto.aportesobrasocial = false;
-          concepto.contribucionesobrasocial = false;
-          concepto.aportesfondosolidario = false;
-          concepto.contribucionesfondosolidario = false;
-          concepto.aportesrenatea = false;
-          concepto.contribucionesrenatea = false;
-          concepto.asignacionesfamiliares = false;
-          concepto.contribucionesfondonacional = false;
-          concepto.contribucionesleyriesgo = false;
-          concepto.aportesregimenesdiferenciales = false;
-          concepto.aportesregimenesespeciales = false;
-          return;
+        concepto.marcarepeticion = false;
+        concepto.aportesipa = false;
+        concepto.contribucionsipa = false;
+        concepto.aportesinssjyp = false;
+        concepto.contribucionesinssjyp = false;
+        concepto.aportesobrasocial = false;
+        concepto.contribucionesobrasocial = false;
+        concepto.aportesfondosolidario = false;
+        concepto.contribucionesfondosolidario = false;
+        concepto.aportesrenatea = false;
+        concepto.contribucionesrenatea = false;
+        concepto.asignacionesfamiliares = false;
+        concepto.contribucionesfondonacional = false;
+        concepto.contribucionesleyriesgo = false;
+        concepto.aportesregimenesdiferenciales = false;
+        concepto.aportesregimenesespeciales = false;
+        return;
     }
   }
 
   changeHandler(data, tipoimpuestosganancias) {
     console.log("tipoimpuestosganancias: ", tipoimpuestosganancias);
 
-    if(tipoimpuestosganancias.myControl.value == "") {
+    if (tipoimpuestosganancias.myControl.value == "") {
       data.tipoimpuestogananciasid = null;
       data.tipoimpuestoganancias = null;
     }
@@ -258,8 +255,8 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
     console.log(this.selectedFormula);
   }
 
-  public onAutomaticCalcGroupSelected(concepto: Concepto){
-    switch(concepto.tipocalculoautomatico.codigo){
+  public onAutomaticCalcGroupSelected(concepto: Concepto) {
+    switch (concepto.tipocalculoautomatico.codigo) {
       case 'PORCENTAJE':
         concepto.tipocalculoautomaticoid = TIPO_CALCULO_AUTOMATICO.PORCENTAJE;
         concepto.tipocalculoautomatico.ID = TIPO_CALCULO_AUTOMATICO.PORCENTAJE;
@@ -268,9 +265,9 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
         concepto.tipocalculoautomaticoid = TIPO_CALCULO_AUTOMATICO.FORMULA;
         concepto.tipocalculoautomatico.ID = TIPO_CALCULO_AUTOMATICO.FORMULA;
         break;
-
-      default:
-
+      
+      default: 
+      
       concepto.tipocalculoautomaticoid = TIPO_CALCULO_AUTOMATICO.NO_APLICA;
       concepto.tipocalculoautomatico.ID = TIPO_CALCULO_AUTOMATICO.NO_APLICA;
     }
@@ -278,5 +275,33 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
 
   }
 
+  noPuedeSerGanancias(concepto: Concepto): Boolean {
+    return (concepto.tipoconceptoid != TIPO_CONCEPTO.RETENCION && concepto.tipoconceptoid != TIPO_CONCEPTO.IMPORTE_NO_REMUNERATIVO)
+  }
 
+  onChangeEsGanancias(concepto: Concepto) {
+    if (concepto.esganancias) {
+      concepto.tipocalculoautomatico.ID = TIPO_CALCULO_AUTOMATICO.FORMULA;
+      concepto.tipocalculoautomaticoid = TIPO_CALCULO_AUTOMATICO.FORMULA;
+      concepto.tipocalculoautomatico.codigo = TIPO_CALCULO_AUTOMATICO_CODIGO.FORMULA;
+      concepto.tipocalculoautomatico.codigo = TIPO_CALCULO_AUTOMATICO_CODIGO.FORMULA;
+      concepto.basesac = false;
+      concepto.prorrateo = false;
+      concepto.tipoimpuestogananciasid = null;
+      concepto.tipoimpuestoganancias = null;
+      if (concepto.tipoconceptoid == TIPO_CONCEPTO.RETENCION) {
+        concepto.conceptoafipid = CONCEPTO_AFIP_GANANCIAS_ID 
+        concepto.formulanombre = FORMULA_GANANCIAS;
+      } else {
+        concepto.conceptoafipid = CONCEPTO_AFIP_GANANCIAS_DEVOLUCION_ID
+        concepto.formulanombre = FORMULA_GANANCIAS_DEVOLUCION;
+      }
+    } else {
+      concepto.conceptoafipid = null
+      concepto.tipocalculoautomatico.ID = TIPO_CALCULO_AUTOMATICO.NO_APLICA;
+      concepto.tipocalculoautomaticoid = TIPO_CALCULO_AUTOMATICO.NO_APLICA;
+      concepto.tipocalculoautomatico.codigo = TIPO_CALCULO_AUTOMATICO_CODIGO.NO_APLICA;
+      concepto.formulanombre = null;
+    }
+  }
 }

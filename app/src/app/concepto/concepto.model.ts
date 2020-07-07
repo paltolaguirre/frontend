@@ -50,6 +50,7 @@ export interface Concepto {
     aportesregimenesespeciales?:boolean;
     cuentacontablepasivoid?: number;
     cuentacontablepasivo?: Cuenta;
+    esganancias?:boolean;
 }
 
 export interface Tipoconcepto {  
@@ -124,3 +125,10 @@ export interface ConceptoAfip {
     activo?: Number;
     Tipoconceptoid?:TIPO_CONCEPTO;
 }
+
+export const FORMULA_GANANCIAS = "ImpuestoALasGanancias"
+
+export const FORMULA_GANANCIAS_DEVOLUCION = "ImpuestoALasGananciasDevolucion"
+
+export const CONCEPTO_AFIP_GANANCIAS_ID = -73
+export const CONCEPTO_AFIP_GANANCIAS_DEVOLUCION_ID = -63

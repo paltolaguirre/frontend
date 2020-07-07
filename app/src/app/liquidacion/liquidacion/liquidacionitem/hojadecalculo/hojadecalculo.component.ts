@@ -21,9 +21,10 @@ export class HojadecalculoComponent implements OnInit {
     this.items = this.liquidacionItem.acumuladores;
 
     this.items = this.items.filter(item => item.esmostrable)
-
+    
     //SOLO QUIERO AGREGAR TITULOS LOCOS CUANDO ES GANANCIAS
-    if (this.liquidacionItem.concepto.codigo == 'IMPUESTO_GANANCIAS' || this.liquidacionItem.concepto.codigo == 'IMPUESTO_GANANCIAS_DEVOLUCION'){
+    //ESTO SOLO SE PODRIA HACER SI PRIMERO ACTUALIZO EL CONCEPTO, POR AHORA SIEMPRE QUE LLEGUE ACA VA A SER CON GANANCIAS; ASI QUE NO TIENE SENTIDO HACERLO
+    //if (this.liquidacionItem.concepto.esganancias){
       
       //AGREGO SUBTOTALES
       const subtotalesOrden = [15, 22, 36, 39, 44, 45, 52, 54]
@@ -63,7 +64,7 @@ export class HojadecalculoComponent implements OnInit {
       }];      
       Array.prototype.push.apply(this.items, subtitles);
 
-    }
+    //}
     
     this.items.sort(function (a, b) {
       if (a.orden > b.orden) {
