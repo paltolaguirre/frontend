@@ -30,7 +30,6 @@ export class ConceptoComponent implements OnInit, AfterViewInit {
     private router: Router,
     public printService: PrintService,
     private loadingService: LoadingService
-    private formulaService: FormulaService
   ) { }
 
 
