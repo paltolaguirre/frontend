@@ -52,6 +52,13 @@
           <mat-checkbox [disabled]=isDefault(data) color="primary" class="example-margin"  [(ngModel)]="data.esremvariable" matTooltip="Tildá esta opción si la remuneración es variable a efectos de los cálculos de la Ley de Contrato de Trabajo">Es Remuneracion Variable</mat-checkbox>
         </div>
 
+        <div style="margin: 15px 0px;">
+          <mat-checkbox (change)="onChangeEsGanancias(data)" [disabled]="isDefault(data) || noPuedeSerGanancias(data)" color="primary" class="example-margin"  [(ngModel)]="data.esganancias" >
+            <div [matTooltip]="noPuedeSerGanancias(data) ?  'Este campo sólo se habilitará para concepto de tipo “Importe No Remunerativo” o “Retención”' : 'Seleccioná esta opción para indicar que este concepto será tu cálculo de Impuesto a las Ganancias, en el caso de querer utilizar Cuentas contables propias. Se recomienda usar los Conceptos de Impuesto a las Ganancias Default.'">
+              Es Impuesto a las Ganancias
+            </div>
+            </mat-checkbox>
+        </div>
 
       </mat-expansion-panel>
 
@@ -116,10 +123,6 @@
         <mat-expansion-panel-header>
           <mat-panel-title>Impuesto a las Ganancias</mat-panel-title>
         </mat-expansion-panel-header>
-
-        <div style="margin: 15px 0px;">
-          <mat-checkbox (change)="onChangeEsGanancias(data)" [disabled]="isDefault(data) || noPuedeSerGanancias(data)" color="primary" class="example-margin"  [(ngModel)]="data.esganancias" matTooltip="Seleccioná esta opción para indicar que este concepto será tu cálculo de Impuesto a las Ganancias">Es Impuesto a las Ganancias</mat-checkbox>
-        </div>
         
         <div>
           <app-selector-default #tipoimpuestosganancias nombre="tipoimpuestosganancias" [filter]="getFilterTipoimpuestosganancias(data)" [(matSelect)]="data.tipoimpuestogananciasid"
