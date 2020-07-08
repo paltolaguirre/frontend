@@ -12,9 +12,10 @@ import { LibrosueldosListPrintComponent } from './librosueldos-list/librosueldos
 import { LiquidacionModule } from '../liquidacion/liquidacion.module';
 import { DialogEncabezado } from './librosueldos-list/encabezado-dialog/encabezado-dialog.component';
 import { LibrosueldosEncabezadoPrintComponent } from './librosueldos-list/librosueldos-encabezado-print/librosueldos-encabezado-print.component';
+import { LibrosueldosCompletePrintComponent } from './librosueldos-list/librosueldos-complete-print/librosueldos-complete-print.component';
 
 @NgModule({
-  declarations: [ LibrosueldosListComponent, ActionsComponent, LibrosueldosListPrintComponent, DialogEncabezado, LibrosueldosEncabezadoPrintComponent],
+  declarations: [ LibrosueldosListComponent, ActionsComponent, LibrosueldosListPrintComponent, DialogEncabezado, LibrosueldosEncabezadoPrintComponent, LibrosueldosCompletePrintComponent],
   imports: [
     CommonModule,
     FormsModule,
