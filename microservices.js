@@ -28,7 +28,7 @@ for (let index = 0; index < myArgs.length; index++) {
             runService(serviceName, path);
             break;
         case 'liquidacion':
-            path = "~/go/src/git-codecommit.us-east-1.amazonaws.com/v1/repos/sueldos-liquidacion";
+            path = "~/go/src/github.com/xubiosueldos/liquidacion";
             runService(serviceName, path);
             break;
         case 'informes':
@@ -39,8 +39,8 @@ for (let index = 0; index < myArgs.length; index++) {
             path = "~/go/src/github.com/xubiosueldos/siradig";
             runService(serviceName, path);
             break;
-	    case 'formulas':
-            path = "~/go/src/git-codecommit.us-east-1.amazonaws.com/v1/repos/sueldos-formula";
+	    case 'formula':
+            path = "~/go/src/github.com/xubiosueldos/formula";
             runService(serviceName, path);
             break;
         case 'actualizacion':
