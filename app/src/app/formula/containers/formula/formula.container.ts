@@ -11,6 +11,8 @@ import { componentDestroyed } from '@w11k/ngx-componentdestroyed';
 import { Location } from '@angular/common';
 import { FormulaTerm } from 'src/app/core/models/formula-term.model';
 import { NotificationService } from 'src/app/handler-error/notification.service';
+import { FormulaValidators } from 'src/app/shared/validators/formula-validators';
+import { LoadingService } from 'src/app/core/services/loading/loading.service';
 
 @Component({
   selector: 'app-formula',
@@ -46,7 +48,8 @@ export class FormulaContainer implements OnInit, OnDestroy {
     private formulaService: FormulaService,
     private dialog: MatDialog,
     private router: Router,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private loadingService: LoadingService
   ) {
     this.buildEmptyForm();
   }
@@ -73,9 +76,13 @@ export class FormulaContainer implements OnInit, OnDestroy {
   }
 
   public async setCurrentFormula(name: string) {
+    this.loadingService.show();
+
     this.currentFormula = await this.formulaService.find(name);
 
     if (!this.currentFormula) {
+      this.loadingService.hide();
+
       return this.showNoDataDialog();
     }
 
@@ -85,11 +92,13 @@ export class FormulaContainer implements OnInit, OnDestroy {
     // TODO: Set actual formulaResult.
 
     this.buildPreLoadedForm();
+
+    this.loadingService.hide();
   }
 
   private buildEmptyForm() {
     this.form = this.formBuilder.group({
-      name: ['', [Validators.required]],
+      name: ['', [Validators.required, FormulaValidators.cannotContainSpaces]],
       description: ['', [Validators.required]],
       origin: ['custom'],
       type: ['generic'],
@@ -179,11 +188,7 @@ export class FormulaContainer implements OnInit, OnDestroy {
     this.currentFormula.description = this.form.get('description').value;
     this.currentFormula.result = this.form.get('result').value;
 
-
-
     if (this.validateCanvasFormulas()) {
-      console.log("Current Formula: ", this.currentFormula)
-
       if (this.isNew) {
         return this.createFormula();
       }
@@ -240,13 +245,21 @@ export class FormulaContainer implements OnInit, OnDestroy {
   }
 
   public async createFormula() {
+    this.loadingService.show();
+
     await this.formulaService.create(this.currentFormula);
+
+    this.loadingService.hide();
 
     return this.goToFormulasList();
   }
 
   public async updateFormula() {
+    this.loadingService.show();
+
     await this.formulaService.update(this.oldFormulaName, this.currentFormula);
+
+    this.loadingService.hide();
 
     return this.goToFormulasList();
   }

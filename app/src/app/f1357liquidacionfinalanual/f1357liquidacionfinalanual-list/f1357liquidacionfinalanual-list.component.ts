@@ -1,18 +1,17 @@
 import { ListaItems, F1357liquidacionfinalanualService } from '../f1357liquidacionfinalanual.service';
 import { F1357liquidacionfinalanual } from '../f1357liquidacionfinalanual.model';
-import { Component, ViewChild, AfterViewInit, OnInit , Input} from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnInit} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { merge, Observable, of as observableOf } from 'rxjs';
-import { catchError, map, startWith, switchMap } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { Observable, of as observableOf } from 'rxjs';
 import { NotificationService } from 'src/app/handler-error/notification.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { formatDate } from "@angular/common";
+import { ActivatedRoute } from '@angular/router';
 import { PrintService } from 'src/app/print/print.service';
 import { saveAs } from 'file-saver';
 import { EmpresaService } from 'src/app/empresa/empresa.service';
+import { LoadingService } from 'src/app/core/services/loading/loading.service';
 
 @Component({
     selector: 'app-f1357liquidacionfinalanual-list',
@@ -28,10 +27,7 @@ export class F1357liquidacionfinalanualListComponent implements OnInit, AfterVie
   tipopresentacion: any;
   anio: any;
   mes: any;
-
-
   resultsLength = 0;
-  isLoadingResults = true;
   isRateLimitReached = false;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -47,20 +43,19 @@ export class F1357liquidacionfinalanualListComponent implements OnInit, AfterVie
     private notificationService: NotificationService,
     public printService: PrintService,
     private empresaService: EmpresaService,
+    private loadingService: LoadingService
   ) {
     this.mes = "";
     this.tipopresentacion = "";
     this.anio = "";
   }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   async ngAfterViewInit() {
     this.updateGrilla();
   }
-  
+
   getPageSizeOptions(): number[] {
     if (this.dataSource.data.length>20)
     return [5, 10, 20,  this.dataSource.paginator.length];
@@ -76,32 +71,33 @@ export class F1357liquidacionfinalanualListComponent implements OnInit, AfterVie
     }
     this.updateGrilla();
   }
-  
+
   public onYearSelectChange(payload: number) {
     this.anio = payload;
     if (this.tipopresentacion == "Anual"){
       this.mes = 12
     }
     this.updateGrilla();
-    
+
   }
- 
+
   changeMes(option) {
     this.mes = option.ID + 1;
     this.updateGrilla();
   }
-  
-  async updateGrilla() {
 
-   if (this.canRequest()){
-    const liquidacionfinalanualApi: ListaItems = await this.liquidacionfinalanualService.getF1357liquidacionfinalanual(this.sort.active, this.sort.direction,this.tipopresentacion,this.anio,this.mes, 1);
-    this.dataSource = new MatTableDataSource<F1357liquidacionfinalanual>(liquidacionfinalanualApi.items);
-    this.dataSource.paginator = this.paginator;
-    this.paginator._intl.itemsPerPageLabel = "Items por página";
-   
+  async updateGrilla() {
+    this.loadingService.show();
+
+    if (this.canRequest()) {
+      const liquidacionfinalanualApi: ListaItems = await this.liquidacionfinalanualService.getF1357liquidacionfinalanual(this.sort.active, this.sort.direction,this.tipopresentacion,this.anio,this.mes, 1);
+      this.dataSource = new MatTableDataSource<F1357liquidacionfinalanual>(liquidacionfinalanualApi.items);
+      this.dataSource.paginator = this.paginator;
+      this.paginator._intl.itemsPerPageLabel = "Items por página";
+    }
+
+    this.loadingService.hide();
   }
-  this.isLoadingResults = false;
-}
 
   canRequest(){
     if(this.tipopresentacion != "" && this.anio != "" && this.mes != ""){
@@ -129,7 +125,7 @@ export class F1357liquidacionfinalanualListComponent implements OnInit, AfterVie
   }
 
   async exportarTXT() {
-  
+
     const empresa = await this.empresaService.getEmpresa();
 
     if(empresa.cuit == "") {

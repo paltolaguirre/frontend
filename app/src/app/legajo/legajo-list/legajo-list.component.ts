@@ -4,12 +4,10 @@ import { Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { merge, Observable, of as observableOf } from 'rxjs';
-import { catchError, map, startWith, switchMap } from 'rxjs/operators';
-import { NotificationService } from 'src/app/handler-error/notification.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
 import { PrintService } from 'src/app/print/print.service';
+import { LoadingService } from 'src/app/core/services/loading/loading.service';
 
 @Component({
   selector: 'app-legajo-list',
@@ -19,11 +17,8 @@ import { PrintService } from 'src/app/print/print.service';
 export class LegajoListComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = [ 'Legajo' , 'Apellido',  'Nombre', 'Acciones'];
   dataSource: MatTableDataSource<Legajo> = new MatTableDataSource<Legajo>();
-  //data: LegajosApi;
 
   resultsLength = 0;
-  isLoadingResults = true;
-  isRateLimitReached = false;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -33,11 +28,10 @@ export class LegajoListComponent implements OnInit, AfterViewInit {
 
 
   constructor(
-    private route: ActivatedRoute,
     private legajoService: LegajoService,
     public dialog: MatDialog,
-    private notificationService: NotificationService,
-    public printService : PrintService
+    public printService: PrintService,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit() {
@@ -51,14 +45,14 @@ export class LegajoListComponent implements OnInit, AfterViewInit {
   }
 
   async ngAfterViewInit() {
+    this.loadingService.show();
 
-      //this.isLoadingResults = false;
-      const legajosApi: ListaItems = await this.legajoService.getLegajos(this.sort.active, this.sort.direction, 1);
-      this.dataSource = new MatTableDataSource<Legajo>(legajosApi.items);
-      this.dataSource.paginator = this.paginator;
-      this.paginator._intl.itemsPerPageLabel = "Items por página";
-      this.isLoadingResults = false;
+    const legajosApi: ListaItems = await this.legajoService.getLegajos(this.sort.active, this.sort.direction, 1);
+    this.dataSource = new MatTableDataSource<Legajo>(legajosApi.items);
+    this.dataSource.paginator = this.paginator;
+    this.paginator._intl.itemsPerPageLabel = "Items por página";
 
+    this.loadingService.hide();
   }
 
   getPageSizeOptions(): number[] {

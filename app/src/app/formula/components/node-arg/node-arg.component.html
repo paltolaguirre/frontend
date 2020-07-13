@@ -1,0 +1,48 @@
+<app-formula-draw
+  *ngIf="arg.valueinvoke"
+  [formulaValue]="arg"
+  [formulaIsEditable]="formulaIsEditable"
+  [formulaIsNew]="formulaIsNew"
+>
+</app-formula-draw>
+<div
+  *ngIf="!arg.valueinvoke"
+  [className]="type + '-param param no-highlight no-selectable'"
+  [draggable]="isAbleToEdit()"
+  (click)="onClickNode($event)"
+  (drop)="onDrop($event, arg, type)"
+  (dragover)="onDragOver($event)"
+  (dragenter)="onDragEnter($event)"
+  (dragleave)="onDragLeave($event)"
+  (mouseenter)="onMouseEnter($event)"
+  (mouseleave)="onMouseLeave($event)"
+  (mouseover)="onMouseEnter($event)"
+>
+  <ng-container *ngIf="type == 'number'">
+    {{ arg.valuenumber }}
+    <input
+      type="number"
+      step="1"
+      placeholder="0.00"
+      class="inputedit"
+      style="display: none;"
+      [(ngModel)]="arg.valuenumber"
+      (change)="valueChanged()"
+      (blur)="onBlurInput($event)"
+    />
+  </ng-container>
+
+  <ng-container *ngIf="type == 'boolean'">
+    {{ arg.Valueboolean ? "verdadero" : "falso" }}
+    <input
+      type="checkbox"
+      step="1"
+      placeholder="0.00"
+      class="inputedit"
+      style="display: none;"
+      [(ngModel)]="arg.Valueboolean"
+      (change)="valueChanged()"
+      (blur)="onBlurInput($event)"
+    />
+  </ng-container>
+</div>
