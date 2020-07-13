@@ -11,8 +11,8 @@
         <col style="width: 90px;border-right:1px solid black;">
         <col style="width: 95px">
         <col style="width: 180px">
-        <col style="width: 90px">
-        <col style="width: 90px">
+        <col style="width: 85px">
+        <col style="width: 95px">
       </colgroup>
       <tr style="min-height: 100px;">
         <th class="tg-0pky hidden-right" colspan="4">
@@ -43,8 +43,8 @@
         <td class="tg-0lax">cuil<div class="dato">{{liquidacion.legajo.cuil}}</div></td>
         <td class="tg-0lax">n documento<div class="dato">{{obtenerDni()}}</div></td>
         <td class="tg-0lax">fecha ingreso<div class="dato">{{liquidacion.legajo.fechaalta | date: 'dd-MM-yyyy'}}</div></td>
-        <td class="tg-0lax">fecha de pago<div class="dato">{{liquidacion.fecha | date: 'dd-MM-yyyy'}}</div></td>
         <td class="tg-0lax">remuneracion<div class="dato">{{liquidacion.legajo.remuneracion | number:'1.2-2':'en'}}</div></td>
+        <td class="tg-0lax">fecha de pago<div class="dato">{{liquidacion.fecha | date: 'dd-MM-yyyy'}}</div></td>
         <td class="tg-0lax">tipo<div class="dato">{{liquidacion.tipo.nombre}}</div></td>
       </tr>
       <tr>
@@ -98,7 +98,7 @@
         <td class="tg-0lax hidden-right" colspan="4">sueldo neto a cobrar</td>
         <td class="tg-0lax hidden-left totalDetalle" colspan="5">({{totalNetoLetras}})</td>
         <td class="tg-0lax">
-          <div class="dato total importe">$ {{totalNeto | number:'1.2-2':'en'}}</div>
+          <div class="dato importe">$ {{totalNeto | number:'1.2-2':'en'}}</div>
         </td>
       </tr>
       <tr>
@@ -163,9 +163,9 @@
         </td>
         <td class="tg-0lax">fecha ingreso<div class="dato">{{liquidacion.legajo.fechaalta | date: 'dd-MM-yyyy'}}</div>
         </td>
-        <td class="tg-0lax">fecha de pago<div class="dato">{{liquidacion.fecha | date: 'dd-MM-yyyy'}}</div>
-        </td>
         <td class="tg-0lax">remuneracion<div class="dato">{{liquidacion.legajo.remuneracion | number:'1.2-2':'en'}}</div>
+        </td>
+        <td class="tg-0lax">fecha de pago<div class="dato">{{liquidacion.fecha | date: 'dd-MM-yyyy'}}</div>
         </td>
         <td class="tg-0lax">tipo<div class="dato">{{liquidacion.tipo.nombre}}</div>
         </td>
@@ -248,7 +248,7 @@
         <td class="tg-0lax hidden-right" colspan="4">sueldo neto a cobrar</td>
         <td class="tg-0lax hidden-left totalDetalle" colspan="5">({{totalNetoLetras}})</td>
         <td class="tg-0lax">
-          <div class="dato total importe">$ {{totalNeto | number:'1.2-2':'en'}}</div>
+          <div class="dato importe">$ {{totalNeto | number:'1.2-2':'en'}}</div>
         </td>
       </tr>
       <tr>
