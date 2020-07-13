@@ -160,3 +160,13 @@
   .datoItemDetalle {
     font-size: 9px !important;
   }
+
+  .totalDetalle {
+    font-size: 10px!important;
+    text-align: right;
+    font-weight: bold!important;
+  }
+
+  .importe {
+    text-align: right;
+  }

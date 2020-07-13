@@ -6,6 +6,7 @@ import { Empresa } from 'src/app/empresa/empresa.model';
 import { Observable } from 'rxjs';
 import { SelectorService } from 'src/app/shared/selector-default/selector-default.service';
 import { TIPO_CONCEPTO_CODIGO } from 'src/app/concepto/concepto.model';
+import { NumeroaletrasService } from 'src/app/shared/services/numeroaletras.service';
 
 export interface LiquidacionItem {
   haber: {
@@ -38,10 +39,11 @@ export class LiquidacionPrintComponent implements OnInit {
   totalImpNoRemunerativo: number;
   totalDeducciones: number;
   totalNeto: number;
+  totalNetoLetras: String;
 
   logobase64: String;
 
-  constructor(private empresaService: EmpresaService, private selectorService: SelectorService) { 
+  constructor(private empresaService: EmpresaService, private selectorService: SelectorService, public numeroaletrasService: NumeroaletrasService) { 
     this.items = new Array();
   }
 
@@ -79,7 +81,7 @@ export class LiquidacionPrintComponent implements OnInit {
     return 1000;
   }
 
-  obtenerItems() {
+  async obtenerItems() {
     this.totalImpRemunerativo = 0;
     this.totalImpNoRemunerativo = 0;
     this.totalDeducciones = 0;
@@ -135,7 +137,8 @@ export class LiquidacionPrintComponent implements OnInit {
       this.items.push(item);
     }
 
-    this.totalNeto = this.totalImpRemunerativo + this.totalImpNoRemunerativo - this.totalDeducciones
+    this.totalNeto = this.totalImpRemunerativo + this.totalImpNoRemunerativo - this.totalDeducciones;
+    this.totalNetoLetras = await this.obtenerEnLetras(this.totalNeto);
   }
 
   obtenerArraysImportes() {
@@ -144,5 +147,11 @@ export class LiquidacionPrintComponent implements OnInit {
     this.liquidacion.descuentos = this.liquidacion.liquidacionitems.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.DESCUENTO);
     this.liquidacion.retenciones = this.liquidacion.liquidacionitems.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.RETENCION);
     this.liquidacion.aportespatronales = this.liquidacion.liquidacionitems.filter((item: Liquidacionitem) => item.concepto.tipoconcepto.codigo == TIPO_CONCEPTO_CODIGO.APORTE_PATRONAL);
+  }
+
+  async obtenerEnLetras(numero: Number){
+
+    const respuesta = await this.numeroaletrasService.numeroALetras(numero)
+    return respuesta.toLowerCase();
   }
 }
