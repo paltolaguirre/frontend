@@ -18,7 +18,7 @@
         <th class="tg-0pky hidden-right" colspan="4">
           <div *ngIf="empresa" class="logo-empresa"><img *ngIf="empresa.logo" src="{{'data:image/png;base64,'+empresa.logo}}" /></div>
         </th>
-        <th class="tg-0lax hidden-left hidden-right" colspan="5">
+        <th class="tg-0lax hidden-left hidden-right" colspan="4">
           <div class="empresa">
             <ul *ngIf="empresa">
               <li>EMPLEADOR: {{empresa.nombre}}</li>
@@ -28,7 +28,14 @@
             </ul>
           </div>
         </th>
-        <th class="tg-0lax hidden-left" style="vertical-align: top;">Nº {{liquidacion.ID}}</th>
+        <th colspan="2" class="tg-0lax hidden-left" style="text-align: right; vertical-align: top;">
+          <div style="font-size: 12px">
+              Recibo de Haberes Ley N° 20.744
+          </div>
+          <div>
+              Nº {{liquidacion.ID}}
+          </div>
+      </th>
       </tr>
       <tr>
         <td class="tg-0lax">legajo<div class="dato">{{liquidacion.legajo.legajo}}</div></td>
@@ -72,24 +79,27 @@
         <td class="tg-0lax"><div class="datoItem">{{item.haber.codigo}}</div></td>
         <td class="tg-0lax" colspan="2"><div class="datoItemDetalle">{{item.haber.detalle | slice:0:50}}</div></td>
         <td class="tg-0lax"><div class="datoItem">{{item.haber.cantidad}}</div></td>
-        <td class="tg-0lax"><div class="datoItem">{{item.haber.remunerativo}}</div></td>
-        <td class="tg-0lax"><div class="datoItem">{{item.haber.noremunerativo}}</div></td>
+        <td class="tg-0lax"><div class="datoItem importe">{{item.haber.remunerativo | number:'1.2-2':'en'}}</div></td>
+        <td class="tg-0lax"><div class="datoItem importe">{{item.haber.noremunerativo | number:'1.2-2':'en'}}</div></td>
         <td class="tg-0lax"><div class="datoItem">{{item.deduccion.codigo}}</div></td>
         <td class="tg-0lax"><div class="datoItemDetalle">{{item.deduccion.detalle}}</div></td>
         <td class="tg-0lax"><div class="datoItem">{{item.deduccion.cantidad}}</div></td>
-        <td class="tg-0lax"><div class="datoItem">{{item.deduccion.importe}}</div></td>
+        <td class="tg-0lax"><div class="datoItem importe">{{item.deduccion.importe | number:'1.2-2':'en'}}</div></td>
       </tr>
 
       <tr>
         <td class="tg-0lax" colspan="4">totales</td>
-        <td class="tg-0lax">{{totalImpRemunerativo | number:'1.2-2':'en'}}</td>
-        <td class="tg-0lax">{{totalImpNoRemunerativo | number:'1.2-2':'en'}}</td>
+        <td class="tg-0lax importe">{{totalImpRemunerativo | number:'1.2-2':'en'}}</td>
+        <td class="tg-0lax" importe>{{totalImpNoRemunerativo | number:'1.2-2':'en'}}</td>
         <td class="tg-0lax" colspan="3">totales</td>
-        <td class="tg-0lax">{{totalDeducciones | number:'1.2-2':'en'}}</td>
+        <td class="tg-0lax importe">{{totalDeducciones | number:'1.2-2':'en'}}</td>
       </tr>
       <tr>
-        <td class="tg-0lax" colspan="9">sueldo neto a cobrar</td>
-        <td class="tg-0lax"><div class="dato total">{{totalNeto | number:'1.2-2':'en'}}</div></td>
+        <td class="tg-0lax hidden-right" colspan="4">sueldo neto a cobrar</td>
+        <td class="tg-0lax hidden-left totalDetalle" colspan="5">({{totalNetoLetras}})</td>
+        <td class="tg-0lax">
+          <div class="dato total importe">$ {{totalNeto | number:'1.2-2':'en'}}</div>
+        </td>
       </tr>
       <tr>
         <td class="tg-0lax" colspan="5">lugar de pago<div *ngIf="empresa" class="dato">{{empresa.localidad}}</div></td>
@@ -122,7 +132,7 @@
         <th class="tg-0pky hidden-right" colspan="4">
           <div *ngIf="empresa" class="logo-empresa"><img *ngIf="empresa.logo" src="{{'data:image/png;base64,'+empresa.logo}}" /></div>
         </th>
-        <th class="tg-0lax hidden-left hidden-right" colspan="5">
+        <th class="tg-0lax hidden-left hidden-right" colspan="4">
           <div class="empresa">
             <ul *ngIf="empresa">
               <li>EMPLEADOR: {{empresa.nombre}}</li>
@@ -132,7 +142,14 @@
             </ul>
           </div>
         </th>
-        <th class="tg-0lax hidden-left" style="vertical-align: top;">Nº {{liquidacion.ID}}</th>
+        <th colspan="2" class="tg-0lax hidden-left" style="text-align: right; vertical-align: top;">
+          <div style="font-size: 12px">
+              Recibo de Haberes Ley N° 20.744
+          </div>
+          <div>
+              Nº {{liquidacion.ID}}
+          </div>
+      </th>
       </tr>
       <tr>
         <td class="tg-0lax">legajo<div class="dato">{{liquidacion.legajo.legajo}}</div>
@@ -201,10 +218,10 @@
           <div class="datoItem">{{item.haber.cantidad}}</div>
         </td>
         <td class="tg-0lax">
-          <div class="datoItem">{{item.haber.remunerativo}}</div>
+          <div class="datoItem importe">{{item.haber.remunerativo | number:'1.2-2':'en'}}</div>
         </td>
         <td class="tg-0lax">
-          <div class="datoItem">{{item.haber.noremunerativo}}</div>
+          <div class="datoItem importe">{{item.haber.noremunerativo | number:'1.2-2':'en'}}</div>
         </td>
         <td class="tg-0lax">
           <div class="datoItem">{{item.deduccion.codigo}}</div>
@@ -216,21 +233,22 @@
           <div class="datoItem">{{item.deduccion.cantidad}}</div>
         </td>
         <td class="tg-0lax">
-          <div class="datoItem">{{item.deduccion.importe}}</div>
+          <div class="datoItem importe">{{item.deduccion.importe | number:'1.2-2':'en'}}</div>
         </td>
       </tr>
     
       <tr>
         <td class="tg-0lax" colspan="4">totales</td>
-        <td class="tg-0lax">{{totalImpRemunerativo | number:'1.2-2':'en'}}</td>
-        <td class="tg-0lax">{{totalImpNoRemunerativo | number:'1.2-2':'en'}}</td>
+        <td class="tg-0lax importe">{{totalImpRemunerativo | number:'1.2-2':'en'}}</td>
+        <td class="tg-0lax importe">{{totalImpNoRemunerativo | number:'1.2-2':'en'}}</td>
         <td class="tg-0lax" colspan="3">totales</td>
-        <td class="tg-0lax">{{totalDeducciones | number:'1.2-2':'en'}}</td>
+        <td class="tg-0lax importe">{{totalDeducciones | number:'1.2-2':'en'}}</td>
       </tr>
       <tr>
-        <td class="tg-0lax" colspan="9">sueldo neto a cobrar</td>
+        <td class="tg-0lax hidden-right" colspan="4">sueldo neto a cobrar</td>
+        <td class="tg-0lax hidden-left totalDetalle" colspan="5">({{totalNetoLetras}})</td>
         <td class="tg-0lax">
-          <div class="dato total">{{totalNeto | number:'1.2-2':'en'}}</div>
+          <div class="dato total importe">$ {{totalNeto | number:'1.2-2':'en'}}</div>
         </td>
       </tr>
       <tr>
