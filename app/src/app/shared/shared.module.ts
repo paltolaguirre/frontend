@@ -12,6 +12,7 @@ import { InfoDialogComponent } from './components/info-dialog/info-dialog.compon
 import { BottomTableActionsComponent } from './components/bottom-table-actions/bottom-table-actions.component';
 import { MonthSelectorComponent } from './components/month-selector/month-selector.component';
 import { DisableControlDirective } from './directives/disable-control/disable-control.directive';
+import { LoadingComponent } from './components/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { DisableControlDirective } from './directives/disable-control/disable-co
     BottomTableActionsComponent,
     YearSelectorComponent,
     DisableControlDirective,
-    FormulaCloneDialogComponent
+    FormulaCloneDialogComponent,
+    LoadingComponent
   ],
   imports: [
     CommonModule,
@@ -48,7 +50,8 @@ import { DisableControlDirective } from './directives/disable-control/disable-co
     MaterialModule,
     ReactiveFormsModule,
     YearSelectorComponent,
-    FormulaCloneDialogComponent
+    FormulaCloneDialogComponent,
+    LoadingComponent
   ]
 })
 export class SharedModule { }

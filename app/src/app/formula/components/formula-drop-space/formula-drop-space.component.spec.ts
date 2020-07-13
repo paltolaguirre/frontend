@@ -42,4 +42,13 @@ describe('FormulaDropSpaceComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  describe('onDrop', () => {
+    it('should stop being executed if the formula cannot be edited', () => {
+      const event = new Event('ondrop');
+      spyOn(component, 'isAbleToEdit').and.returnValue(false);
+
+      expect(component.onDrop(event)).toBeNull();
+    });
+  });
 });
