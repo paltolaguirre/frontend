@@ -117,11 +117,6 @@
     font-size: 16px;
   }
 
-  .total {
-    font-size: 14px;
-    margin: 5px 0px;
-  }
-
   .hidden-top {
     border-top-style: hidden !important;
   }
@@ -159,4 +154,14 @@
 
   .datoItemDetalle {
     font-size: 9px !important;
+  }
+
+  .totalDetalle {
+    font-size: 10px!important;
+    text-align: right;
+    font-weight: bold!important;
+  }
+
+  .importe {
+    text-align: right;
   }
