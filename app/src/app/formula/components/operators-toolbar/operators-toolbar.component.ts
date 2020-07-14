@@ -20,8 +20,6 @@ export class OperatorsToolbarComponent implements OnInit {
   public selectedOperator: Formula = null;
   public basicMathOperators: any[];
   public logicalOperators: any[];
-  public xorOperator: any;
-  public numberOperator: Operator;
   public isMoreOperatorsListOpened: boolean;
 
   constructor(
@@ -31,8 +29,6 @@ export class OperatorsToolbarComponent implements OnInit {
 
   ngOnInit() {
     this.fetchFormulas();
-    this.xorOperator = this.operatorsService.getXOROperator();
-    this.numberOperator = this.operatorsService.getNumberOperator();
 
     this.operatorsService.operatorDropEmitter.subscribe((operator: DataPayload) => {
       this.closeMoreOperatorsList();
@@ -125,7 +121,6 @@ export class OperatorsToolbarComponent implements OnInit {
 
   public onOperatorSelected(event) {
     const data: FormulaTransferData = {
-      nodeId: `more-operators-${event.id || event.valueid}`,
       payload: event
     };
 
@@ -142,15 +137,14 @@ export class OperatorsToolbarComponent implements OnInit {
     return operator.hasOwnProperty('valueid');
   }
 
-  public onDragStart(event, operator: Operator, prefix?: string) {
-    const data: FormulaTransferData = this.getOperatorTransferData(operator, prefix);
+  public onDragStart(event, operator: Operator) {
+    const data: FormulaTransferData = this.getOperatorTransferData(operator);
 
     event.dataTransfer.setData('text/plain', JSON.stringify(data));
   }
 
-  public onMoreOperatorsDragStart(event, operator: Operator, prefix: string) {
+  public onMoreOperatorsDragStart(event, operator: Operator) {
     const data: FormulaTransferData = {
-      nodeId: prefix,
       payload: operator
     };
 
@@ -159,8 +153,8 @@ export class OperatorsToolbarComponent implements OnInit {
     console.log(data);
   }
 
-  public onOperatorItemClick(event, operator, prefix?: string) {
-    const data: FormulaTransferData = this.getOperatorTransferData(operator, prefix);
+  public onOperatorItemClick(event, operator) {
+    const data: FormulaTransferData = this.getOperatorTransferData(operator);
 
     this.operatorsService.emitOperatorClicked(data);
   }
@@ -169,13 +163,8 @@ export class OperatorsToolbarComponent implements OnInit {
     return MathOperatorTypes.Numeric;
   }
 
-  public getDomIdByOperator(operator: Operator, prefix?: string) {
-    return this.operatorsService.getDomIdByOperator(operator, prefix);
-  }
-
-  public getOperatorTransferData(operator: Operator, prefix?: string): FormulaTransferData {
+  public getOperatorTransferData(operator: Operator): FormulaTransferData {
     return {
-      nodeId: this.getDomIdByOperator(operator, prefix),
       payload: operator
     };
   }

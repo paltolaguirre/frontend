@@ -4,14 +4,14 @@ import { Component, ViewChild, AfterViewInit, OnInit , Input} from '@angular/cor
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { merge, Observable, of as observableOf } from 'rxjs';
-import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { NotificationService } from 'src/app/handler-error/notification.service';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { formatDate } from "@angular/common";
 import { PrintService } from 'src/app/print/print.service';
 import { DialogEncabezado } from './encabezado-dialog/encabezado-dialog.component';
+import { LoadingService } from 'src/app/core/services/loading/loading.service';
 
 @Component({
   selector: 'app-librosueldos-list',
@@ -21,13 +21,10 @@ import { DialogEncabezado } from './encabezado-dialog/encabezado-dialog.componen
 export class LibrosueldosListComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['Legajo', 'Apellido', 'Nombre', 'Fechaperiodoliquidacion'];
   dataSource: MatTableDataSource<Librosueldos> = new MatTableDataSource<Librosueldos>();
-  //data: LibrosueldossApi;
-
   fechahasta : any;
   fechadesde : any;
 
   resultsLength = 0;
-  isLoadingResults = true;
   isRateLimitReached = false;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -41,8 +38,8 @@ export class LibrosueldosListComponent implements OnInit, AfterViewInit {
     private router: Router,
     private librosueldosService: LibrosueldosService,
     public dialog: MatDialog,
-    private notificationService: NotificationService,
-    public printService : PrintService
+    public printService: PrintService,
+    private loadingService: LoadingService
   ) {
     if(localStorage.getItem('librosueldos-fechahasta')) {
       this.fechahasta = localStorage.getItem('librosueldos-fechahasta');
@@ -56,9 +53,7 @@ export class LibrosueldosListComponent implements OnInit, AfterViewInit {
     }
   }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   getPageSizeOptions(): number[] {
     if (this.dataSource.data.length>20)
@@ -82,11 +77,14 @@ export class LibrosueldosListComponent implements OnInit, AfterViewInit {
   }
 
   async updateGrilla () {
+    this.loadingService.show();
+
     const librosueldossApi: ListaItems = await this.librosueldosService.getLibrosueldos(this.sort.active, this.sort.direction,this.fechadesde,this.fechahasta, 1);
     this.dataSource = new MatTableDataSource<Librosueldos>(librosueldossApi.items);
     this.dataSource.paginator = this.paginator;
     this.paginator._intl.itemsPerPageLabel = "Items por página";
-    this.isLoadingResults = false;
+
+    this.loadingService.hide();
   }
 
   public doFilter = (value: string) => {
@@ -107,11 +105,11 @@ export class LibrosueldosListComponent implements OnInit, AfterViewInit {
 
   onClickEncabezado(): void {
     const dialogRef = this.dialog.open(DialogEncabezado, {
-       
+
     });
 
     dialogRef.afterClosed().subscribe(result => {
-   
+
     });
   }
 }

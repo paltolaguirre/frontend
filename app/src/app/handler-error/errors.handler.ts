@@ -3,6 +3,7 @@ import { ErrorHandler, Injectable, Injector } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { NotificationService, Notificacion } from './notification.service';
+import { LoadingService } from '../core/services/loading/loading.service';
 
 //import * as StackTraceParser from 'error-stack-parser';
 
@@ -13,15 +14,17 @@ export class ErrorsHandler implements ErrorHandler {
 
     constructor(
         private injector: Injector,
+        private loadingService: LoadingService
     ) { }
 
     handleError(error: Error | HttpErrorResponse) {
         const notificationService = this.injector.get(NotificationService);
         // const errorsService = this.injector.get(ErrorsService);
         const router = this.injector.get(Router);
+        this.loadingService.hide();
 
         if (error instanceof HttpErrorResponse) {
-            // Server error happened      
+            // Server error happened
             if (!navigator.onLine) {
                 // No Internet connection
                 // return notificationService.notify('No Internet Connection');
@@ -52,11 +55,11 @@ export class ErrorsHandler implements ErrorHandler {
                     codigo: parseInt(mensaje.split("|")[0]),
                     mensaje: mensaje.split("|")[1]
                 }
-                ret = notificationService.notify(notificacion);     
+                ret = notificationService.notify(notificacion);
             } else {
                 ret = null;
             }
-            
+
             return ret;
         }
     }
