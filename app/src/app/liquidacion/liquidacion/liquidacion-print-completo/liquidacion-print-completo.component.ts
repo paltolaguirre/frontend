@@ -5,7 +5,7 @@ import { EmpresaService } from 'src/app/empresa/empresa.service';
 import { Empresa } from 'src/app/empresa/empresa.model';
 import { Observable } from 'rxjs';
 import { SelectorService } from 'src/app/shared/selector-default/selector-default.service';
-import { TIPO_CONCEPTO_CODIGO } from 'src/app/concepto/concepto.model';
+import { TIPO_CONCEPTO_CODIGO, Concepto } from 'src/app/concepto/concepto.model';
 import { NumeroaletrasService } from 'src/app/shared/services/numeroaletras.service';
 export interface LiquidacionItem {
   haber: {
@@ -108,13 +108,13 @@ export class LiquidacionPrintCompletoComponent implements OnInit {
       };
 
       if (index < this.liquidacion.importesremunerativos.length) {
-        item.haber.codigo = this.liquidacion.importesremunerativos[index].conceptoid.toString();
+        item.haber.codigo = this.obtenerConceptoCodigo(this.liquidacion.importesremunerativos[index].concepto);
         item.haber.detalle = this.liquidacion.importesremunerativos[index].concepto.nombre;
         item.haber.remunerativo = this.liquidacion.importesremunerativos[index].importeunitario;
         item.haber.cantidad = this.liquidacion.importesremunerativos[index].cantidad.toString();
         this.totalImpRemunerativo += this.liquidacion.importesremunerativos[index].importeunitario;
       } else if (posicionImpNoRemunerativos < this.liquidacion.importesnoremunerativos.length) {
-        item.haber.codigo = this.liquidacion.importesnoremunerativos[posicionImpNoRemunerativos].conceptoid.toString();
+        item.haber.codigo = this.obtenerConceptoCodigo(this.liquidacion.importesnoremunerativos[posicionImpNoRemunerativos].concepto);
         item.haber.detalle = this.liquidacion.importesnoremunerativos[posicionImpNoRemunerativos].concepto.nombre;
         item.haber.noremunerativo = this.liquidacion.importesnoremunerativos[posicionImpNoRemunerativos].importeunitario;
         item.haber.cantidad = this.liquidacion.importesnoremunerativos[posicionImpNoRemunerativos].cantidad.toString();
@@ -122,12 +122,12 @@ export class LiquidacionPrintCompletoComponent implements OnInit {
       }
 
       if (index < this.liquidacion.descuentos.length) {
-        item.deduccion.codigo = this.liquidacion.descuentos[index].conceptoid.toString();
+        item.deduccion.codigo = this.obtenerConceptoCodigo(this.liquidacion.descuentos[index].concepto);
         item.deduccion.detalle = this.liquidacion.descuentos[index].concepto.nombre;
         item.deduccion.importe = this.liquidacion.descuentos[index].importeunitario;
         item.deduccion.cantidad = this.liquidacion.descuentos[index].cantidad.toString();
       } else if (posicionRetenciones < this.liquidacion.retenciones.length) {
-        item.deduccion.codigo = this.liquidacion.retenciones[posicionRetenciones].conceptoid.toString();
+        item.deduccion.codigo = this.obtenerConceptoCodigo(this.liquidacion.retenciones[posicionRetenciones].concepto);
         item.deduccion.detalle = this.liquidacion.retenciones[posicionRetenciones].concepto.nombre;
         item.deduccion.importe = this.liquidacion.retenciones[posicionRetenciones].importeunitario;
         item.deduccion.cantidad = this.liquidacion.retenciones[posicionRetenciones].cantidad.toString();
@@ -153,6 +153,14 @@ export class LiquidacionPrintCompletoComponent implements OnInit {
 
     const respuesta = await this.numeroaletrasService.numeroALetras(numero)
     return respuesta.toLowerCase();
+  }
+
+  obtenerConceptoCodigo(concepto: Concepto): string {
+    if (concepto.ID > 0 && concepto.codigo != ''){
+        return concepto.codigo.substr(0, 4);
+    }     
+    return concepto.codigointerno.toString();
+
   }
 
 }
