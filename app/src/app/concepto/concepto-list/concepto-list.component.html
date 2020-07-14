@@ -1,24 +1,25 @@
 <div class="example-container">
-  <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
-    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+  <div class="example-loading-shade" *ngIf="isRateLimitReached">
     <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
       No se pudieron obtener datos. Por favor vuelva a intentar más tarde.
     </div>
   </div>
 
-  
-  <div class="topmenu-container" >
-      <div>
-        <button mat-raised-button color="primary" class="topmenu-button" mat-button [routerLink]="['/conceptos', 'nuevo']">Nuevo</button>
-        <button mat-raised-button color="secondary" class="topmenu-button" mat-button (click)="printService.printTOPDF()">Imprimir</button>
-        <mat-form-field class="topmenu-search">
-          <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Buscar">
-        </mat-form-field>
-      </div>
+
+  <div class="topmenu-container">
+    <div>
+      <button mat-raised-button color="primary" class="topmenu-button" mat-button
+        [routerLink]="['/conceptos', 'nuevo']">Nuevo</button>
+      <button mat-raised-button color="secondary" class="topmenu-button" mat-button
+        (click)="printService.printTOPDF()">Imprimir</button>
+      <mat-form-field class="topmenu-search">
+        <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Buscar">
+      </mat-form-field>
+    </div>
   </div>
-  <div class="table-container">   
+  <div class="table-container">
     <table mat-table [dataSource]="dataSource" class="example-table" matSort matSortActive="Creado" matSortDisableClear
-      matSortDirection="desc"  id="contentTOPDF">
+      matSortDirection="desc" id="contentTOPDF">
       <!-- Number Column -->
 
 
@@ -40,8 +41,8 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
-<div>
-  <mat-paginator class="paginator-container" #paginator [pageSize]="10" [pageSizeOptions]="getPageSizeOptions()"></mat-paginator>
-</div>
-  <!--<mat-paginator [length]="resultsLength" [pageSize]="30"></mat-paginator>-->
+  <div>
+    <mat-paginator class="paginator-container" #paginator [pageSize]="10" [pageSizeOptions]="getPageSizeOptions()">
+    </mat-paginator>
+  </div>
 </div>

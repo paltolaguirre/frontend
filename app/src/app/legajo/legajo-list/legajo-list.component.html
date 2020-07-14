@@ -1,12 +1,4 @@
 <div class="example-container">
-  <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
-    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
-    <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
-      No se pudieron obtener datos. Por favor vuelva a intentar más tarde.
-    </div>
-  </div>
-  
-
   <div class="topmenu-container" >
       <div>
         <button mat-raised-button color="primary" class="topmenu-button" mat-button [routerLink]="['/legajos', 'nuevo']">Nuevo</button>
@@ -17,7 +9,7 @@
           </mat-form-field>
       </div>
   </div>
-  <div class="table-container" id="contentTOPDF">   
+  <div class="table-container" id="contentTOPDF">
     <table mat-table [dataSource]="dataSource" class="example-table" matSort matSortActive="Creado" matSortDisableClear
       matSortDirection="desc" id="contentTOPDF">
 

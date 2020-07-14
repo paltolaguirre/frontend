@@ -47,20 +47,38 @@ describe('FormulaCloneDialogComponent', () => {
   });
 
   describe('apply', () => {
-    it('should prepare the formula', () => {
-      const prepareFormulaSpy = spyOn(component, 'prepareFormula');
+    describe('when the form is valid', () => {
+      beforeEach(() => {
+        component.form.get('name').patchValue('formulaName');
+        component.form.get('description').patchValue('description');
+      });
 
-      component.apply();
+      it('should prepare the formula', () => {
+        const prepareFormulaSpy = spyOn(component, 'prepareFormula');
 
-      expect(prepareFormulaSpy).toHaveBeenCalledTimes(1);
+        component.apply();
+
+        expect(prepareFormulaSpy).toHaveBeenCalledTimes(1);
+      });
+
+      it('should call to dialogRef to close the modal', () => {
+        const closeModalSpy = spyOn(matDialogRef, 'close').and.returnValue(null);
+
+        component.apply();
+
+        expect(closeModalSpy).toHaveBeenCalledTimes(1);
+      });
     });
 
-    it('should call to dialogRef to close the modal', () => {
-      const closeModalSpy = spyOn(matDialogRef, 'close').and.returnValue(null);
+    describe('when the form is invalid', () => {
+      it('should not prepare the formula', () => {
+        const prepareFormulaSpy = spyOn(component, 'prepareFormula');
 
-      component.apply();
+        const result = component.apply();
 
-      expect(closeModalSpy).toHaveBeenCalledTimes(1);
+        expect(prepareFormulaSpy).toHaveBeenCalledTimes(0);
+        expect(result).toBeNull();
+      });
     });
   });
 
@@ -76,5 +94,14 @@ describe('FormulaCloneDialogComponent', () => {
 
       expect(formula.scope).toEqual('private');
     });
+
+    it('should set its valueinvoke id to zero', () => {
+      component.data.formula.value.valueinvoke = { ID: 4 };
+
+      const formula = component.prepareFormula();
+
+      expect(formula.value.valueinvoke.ID).toEqual(0);
+      expect(formula.value.valueinvokeid).toEqual(0);
+    });
   });
-}); 
+});
