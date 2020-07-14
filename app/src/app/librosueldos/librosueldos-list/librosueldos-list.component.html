@@ -16,7 +16,7 @@
         (click)="onClickPreview()">Imprimir</button>
       <button mat-raised-button color="primary" class="topmenu-button" mat-button (click)="onClickEncabezado()">Imprimir
         Encabezado</button>
-        <button mat-raised-button color="secondary" class="topmenu-button" mat-button (click)="onClickImprimirCompleto()">Imprimir Completo</button>
+        <button mat-raised-button color="secondary" class="topmenu-button" matTooltip="Impresión de Libro Sueldos con Encabezado en un solo pdf." mat-button (click)="onClickImprimirCompleto()">Imprimir Completo</button>
       <mat-form-field class="topmenu-search">
         <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Buscar">
       </mat-form-field>
