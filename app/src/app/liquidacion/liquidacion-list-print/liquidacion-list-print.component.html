@@ -1,0 +1,13 @@
+<div class="liquidacion-container">
+    <div mat-dialog-content class="content" style="padding: 5em 0.5em 5em 0.5em; overflow: auto;">
+        <div id="contentTOPDF">
+            <ng-container *ngFor="let liquidacion of liquidaciones; let i = index;">
+                <app-liquidacion-print [liquidacion]="liquidacion"></app-liquidacion-print>
+            </ng-container>
+        </div>
+    </div>
+    <div mat-dialog-actions class="actions">
+        <button mat-raised-button mat-button (click)="onClickId()">Cerrar</button>
+        <button mat-raised-button color="primary" mat-button (click)="onClickPrint()">Descargar</button>
+    </div>
+</div>
