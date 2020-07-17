@@ -112,4 +112,9 @@ export class LibrosueldosListComponent implements OnInit, AfterViewInit {
 
     });
   }
+
+
+  onClickImprimirCompleto(): void {
+    this.router.navigate([`/informes/libro-sueldos/imprimir/completo`], { queryParams: { fechadesde: this.fechadesde, fechahasta: this.fechahasta }});
+  }
 }

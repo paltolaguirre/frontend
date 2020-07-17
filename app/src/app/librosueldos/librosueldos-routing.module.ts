@@ -4,6 +4,7 @@ import { AuthGuard } from 'src/app/auth/auth.guard';
 import { LibrosueldosListComponent } from './librosueldos-list/librosueldos-list.component';
 import { LibrosueldosListPrintComponent } from './librosueldos-list/librosueldos-list-print/librosueldos-list-print.component';
 import { LibrosueldosEncabezadoPrintComponent } from './librosueldos-list/librosueldos-encabezado-print/librosueldos-encabezado-print.component';
+import { LibrosueldosCompletePrintComponent } from './librosueldos-list/librosueldos-complete-print/librosueldos-complete-print.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,10 @@ const routes: Routes = [
   {
     path: 'imprimir/encabezado',
     component: LibrosueldosEncabezadoPrintComponent
+  },
+  {
+    path: 'imprimir/completo',
+    component: LibrosueldosCompletePrintComponent
   },
 ];
 
