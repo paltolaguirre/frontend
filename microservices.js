@@ -47,6 +47,10 @@ for (let index = 0; index < myArgs.length; index++) {
             path = "~/go/src/github.com/xubiosueldos/actualizacion";
             runService(serviceName, path);
             break;
+	case 'tarea':
+            path = "~/go/src/github.com/xubio-inc/tarea";
+            runService(serviceName, path);
+            break;
         default:
             console.log("* El servicio '" + serviceName + "' no existe.");
     }
