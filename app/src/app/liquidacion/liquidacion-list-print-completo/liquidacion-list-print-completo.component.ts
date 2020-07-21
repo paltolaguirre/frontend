@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingService } from 'src/app/core/services/loading/loading.service';
 import { LiquidacionService } from '../liquidacion.service';
 import { PrintService } from 'src/app/print/print.service';
@@ -17,7 +17,8 @@ export class LiquidacionListPrintCompletoComponent implements OnInit {
     private route: ActivatedRoute,
     private loadingService: LoadingService,
     private liquidacionService: LiquidacionService,
-    public printService: PrintService
+    public printService: PrintService,
+    private router: Router,
   ) {}
 
   async ngOnInit() {
@@ -40,5 +41,9 @@ export class LiquidacionListPrintCompletoComponent implements OnInit {
 
   onClickPrint() {
     this.printService.printTOPDF();
+  }
+
+  onClickAbort() {
+    this.router.navigate([`/liquidaciones`]);
   }
 }
