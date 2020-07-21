@@ -11,7 +11,8 @@
     <app-selector-default class="medium-selector" matSelect="0" nombre="liquidaciontipo" type="hardcode" (optionSelected)="changeTipoLiquidacion($event.ID)"></app-selector-default>
     <div>
         <button mat-raised-button color="primary" class="topmenu-button" mat-button [routerLink]="['/liquidaciones', 'nuevo']">Nuevo</button>
-        <button mat-raised-button color="secondary" class="topmenu-button" mat-button (click)="printService.printTOPDF()">Imprimir</button>
+        <!--<button mat-raised-button color="secondary" class="topmenu-button" mat-button (click)="printService.printTOPDF()">Imprimir</button>-->
+        <button color="primary" mat-button (click)="onClickPrint(dataSource.data)">Imprimir Recibos</button>
         <button mat-raised-button color="secondary" class="topmenu-button" mat-button (click)="onClickContabilizar(dataSource.data)">Contabilizar</button>
         <button mat-raised-button color="secondary" class="topmenu-button" mat-button (click)="onClickDuplicar(dataSource.data)">Duplicar</button>
         <mat-form-field class="topmenu-search">

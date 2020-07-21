@@ -4,7 +4,11 @@
 
     <div *ngSwitchCase="'imprimir'">
       <div *ngIf="currentLiquidacion$ | async as data" class="liquidacion-container" >
-        <app-liquidacion-print [liquidacion]="data"></app-liquidacion-print>
+        <div mat-dialog-content class="content" style="padding: 5em 0.5em 5em 0.5em; overflow: auto;">
+          <div id="contentTOPDF">
+            <app-liquidacion-print [liquidacion]="data"></app-liquidacion-print>
+          </div>
+        </div>
         <div mat-dialog-actions class="actions">
           <button mat-raised-button mat-button (click)="onClickId()">Cerrar</button>
           <button mat-raised-button color="primary" mat-button (click)="onClickPrint()">Descargar</button>
@@ -14,8 +18,12 @@
 
 
     <div *ngSwitchCase="'imprimircompleto'">
-      <div *ngIf="currentLiquidacion$ | async as data" class="liquidacion-container">
-        <app-liquidacion-print-completo [liquidacion]="data"></app-liquidacion-print-completo>
+      <div *ngIf="currentLiquidacion$ | async as data" class="liquidacion-container" >
+        <div mat-dialog-content class="content" style="padding: 5em 0.5em 5em 0.5em; overflow: auto;">
+          <div id="contentTOPDF">
+            <app-liquidacion-print-completo [liquidacion]="data"></app-liquidacion-print-completo>
+          </div>
+        </div>
         <div mat-dialog-actions class="actions">
           <button mat-raised-button mat-button (click)="onClickId()">Cerrar</button>
           <button mat-raised-button color="primary" mat-button (click)="onClickPrint()">Descargar</button>

@@ -1,15 +1,8 @@
  /*@import "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css";*/
  
- #contentTOPDF {
-    width: 1000px;
-    padding-right: 50px;
-    padding-left: 50px;
-  }
- 
  .hojaPDF {
     padding-top: 25px;
-    padding-bottom: 25px;
-    height: 1490px;
+    height: 1527px;
   }
 
   .tg {

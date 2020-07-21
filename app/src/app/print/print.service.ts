@@ -11,11 +11,11 @@ export class PrintService {
 
   constructor(private loadingService: LoadingService) { }
 
-  public printTOPDF()
+  public printTOPDF(elementID='contentTOPDF')
   {
     this.loadingService.show();
 
-    var data = document.getElementById('contentTOPDF');
+    var data = document.getElementById(elementID);
    /*
     var elements = data.getElementsByClassName('Acciones');
     while(elements.length > 0){
