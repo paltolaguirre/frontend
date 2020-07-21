@@ -14,6 +14,7 @@ import { DatePipe, formatDate } from '@angular/common';
 import { TableService } from 'src/app/shared/services/table.service';
 import { LoadingService } from 'src/app/core/services/loading/loading.service';
 import { SelectionModel } from '@angular/cdk/collections';
+import { LiquidacionListDialog } from '../liquidacion-list-dialog/liquidacion-list-dialog.component';
 
 export interface LiquidacionTable {
   ID: number;
@@ -241,5 +242,20 @@ export class LiquidacionListComponent implements OnInit, AfterViewInit {
       return this.selection.selected.length;
     }
 
+    onClickPrint(data): void {
+      data = this.selection.selected
+
+      if(data.length == 0) {
+        const notificacion = {
+          codigo: 400,
+          mensaje: `Se debe seleccionar al menos una liquidación a imprimir.`
+        }
+        const ret = this.notificationService.notify(notificacion);
+      } else {
+        const dialogRef = this.dialog.open(LiquidacionListDialog, {
+          data
+        });
+      }
+    }
 }
 

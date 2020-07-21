@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { LoadingService } from "src/app/core/services/loading/loading.service";
 import { LiquidacionService } from "../liquidacion.service";
 import { PrintService } from 'src/app/print/print.service';
@@ -17,31 +17,36 @@ export class LiquidacionListPrintComponent implements OnInit {
     private route: ActivatedRoute,
     private loadingService: LoadingService,
     private liquidacionService: LiquidacionService,
-    public printService: PrintService
+    public printService: PrintService,
+    private router: Router,
   ) {}
 
   async ngOnInit() {
     this.ids = this.route.snapshot.queryParamMap.get("ids");
     if(!this.ids) return;
-
+    this.loadingService.show();
+    
     const arrayId = this.ids.split(',');
     var idsFiltered = arrayId.filter(function (item) {
       return (parseInt(item) == item);
     });
     console.log("IDs: ", idsFiltered);
 
-    this.loadingService.show();
     idsFiltered.forEach(async id => {
       const liquidacion = await this.liquidacionService.getLiquidacion(id);
       this.liquidaciones.push(liquidacion);
     });
     //this.fechaperiododepositado = liquidacion.fechaperiododepositado?liquidacion.fechaperiododepositado.substring(0, 7):liquidacion.fechaperiododepositado;
     //this.fechaperiodoliquidacion = liquidacion.fechaperiodoliquidacion?liquidacion.fechaperiodoliquidacion.substring(0, 7):liquidacion.fechaperiodoliquidacion;
-    console.log("liquidaciones: ", this.liquidaciones);
+    
     this.loadingService.hide();
   }
 
   onClickPrint() {
     this.printService.printTOPDF();
+  }
+
+  onClickAbort() {
+    this.router.navigate([`/liquidaciones`]);
   }
 }
